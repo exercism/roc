@@ -1,0 +1,32 @@
+{
+  "docs": [
+    {
+      "uuid": "cb33a505-ee1c-4823-8839-41bce7404bb0",
+      "slug": "installation",
+      "path": "docs/INSTALLATION.md",
+      "title": "Installing Roc locally",
+      "blurb": "Learn how to install Roc locally to solve Exercism's exercises on your own machine"
+    },
+    {
+      "uuid": "a3e9e903-b9fb-4fd9-aa80-10ea961d9009",
+      "slug": "learning",
+      "path": "docs/LEARNING.md",
+      "title": "How to learn Roc",
+      "blurb": "An overview of how to get started from scratch with Roc"
+    },
+    {
+      "uuid": "6c6d8750-7a12-4585-a0ae-2f945f14055c",
+      "slug": "tests",
+      "path": "docs/TESTS.md",
+      "title": "Testing on the Roc track",
+      "blurb": "Learn how to test your Roc exercises on Exercism"
+    },
+    {
+      "uuid": "5eec3b52-d642-4c3e-85ee-fbe824b6b2bb",
+      "slug": "resources",
+      "path": "docs/RESOURCES.md",
+      "title": "Useful Roc resources",
+      "blurb": "A collection of useful resources to help you master Roc"
+    }
+  ]
+}
