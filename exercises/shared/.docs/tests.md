@@ -1,15 +1,3 @@
-# Tests
+# Testing on the Command Line
 
-<!-- TODO: write document
-
-  This document should contain instructions on how to run the exercise's tests.
-
-  The instructions should be short and to the point.
-
-  The docs/TESTS.md file can contain a more verbose description on how to run tests.
-
-  When a student downloads an exercise via the CLI, this file's contents are
-  included into the HELP.md file.
-
-  See https://exercism.org/docs/building/tracks/shared-files for more information.
--->
+To test your solution to an exercise, open a terminal, go to this exercise's directory, run `roc test <exercise-name>-test.roc`, for example `roc test hello-world-test.roc`, and ensure that all the tests pass.
