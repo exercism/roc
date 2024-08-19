@@ -51,15 +51,10 @@
     "paradigm/functional",
     "platform/linux",
     "platform/mac",
-    "platform/windows",
     "typing/strong",
-    "used_for/artificial_intelligence",
     "used_for/backends",
     "used_for/cross_platform_development",
-    "used_for/embedded_systems",
     "used_for/games",
-    "used_for/robotics",
-    "used_for/scientific_calculations",
     "used_for/scripts"
   ]
 }
