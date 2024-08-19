@@ -13,7 +13,7 @@
   "online_editor": {
     "indent_style": "space",
     "indent_size": 4,
-    "highlightjs_language": "roc"
+    "highlightjs_language": "haskell"
   },
   "files": {
     "solution": [
