@@ -1,6 +1,7 @@
 # About
 
-Roc is a modern, fast, and safe programming language designed for building reliable software with simplicity in mind. With an emphasis on performance and minimalism, Roc brings a fresh perspective to the world of functional programming, aiming to make it accessible and efficient for developers.
+Roc is a modern, fast, and safe programming language designed for building reliable software with simplicity in mind.
+With an emphasis on performance and minimalism, Roc brings a fresh perspective to the world of functional programming, aiming to make it accessible and efficient for developers.
 
 ## Main Features
 
