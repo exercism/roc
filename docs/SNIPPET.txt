@@ -1,17 +1,13 @@
+app [main] { pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.12.0/Lb8EgiejTUzbggO2HVVuPJFkwvvsfW6LojkLR20kTVE.tar.br" }
+
+import pf.Stdout
+
+factorial = \n ->
+    if n == 1 then
+        1
+    else
+        n * factorial (n - 1)
+
 main =
-    Path.fromStr "url.txt"
-    |> storeEmail
-    |> Task.onErr handleErr
-
-storeEmail = \path ->
-    url = File.readUtf8! path
-    user = Http.get! url Json.utf8
-    dest = Path.fromStr "$(user.name).txt"
-    File.writeUtf8! dest user.email
-    Stdout.line! "Wrote email to $(Path.display dest)"
-
-handleErr = \err ->
-    when err is
-        HttpErr url _ -> Stderr.line! "Error fetching URL $(url)"
-        FileReadErr path _ -> Stderr.line! "Error reading from $(Path.display path)"
-        FileWriteErr path _ -> Stderr.line! "Error writing to $(Path.display path)"
+    result = factorial 5
+    Stdout.line! "factorial 5 = 1 * 2 * 3 * 4 * 5 = $(Num.toStr result)"
