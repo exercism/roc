@@ -1,4 +1,4 @@
 module [isLeapYear]
 
 isLeapYear = \year ->
-    crash "TODO"
+    crash "Please implement the `isLeapYear` function"
