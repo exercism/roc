@@ -46,6 +46,38 @@
       }
     ]
   },
+  "key_features": [
+    {
+      "title": "Fast",
+      "content": "Roc code is designed to build fast and run fast. It compiles to machine code or WebAssembly.",
+      "icon": "fast"
+    },
+    {
+      "title": "Functional",
+      "content": "Roc has a small number of simple language primitives. It's a single-paradigm functional language.",
+      "icon": "functional"
+    },
+    {
+      "title": "Friendly",
+      "content": "Roc's syntax, semantics, and included toolset all prioritize user-friendliness.",
+      "icon": "extensible"
+    },
+    {
+      "title": "Safe",
+      "content": "Roc's powerful type system and immutability lead to more predictable and maintainable code.",
+      "icon": "immutable"
+    },
+    {
+      "title": "Interoperable",
+      "content": "Roc is works well with other languages, making it easier to integrate into existing projects.",
+      "icon": "interop"
+    },
+    {
+      "title": "Evolving",
+      "content": "Roc is a young language, and it is evolving fast.",
+      "icon": "evolving"
+    }
+  ],
   "tags": [
     "execution_mode/compiled",
     "paradigm/functional",
