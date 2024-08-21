@@ -1,4 +1,4 @@
-# Testing on the Command Line
+# Tests
 
 To download an exercise, for example `hello-world`, open a terminal and run:
 
