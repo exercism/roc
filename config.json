@@ -8,23 +8,85 @@
     "representer": false,
     "analyzer": false
   },
-  "blurb": "TODO: add blurb",
+  "blurb": "Roc is a fast, friendly, functional language.",
   "version": 3,
   "online_editor": {
     "indent_style": "space",
-    "indent_size": 4
+    "indent_size": 4,
+    "highlightjs_language": "haskell"
   },
   "files": {
-    "solution": [],
-    "test": [],
-    "example": [],
-    "exemplar": []
+    "solution": [
+      "%{pascal_slug}.roc"
+    ],
+    "test": [
+      "%{kebab_slug}-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
   },
   "exercises": {
-    "concept": [],
-    "practice": []
+    "practice": [
+      {
+        "slug": "hello-world",
+        "name": "Hello World",
+        "uuid": "c2e68f17-4f90-4510-a945-9e2dbf23d777",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
+        "slug": "leap",
+        "name": "Leap",
+        "uuid": "fd8452d6-b1af-424a-9d03-aadb4945e644",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      }
+    ]
   },
-  "concepts": [],
-  "key_features": [],
-  "tags": []
+  "key_features": [
+    {
+      "title": "Fast",
+      "content": "Roc code is designed to build fast and run fast. It compiles to machine code or WebAssembly.",
+      "icon": "fast"
+    },
+    {
+      "title": "Functional",
+      "content": "Roc has a small number of simple language primitives. It's a single-paradigm functional language.",
+      "icon": "functional"
+    },
+    {
+      "title": "Friendly",
+      "content": "Roc's syntax, semantics, and included toolset all prioritize user-friendliness.",
+      "icon": "extensible"
+    },
+    {
+      "title": "Safe",
+      "content": "Roc's powerful type system and immutability lead to more predictable and maintainable code.",
+      "icon": "immutable"
+    },
+    {
+      "title": "Interoperable",
+      "content": "Roc is works well with other languages, making it easier to integrate into existing projects.",
+      "icon": "interop"
+    },
+    {
+      "title": "Evolving",
+      "content": "Roc is a young language, and it is evolving fast.",
+      "icon": "evolving"
+    }
+  ],
+  "tags": [
+    "execution_mode/compiled",
+    "paradigm/functional",
+    "platform/linux",
+    "platform/mac",
+    "typing/strong",
+    "used_for/backends",
+    "used_for/cross_platform_development",
+    "used_for/games",
+    "used_for/scripts"
+  ]
 }

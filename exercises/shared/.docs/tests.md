@@ -1,15 +1,42 @@
-# Tests
+# Testing on the Command Line
 
-<!-- TODO: write document
+To download an exercise, for example `hello-world`, open a terminal and run:
 
-  This document should contain instructions on how to run the exercise's tests.
+```bash
+exercism download --track roc --exercise hello-world
+```
 
-  The instructions should be short and to the point.
+Then go to the exercise directory and edit the code to solve the exercise. For example:
 
-  The docs/TESTS.md file can contain a more verbose description on how to run tests.
+```bash
+cd {your Exercism folder}/roc/hello-world
+edit HelloWorld.roc
+```
 
-  When a student downloads an exercise via the CLI, this file's contents are
-  included into the HELP.md file.
+Each exercise comes with a test suite. You can run the tests using the `roc test` command, for example:
 
-  See https://exercism.org/docs/building/tracks/shared-files for more information.
--->
+```
+roc test hello-world-test.roc
+```
+
+If you've solved the exercise, you should see 0 failed test, for example:
+
+```
+0 failed and 1 passed in 583 ms.
+```
+
+However, if your code has any errors, they will look like this:
+
+```
+── EXPECT FAILED in hello-world-test.roc ───────────────────────────────────────
+
+This expectation failed:
+
+6│  expect hello == "Hello, World!"
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+1 failed and 0 passed in 1264 ms.
+```
+
+This should help you fix your code. Once your code works, you can submit it using the `exercism submit` command (see `HELP.md` in the exercise directory for more details).

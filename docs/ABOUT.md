@@ -1,14 +1,14 @@
 # About
 
-<!-- TODO: write document
+Roc is a modern, fast, and safe programming language designed for building reliable software with simplicity in mind.
+With an emphasis on performance and minimalism, Roc brings a fresh perspective to the world of functional programming, aiming to make it accessible and efficient for developers.
 
-  This document contains a short introduction to the language.
+## Main Features
 
-  The introduction should be relatively brief and touch upon what
-  makes the language interesting (and possibly unique). The goal
-  is to help students decide if they want to join this track.
+- **Simplicity and Safety**: Roc is designed to reduce common programming errors through its type system and by enforcing immutability by default, which leads to more predictable and maintainable code.
+- **Optimized Performance**: Roc's compiler is built to generate highly optimized machine code, ensuring that applications run fast and efficiently.
+- **No Nonsense Dependencies**: Roc encourages simplicity not just in code, but also in dependency management, aiming for minimal external dependencies.
+- **Clean Syntax**: Roc's syntax is straightforward and easy to read, drawing inspiration from modern functional languages while stripping away unnecessary complexity.
+- **Interoperability**: Roc is built to work well with other languages, making it easier to integrate into existing projects.
 
-  The contents of this document are displayed on the track page,
-  provided the student has not joined the track.
-
-  See https://exercism.org/docs/building/tracks/docs for more information. -->
+For more details, visit [roc-lang.org](https://roc-lang.org).

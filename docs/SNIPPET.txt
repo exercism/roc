@@ -1,1 +1,13 @@
-TODO: add snippet
+app [main] { pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.12.0/Lb8EgiejTUzbggO2HVVuPJFkwvvsfW6LojkLR20kTVE.tar.br" }
+
+import pf.Stdout
+
+factorial = \n ->
+    if n == 1 then
+        1
+    else
+        n * factorial (n - 1)
+
+main =
+    result = factorial 5
+    Stdout.line! "factorial 5 = 1 * 2 * 3 * 4 * 5 = $(Num.toStr result)"

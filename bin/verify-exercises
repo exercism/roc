@@ -23,11 +23,21 @@
 
 slug="${1:-*}"
 
+test_example() {
+    MODULE_FILE=`jq -r '.files.solution[]' $1/.meta/config.json`
+    EXAMPLE_FILE=`jq -r '.files.example[]' $1/.meta/config.json`
+    TEST_FILE=`jq -r '.files.test[]' $1/.meta/config.json`
+    mv "$1/${MODULE_FILE}" "$1/${MODULE_FILE}.bak"
+    cp "$1/${EXAMPLE_FILE}" "$1/${MODULE_FILE}"
+    roc test "$1/${TEST_FILE}"
+    mv -f "$1/${MODULE_FILE}".bak "$1/${MODULE_FILE}"
+}
+
 # Verify the Concept Exercises
 for concept_exercise_dir in ./exercises/concept/${slug}/; do
     if [ -d $concept_exercise_dir ]; then
         echo "Checking $(basename "${concept_exercise_dir}") exercise..."
-        # TODO: run command to verify that the exemplar solution passes the tests
+        test_example "${concept_exercise_dir%/}"
     fi
 done
 
@@ -35,6 +45,6 @@ done
 for practice_exercise_dir in ./exercises/practice/${slug}/; do
     if [ -d $practice_exercise_dir ]; then
         echo "Checking $(basename "${practice_exercise_dir}") exercise..."
-        # TODO: run command to verify that the example solution passes the tests
+        test_example "${practice_exercise_dir%/}"
     fi
 done
