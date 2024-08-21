@@ -1,4 +1,4 @@
-# Tests
+# Testing on the Command Line
 
 Roc comes with its own integrated test tools, no need to install anything else.
 
