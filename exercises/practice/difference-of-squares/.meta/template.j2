@@ -1,0 +1,17 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import DifferenceOfSquares exposing [squareOfSum, sumOfSquares, differenceOfSquares]
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+    {% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == {{ case["expected"] }}
+
+  {% endfor %}
+{% endfor %}

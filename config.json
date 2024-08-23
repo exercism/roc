@@ -16,15 +16,9 @@
     "highlightjs_language": "haskell"
   },
   "files": {
-    "solution": [
-      "%{pascal_slug}.roc"
-    ],
-    "test": [
-      "%{kebab_slug}-test.roc"
-    ],
-    "example": [
-      ".meta/Example.roc"
-    ]
+    "solution": ["%{pascal_slug}.roc"],
+    "test": ["%{kebab_slug}-test.roc"],
+    "example": [".meta/Example.roc"]
   },
   "exercises": {
     "practice": [
@@ -40,6 +34,30 @@
         "slug": "leap",
         "name": "Leap",
         "uuid": "fd8452d6-b1af-424a-9d03-aadb4945e644",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
+        "slug": "bob",
+        "name": "Bob",
+        "uuid": "80a035ed-e6d2-47de-ab12-5711cc39bee5",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
+        "slug": "darts",
+        "name": "Darts",
+        "uuid": "482902d5-47ed-430e-86d3-958a7817edf7",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
+        "slug": "difference-of-squares",
+        "name": "Difference of Squares",
+        "uuid": "f7d9119b-776c-41d6-9602-21c55be71574",
         "practices": [],
         "prerequisites": [],
         "difficulty": 1

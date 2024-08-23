@@ -1,0 +1,11 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import Darts exposing [score]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect {{ case["property"] | to_camel }} {{ case["input"]["x"] }}f64 {{ case["input"]["y"] }}f64 == {{ case["expected"] }}
+
+{% endfor %}
