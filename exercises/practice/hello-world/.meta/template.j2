@@ -7,6 +7,6 @@ import HelloWorld exposing [hello]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect {{ case["property"] }} == "{{- case ["expected"] }}"
+expect {{ case["property"] }} == {{ case ["expected"] | tojson }}
 
 {% endfor %}
