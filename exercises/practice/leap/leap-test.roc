@@ -1,7 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/leap/canonical-data.json
 # File last updated on 2024-08-23
-
 app [main] { pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.12.0/Lb8EgiejTUzbggO2HVVuPJFkwvvsfW6LojkLR20kTVE.tar.br" }
 
 import pf.Task exposing [Task]
@@ -37,5 +36,4 @@ expect (isLeapYear 2400) == Bool.true
 
 # year divisible by 200, not divisible by 400 in common year
 expect (isLeapYear 1800) == Bool.false
-
 

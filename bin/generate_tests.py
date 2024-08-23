@@ -109,6 +109,14 @@ def to_pascal(string: str) -> str:
     return "".join(w.title() for w in to_snake(string).split("_"))
 
 
+def to_camel(string: str) -> str:
+    """
+    Convert pretty much anything to CamelCase.
+    """
+    pascal = to_pascal(string)
+    return pascal[0].lower() + pascal[1:]
+
+
 def wrap_overlong(string: str, width: int = 70) -> List[str]:
     """
     Break an overly long string literal into escaped lines.
@@ -448,6 +456,7 @@ def generate(
     env = Environment(loader=loader, keep_trailing_newline=True)
     env.filters["to_snake"] = to_snake
     env.filters["to_pascal"] = to_pascal
+    env.filters["to_camel"] = to_camel
     env.filters["wrap_overlong"] = wrap_overlong
     env.filters["regex_replace"] = regex_replace
     env.filters["regex_find"] = regex_find
