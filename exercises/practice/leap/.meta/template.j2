@@ -1,0 +1,12 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+
+{{ macros.header()}}
+
+import Leap exposing [isLeapYear]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect (isLeapYear {{ case["input"]["year"] }}) == Bool.{{- case ["expected"] | lower }}
+
+{% endfor %}
