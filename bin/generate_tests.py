@@ -117,6 +117,32 @@ def to_camel(string: str) -> str:
     return pascal[0].lower() + pascal[1:]
 
 
+ESCAPE_ROC_STRING = re.compile(r'[\x00-\x1f\\"\b\f\n\r\t]')
+ESCAPE_MAP = {
+    "\\": "\\\\",
+    '"': '\\"',
+    "\b": "\\b",
+    "\f": "\\f",
+    "\n": "\\n",
+    "\r": "\\r",
+    "\t": "\\t",
+}
+for i in range(0x20):
+    ESCAPE_MAP.setdefault(chr(i), f"\\u({i:04x})")
+del i
+
+
+def to_roc_string(string: str) -> str:
+    """
+    Return a Roc representation of a Python string
+    """
+    return (
+        '"'
+        + ESCAPE_ROC_STRING.sub(lambda match: ESCAPE_MAP[match.group(0)], string)
+        + '"'
+    ).replace("$(", "\\$(")
+
+
 def wrap_overlong(string: str, width: int = 70) -> List[str]:
     """
     Break an overly long string literal into escaped lines.
@@ -457,6 +483,7 @@ def generate(
     env.filters["to_snake"] = to_snake
     env.filters["to_pascal"] = to_pascal
     env.filters["to_camel"] = to_camel
+    env.filters["to_roc_string"] = to_roc_string
     env.filters["wrap_overlong"] = wrap_overlong
     env.filters["regex_replace"] = regex_replace
     env.filters["regex_find"] = regex_find

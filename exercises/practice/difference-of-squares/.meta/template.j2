@@ -9,9 +9,9 @@ import DifferenceOfSquares exposing [squareOfSum, sumOfSquares, differenceOfSqua
 ## {{ supercase["description"] }}
 ##
 
-    {% for case in supercase["cases"] -%}
+{% for case in supercase["cases"] -%}
 # {{ case["description"] }}
 expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == {{ case["expected"] }}
 
-  {% endfor %}
+{% endfor %}
 {% endfor %}
