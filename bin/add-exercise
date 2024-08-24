@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+
+# this script was adapted from:
+# https://github.com/exercism/arturo/blob/main/bin/add-exercise
+
+set -euo pipefail
+scriptname=$0
+
+help_and_exit() {
+    echo >&2 "Scaffold the files for a new practice exercise."
+    echo >&2 "Usage: ${scriptname} [-h] [-a author] [-d difficulty] <exercise-slug>"
+    echo >&2 "Where: author is the github username of the exercise creator."
+    exit 1
+}
+
+die() { echo >&2 "$*"; exit 1; }
+
+required_tool() {
+    command -v "$1" >/dev/null 2>&1 ||
+        die "$1 is required but not installed. Please install it and make sure it's in your PATH."
+}
+
+(( $# >= 1 )) || help_and_exit
+
+required_tool jq
+required_tool curl
+
+[[ -f ./bin/fetch-configlet ]] || die "run this script from the repo's root directory."
+
+author=''
+difficulty='1'
+while getopts :ha:d: opt; do
+    case $opt in
+        h) help_and_exit ;;
+        a) author=$OPTARG ;;
+        d) difficulty=$OPTARG ;;
+        ?) echo >&2 "Unknown option: -$OPTARG"; help_and_exit ;;
+    esac
+done
+shift "$((OPTIND - 1))"
+
+slug="${1}"
+
+if [[ -z $author ]]; then
+    read -rp 'Your github username: ' author
+fi
+
+# Create entry for exercise in config.json and exercise files
+./bin/fetch-configlet
+./bin/configlet create --practice-exercise "${slug}" --author "${author}" --difficulty "${difficulty}"
+
+
+cat << END_TESTER > "exercises/practice/${slug}/.meta/template.j2"
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ exercise | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect {{ case["property"] | to_camel }} {{ case["input"]["myArg"] }} == {{ case["expected"] }}
+
+{% endfor %}
+
+# ${slug}/canonical-data.json
+$(curl --silent "https://raw.githubusercontent.com/exercism/problem-specifications/main/exercises/${slug}/canonical-data.json")
+END_TESTER
+
+slug_pascal=$(cd bin && python -c "from generate_tests import to_pascal; print(to_pascal('${slug}'))")
+slug_camel=$(cd bin && python -c "from generate_tests import to_camel; print(to_camel('${slug}'))")
+
+cat << END_TEST > "exercises/practice/${slug}/${slug}-test.roc"
+# This file will be generated automatically
+# You must first define exercises/practice/${slug}/.meta/template.j2
+# Then run: bin/generate_tests.py ${slug}
+END_TEST
+
+cat << END_STUB > "exercises/practice/${slug}/${slug_pascal}.roc"
+module [${slug_camel}]
+
+${slug_camel} = \myArg ->
+    crash "Please implement the '${slug_camel}' function"
+END_STUB
+
+cp "exercises/practice/${slug}/${slug_pascal}.roc" "exercises/practice/${slug}/.meta/Example.roc"
+
+cat << NEXT_STEPS
+
+Your next steps are:
+- Edit the test suite template in 'exercises/practice/${slug}/.meta/template.j2'
+  based on the canonical-data.json for this exercise. It is copied at the end of
+  the template for your convenience, please delete it once you're done.
+  - Any test cases you don't implement, mark them in 'exercises/practice/${slug}/.meta/tests.toml' with "include = false"
+- Generate the test suite by running: bin/generate_tests.py ${slug}
+- Create the example solution in 'exercises/practice/${slug}/.meta/Example.roc'
+- Verify the example solution by running 'bin/verify-exercises ${slug}'
+- Edit the stub solution in 'exercises/practice/${slug}/${slug_pascal}.roc'
+- Format all your Roc code by running 'roc format' on each .roc file
+- Update the 'difficulty' value for the exercise's entry in the 'config.json' file
+- Validate CI using 'bin/configlet lint' and 'bin/configlet fmt'
+NEXT_STEPS
