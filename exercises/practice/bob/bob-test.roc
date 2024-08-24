@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/bob/canonical-data.json
-# File last updated on 2024-08-23
+# File last updated on 2024-08-24
 app [main] { pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.12.0/Lb8EgiejTUzbggO2HVVuPJFkwvvsfW6LojkLR20kTVE.tar.br" }
 
 import pf.Task exposing [Task]
@@ -32,10 +32,10 @@ expect response "fffbbcbeab?" == "Sure."
 expect response "Hi there!" == "Whatever."
 
 # using acronyms in regular speech
-# expect response "It\u0027s OK if you don\u0027t want to go work for NASA." == "Whatever."
+expect response "It's OK if you don't want to go work for NASA." == "Whatever."
 
 # forceful question
-# expect response "WHAT\u0027S GOING ON?" == "Calm down, I know what I\u0027m doing!"
+expect response "WHAT'S GOING ON?" == "Calm down, I know what I'm doing!"
 
 # shouting numbers
 expect response "1, 2, 3 GO!" == "Whoa, chill out!"
@@ -47,7 +47,7 @@ expect response "1, 2, 3" == "Whatever."
 expect response "4?" == "Sure."
 
 # shouting with special characters
-# expect response "ZOMG THE %^*@#$(*^ ZOMBIES ARE COMING!!11!!1!" == "Whoa, chill out!"
+expect response "ZOMG THE %^*@#\$(*^ ZOMBIES ARE COMING!!11!!1!" == "Whoa, chill out!"
 
 # shouting with no exclamation mark
 expect response "I HATE THE DENTIST" == "Whoa, chill out!"
