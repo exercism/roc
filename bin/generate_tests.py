@@ -132,6 +132,10 @@ for i in range(0x20):
 del i
 
 
+def to_roc_bool(b: bool) -> str:
+    return "Bool.true" if b else "Bool.false"
+
+
 def to_roc_string(string: str) -> str:
     """
     Return a Roc representation of a Python string
@@ -483,6 +487,7 @@ def generate(
     env.filters["to_snake"] = to_snake
     env.filters["to_pascal"] = to_pascal
     env.filters["to_camel"] = to_camel
+    env.filters["to_roc_bool"] = to_roc_bool
     env.filters["to_roc_string"] = to_roc_string
     env.filters["wrap_overlong"] = wrap_overlong
     env.filters["regex_replace"] = regex_replace
