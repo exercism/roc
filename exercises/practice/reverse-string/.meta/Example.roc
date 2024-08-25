@@ -18,7 +18,7 @@ reverse = \string ->
         graphemes = string |> Grapheme.split
         when graphemes is
             Ok gs -> gs |> List.reverse |> Str.joinWith ""
-            Err _ -> "Ooops"
+            Err _ -> "Unexpected error: could not split the string into graphemes"
 
 
 ## This function reverses the input string, e.g., "hello" -> "olleh". It is
