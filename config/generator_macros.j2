@@ -23,8 +23,6 @@ app [main] {
 {%- for name in imports -%},
     {% if name == "unicode" -%}
     unicode: "https://github.com/roc-lang/unicode/releases/download/0.1.1/-FQDoegpSfMS-a7B0noOnZQs3-A2aq9RSOR5VVLMePg.tar.br"
-    {%- elif name == "toto" -%}
-    toto: "https://github.com/roc-lang/unicode/releases/toto"
     {%- endif -%}
 {%- endfor -%}
 {%- endif %}
