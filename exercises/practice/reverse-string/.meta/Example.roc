@@ -12,13 +12,9 @@ import unicode.Grapheme
 ## To use the `unicode` package, its URL must be added to the app's header.
 ## Luckily, we've added it for you in reverse-string-test.roc. Take a look!
 reverse = \string ->
-    if string == "" then
-        ""
-    else
-        graphemes = string |> Grapheme.split
-        when graphemes is
-            Ok gs -> gs |> List.reverse |> Str.joinWith ""
-            Err _ -> "Unexpected error: could not split the string into graphemes"
+    when Grapheme.split string is
+        Ok graphemes -> graphemes |> List.reverse |> Str.joinWith ""
+        Err _ -> "Unexpected error: could not split the string into graphemes"
 
 ## This function reverses the input string, e.g., "hello" -> "olleh". It is
 ## faster and simpler than the implementation above, plus it does not require an
