@@ -1,0 +1,17 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [isEquilateral, isIsosceles, isScalene]
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+expect is{{ case["property"] | to_pascal }} {{ case["input"]["sides"] | to_roc_tuple }} == {{ case["expected"] | to_roc }}
+
+{% endfor %}
+{% endfor %}
