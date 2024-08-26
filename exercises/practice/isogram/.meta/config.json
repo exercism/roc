@@ -1,0 +1,19 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "Isogram.roc"
+    ],
+    "test": [
+      "isogram-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Determine if a word or phrase is an isogram.",
+  "source": "Wikipedia",
+  "source_url": "https://en.wikipedia.org/wiki/Isogram"
+}
