@@ -5,9 +5,9 @@ isQuestion = \heyBob ->
 
 isYelling = \heyBob ->
     isLower = \c ->
-        c >= 97 && c <= 122
+        c >= 'a' && c <= 'z'
     isUpper = \c ->
-        c >= 65 && c <= 90
+        c >= 'A' && c <= 'Z'
     chars = Str.toUtf8 heyBob
     (chars |> List.any isUpper) && !(chars |> List.any isLower)
 
