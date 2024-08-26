@@ -20,7 +20,6 @@ reverse = \string ->
             Ok gs -> gs |> List.reverse |> Str.joinWith ""
             Err _ -> "Unexpected error: could not split the string into graphemes"
 
-
 ## This function reverses the input string, e.g., "hello" -> "olleh". It is
 ## faster and simpler than the implementation above, plus it does not require an
 ## external package, but it is only guaranteed to work on ASCII strings.
