@@ -1,0 +1,24 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [grainsOnSquare, totalGrains]
+
+{% for case in cases %}
+##
+## {{ case["description"] }}
+##
+{% if case["property"] == "total" %}
+expect totalGrains == {{ case["expected"] }}
+{% else %}
+{% for subcase in case["cases"] -%}
+# {{ subcase["description"] }}
+{% if subcase["expected"]["error"] -%}
+expect grainsOnSquare {{ subcase["input"]["square"] | to_roc }} == Err {{ subcase["expected"]["error"] | to_roc }}
+{%- else -%}
+expect grainsOnSquare {{ subcase["input"]["square"] | to_roc }} == Ok {{ subcase["expected"] }}
+{%- endif %}
+
+{% endfor %}
+{%- endif -%}
+{%- endfor -%}
