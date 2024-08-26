@@ -40,6 +40,9 @@ expect grainsOnSquare 64 == Ok 9223372036854775808
 # square 0 is invalid
 expect grainsOnSquare 0 == Err "square must be between 1 and 64"
 
+# negative square is invalid
+expect grainsOnSquare -1 == Err "square must be between 1 and 64"
+
 # square greater than 64 is invalid
 expect grainsOnSquare 65 == Err "square must be between 1 and 64"
 
