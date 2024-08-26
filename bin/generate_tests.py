@@ -132,10 +132,6 @@ for i in range(0x20):
 del i
 
 
-def to_roc_bool(b: bool) -> str:
-    return "Bool.true" if b else "Bool.false"
-
-
 def to_roc_string(string: str) -> str:
     """
     Return a Roc representation of a Python string
@@ -145,6 +141,42 @@ def to_roc_string(string: str) -> str:
         + ESCAPE_ROC_STRING.sub(lambda match: ESCAPE_MAP[match.group(0)], string)
         + '"'
     ).replace("$(", "\\$(")
+
+
+def to_roc_tuple(values: Any):
+    list_content = ", ".join([to_roc(v) for v in tuple(values)])
+    return f"({list_content})"
+
+
+def to_roc_bool(value: bool):
+    return "Bool.true" if value else "Bool.false"
+
+
+def to_roc_list(values: Any):
+    list_content = ", ".join([to_roc(v) for v in list(values)])
+    return f"[{list_content}]"
+
+
+def to_roc_float(value: Union[int, float]):
+    value = float(value)
+    return f"{value!r}f64".replace("+", "")
+
+
+def to_roc(value: Any) -> str:
+    if isinstance(value, str):
+        return to_roc_string(value)
+    elif isinstance(value, float):
+        return to_roc_float(value)
+    elif isinstance(value, bool):
+        return to_roc_bool(value)
+    elif isinstance(value, list):
+        return to_roc_list(value)
+    elif isinstance(value, tuple):
+        return to_roc_tuple(value)
+    elif value is None:
+        return "{}"
+    else:
+        return repr(value)
 
 
 def wrap_overlong(string: str, width: int = 70) -> List[str]:
@@ -487,8 +519,12 @@ def generate(
     env.filters["to_snake"] = to_snake
     env.filters["to_pascal"] = to_pascal
     env.filters["to_camel"] = to_camel
-    env.filters["to_roc_bool"] = to_roc_bool
+    env.filters["to_roc"] = to_roc
     env.filters["to_roc_string"] = to_roc_string
+    env.filters["to_roc_float"] = to_roc_float
+    env.filters["to_roc_bool"] = to_roc_bool
+    env.filters["to_roc_list"] = to_roc_list
+    env.filters["to_roc_tuple"] = to_roc_tuple
     env.filters["wrap_overlong"] = wrap_overlong
     env.filters["regex_replace"] = regex_replace
     env.filters["regex_find"] = regex_find

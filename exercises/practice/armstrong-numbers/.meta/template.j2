@@ -6,6 +6,6 @@ import {{ exercise | to_pascal }} exposing [isArmstrongNumber]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == {{ case["expected"] | to_roc_bool }}
+expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == {{ case["expected"] | to_roc }}
 
 {% endfor %}
