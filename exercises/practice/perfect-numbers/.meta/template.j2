@@ -1,0 +1,21 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [classify]
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+{% if case["expected"]["error"] -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == Err {{ case["expected"]["error"] | to_roc }}
+{%- else -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == Ok {{ case["expected"] | to_pascal }}
+{%- endif %}
+
+{% endfor %}
+{% endfor %}
