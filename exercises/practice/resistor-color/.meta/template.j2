@@ -1,0 +1,24 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [colorCode, colors]
+
+{% for case in cases %}
+##
+## {{ case["description"] }}
+##
+{% if case["property"] == "colors" %}
+expect {{ case["property"] | to_camel }} == [
+{%- for color in case["expected"] %}
+    {{ color | to_roc_string }},
+{%- endfor %}
+]
+{% else %}
+{% for subcase in case["cases"] -%}
+# {{ subcase["description"] }}
+expect {{ subcase["property"] | to_camel }} {{ subcase["input"]["color"] | to_roc_string }} == Ok {{ subcase["expected"] }}
+
+{% endfor %}
+{%- endif -%}
+{%- endfor -%}
