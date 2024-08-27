@@ -1,50 +1,77 @@
 #!/usr/bin/env bash
 
 # Synopsis:
-# Test the track's exercises.
-# 
-# At a minimum, this file must check if the example/exemplar solution of each 
-# Practice/Concept Exercise passes the exercise's tests.
-#
-# To check this, you usually have to (temporarily) replace the exercise's solution files
-# with its exemplar/example files.
-#
-# If your track uses skipped tests, make sure to (temporarily) enable these tests
-# before running the tests.
-#
-# The path to the solution/example/exemplar files can be found in the exercise's
-# .meta/config.json file, or possibly inferred from the exercise's directory name.
+# Verify that each exercise's example/exemplar solution passes the tests.
+# You can either verify all exercises or a single exercise.
 
 # Example: verify all exercises
-# ./bin/verify-exercises
+# bin/verify-exercises
 
 # Example: verify single exercise
-# ./bin/verify-exercises two-fer
+# bin/verify-exercises two-fer
 
-slug="${1:-*}"
+set -eo pipefail
 
-test_example() {
-    MODULE_FILE=`jq -r '.files.solution[]' $1/.meta/config.json`
-    EXAMPLE_FILE=`jq -r '.files.example[]' $1/.meta/config.json`
-    TEST_FILE=`jq -r '.files.test[]' $1/.meta/config.json`
-    mv "$1/${MODULE_FILE}" "$1/${MODULE_FILE}.bak"
-    cp "$1/${EXAMPLE_FILE}" "$1/${MODULE_FILE}"
-    roc test "$1/${TEST_FILE}"
-    mv -f "$1/${MODULE_FILE}".bak "$1/${MODULE_FILE}"
+die() { echo "$*" >&2; exit 1; }
+
+required_tool() {
+    command -v "${1}" >/dev/null 2>&1 ||
+        die "${1} is required but not installed. Please install it and make sure it's in your PATH."
 }
 
-# Verify the Concept Exercises
-for concept_exercise_dir in ./exercises/concept/${slug}/; do
-    if [ -d $concept_exercise_dir ]; then
-        echo "Checking $(basename "${concept_exercise_dir}") exercise..."
-        test_example "${concept_exercise_dir%/}"
-    fi
-done
+required_tool jq
 
-# Verify the Practice Exercises
-for practice_exercise_dir in ./exercises/practice/${slug}/; do
-    if [ -d $practice_exercise_dir ]; then
-        echo "Checking $(basename "${practice_exercise_dir}") exercise..."
-        test_example "${practice_exercise_dir%/}"
-    fi
-done
+copy_example_or_examplar_to_solution() {
+    jq -c '[.files.solution, .files.exemplar // .files.example] | transpose | map({src: .[1], dst: .[0]}) | .[]' .meta/config.json \
+    | while read -r src_and_dst; do
+        cp "$(jq -r '.src' <<< "${src_and_dst}")" "$(jq -r '.dst' <<< "${src_and_dst}")"
+    done
+}
+
+run_tests() {
+    module_file=`jq -r '.files.solution[]' .meta/config.json`
+    example_file=`jq -r '.files.example[]' .meta/config.json`
+    test_file=`jq -r '.files.test[]' .meta/config.json`
+    cp "${example_file}" "${module_file}"
+    roc test "${test_file}"
+}
+
+verify_exercise() {
+    local dir
+    local slug
+    local tmp_dir
+
+    dir=$(realpath "${1}")
+    slug=$(basename "${dir}")
+    tmp_dir=$(mktemp -d -t "exercism-verify-${slug}-XXXXX")
+
+    echo "Verifying ${slug} exercise..."
+
+    (
+        trap 'rm -rf "$tmp_dir"' EXIT    # remove tempdir when subshell ends
+        cp -r "${dir}/." "${tmp_dir}"
+        cd "${tmp_dir}"
+
+        copy_example_or_examplar_to_solution
+        run_tests "${slug}"
+    )
+}
+
+verify_exercises() {
+    local exercise_slug
+
+    exercise_slug="${1}"
+
+    shopt -s nullglob
+    count=0
+    for exercise_dir in ./exercises/{concept,practice}/${exercise_slug}/; do
+        if [[ -d "${exercise_dir}" ]]; then
+            verify_exercise "${exercise_dir}"
+            ((++count))
+        fi
+    done
+    ((count > 0)) || die 'no matching exercises found!'
+}
+
+exercise_slug="${1:-*}"
+verify_exercises "${exercise_slug}"
