@@ -1,0 +1,40 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [append, concat, filter, length, map, foldl, foldr, reverse]
+
+{% set function_map = {
+    "(acc, el) -> el * acc": "\\acc, el -> el * acc",
+    "(acc, el) -> el / acc": "\\acc, el -> el / acc",
+    "(acc, el) -> el + acc": "\\acc, el -> el + acc",
+    "(x) -> x + 1": "\\x -> x + 1",
+    "(x) -> x modulo 2 == 1": "Num.isOdd",
+} -%}
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+{% if case["property"] == "append" -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["list1"] | to_roc }} {{ case["input"]["list2"] | to_roc }} == {{ case["expected"] | to_roc }}
+{% elif case["property"] == "concat" -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["lists"] | to_roc }} == {{ case["expected"] | to_roc }}
+{% elif case["property"] == "filter" -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} ({{ function_map[case["input"]["function"]] }}) == {{ case["expected"] | to_roc }}
+{% elif case["property"] == "length" -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} == {{ case["expected"] }}
+{% elif case["property"] == "map" -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} ({{ function_map[case["input"]["function"]] }}) == {{ case["expected"] }}
+{% elif case["property"] in ("foldl", "foldr") -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} {{ case["input"]["initial"] }} ({{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %}|> Num.round{% endif %} == {{ case["expected"] | to_roc }}
+{% elif case["property"] == "reverse" -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} == {{ case["expected"] | to_roc }}
+{% else -%}
+# Try adding this test case yourself!
+{% endif %}
+{% endfor -%}
+{% endfor -%}
