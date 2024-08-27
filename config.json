@@ -16,15 +16,9 @@
     "highlightjs_language": "haskell"
   },
   "files": {
-    "solution": [
-      "%{pascal_slug}.roc"
-    ],
-    "test": [
-      "%{kebab_slug}-test.roc"
-    ],
-    "example": [
-      ".meta/Example.roc"
-    ]
+    "solution": ["%{pascal_slug}.roc"],
+    "test": ["%{kebab_slug}-test.roc"],
+    "example": [".meta/Example.roc"]
   },
   "exercises": {
     "practice": [
@@ -184,6 +178,14 @@
         "slug": "etl",
         "name": "ETL",
         "uuid": "5a60367a-3007-4d6d-ac48-ef3f3bb30a4c",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
+        "slug": "acronym",
+        "name": "Acronym",
+        "uuid": "5bc989a9-f7a8-489d-b9fc-6f65c2425fd7",
         "practices": [],
         "prerequisites": [],
         "difficulty": 1
