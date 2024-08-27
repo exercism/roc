@@ -1,0 +1,24 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [transform]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    legacy =
+        Dict.fromList [
+{%- for score, letters in case["input"]["legacy"].items() %}
+            ({{score}}, {{ letters | to_roc | replace("\"", "'") }}),
+{%- endfor %}
+        ]
+    expected =
+        Dict.fromList [
+{%- for letter, score in case["expected"].items() %}
+            ('{{letter}}', {{ score }}),
+{%- endfor %}
+        ]
+    transform legacy == expected
+        
+{% endfor %}
