@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "ListOps.roc"
+    ],
+    "test": [
+      "list-ops-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Implement basic list operations."
+}
