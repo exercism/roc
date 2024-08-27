@@ -6,6 +6,8 @@ import Darts exposing [score]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect {{ case["property"] | to_camel }} {{ case["input"]["x"] }}f64 {{ case["input"]["y"] }}f64 == {{ case["expected"] }}
+expect
+    result = {{ case["property"] | to_camel }} {{ case["input"]["x"] | to_roc_float }} {{ case["input"]["y"] | to_roc_float }}
+    result == {{ case["expected"] }}
 
 {% endfor %}

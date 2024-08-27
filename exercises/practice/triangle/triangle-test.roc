@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/triangle/canonical-data.json
-# File last updated on 2024-08-26
+# File last updated on 2024-08-27
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br",
 }
@@ -17,73 +17,115 @@ import Triangle exposing [isEquilateral, isIsosceles, isScalene]
 ##
 
 # all sides are equal
-expect isEquilateral (2, 2, 2) == Bool.true
+expect
+    result = isEquilateral (2, 2, 2)
+    result == Bool.true
 
 # any side is unequal
-expect isEquilateral (2, 3, 2) == Bool.false
+expect
+    result = isEquilateral (2, 3, 2)
+    result == Bool.false
 
 # no sides are equal
-expect isEquilateral (5, 4, 6) == Bool.false
+expect
+    result = isEquilateral (5, 4, 6)
+    result == Bool.false
 
 # all zero sides is not a triangle
-expect isEquilateral (0, 0, 0) == Bool.false
+expect
+    result = isEquilateral (0, 0, 0)
+    result == Bool.false
 
 # sides may be floats
-expect isEquilateral (0.5f64, 0.5f64, 0.5f64) == Bool.true
+expect
+    result = isEquilateral (0.5f64, 0.5f64, 0.5f64)
+    result == Bool.true
 
 ##
 ## isosceles triangle
 ##
 
 # last two sides are equal
-expect isIsosceles (3, 4, 4) == Bool.true
+expect
+    result = isIsosceles (3, 4, 4)
+    result == Bool.true
 
 # first two sides are equal
-expect isIsosceles (4, 4, 3) == Bool.true
+expect
+    result = isIsosceles (4, 4, 3)
+    result == Bool.true
 
 # first and last sides are equal
-expect isIsosceles (4, 3, 4) == Bool.true
+expect
+    result = isIsosceles (4, 3, 4)
+    result == Bool.true
 
 # equilateral triangles are also isosceles
-expect isIsosceles (4, 4, 4) == Bool.true
+expect
+    result = isIsosceles (4, 4, 4)
+    result == Bool.true
 
 # no sides are equal
-expect isIsosceles (2, 3, 4) == Bool.false
+expect
+    result = isIsosceles (2, 3, 4)
+    result == Bool.false
 
 # first triangle inequality violation
-expect isIsosceles (1, 1, 3) == Bool.false
+expect
+    result = isIsosceles (1, 1, 3)
+    result == Bool.false
 
 # second triangle inequality violation
-expect isIsosceles (1, 3, 1) == Bool.false
+expect
+    result = isIsosceles (1, 3, 1)
+    result == Bool.false
 
 # third triangle inequality violation
-expect isIsosceles (3, 1, 1) == Bool.false
+expect
+    result = isIsosceles (3, 1, 1)
+    result == Bool.false
 
 # sides may be floats
-expect isIsosceles (0.5f64, 0.4f64, 0.5f64) == Bool.true
+expect
+    result = isIsosceles (0.5f64, 0.4f64, 0.5f64)
+    result == Bool.true
 
 ##
 ## scalene triangle
 ##
 
 # no sides are equal
-expect isScalene (5, 4, 6) == Bool.true
+expect
+    result = isScalene (5, 4, 6)
+    result == Bool.true
 
 # all sides are equal
-expect isScalene (4, 4, 4) == Bool.false
+expect
+    result = isScalene (4, 4, 4)
+    result == Bool.false
 
 # first and second sides are equal
-expect isScalene (4, 4, 3) == Bool.false
+expect
+    result = isScalene (4, 4, 3)
+    result == Bool.false
 
 # first and third sides are equal
-expect isScalene (3, 4, 3) == Bool.false
+expect
+    result = isScalene (3, 4, 3)
+    result == Bool.false
 
 # second and third sides are equal
-expect isScalene (4, 3, 3) == Bool.false
+expect
+    result = isScalene (4, 3, 3)
+    result == Bool.false
 
 # may not violate triangle inequality
-expect isScalene (7, 3, 2) == Bool.false
+expect
+    result = isScalene (7, 3, 2)
+    result == Bool.false
 
 # sides may be floats
-expect isScalene (0.5f64, 0.4f64, 0.6f64) == Bool.true
+expect
+    result = isScalene (0.5f64, 0.4f64, 0.6f64)
+    result == Bool.true
 

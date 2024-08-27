@@ -6,6 +6,8 @@ import {{ exercise | to_pascal }} exposing [response]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect {{ case["property"] | to_camel }} {{ case["input"]["heyBob"] | to_roc }} == {{ case["expected"] | to_roc }}
+expect
+    result = {{ case["property"] | to_camel }} {{ case["input"]["heyBob"] | to_roc }}
+    result == {{ case["expected"] | to_roc }}
 
 {% endfor %}

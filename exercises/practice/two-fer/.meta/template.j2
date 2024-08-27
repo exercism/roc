@@ -6,10 +6,12 @@ import {{ exercise | to_pascal }} exposing [{{ exercise | to_camel }}]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-{% if case["input"]["name"] == None -%}
-expect {{ case["property"] | to_camel }} Anonymous == {{ case["expected"] | to_roc }}
-{%- else -%}
-expect {{ case["property"] | to_camel }} (Name {{ case["input"]["name"] | to_roc }}) == {{ case["expected"] | to_roc }}
+expect
+{%- if case["input"]["name"] == None %}
+    result = {{ case["property"] | to_camel }} Anonymous
+{%- else %}
+    result = {{ case["property"] | to_camel }} (Name {{ case["input"]["name"] | to_roc }})
 {%- endif %}
+    result == {{ case["expected"] | to_roc }}
 
 {% endfor %}

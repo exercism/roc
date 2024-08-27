@@ -9,15 +9,19 @@ import {{ exercise | to_pascal }} exposing [colorCode, colors]
 ## {{ case["description"] }}
 ##
 {% if case["property"] == "colors" %}
-expect {{ case["property"] | to_camel }} == [
+expect
+    result = {{ case["property"] | to_camel }}
+    result == [
 {%- for color in case["expected"] %}
-    {{ color | to_roc }},
+        {{ color | to_roc }},
 {%- endfor %}
-]
+    ]
 {% else %}
 {% for subcase in case["cases"] -%}
 # {{ subcase["description"] }}
-expect {{ subcase["property"] | to_camel }} {{ subcase["input"]["color"] | to_roc }} == Ok {{ subcase["expected"] }}
+expect
+    result = {{ subcase["property"] | to_camel }} {{ subcase["input"]["color"] | to_roc }}
+    result == Ok {{ subcase["expected"] }}
 
 {% endfor %}
 {%- endif -%}

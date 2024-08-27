@@ -19,22 +19,31 @@ import {{ exercise | to_pascal }} exposing [append, concat, filter, length, map,
 
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
-{% if case["property"] == "append" -%}
-expect {{ case["property"] | to_camel }} {{ case["input"]["list1"] | to_roc }} {{ case["input"]["list2"] | to_roc }} == {{ case["expected"] | to_roc }}
-{% elif case["property"] == "concat" -%}
-expect {{ case["property"] | to_camel }} {{ case["input"]["lists"] | to_roc }} == {{ case["expected"] | to_roc }}
-{% elif case["property"] == "filter" -%}
-expect {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} ({{ function_map[case["input"]["function"]] }}) == {{ case["expected"] | to_roc }}
-{% elif case["property"] == "length" -%}
-expect {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} == {{ case["expected"] }}
-{% elif case["property"] == "map" -%}
-expect {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} ({{ function_map[case["input"]["function"]] }}) == {{ case["expected"] }}
-{% elif case["property"] in ("foldl", "foldr") -%}
-expect {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} {{ case["input"]["initial"] }} ({{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %}|> Num.round{% endif %} == {{ case["expected"] | to_roc }}
-{% elif case["property"] == "reverse" -%}
-expect {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} == {{ case["expected"] | to_roc }}
-{% else -%}
-# Try adding this test case yourself!
-{% endif %}
+expect
+{%- if case["property"] == "append" %}
+    result = {{ case["property"] | to_camel }} {{ case["input"]["list1"] | to_roc }} {{ case["input"]["list2"] | to_roc }}
+    result == {{ case["expected"] | to_roc }}
+{%- elif case["property"] == "concat" %}
+    result = {{ case["property"] | to_camel }} {{ case["input"]["lists"] | to_roc }}
+    result == {{ case["expected"] | to_roc }}
+{%- elif case["property"] == "filter" %}
+    result = {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} ({{ function_map[case["input"]["function"]] }})
+    result == {{ case["expected"] | to_roc }}
+{%- elif case["property"] == "length" %}
+    result = {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }}
+    result == {{ case["expected"] }}
+{%- elif case["property"] == "map" %}
+    result = {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} ({{ function_map[case["input"]["function"]] }})
+    result == {{ case["expected"] }}
+{%- elif case["property"] in ("foldl", "foldr") %}
+    result = {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} {{ case["input"]["initial"] }} ({{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %}|> Num.round{% endif %}
+    result == {{ case["expected"] | to_roc }}
+{%- elif case["property"] == "reverse" %}
+    result = {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }}
+    result == {{ case["expected"] | to_roc }}
+{%- else %}
+    Bool.true # This test case is not yet implemented
+{%- endif %}
+
 {% endfor -%}
 {% endfor -%}

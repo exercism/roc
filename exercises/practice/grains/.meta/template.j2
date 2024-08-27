@@ -9,14 +9,18 @@ import {{ exercise | to_pascal }} exposing [grainsOnSquare, totalGrains]
 ## {{ case["description"] }}
 ##
 {% if case["property"] == "total" %}
-expect totalGrains == {{ case["expected"] }}
+expect
+    result = totalGrains
+    result == {{ case["expected"] }}
 {% else %}
 {% for subcase in case["cases"] -%}
 # {{ subcase["description"] }}
-{% if subcase["expected"]["error"] -%}
-expect grainsOnSquare {{ subcase["input"]["square"] | to_roc }} == Err {{ subcase["expected"]["error"] | to_roc }}
-{%- else -%}
-expect grainsOnSquare {{ subcase["input"]["square"] | to_roc }} == Ok {{ subcase["expected"] }}
+expect
+    result = grainsOnSquare {{ subcase["input"]["square"] | to_roc }}
+{%- if subcase["expected"]["error"] %}
+    result == Err {{ subcase["expected"]["error"] | to_roc }}
+{%- else %}
+    result == Ok {{ subcase["expected"] }}
 {%- endif %}
 
 {% endfor %}

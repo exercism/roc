@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/isogram/canonical-data.json
-# File last updated on 2024-08-26
+# File last updated on 2024-08-27
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br",
 }
@@ -13,44 +13,72 @@ main =
 import Isogram exposing [isIsogram]
 
 # empty string
-expect isIsogram "" == Bool.true
+expect
+    result = isIsogram ""
+    result == Bool.true
 
 # isogram with only lower case characters
-expect isIsogram "isogram" == Bool.true
+expect
+    result = isIsogram "isogram"
+    result == Bool.true
 
 # word with one duplicated character
-expect isIsogram "eleven" == Bool.false
+expect
+    result = isIsogram "eleven"
+    result == Bool.false
 
 # word with one duplicated character from the end of the alphabet
-expect isIsogram "zzyzx" == Bool.false
+expect
+    result = isIsogram "zzyzx"
+    result == Bool.false
 
 # longest reported english isogram
-expect isIsogram "subdermatoglyphic" == Bool.true
+expect
+    result = isIsogram "subdermatoglyphic"
+    result == Bool.true
 
 # word with duplicated character in mixed case
-expect isIsogram "Alphabet" == Bool.false
+expect
+    result = isIsogram "Alphabet"
+    result == Bool.false
 
 # word with duplicated character in mixed case, lowercase first
-expect isIsogram "alphAbet" == Bool.false
+expect
+    result = isIsogram "alphAbet"
+    result == Bool.false
 
 # hypothetical isogrammic word with hyphen
-expect isIsogram "thumbscrew-japingly" == Bool.true
+expect
+    result = isIsogram "thumbscrew-japingly"
+    result == Bool.true
 
 # hypothetical word with duplicated character following hyphen
-expect isIsogram "thumbscrew-jappingly" == Bool.false
+expect
+    result = isIsogram "thumbscrew-jappingly"
+    result == Bool.false
 
 # isogram with duplicated hyphen
-expect isIsogram "six-year-old" == Bool.true
+expect
+    result = isIsogram "six-year-old"
+    result == Bool.true
 
 # made-up name that is an isogram
-expect isIsogram "Emily Jung Schwartzkopf" == Bool.true
+expect
+    result = isIsogram "Emily Jung Schwartzkopf"
+    result == Bool.true
 
 # duplicated character in the middle
-expect isIsogram "accentor" == Bool.false
+expect
+    result = isIsogram "accentor"
+    result == Bool.false
 
 # same first and last characters
-expect isIsogram "angola" == Bool.false
+expect
+    result = isIsogram "angola"
+    result == Bool.false
 
 # word with duplicated character and with two hyphens
-expect isIsogram "up-to-date" == Bool.false
+expect
+    result = isIsogram "up-to-date"
+    result == Bool.false
 
