@@ -1,10 +1,11 @@
 module [steps]
 
 steps = \n ->
-    if n == 1 then
-        0
+    if n <= 0 then
+        Err "Only positive integers are allowed"
+    else if n == 1 then
+        Ok 0
     else if Num.isEven n then
-        (steps (n // 2)) + 1
+        Ok ((steps? (n // 2)) + 1)
     else
-        (steps (3 * n + 1)) + 1
-
+        Ok ((steps? (3 * n + 1)) + 1)
