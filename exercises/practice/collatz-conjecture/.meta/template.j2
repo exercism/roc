@@ -6,6 +6,10 @@ import {{ exercise | to_pascal }} exposing [steps]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == {{ case["expected"] }}
+{% if case["expected"]["error"] -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == Err {{ case["expected"]["error"] | to_roc }}
+{%- else -%}
+expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == Ok {{ case["expected"] }}
+{%- endif %}
 
 {% endfor %}
