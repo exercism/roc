@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/reverse-string/canonical-data.json
-# File last updated on 2024-08-25
+# File last updated on 2024-08-27
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br",
     unicode: "https://github.com/roc-lang/unicode/releases/download/0.1.2/vH5iqn04ShmqP-pNemgF773f86COePSqMWHzVGrAKNo.tar.br",
@@ -14,29 +14,47 @@ main =
 import ReverseString exposing [reverse]
 
 # an empty string
-expect reverse "" == ""
+expect
+    result = reverse ""
+    result == ""
 
 # a word
-expect reverse "robot" == "tobor"
+expect
+    result = reverse "robot"
+    result == "tobor"
 
 # a capitalized word
-expect reverse "Ramen" == "nemaR"
+expect
+    result = reverse "Ramen"
+    result == "nemaR"
 
 # a sentence with punctuation
-expect reverse "I'm hungry!" == "!yrgnuh m'I"
+expect
+    result = reverse "I'm hungry!"
+    result == "!yrgnuh m'I"
 
 # a palindrome
-expect reverse "racecar" == "racecar"
+expect
+    result = reverse "racecar"
+    result == "racecar"
 
 # an even-sized word
-expect reverse "drawer" == "reward"
+expect
+    result = reverse "drawer"
+    result == "reward"
 
 # wide characters
-expect reverse "子猫" == "猫子"
+expect
+    result = reverse "子猫"
+    result == "猫子"
 
 # grapheme cluster with pre-combined form
-expect reverse "Würstchenstand" == "dnatsnehctsrüW"
+expect
+    result = reverse "Würstchenstand"
+    result == "dnatsnehctsrüW"
 
 # grapheme clusters
-expect reverse "ผู้เขียนโปรแกรม" == "มรกแรปโนยขีเผู้"
+expect
+    result = reverse "ผู้เขียนโปรแกรม"
+    result == "มรกแรปโนยขีเผู้"
 

@@ -13,23 +13,37 @@ main =
 import ResistorColorDuo exposing [value]
 
 # Brown and black
-expect value ["brown", "black"] == Ok 10
+expect
+    result = value ["brown", "black"]
+    result == Ok 10
 
 # Blue and grey
-expect value ["blue", "grey"] == Ok 68
+expect
+    result = value ["blue", "grey"]
+    result == Ok 68
 
 # Yellow and violet
-expect value ["yellow", "violet"] == Ok 47
+expect
+    result = value ["yellow", "violet"]
+    result == Ok 47
 
 # White and red
-expect value ["white", "red"] == Ok 92
+expect
+    result = value ["white", "red"]
+    result == Ok 92
 
 # Orange and orange
-expect value ["orange", "orange"] == Ok 33
+expect
+    result = value ["orange", "orange"]
+    result == Ok 33
 
 # Ignore additional colors
-expect value ["green", "brown", "orange"] == Ok 51
+expect
+    result = value ["green", "brown", "orange"]
+    result == Ok 51
 
 # Black and brown, one-digit
-expect value ["black", "brown"] == Ok 1
+expect
+    result = value ["black", "brown"]
+    result == Ok 1
 

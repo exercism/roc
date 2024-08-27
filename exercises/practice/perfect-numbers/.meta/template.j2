@@ -11,10 +11,12 @@ import {{ exercise | to_pascal }} exposing [classify]
 
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
-{% if case["expected"]["error"] -%}
-expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == Err {{ case["expected"]["error"] | to_roc }}
-{%- else -%}
-expect {{ case["property"] | to_camel }} {{ case["input"]["number"] }} == Ok {{ case["expected"] | to_pascal }}
+expect
+    result = {{ case["property"] | to_camel }} {{ case["input"]["number"] }}
+{%- if case["expected"]["error"] %}
+    result == Err {{ case["expected"]["error"] | to_roc }}
+{%- else %}
+    result == Ok {{ case["expected"] | to_pascal }}
 {%- endif %}
 
 {% endfor %}

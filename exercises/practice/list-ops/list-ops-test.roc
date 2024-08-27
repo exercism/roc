@@ -17,96 +17,140 @@ import ListOps exposing [append, concat, filter, length, map, foldl, foldr, reve
 ##
 
 # empty lists
-expect append [] [] == []
+expect
+    result = append [] []
+    result == []
 
 # list to empty list
-expect append [] [1, 2, 3, 4] == [1, 2, 3, 4]
+expect
+    result = append [] [1, 2, 3, 4]
+    result == [1, 2, 3, 4]
 
 # empty list to list
-expect append [1, 2, 3, 4] [] == [1, 2, 3, 4]
+expect
+    result = append [1, 2, 3, 4] []
+    result == [1, 2, 3, 4]
 
 # non-empty lists
-expect append [1, 2] [2, 3, 4, 5] == [1, 2, 2, 3, 4, 5]
+expect
+    result = append [1, 2] [2, 3, 4, 5]
+    result == [1, 2, 2, 3, 4, 5]
 
 ##
 ## concatenate a list of lists
 ##
 
 # empty list
-expect concat [] == []
+expect
+    result = concat []
+    result == []
 
 # list of lists
-expect concat [[1, 2], [3], [], [4, 5, 6]] == [1, 2, 3, 4, 5, 6]
+expect
+    result = concat [[1, 2], [3], [], [4, 5, 6]]
+    result == [1, 2, 3, 4, 5, 6]
 
 # list of nested lists
-expect concat [[[1], [2]], [[3]], [[]], [[4, 5, 6]]] == [[1], [2], [3], [], [4, 5, 6]]
+expect
+    result = concat [[[1], [2]], [[3]], [[]], [[4, 5, 6]]]
+    result == [[1], [2], [3], [], [4, 5, 6]]
 
 ##
 ## filter list returning only values that satisfy the filter function
 ##
 
 # empty list
-expect filter [] (Num.isOdd) == []
+expect
+    result = filter [] (Num.isOdd)
+    result == []
 
 # non-empty list
-expect filter [1, 2, 3, 5] (Num.isOdd) == [1, 3, 5]
+expect
+    result = filter [1, 2, 3, 5] (Num.isOdd)
+    result == [1, 3, 5]
 
 ##
 ## returns the length of a list
 ##
 
 # empty list
-expect length [] == 0
+expect
+    result = length []
+    result == 0
 
 # non-empty list
-expect length [1, 2, 3, 4] == 4
+expect
+    result = length [1, 2, 3, 4]
+    result == 4
 
 ##
 ## return a list of elements whose values equal the list value transformed by the mapping function
 ##
 
 # empty list
-expect map [] (\x -> x + 1) == []
+expect
+    result = map [] (\x -> x + 1)
+    result == []
 
 # non-empty list
-expect map [1, 3, 5, 7] (\x -> x + 1) == [2, 4, 6, 8]
+expect
+    result = map [1, 3, 5, 7] (\x -> x + 1)
+    result == [2, 4, 6, 8]
 
 ##
 ## folds (reduces) the given list from the left with a function
 ##
 
 # empty list
-expect foldl [] 2 (\acc, el -> el * acc) == 2
+expect
+    result = foldl [] 2 (\acc, el -> el * acc)
+    result == 2
 
 # direction independent function applied to non-empty list
-expect foldl [1, 2, 3, 4] 5 (\acc, el -> el + acc) == 15
+expect
+    result = foldl [1, 2, 3, 4] 5 (\acc, el -> el + acc)
+    result == 15
 
 # direction dependent function applied to non-empty list
-expect foldl [1, 2, 3, 4] 24 (\acc, el -> el / acc) |> Num.round == 64
+expect
+    result = foldl [1, 2, 3, 4] 24 (\acc, el -> el / acc) |> Num.round
+    result == 64
 
 ##
 ## folds (reduces) the given list from the right with a function
 ##
 
 # empty list
-expect foldr [] 2 (\acc, el -> el * acc) == 2
+expect
+    result = foldr [] 2 (\acc, el -> el * acc)
+    result == 2
 
 # direction independent function applied to non-empty list
-expect foldr [1, 2, 3, 4] 5 (\acc, el -> el + acc) == 15
+expect
+    result = foldr [1, 2, 3, 4] 5 (\acc, el -> el + acc)
+    result == 15
 
 # direction dependent function applied to non-empty list
-expect foldr [1, 2, 3, 4] 24 (\acc, el -> el / acc) |> Num.round == 9
+expect
+    result = foldr [1, 2, 3, 4] 24 (\acc, el -> el / acc) |> Num.round
+    result == 9
 
 ##
 ## reverse the elements of the list
 ##
 
 # empty list
-expect reverse [] == []
+expect
+    result = reverse []
+    result == []
 
 # non-empty list
-expect reverse [1, 3, 5, 7] == [7, 5, 3, 1]
+expect
+    result = reverse [1, 3, 5, 7]
+    result == [7, 5, 3, 1]
 
 # list of lists is not flattened
-expect reverse [[1, 2], [3], [], [4, 5, 6]] == [[4, 5, 6], [], [3], [1, 2]]
+expect
+    result = reverse [[1, 2], [3], [], [4, 5, 6]]
+    result == [[4, 5, 6], [], [3], [1, 2]]
 
