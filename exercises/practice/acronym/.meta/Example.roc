@@ -27,6 +27,6 @@ isLetter = \byte ->
 capitalize : U8 -> U8
 capitalize = \byte ->
     if 'a' <= byte && byte <= 'z' then
-        byte - 32
+        byte - 'a' + 'A'
     else
         byte

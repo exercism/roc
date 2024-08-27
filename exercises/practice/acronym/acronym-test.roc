@@ -56,3 +56,4 @@ expect
 expect
     result = abbreviate "The Road _Not_ Taken"
     result == "TRNT"
+
