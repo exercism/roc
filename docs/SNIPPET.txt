@@ -1,13 +1,13 @@
 app [main] { pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br" }
-
 import pf.Stdout
 
-factorial = \n ->
-    if n == 1 then
-        1
-    else
-        n * factorial (n - 1)
+factorial = \number ->
+    when number is
+        1 -> 1
+        n -> n * factorial (n - 1)
+
+expect factorial 5 == 1 * 2 * 3 * 4 * 5
 
 main =
-    result = factorial 5
-    Stdout.line! "factorial 5 = 1 * 2 * 3 * 4 * 5 = $(Num.toStr result)"
+    result = factorial 20 |> Num.toStr
+    Stdout.line! "factorial 20 = $(result)"
