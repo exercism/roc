@@ -2,26 +2,15 @@ module [valid]
 
 valid : Str -> Bool
 valid = \number ->
-    when check number is
-        Ok x if x -> Bool.true
+    when toDigits number is
+        Ok digits if List.len digits > 1 ->
+            mapEveryOtherBackwards digits \digit ->
+                product = digit * 2
+                if product < 10 then product else product - 9
+            |> List.sum
+            |> Num.isMultipleOf 10
+
         _ -> Bool.false
-
-check : Str -> Result Bool _
-check = \number ->
-    digits = toDigits? number
-    validateLength? digits
-    mapEveryOtherBackwards digits \digit ->
-        product = digit * 2
-        if product < 10 then product else product - 9
-    |> List.sum
-    |> Num.isMultipleOf 10
-    |> Ok
-
-validateLength = \list ->
-    if List.len list < 2 then
-        Err NotEnoughDigits
-    else
-        Ok {}
 
 toDigits : Str -> Result (List U16) _
 toDigits = \number ->
@@ -49,7 +38,7 @@ mapEveryOtherBackwards = \list, func ->
             [x] -> List.append state x
             [] -> state
 
-    help list []
+    help [] list
     |> List.reverse
 
 # single digit strings can not be valid
