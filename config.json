@@ -4,7 +4,7 @@
   "active": false,
   "status": {
     "concept_exercises": false,
-    "test_runner": false,
+    "test_runner": true,
     "representer": false,
     "analyzer": false
   },
@@ -45,65 +45,9 @@
         "difficulty": 1
       },
       {
-        "slug": "bob",
-        "name": "Bob",
-        "uuid": "80a035ed-e6d2-47de-ab12-5711cc39bee5",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "darts",
-        "name": "Darts",
-        "uuid": "482902d5-47ed-430e-86d3-958a7817edf7",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "difference-of-squares",
-        "name": "Difference of Squares",
-        "uuid": "f7d9119b-776c-41d6-9602-21c55be71574",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "collatz-conjecture",
-        "name": "Collatz Conjecture",
-        "uuid": "39d17f08-a506-4d0e-8846-34e7c622160b",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "reverse-string",
-        "name": "Reverse String",
-        "uuid": "7bd2e210-08aa-45e9-8a19-f2213a22ac27",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "armstrong-numbers",
-        "name": "Armstrong Numbers",
-        "uuid": "da8055c2-c2f0-43ad-85f2-dd55f10e84be",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
         "slug": "raindrops",
         "name": "Raindrops",
         "uuid": "0299b320-36e0-4908-a71d-d2677a1f216b",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "gigasecond",
-        "name": "Gigasecond",
-        "uuid": "8ab57d21-e5ec-49bb-b75d-c3f1da8e77ab",
         "practices": [],
         "prerequisites": [],
         "difficulty": 1
@@ -117,38 +61,6 @@
         "difficulty": 1
       },
       {
-        "slug": "triangle",
-        "name": "Triangle",
-        "uuid": "2fd79a25-ef01-497f-91e2-5a7eaf6104d2",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "perfect-numbers",
-        "name": "Perfect Numbers",
-        "uuid": "6bc05800-d03a-401d-be45-8b492297aa41",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "pangram",
-        "name": "Pangram",
-        "uuid": "b760f4aa-bc7d-4e88-b57d-ce424f44f2be",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "isogram",
-        "name": "Isogram",
-        "uuid": "826611f6-0420-48ba-b3f1-3e2a765e932f",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
         "slug": "two-fer",
         "name": "Two-Fer",
         "uuid": "f6cfd56b-078d-4cda-85b3-8542363c3c62",
@@ -157,60 +69,44 @@
         "difficulty": 1
       },
       {
+        "slug": "collatz-conjecture",
+        "name": "Collatz Conjecture",
+        "uuid": "39d17f08-a506-4d0e-8846-34e7c622160b",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
+        "slug": "darts",
+        "name": "Darts",
+        "uuid": "482902d5-47ed-430e-86d3-958a7817edf7",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
+        "slug": "difference-of-squares",
+        "name": "Difference of Squares",
+        "uuid": "f7d9119b-776c-41d6-9602-21c55be71574",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "grains",
         "name": "Grains",
         "uuid": "2b0c82bf-ed64-4e4c-a849-a7872451b43a",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 2
       },
       {
-        "slug": "isbn-verifier",
-        "name": "ISBN Verifier",
-        "uuid": "4c218d70-b895-46a8-b43f-d68906372fb8",
+        "slug": "isogram",
+        "name": "Isogram",
+        "uuid": "826611f6-0420-48ba-b3f1-3e2a765e932f",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "rotational-cipher",
-        "name": "Rotational Cipher",
-        "uuid": "d18a540a-36bf-4637-a810-4fe715cf0ec9",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "etl",
-        "name": "ETL",
-        "uuid": "5a60367a-3007-4d6d-ac48-ef3f3bb30a4c",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "acronym",
-        "name": "Acronym",
-        "uuid": "5bc989a9-f7a8-489d-b9fc-6f65c2425fd7",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "list-ops",
-        "name": "List Ops",
-        "uuid": "e1b4ef33-1788-46b2-b264-70b1d1f3f85e",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
-      },
-      {
-        "slug": "resistor-color-duo",
-        "name": "Resistor Color Duo",
-        "uuid": "04ac004e-4f05-467b-833e-a180a8431700",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 2
       },
       {
         "slug": "rna-transcription",
@@ -218,39 +114,47 @@
         "uuid": "602814f7-dc7b-490e-9242-aad924c81ae4",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 2
       },
       {
-        "slug": "wordy",
-        "name": "Wordy",
-        "uuid": "0aac3eb0-7e88-4d6e-a519-007ef317f6c9",
+        "slug": "resistor-color-duo",
+        "name": "Resistor Color Duo",
+        "uuid": "04ac004e-4f05-467b-833e-a180a8431700",
         "practices": [],
         "prerequisites": [],
         "difficulty": 2
       },
       {
-        "slug": "anagram",
-        "name": "Anagram",
-        "uuid": "40942be8-7c32-4da3-acff-a2365087cd5d",
+        "slug": "triangle",
+        "name": "Triangle",
+        "uuid": "2fd79a25-ef01-497f-91e2-5a7eaf6104d2",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
+        "slug": "armstrong-numbers",
+        "name": "Armstrong Numbers",
+        "uuid": "da8055c2-c2f0-43ad-85f2-dd55f10e84be",
         "practices": [],
         "prerequisites": [],
         "difficulty": 3
       },
       {
-        "slug": "luhn",
-        "name": "Luhn",
-        "uuid": "b26ef54b-d3fb-44fd-83a6-3c8b5055bfeb",
+        "slug": "bob",
+        "name": "Bob",
+        "uuid": "80a035ed-e6d2-47de-ab12-5711cc39bee5",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 2
+        "difficulty": 3
       },
       {
-        "slug": "house",
-        "name": "House",
-        "uuid": "3e832749-3036-432b-a4a4-3aab4e599377",
+        "slug": "etl",
+        "name": "ETL",
+        "uuid": "5a60367a-3007-4d6d-ac48-ef3f3bb30a4c",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 3
       },
       {
         "slug": "hamming",
@@ -258,7 +162,63 @@
         "uuid": "3ea9f608-75a0-49c9-bb62-28a8df533c26",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 3
+      },
+      {
+        "slug": "isbn-verifier",
+        "name": "ISBN Verifier",
+        "uuid": "4c218d70-b895-46a8-b43f-d68906372fb8",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "pangram",
+        "name": "Pangram",
+        "uuid": "b760f4aa-bc7d-4e88-b57d-ce424f44f2be",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "reverse-string",
+        "name": "Reverse String",
+        "uuid": "7bd2e210-08aa-45e9-8a19-f2213a22ac27",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "rotational-cipher",
+        "name": "Rotational Cipher",
+        "uuid": "d18a540a-36bf-4637-a810-4fe715cf0ec9",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "anagram",
+        "name": "Anagram",
+        "uuid": "40942be8-7c32-4da3-acff-a2365087cd5d",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
+        "slug": "house",
+        "name": "House",
+        "uuid": "3e832749-3036-432b-a4a4-3aab4e599377",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
+        "slug": "perfect-numbers",
+        "name": "Perfect Numbers",
+        "uuid": "6bc05800-d03a-401d-be45-8b492297aa41",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
       },
       {
         "slug": "flatten-array",
@@ -266,7 +226,47 @@
         "uuid": "9962e586-f68f-40c8-8547-75cec77c0380",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 5
+      },
+      {
+        "slug": "acronym",
+        "name": "Acronym",
+        "uuid": "5bc989a9-f7a8-489d-b9fc-6f65c2425fd7",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
+        "slug": "gigasecond",
+        "name": "Gigasecond",
+        "uuid": "8ab57d21-e5ec-49bb-b75d-c3f1da8e77ab",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
+        "slug": "list-ops",
+        "name": "List Ops",
+        "uuid": "e1b4ef33-1788-46b2-b264-70b1d1f3f85e",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
+        "slug": "luhn",
+        "name": "Luhn",
+        "uuid": "b26ef54b-d3fb-44fd-83a6-3c8b5055bfeb",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
+        "slug": "wordy",
+        "name": "Wordy",
+        "uuid": "0aac3eb0-7e88-4d6e-a519-007ef317f6c9",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 7
       }
     ]
   },
@@ -293,7 +293,7 @@
     },
     {
       "title": "Interoperable",
-      "content": "Roc is works well with other languages, making it easier to integrate into existing projects.",
+      "content": "Roc works well with other languages, making it easier to integrate into existing projects.",
       "icon": "interop"
     },
     {
