@@ -19,7 +19,7 @@ Each exercise comes with a test suite. You can run the tests using the `roc test
 roc test hello-world-test.roc
 ```
 
-If you've solved the exercise, you should see 0 failed test, for example:
+If you've solved the exercise, you should see 0 failed tests, for example:
 
 ```
 0 failed and 1 passed in 583 ms.
