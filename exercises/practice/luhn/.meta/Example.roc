@@ -2,41 +2,55 @@ module [valid]
 
 valid : Str -> Bool
 valid = \number ->
-    dbg "Input: $(number)"
+    when check number is
+        Ok x if x -> Bool.true
+        _ -> Bool.false
 
-    digits =
-        Str.toUtf8 number
-        |> List.keepIf \byte ->
-            '0' <= byte && byte <= '9'
-        |> List.map \byte ->
-            byte - '0' |> Num.toU16
+check : Str -> Result Bool _
+check = \number ->
+    digits = toDigits? number
+    validateLength? digits
+    mapEveryOtherBackwards digits \digit ->
+        product = digit * 2
+        if product < 10 then product else product - 9
+    |> List.sum
+    |> Num.isMultipleOf 10
+    |> Ok
 
-    if List.len digits < 2 then
-        Bool.false
+validateLength = \list ->
+    if List.len list < 2 then
+        Err NotEnoughDigits
     else
-        sum =
-            mapEveryOther digits \digit ->
-                product = digit * 9
-                if product < 10 then product else product - 9
-            |> List.sum
-        dbg sum
+        Ok {}
 
-        Num.isMultipleOf sum 10
-
-mapEveryOther : List a, (a -> a) -> List a
-mapEveryOther = \list, func ->
-    help = \input, acc ->
+toDigits : Str -> Result (List U16) _
+toDigits = \number ->
+    help = \input, digits ->
         when input is
-            [x, y, .. as rest] ->
-                newAcc =
-                    List.append acc (func x)
-                    |> List.append y
-                help rest newAcc
+            [] -> Ok digits
+            [byte, .. as rest] if byte == ' ' -> help rest digits
+            [byte, .. as rest] if '0' <= byte && byte <= '9' ->
+                # convert to U16 to prevent an overflow when summing up the digits
+                digit = byte - '0' |> Num.toU16
+                help rest (List.append digits digit)
 
-            [x] -> List.append acc (func x)
-            [] -> acc
+            _ -> Err IllegalCharacter
+    help (Str.toUtf8 number) []
+
+mapEveryOtherBackwards : List a, (a -> a) -> List a
+mapEveryOtherBackwards = \list, func ->
+    help = \state, input ->
+        when input is
+            [.. as rest, x, y] ->
+                List.append state y
+                |> List.append (func x)
+                |> help rest
+
+            [x] -> List.append state x
+            [] -> state
 
     help list []
+    |> List.reverse
 
 # single digit strings can not be valid
 expect
