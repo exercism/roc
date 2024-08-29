@@ -453,15 +453,14 @@ def generate_exercise(
             spec[plugins_name] = plugins_module
         logger.debug(f"{slug}: attempting render")
         rendered = template.render(**spec)
-        with NamedTemporaryFile("w", delete=False) as tmp:
+        with NamedTemporaryFile("w", suffix=".roc", delete=False) as tmp:
             logger.debug(f"{slug}: writing render to tmp file {tmp.name}")
             tmpfile = Path(tmp.name)
             tmp.write(rendered)
         try:
             logger.debug(f"{slug}: formatting tmp file {tmpfile}")
             format_file(tmpfile)
-        except FileNotFoundError as e:
-            logger.error(f"{slug}: the black utility must be installed")
+        except subprocess.CalledProcessError as e:
             return False
 
         if check:
