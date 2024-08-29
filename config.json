@@ -13,15 +13,21 @@
   "online_editor": {
     "indent_style": "space",
     "indent_size": 4,
-    "highlightjs_language": "haskell"
+    "highlightjs_language": "elm"
   },
   "test_runner": {
     "average_run_time": 2
   },
   "files": {
-    "solution": ["%{pascal_slug}.roc"],
-    "test": ["%{kebab_slug}-test.roc"],
-    "example": [".meta/Example.roc"]
+    "solution": [
+      "%{pascal_slug}.roc"
+    ],
+    "test": [
+      "%{kebab_slug}-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
   },
   "exercises": {
     "practice": [
