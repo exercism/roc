@@ -14,7 +14,7 @@ import {{ exercise | to_pascal }} exposing [classify]
 expect
     result = {{ case["property"] | to_camel }} {{ case["input"]["number"] }}
 {%- if case["expected"]["error"] %}
-    result == Err {{ case["expected"]["error"] | to_pascal }}
+    result == Err OnlyPositiveIntegersAreAllowed
 {%- else %}
     result == Ok {{ case["expected"] | to_pascal }}
 {%- endif %}
