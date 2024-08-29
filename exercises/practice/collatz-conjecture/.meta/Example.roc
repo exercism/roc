@@ -2,7 +2,7 @@ module [steps]
 
 steps = \n ->
     if n <= 0 then
-        Err "Only positive integers are allowed"
+        Err OnlyPositiveIntegersAreAllowed
     else if n == 1 then
         Ok 0
     else if Num.isEven n then
