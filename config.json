@@ -200,6 +200,14 @@
         "difficulty": 3
       },
       {
+        "slug": "square-root",
+        "name": "Square Root",
+        "uuid": "c2b5fc60-aac2-46fb-b060-8482aa9f60a5",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "anagram",
         "name": "Anagram",
         "uuid": "40942be8-7c32-4da3-acff-a2365087cd5d",
@@ -270,14 +278,6 @@
         "practices": [],
         "prerequisites": [],
         "difficulty": 7
-      },
-      {
-        "slug": "square-root",
-        "name": "Square Root",
-        "uuid": "c2b5fc60-aac2-46fb-b060-8482aa9f60a5",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
       }
     ]
   },
