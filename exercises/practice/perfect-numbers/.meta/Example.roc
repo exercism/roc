@@ -2,7 +2,7 @@ module [classify]
 
 aliquotSum = \number ->
     if number <= 0 then
-        Err ClassificationIsOnlyPossibleForPositiveIntegers
+        Err OnlyPositiveIntegersAreAllowed
     else if number == 1 then
         Ok 0 # edge case
     else

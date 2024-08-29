@@ -86,10 +86,10 @@ expect
 # Zero is rejected (as it is not a positive integer)
 expect
     result = classify 0
-    result == Err ClassificationIsOnlyPossibleForPositiveIntegers
+    result == Err OnlyPositiveIntegersAreAllowed
 
 # Negative integer is rejected (as it is not a positive integer)
 expect
     result = classify -1
-    result == Err ClassificationIsOnlyPossibleForPositiveIntegers
+    result == Err OnlyPositiveIntegersAreAllowed
 
