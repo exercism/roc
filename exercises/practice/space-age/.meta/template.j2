@@ -1,0 +1,17 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    result = {{ case["property"] | to_camel }} {{ case["input"]["planet"] | to_roc }} {{ case["input"]["seconds"] }}
+{%- if case["expected"]["error"] %}
+    result == Err {{ case["expected"]["error"] | to_pascal }}
+{%- else %}
+    result == Ok {{ case["expected"] }}
+{%- endif %}
+
+{% endfor %}
