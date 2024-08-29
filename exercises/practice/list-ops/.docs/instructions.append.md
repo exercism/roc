@@ -1,7 +1,7 @@
 # Wait, It's Impossible!
 Implementing these list operations without using *any* built-in function is
 virtually impossible in Roc, because you need a way to append or prepend
-elements to a list. In other languages you might use operators such as `::`
+elements to a list. In other languages you might use operators such as `:`
 in Haskell or `+=` in Python, but in Roc you have to use the
 [`List` functions](https://www.roc-lang.org/builtins/List).
 
