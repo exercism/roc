@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/space-age/canonical-data.json
-# File last updated on 2024-08-29
+# File last updated on 2024-09-01
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br",
 }
@@ -55,5 +55,5 @@ expect
 # invalid planet causes error
 expect
     result = age "Sun" 680804807
-    result == Err NotAPlanet
+    result == Err (PlanetArgWasNotAPlanet "Sun")
 

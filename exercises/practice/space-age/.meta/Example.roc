@@ -20,4 +20,4 @@ orbitalPeriodInEarthYears = \planet ->
         "Saturn" -> Ok 29.447498
         "Uranus" -> Ok 84.016846
         "Neptune" -> Ok 164.79132
-        _ -> Err NotAPlanet
+        _ -> Err (PlanetArgWasNotAPlanet planet)

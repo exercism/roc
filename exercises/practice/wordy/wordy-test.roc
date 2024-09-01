@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/wordy/canonical-data.json
-# File last updated on 2024-08-27
+# File last updated on 2024-09-01
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br",
 }
@@ -90,40 +90,40 @@ expect
 # unknown operation
 expect
     result = answer "What is 52 cubed?"
-    result == Err UnknownOperation
+    result == Err (QuestionArgHadAnUnknownOperation "What is 52 cubed?")
 
 # Non math question
 expect
     result = answer "Who is the President of the United States?"
-    result == Err UnknownOperation
+    result == Err (QuestionArgHadAnUnknownOperation "Who is the President of the United States?")
 
 # reject problem missing an operand
 expect
     result = answer "What is 1 plus?"
-    result == Err SyntaxError
+    result == Err (QuestionArgHadASyntaxError "What is 1 plus?")
 
 # reject problem with no operands or operators
 expect
     result = answer "What is?"
-    result == Err SyntaxError
+    result == Err (QuestionArgHadASyntaxError "What is?")
 
 # reject two operations in a row
 expect
     result = answer "What is 1 plus plus 2?"
-    result == Err SyntaxError
+    result == Err (QuestionArgHadASyntaxError "What is 1 plus plus 2?")
 
 # reject two numbers in a row
 expect
     result = answer "What is 1 plus 2 1?"
-    result == Err SyntaxError
+    result == Err (QuestionArgHadASyntaxError "What is 1 plus 2 1?")
 
 # reject postfix notation
 expect
     result = answer "What is 1 2 plus?"
-    result == Err SyntaxError
+    result == Err (QuestionArgHadASyntaxError "What is 1 2 plus?")
 
 # reject prefix notation
 expect
     result = answer "What is plus 1 2?"
-    result == Err SyntaxError
+    result == Err (QuestionArgHadASyntaxError "What is plus 1 2?")
 

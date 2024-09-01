@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/hamming/canonical-data.json
-# File last updated on 2024-08-28
+# File last updated on 2024-09-01
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br",
 }
@@ -40,20 +40,20 @@ expect
 # disallow first strand longer
 expect
     result = distance "AATG" "AAA"
-    result == Err StrandsMustBeOfEqualLength
+    result == Err (StrandArgsWereNotOfEqualLength "AATG" "AAA")
 
 # disallow second strand longer
 expect
     result = distance "ATA" "AGTG"
-    result == Err StrandsMustBeOfEqualLength
+    result == Err (StrandArgsWereNotOfEqualLength "ATA" "AGTG")
 
 # disallow empty first strand
 expect
     result = distance "" "G"
-    result == Err StrandsMustBeOfEqualLength
+    result == Err (StrandArgsWereNotOfEqualLength "" "G")
 
 # disallow empty second strand
 expect
     result = distance "G" ""
-    result == Err StrandsMustBeOfEqualLength
+    result == Err (StrandArgsWereNotOfEqualLength "G" "")
 

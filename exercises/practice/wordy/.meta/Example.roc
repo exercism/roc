@@ -1,33 +1,39 @@
 module [answer]
 
-parseInteger = \integerString ->
-    Str.toI64 integerString |> Result.mapErr? \_ -> SyntaxError
-
 evaluateExpression = \accumulator, operations ->
     when operations is
         [] -> Ok accumulator
         ["plus", numberString, .. as rest] ->
-            evaluateExpression (accumulator + (parseInteger? numberString)) rest
+            evaluateExpression (accumulator + (Str.toI64? numberString)) rest
 
         ["minus", numberString, .. as rest] ->
-            evaluateExpression (accumulator - (parseInteger? numberString)) rest
+            evaluateExpression (accumulator - (Str.toI64? numberString)) rest
 
         ["multiplied", "by", numberString, .. as rest] ->
-            evaluateExpression (accumulator * (parseInteger? numberString)) rest
+            evaluateExpression (accumulator * (Str.toI64? numberString)) rest
 
         ["divided", "by", numberString, .. as rest] ->
-            evaluateExpression (accumulator // (parseInteger? numberString)) rest
+            evaluateExpression (accumulator // (Str.toI64? numberString)) rest
 
-        ["cubed"] -> Err UnknownOperation
-        _ -> Err SyntaxError
+        ["cubed"] -> Err (OperationsArgHadAnInvalidOperation operations)
+        _ -> Err (OperationsArgHadASyntaxError operations)
 
 answer = \question ->
     words = question |> Str.replaceEach "?" " ?" |> Str.split " "
     when words is
         ["What", "is", numberString, .. as operations, "?"] ->
-            evaluateExpression (parseInteger? numberString) operations
+            maybeStartNumber = Str.toI64 numberString
+            when maybeStartNumber is
+                Ok startNumber ->
+                    when evaluateExpression startNumber operations is
+                        Err (OperationsArgHadAnInvalidOperation _) -> Err (QuestionArgHadAnUnknownOperation question)
+                        Err (OperationsArgHadASyntaxError _) -> Err (QuestionArgHadASyntaxError question)
+                        Err InvalidNumStr -> Err (QuestionArgHadASyntaxError question)
+                        Ok result -> Ok result
 
-        [_, "is", _, .., "?"] -> Err UnknownOperation
-        [_, "are", .., "?"] -> Err UnknownOperation
-        _ -> Err SyntaxError
+                Err InvalidNumStr -> Err (QuestionArgHadASyntaxError question)
+
+        [_, "is", _, .., "?"] -> Err (QuestionArgHadAnUnknownOperation question)
+        [_, "are", .., "?"] -> Err (QuestionArgHadAnUnknownOperation question)
+        _ -> Err (QuestionArgHadASyntaxError question)
 

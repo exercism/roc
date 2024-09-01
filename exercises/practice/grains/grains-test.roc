@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/grains/canonical-data.json
-# File last updated on 2024-08-29
+# File last updated on 2024-09-01
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br",
 }
@@ -54,17 +54,17 @@ expect
 # square 0 is invalid
 expect
     result = grainsOnSquare 0
-    result == Err SquareMustBeBetween1And64
+    result == Err (SquareArgWasNotBetween1And64 0)
 
 # negative square is invalid
 expect
     result = grainsOnSquare -1
-    result == Err SquareMustBeBetween1And64
+    result == Err (SquareArgWasNotBetween1And64 -1)
 
 # square greater than 64 is invalid
 expect
     result = grainsOnSquare 65
-    result == Err SquareMustBeBetween1And64
+    result == Err (SquareArgWasNotBetween1And64 65)
 
 ##
 ## returns the total number of grains on the board

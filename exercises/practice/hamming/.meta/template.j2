@@ -9,7 +9,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }
 expect
     result = {{ case["property"] | to_camel }} {{ case["input"]["strand1"] | to_roc }} {{ case["input"]["strand2"] | to_roc }}
 {%- if case["expected"]["error"] %}
-    result == Err {{ case["expected"]["error"] | to_pascal }}
+    result == Err (StrandArgsWereNotOfEqualLength {{ case["input"]["strand1"] | to_roc }} {{ case["input"]["strand2"] | to_roc }})
 {%- else %}
     result == Ok {{ case["expected"] }}
 {%- endif %}

@@ -5,7 +5,7 @@ grainsOnSquare = \square ->
         2 |> Num.powInt (square - 1) |> Ok
         # or: 1u64 |> Num.shiftLeftBy (square - 1) |> Ok
     else
-        Err SquareMustBeBetween1And64
+        Err (SquareArgWasNotBetween1And64 square)
 
 totalGrains =
     Num.maxU64
