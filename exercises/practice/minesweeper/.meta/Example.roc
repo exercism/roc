@@ -1,17 +1,16 @@
 module [annotate]
 
-isBomb : List Str, I64, I64 -> Result Bool [OutOfBounds]
+isBomb : List (List U8), I64, I64 -> Result Bool [OutOfBounds]
 isBomb = \rows, nx, ny ->
-    y = Num.toU64Checked? ny
     x = Num.toU64Checked? nx
+    y = Num.toU64Checked? ny
     rows
-    |> List.get? y
-    |> Str.toUtf8
-    |> List.get? x
-    |> Bool.isEq '*'
-    |> Ok
+        |> List.get? y
+        |> List.get? x
+        |> Bool.isEq '*'
+        |> Ok
 
-countNeighbors : List Str, U64, U64 -> Num *
+countNeighbors : List (List U8), U64, U64 -> Num *
 countNeighbors = \rows, x, y ->
     [-1, 0, 1]
     |> List.map \dy ->
@@ -25,12 +24,11 @@ countNeighbors = \rows, x, y ->
 
 annotate : Str -> Str
 annotate = \minefield ->
-    rows = minefield |> Str.split "\n"
+    rows = minefield |> Str.split "\n" |> List.map Str.toUtf8
     annotated =
         rows
         |> List.mapWithIndex \row, y ->
             row
-            |> Str.toUtf8
             |> List.mapWithIndex \cell, x ->
                 if cell == '*' then
                     '*'
