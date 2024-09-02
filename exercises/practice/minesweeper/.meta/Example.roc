@@ -2,11 +2,14 @@ module [annotate]
 
 isBomb : List Str, I64, I64 -> Result Bool [OutOfBounds]
 isBomb = \rows, nx, ny ->
-    if nx < 0 || ny < 0 then
-        Err OutOfBounds
-    else
-        rowChars = rows |> List.get? (Num.toU64 ny) |> Str.toUtf8
-        rowChars |> List.get? (Num.toU64 nx) |> Bool.isEq '*' |> Ok
+    y = Num.toU64Checked? ny
+    x = Num.toU64Checked? nx
+    rows
+    |> List.get? y
+    |> Str.toUtf8
+    |> List.get? x
+    |> Bool.isEq '*'
+    |> Ok
 
 countNeighbors : List Str, U64, U64 -> Num *
 countNeighbors = \rows, x, y ->
