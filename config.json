@@ -304,6 +304,14 @@
         "difficulty": 6
       },
       {
+        "slug": "minesweeper",
+        "name": "Minesweeper",
+        "uuid": "8d5ea690-9d52-4d0a-a59e-aeec1a03cac7",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "wordy",
         "name": "Wordy",
         "uuid": "0aac3eb0-7e88-4d6e-a519-007ef317f6c9",
