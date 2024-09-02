@@ -11,6 +11,7 @@ import unicode.Grapheme
 ## Unicode codepoints (e + ´).
 ## To use the `unicode` package, its URL must be added to the app's header.
 ## Luckily, we've added it for you in reverse-string-test.roc. Take a look!
+reverse : Str -> Str
 reverse = \string ->
     when Grapheme.split string is
         Ok graphemes -> graphemes |> List.reverse |> Str.joinWith ""

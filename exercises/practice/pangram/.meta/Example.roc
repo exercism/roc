@@ -3,6 +3,7 @@ module [isPangram]
 alphabet =
     List.range { start: At 'A', end: At 'Z' } |> Set.fromList
 
+isPangram : Str -> Bool
 isPangram = \sentence ->
     sentence
     |> Str.toUtf8

@@ -11,6 +11,7 @@ charValue = \char, index ->
     else
         Err InvalidIsbnBadChar
 
+isValid : Str -> Bool
 isValid = \isbn ->
     chars =
         isbn

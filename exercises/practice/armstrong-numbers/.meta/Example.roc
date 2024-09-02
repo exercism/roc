@@ -6,6 +6,7 @@ listDigits = \number ->
     else
         (listDigits (number // 10)) |> List.append (number % 10)
 
+isArmstrongNumber : U64 -> Bool
 isArmstrongNumber = \number ->
     digits = listDigits number
     len = List.len digits

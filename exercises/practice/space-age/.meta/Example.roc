@@ -4,6 +4,7 @@ round = \value, { digits ? 2 } ->
     pow = 10.0 |> Num.pow digits
     value * pow |> Num.round |> Num.toFrac |> Num.div pow
 
+age : Str, Dec -> Result Dec [NotAPlanet]
 age = \planet, seconds ->
     periodInEarthYears = orbitalPeriodInEarthYears? planet
     periodInSeconds = periodInEarthYears * 365.25 * 24 * 60 * 60

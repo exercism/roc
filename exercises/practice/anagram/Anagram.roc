@@ -1,5 +1,6 @@
 module [findAnagrams]
 
+findAnagrams : Str, List Str -> List Str
 findAnagrams = \subject, candidates ->
     crash "Please implement the 'findAnagrams' function"
 

@@ -12,7 +12,7 @@ valid = \number ->
 
         _ -> Bool.false
 
-toDigits : Str -> Result (List U16) _
+toDigits : Str -> Result (List U16) [IllegalCharacter]
 toDigits = \number ->
     help = \input, digits ->
         when input is

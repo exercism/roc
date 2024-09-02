@@ -1,5 +1,6 @@
 module [find]
 
+find : List U64, U64 -> Result U64 [ValueNotInArray]
 find = \array, value ->
     binarySearch = \minIndex, maxIndex ->
         middleIndex = (minIndex + maxIndex) // 2

@@ -1,11 +1,12 @@
 module [steps]
 
-steps = \n ->
-    if n <= 0 then
-        Err OnlyPositiveIntegersAreAllowed
-    else if n == 1 then
+steps : U64 -> Result U64 [NumberArgWasZero]
+steps = \number ->
+    if number <= 0 then
+        Err NumberArgWasZero
+    else if number == 1 then
         Ok 0
-    else if Num.isEven n then
-        Ok ((steps? (n // 2)) + 1)
+    else if Num.isEven number then
+        Ok ((steps? (number // 2)) + 1)
     else
-        Ok ((steps? (3 * n + 1)) + 1)
+        Ok ((steps? (3 * number + 1)) + 1)

@@ -1,16 +1,19 @@
 module [squareOfSum, sumOfSquares, differenceOfSquares]
 
-sum = \n ->
-    n * (n + 1) / 2
+sum : U64 -> U64
+sum = \number ->
+    number * (number + 1) // 2
 
-squareOfSum = \n ->
-    s = sum n
+squareOfSum : U64 -> U64
+squareOfSum = \number ->
+    s = sum number
     s * s
 
-sumOfSquares = \n ->
-    s = sum n
-    s * (2 * n + 1) / 3
+sumOfSquares : U64 -> U64
+sumOfSquares = \number ->
+    s = sum number
+    s * (2 * number + 1) // 3
 
-differenceOfSquares = \n ->
-    (squareOfSum n) - (sumOfSquares n)
-
+differenceOfSquares : U64 -> U64
+differenceOfSquares = \number ->
+    (squareOfSum number) - (sumOfSquares number)
