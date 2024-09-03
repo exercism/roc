@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/wordy/canonical-data.json
-# File last updated on 2024-08-27
+# File last updated on 2024-09-03
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
@@ -88,40 +88,40 @@ expect
 # unknown operation
 expect
     result = answer "What is 52 cubed?"
-    result == Err UnknownOperation
+    Result.isErr result
 
 # Non math question
 expect
     result = answer "Who is the President of the United States?"
-    result == Err UnknownOperation
+    Result.isErr result
 
 # reject problem missing an operand
 expect
     result = answer "What is 1 plus?"
-    result == Err SyntaxError
+    Result.isErr result
 
 # reject problem with no operands or operators
 expect
     result = answer "What is?"
-    result == Err SyntaxError
+    Result.isErr result
 
 # reject two operations in a row
 expect
     result = answer "What is 1 plus plus 2?"
-    result == Err SyntaxError
+    Result.isErr result
 
 # reject two numbers in a row
 expect
     result = answer "What is 1 plus 2 1?"
-    result == Err SyntaxError
+    Result.isErr result
 
 # reject postfix notation
 expect
     result = answer "What is 1 2 plus?"
-    result == Err SyntaxError
+    Result.isErr result
 
 # reject prefix notation
 expect
     result = answer "What is plus 1 2?"
-    result == Err SyntaxError
+    Result.isErr result
 

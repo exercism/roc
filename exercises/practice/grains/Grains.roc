@@ -1,6 +1,6 @@
 module [grainsOnSquare, totalGrains]
 
-grainsOnSquare : U8 -> Result U64 [SquareMustBeBetween1And64]
+grainsOnSquare : U8 -> Result U64 _
 grainsOnSquare = \square ->
     crash "Please implement the 'grainsOnSquare' function"
 

@@ -9,7 +9,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }
 expect
     result = {{ case["input"]["array"] | to_roc }} |> {{ case["property"] | to_camel }} {{ case["input"]["value"] }}
 {%- if case["expected"]["error"] %}
-    result == Err {{ case["expected"]["error"] | to_pascal }}
+    Result.isErr result
 {%- else %}
     result == Ok {{ case["expected"] }}
 {%- endif %}
