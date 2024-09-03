@@ -4,11 +4,6 @@
 
 import {{ exercise | to_pascal }} exposing [answer]
 
-{% set error_map = {
-    "unknown operation": "QuestionArgHadAnUnknownOperation",
-    "syntax error": "QuestionArgHadASyntaxError",
-} -%}
-
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
