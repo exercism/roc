@@ -312,6 +312,14 @@
         "difficulty": 6
       },
       {
+        "slug": "pig-latin",
+        "name": "Pig Latin",
+        "uuid": "8beb7c89-bf06-4eb1-b97f-36f2d9750dad",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 7
+      },
+      {
         "slug": "wordy",
         "name": "Wordy",
         "uuid": "0aac3eb0-7e88-4d6e-a519-007ef317f6c9",
