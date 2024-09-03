@@ -1,6 +1,6 @@
 module [distance]
 
-distance : Str, Str -> Result (Num *) [StrandsMustBeOfEqualLength]
+distance : Str, Str -> Result (Num *) [StrandArgsWereNotOfEqualLength Str Str]
 distance = \strand1, strand2 ->
     nucleotides1 = strand1 |> Str.toUtf8
     nucleotides2 = strand2 |> Str.toUtf8
@@ -10,4 +10,4 @@ distance = \strand1, strand2 ->
         |> List.sum
         |> Ok
     else
-        Err StrandsMustBeOfEqualLength
+        Err (StrandArgsWereNotOfEqualLength strand1 strand2)
