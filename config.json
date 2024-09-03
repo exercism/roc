@@ -19,9 +19,15 @@
     "average_run_time": 2
   },
   "files": {
-    "solution": ["%{pascal_slug}.roc"],
-    "test": ["%{kebab_slug}-test.roc"],
-    "example": [".meta/Example.roc"]
+    "solution": [
+      "%{pascal_slug}.roc"
+    ],
+    "test": [
+      "%{kebab_slug}-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
   },
   "exercises": {
     "practice": [
@@ -258,6 +264,14 @@
         "difficulty": 4
       },
       {
+        "slug": "all-your-base",
+        "name": "All Your Base",
+        "uuid": "bb51a364-e9de-4e98-bbd9-a8cdd0bc76b3",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "flatten-array",
         "name": "Flatten Array",
         "uuid": "9962e586-f68f-40c8-8547-75cec77c0380",
@@ -312,14 +326,6 @@
         "practices": [],
         "prerequisites": [],
         "difficulty": 7
-      },
-      {
-        "slug": "all-your-base",
-        "name": "All Your Base",
-        "uuid": "bb51a364-e9de-4e98-bbd9-a8cdd0bc76b3",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 5
       }
     ]
   },
