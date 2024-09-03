@@ -1,6 +1,6 @@
 module [grainsOnSquare, totalGrains]
 
-grainsOnSquare : U8 -> Result U64 [SquareMustBeBetween1And64]
+grainsOnSquare : U8 -> Result U64 [SquareArgWasNotBetween1And64 U8]
 grainsOnSquare = \square ->
     if square > 0 && square <= 64 then
         2u64 |> Num.powInt (Num.toU64 square - 1) |> Ok
