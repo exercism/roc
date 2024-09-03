@@ -1,11 +1,9 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/binary-search/canonical-data.json
-# File last updated on 2024-09-01
+# File last updated on 2024-09-03
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
-
-import pf.Task exposing [Task]
 
 main =
     Task.ok {}
@@ -45,25 +43,25 @@ expect
 # identifies that a value is not included in the array
 expect
     result = [1, 3, 4, 6, 8, 9, 11] |> find 7
-    result == Err (ValueWasNotFound [1, 3, 4, 6, 8, 9, 11] 7)
+    Result.isErr result
 
 # a value smaller than the array's smallest value is not found
 expect
     result = [1, 3, 4, 6, 8, 9, 11] |> find 0
-    result == Err (ValueWasNotFound [1, 3, 4, 6, 8, 9, 11] 0)
+    Result.isErr result
 
 # a value larger than the array's largest value is not found
 expect
     result = [1, 3, 4, 6, 8, 9, 11] |> find 13
-    result == Err (ValueWasNotFound [1, 3, 4, 6, 8, 9, 11] 13)
+    Result.isErr result
 
 # nothing is found in an empty array
 expect
     result = [] |> find 1
-    result == Err (ValueWasNotFound [] 1)
+    Result.isErr result
 
 # nothing is found when the left and right bounds cross
 expect
     result = [1, 2] |> find 0
-    result == Err (ValueWasNotFound [1, 2] 0)
+    Result.isErr result
 

@@ -1,8 +1,9 @@
 module [classify]
 
+aliquotSum : U64 -> Result U64 [NumberArgIsZero]
 aliquotSum = \number ->
-    if number <= 0 then
-        Err (NumberArgWasNotPositive number)
+    if number == 0 then
+        Err NumberArgIsZero
     else if number == 1 then
         Ok 0 # edge case
     else
@@ -14,6 +15,7 @@ aliquotSum = \number ->
                 |> List.sum
             )
 
+classify : U64 -> Result [Abundant, Deficient, Perfect] [NumberArgIsZero]
 classify = \number ->
     sum = aliquotSum? number
     if sum == number then

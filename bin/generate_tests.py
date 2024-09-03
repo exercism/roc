@@ -132,15 +132,35 @@ for i in range(0x20):
 del i
 
 
+def escape_roc_string_content(string: str):
+    """
+    Return a Roc representation of a Python string without the surrounding quotes
+    """
+    return ESCAPE_ROC_STRING.sub(lambda match: ESCAPE_MAP[match.group(0)], string)
+
+
 def to_roc_string(string: str) -> str:
     """
     Return a Roc representation of a Python string
     """
-    return (
-        '"'
-        + ESCAPE_ROC_STRING.sub(lambda match: ESCAPE_MAP[match.group(0)], string)
-        + '"'
-    ).replace("$(", "\\$(")
+    return ('"' + escape_roc_string_content(string) + '"').replace("$(", "\\$(")
+
+
+def to_roc_multiline_string(lines: Union[str, List[str]]) -> str:
+    """
+    Return a multiline Roc representation of a Python multiline string or list
+    of lines
+    """
+    if isinstance(lines, str):
+        lines = lines.split("\n")
+    if len(lines) == 0:
+        return '""'
+    elif len(lines) == 1:
+        return to_roc_string(lines[0])
+    else:
+        return "\n".join(
+            ["", '"""'] + [escape_roc_string_content(line) for line in lines] + ['"""']
+        ).replace("$(", "\\$(")
 
 
 def to_roc_tuple(values: Any):
@@ -520,6 +540,7 @@ def generate(
     env.filters["to_camel"] = to_camel
     env.filters["to_roc"] = to_roc
     env.filters["to_roc_string"] = to_roc_string
+    env.filters["to_roc_multiline_string"] = to_roc_multiline_string
     env.filters["to_roc_float"] = to_roc_float
     env.filters["to_roc_bool"] = to_roc_bool
     env.filters["to_roc_list"] = to_roc_list

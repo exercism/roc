@@ -8,6 +8,7 @@ shiftChar = \c, shiftKey ->
     else
         c
 
+rotate : Str, U8 -> Str
 rotate = \text, shiftKey ->
     text
     |> Str.toUtf8

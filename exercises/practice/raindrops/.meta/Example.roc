@@ -1,5 +1,6 @@
 module [convert]
 
+convert : U64 -> Str
 convert = \number ->
     pling = if number % 3 == 0 then "Pling" else ""
     plang = if number % 5 == 0 then "Plang" else ""

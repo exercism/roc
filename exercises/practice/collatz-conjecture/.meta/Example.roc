@@ -1,8 +1,9 @@
 module [steps]
 
+steps : U64 -> Result U64 [NumberArgWasZero]
 steps = \number ->
     if number <= 0 then
-        Err (NumberArgWasNotPositive number)
+        Err NumberArgWasZero
     else if number == 1 then
         Ok 0
     else if Num.isEven number then

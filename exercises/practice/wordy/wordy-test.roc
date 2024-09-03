@@ -1,11 +1,9 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/wordy/canonical-data.json
-# File last updated on 2024-09-01
+# File last updated on 2024-09-03
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
-
-import pf.Task exposing [Task]
 
 main =
     Task.ok {}
@@ -90,40 +88,40 @@ expect
 # unknown operation
 expect
     result = answer "What is 52 cubed?"
-    result == Err (QuestionArgHadAnUnknownOperation "What is 52 cubed?")
+    Result.isErr result
 
 # Non math question
 expect
     result = answer "Who is the President of the United States?"
-    result == Err (QuestionArgHadAnUnknownOperation "Who is the President of the United States?")
+    Result.isErr result
 
 # reject problem missing an operand
 expect
     result = answer "What is 1 plus?"
-    result == Err (QuestionArgHadASyntaxError "What is 1 plus?")
+    Result.isErr result
 
 # reject problem with no operands or operators
 expect
     result = answer "What is?"
-    result == Err (QuestionArgHadASyntaxError "What is?")
+    Result.isErr result
 
 # reject two operations in a row
 expect
     result = answer "What is 1 plus plus 2?"
-    result == Err (QuestionArgHadASyntaxError "What is 1 plus plus 2?")
+    Result.isErr result
 
 # reject two numbers in a row
 expect
     result = answer "What is 1 plus 2 1?"
-    result == Err (QuestionArgHadASyntaxError "What is 1 plus 2 1?")
+    Result.isErr result
 
 # reject postfix notation
 expect
     result = answer "What is 1 2 plus?"
-    result == Err (QuestionArgHadASyntaxError "What is 1 2 plus?")
+    Result.isErr result
 
 # reject prefix notation
 expect
     result = answer "What is plus 1 2?"
-    result == Err (QuestionArgHadASyntaxError "What is plus 1 2?")
+    Result.isErr result
 

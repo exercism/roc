@@ -14,7 +14,7 @@ import {{ exercise | to_pascal }} exposing [answer]
 expect
     result = {{ case["property"] | to_camel }} {{ case["input"]["question"] | to_roc }}
 {%- if case["expected"]["error"] %}
-    result == Err ({{ error_map[case["expected"]["error"]] }} {{ case["input"]["question"] | to_roc }})
+    Result.isErr result
 {%- else %}
     result == Ok {{ case["expected"] }}
 {%- endif %}

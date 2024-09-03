@@ -23,6 +23,7 @@ verse = \index ->
         |> Str.joinWith " the "
     "This is the $(blablabla)"
 
+recite : U64, U64 -> Str
 recite = \startVerse, endVerse ->
     List.range { start: At startVerse, end: At endVerse }
     |> List.map verse

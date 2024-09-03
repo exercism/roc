@@ -39,6 +39,7 @@ isAnagramOf = \word1, word2 ->
     sorted2 = word2 |> toUpper |> sortedGraphemes?
     Ok (sorted1 == sorted2)
 
+findAnagrams : Str, List Str -> List Str
 findAnagrams = \subject, candidates ->
     candidates
     |> List.dropIf \word -> toUpper word == toUpper subject

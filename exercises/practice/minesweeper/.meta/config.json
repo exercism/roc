@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "Minesweeper.roc"
+    ],
+    "test": [
+      "minesweeper-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Add the numbers to a minesweeper board."
+}

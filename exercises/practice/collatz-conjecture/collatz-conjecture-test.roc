@@ -1,11 +1,9 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/collatz-conjecture/canonical-data.json
-# File last updated on 2024-09-01
+# File last updated on 2024-09-03
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.14.0/dC5ceT962N_4jmoyoffVdphJ_4GlW3YMhAPyGPr-nU0.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
-
-import pf.Task exposing [Task]
 
 main =
     Task.ok {}
@@ -35,10 +33,4 @@ expect
 # zero is an error
 expect
     result = steps 0
-    result == Err (NumberArgWasNotPositive 0)
-
-# negative value is an error
-expect
-    result = steps -15
-    result == Err (NumberArgWasNotPositive -15)
-
+    Result.isErr result

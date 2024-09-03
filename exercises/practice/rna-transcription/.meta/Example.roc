@@ -8,6 +8,7 @@ complement = \nucleotide ->
         'A' -> 'U'
         c -> c # invalid nucleotides are ignored
 
+toRna : Str -> Str
 toRna = \dna ->
     maybeRna =
         dna

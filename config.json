@@ -128,12 +128,28 @@
         "difficulty": 2
       },
       {
+        "slug": "secret-handshake",
+        "name": "Secret Handshake",
+        "uuid": "7d682b2c-f60f-4b31-b168-51d7ff6841ff",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "space-age",
         "name": "Space Age",
         "uuid": "7f031524-9eb8-4c7d-af64-105708b40e9c",
         "practices": [],
         "prerequisites": [],
         "difficulty": 2
+      },
+      {
+        "slug": "sum-of-multiples",
+        "name": "Sum of Multiples",
+        "uuid": "a4d3e64a-6bd4-43b8-a754-638d9c2ca763",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
       },
       {
         "slug": "triangle",
@@ -283,6 +299,14 @@
         "slug": "luhn",
         "name": "Luhn",
         "uuid": "b26ef54b-d3fb-44fd-83a6-3c8b5055bfeb",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
+        "slug": "minesweeper",
+        "name": "Minesweeper",
+        "uuid": "8d5ea690-9d52-4d0a-a59e-aeec1a03cac7",
         "practices": [],
         "prerequisites": [],
         "difficulty": 6

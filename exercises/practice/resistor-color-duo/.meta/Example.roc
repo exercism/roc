@@ -5,6 +5,7 @@ allColors = ["black", "brown", "red", "orange", "yellow", "green", "blue", "viol
 colorCode = \color ->
     allColors |> List.findFirstIndex \elem -> elem == color
 
+value : List Str -> Result U64 [NotFound, OutOfBounds]
 value = \colors ->
     first = colors |> List.get? 0 |> colorCode?
     second = colors |> List.get? 1 |> colorCode?

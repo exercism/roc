@@ -18,7 +18,7 @@ expect
 expect
     result = grainsOnSquare {{ subcase["input"]["square"] }}
 {%- if subcase["expected"]["error"] %}
-    result == Err (SquareArgWasNotBetween1And64 {{ subcase["input"]["square"] }})
+    Result.isErr result
 {%- else %}
     result == Ok {{ subcase["expected"] }}
 {%- endif %}

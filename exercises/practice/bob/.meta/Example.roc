@@ -11,6 +11,7 @@ isYelling = \heyBob ->
     chars = Str.toUtf8 heyBob
     (chars |> List.any isUpper) && !(chars |> List.any isLower)
 
+response : Str -> Str
 response = \heyBob ->
     trimmed = Str.trim heyBob
     if trimmed == "" then

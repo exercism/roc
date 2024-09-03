@@ -1,5 +1,6 @@
 module [squareRoot, squareRootTheSimpleWay]
 
+squareRoot : U64 -> U64
 squareRoot = \radicand ->
     binarySearch = \min, max ->
         val = (min + max) // 2

@@ -18,6 +18,7 @@ evaluateExpression = \accumulator, operations ->
         ["cubed"] -> Err (OperationsArgHadAnInvalidOperation operations)
         _ -> Err (OperationsArgHadASyntaxError operations)
 
+answer : Str -> Result I64 [UnknownOperation, SyntaxError]
 answer = \question ->
     words = question |> Str.replaceEach "?" " ?" |> Str.split " "
     when words is
