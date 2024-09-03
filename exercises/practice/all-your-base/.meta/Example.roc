@@ -1,18 +1,21 @@
 module [rebase]
 
-Input : { inputBase : U64, outputBase : U64, digits : List U64 }
+rebase : { inputBase : U64, outputBase : U64, digits : List U64 } -> Result (List U64) _
+rebase = \{ inputBase, outputBase, digits } ->
+    if inputBase <= 1 then
+        Err InputBaseMustBeGreaterThanOne
+    else if outputBase <= 1 then
+        Err OutputBaseMustBeGreaterThanOne
+    else if List.any digits \digit -> digit >= inputBase then
+        Err DigitsMustBeLessThanInputBase
+    else
+        numberInBase10 =
+            List.reverse digits
+            |> List.mapWithIndex \digit, index ->
+                digit * (Num.powInt inputBase index)
+            |> List.sum
 
-rebase : Input -> Result (List U64) _
-rebase = \input ->
-    validateInput? input
-
-    numberInBase10 =
-        List.reverse input.digits
-        |> List.mapWithIndex \digit, index ->
-            digit * (Num.powInt input.inputBase index)
-        |> List.sum
-
-    toDigits numberInBase10 input.outputBase |> Ok
+        toDigits numberInBase10 outputBase |> Ok
 
 toDigits : U64, U64 -> List U64
 toDigits = \number, base ->
@@ -37,14 +40,3 @@ intLog = \number, base ->
         else
             help (remaining // base) (exponent + 1)
     help number 0
-
-validateInput : Input -> Result {} _
-validateInput = \{ inputBase, outputBase, digits } ->
-    if inputBase <= 1 then
-        Err InputBaseMustBeGreaterThanOne
-    else if outputBase <= 1 then
-        Err OutputBaseMustBeGreaterThanOne
-    else if List.any digits \digit -> digit >= inputBase then
-        Err DigitsMustBeLessThanInputBase
-    else
-        Ok {}
