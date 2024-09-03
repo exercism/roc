@@ -1,6 +1,8 @@
 module [flatten]
 
-flatten : [NestedArray (List NestedValue), Null, Value I64] as NestedValue -> List I64
+NestedValue : [Value I64, Null, NestedArray (List NestedValue)]
+
+flatten : NestedValue -> List I64
 flatten = \array ->
     when array is
         NestedArray list -> list |> List.joinMap flatten
