@@ -5,12 +5,14 @@ Input : { inputBase : U64, outputBase : U64, digits : List U64 }
 rebase : Input -> Result (List U64) _
 rebase = \input ->
     validateInput? input
-    List.reverse input.digits
-    |> List.mapWithIndex \digit, index ->
-        digit * (Num.powInt input.inputBase index)
-    |> List.sum
-    |> toDigits input.outputBase
-    |> Ok
+
+    numberInBase10 =
+        List.reverse input.digits
+        |> List.mapWithIndex \digit, index ->
+            digit * (Num.powInt input.inputBase index)
+        |> List.sum
+
+    toDigits numberInBase10 input.outputBase |> Ok
 
 toDigits : U64, U64 -> List U64
 toDigits = \number, base ->
