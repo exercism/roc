@@ -3,6 +3,7 @@ module [score]
 distanceSquared = \x, y ->
     x * x + y * y
 
+score : F64, F64 -> U64
 score = \x, y ->
     d2 = distanceSquared x y
     if d2 > 100 then

@@ -1,8 +1,10 @@
 module [colorCode, colorCodeFromDict, colors]
 
+colors : List Str
 colors =
     ["black", "brown", "red", "orange", "yellow", "green", "blue", "violet", "grey", "white"]
 
+colorCode : Str -> Result U64 [NotFound]
 colorCode = \color ->
     colors |> List.findFirstIndex \elem -> elem == color
 

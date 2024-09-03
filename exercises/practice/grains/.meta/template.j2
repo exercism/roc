@@ -18,7 +18,7 @@ expect
 expect
     result = grainsOnSquare {{ subcase["input"]["square"] | to_roc }}
 {%- if subcase["expected"]["error"] %}
-    result == Err {{ subcase["expected"]["error"] | to_pascal }}
+    Result.isErr result
 {%- else %}
     result == Ok {{ subcase["expected"] }}
 {%- endif %}

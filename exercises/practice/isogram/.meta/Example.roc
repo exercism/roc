@@ -1,5 +1,6 @@
 module [isIsogram]
 
+isIsogram : Str -> Bool
 isIsogram = \phrase ->
     chars =
         phrase

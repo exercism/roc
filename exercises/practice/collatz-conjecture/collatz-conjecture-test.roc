@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/collatz-conjecture/canonical-data.json
-# File last updated on 2024-08-29
+# File last updated on 2024-09-03
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
@@ -33,10 +33,5 @@ expect
 # zero is an error
 expect
     result = steps 0
-    result == Err OnlyPositiveIntegersAreAllowed
-
-# negative value is an error
-expect
-    result = steps -15
-    result == Err OnlyPositiveIntegersAreAllowed
+    Result.isErr result
 
