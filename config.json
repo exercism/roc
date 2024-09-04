@@ -272,6 +272,14 @@
         "difficulty": 4
       },
       {
+        "slug": "prime-factors",
+        "name": "Prime Factors",
+        "uuid": "788260ad-5bc5-442b-8089-72513ac13ff5",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "all-your-base",
         "name": "All Your Base",
         "uuid": "bb51a364-e9de-4e98-bbd9-a8cdd0bc76b3",
