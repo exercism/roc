@@ -264,6 +264,14 @@
         "difficulty": 4
       },
       {
+        "slug": "all-your-base",
+        "name": "All Your Base",
+        "uuid": "bb51a364-e9de-4e98-bbd9-a8cdd0bc76b3",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "flatten-array",
         "name": "Flatten Array",
         "uuid": "9962e586-f68f-40c8-8547-75cec77c0380",
