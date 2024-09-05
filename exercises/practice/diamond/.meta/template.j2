@@ -1,0 +1,14 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ exercise | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    result = {{ exercise | to_camel }} '{{ case["input"]["letter"] }}'
+    expected = {{ case["expected"] | to_roc_multiline_string | replace(" ", "·") | indent(8) }}  |> Str.replaceEach "·" " "
+    result == expected
+
+{% endfor %}
