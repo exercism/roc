@@ -2,17 +2,15 @@ module [primeFactors]
 
 primeFactors : U64 -> List U64
 primeFactors = \value ->
-    findPrimeFactors = \n, p ->
+    findPrimeFactors = \factors, n, p ->
         if n < 2 then
-            []
-        else if n % p == 0 then
-            findPrimeFactors (n // p) p |> List.prepend p
+            factors
+        else if n |> Num.isMultipleOf p then
+            findPrimeFactors (List.append factors p) (n // p) p
         else if p * p < n then
             nextP = if p == 2 then 3 else p + 2
-            findPrimeFactors n nextP
+            findPrimeFactors factors n nextP
         else
-            [n]
+            List.append factors n
 
-    when findPrimeFactors value 2 is
-        [] -> if value < 2 then [] else [value]
-        result -> result
+    findPrimeFactors [] value 2
