@@ -1,30 +1,24 @@
 module [diamond]
 
-makeRow : U8, U8 -> Str
-makeRow = \rowIndex, numRows ->
-    middleRowIndex = numRows // 2
-    letterIndex =
-        if rowIndex > middleRowIndex then
-            numRows - rowIndex - 1
-        else
-            rowIndex
-    center =
-        if letterIndex == 0 then
-            ['A']
-        else
-            letter = letterIndex + 'A'
-            innerSpaces = List.repeat ' ' (2 * letterIndex - 1 |> Num.toU64)
-            [letter] |> List.concat innerSpaces |> List.append letter
+getChar : I8, I8, I8 -> U8
+getChar = \rowIndex, colIndex, letterIndex ->
+    if Num.abs rowIndex + Num.abs colIndex == letterIndex then
+        letterIndex - Num.abs rowIndex |> Num.toU8 |> Num.add 'A'
+    else
+        ' '
 
-    outerSpaces = List.repeat ' ' (middleRowIndex - letterIndex |> Num.toU64)
-    rowChars = outerSpaces |> List.concat center |> List.concat outerSpaces
-    when rowChars |> Str.fromUtf8 is
+unwrapFromUtf8 : List U8 -> Str
+unwrapFromUtf8 = \chars ->
+    when chars |> Str.fromUtf8 is
         Ok result -> result
-        Err _ -> crash "Unreachable: Str.fromUtf8 should never fail here"
+        Err _ -> crash "Str.fromUtf8 should never fail here"
 
 diamond : U8 -> Str
 diamond = \letter ->
-    numRows = 2 * (letter - 'A') + 1
-    List.range { start: At 0, end: Before numRows }
-    |> List.map \rowIndex -> makeRow rowIndex numRows
+    letterIndex = letter - 'A' |> Num.toI8
+    List.range { start: At -letterIndex, end: At letterIndex }
+    |> List.map \rowIndex ->
+        List.range { start: At -letterIndex, end: At letterIndex }
+        |> List.map \colIndex -> getChar rowIndex colIndex letterIndex
+        |> unwrapFromUtf8
     |> Str.joinWith "\n"
