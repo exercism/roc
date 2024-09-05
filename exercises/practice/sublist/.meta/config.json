@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "Sublist.roc"
+    ],
+    "test": [
+      "sublist-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Write a function to determine if a list is a sublist of another list."
+}
