@@ -144,6 +144,14 @@
         "difficulty": 2
       },
       {
+        "slug": "sublist",
+        "name": "Sublist",
+        "uuid": "2b64b4ad-fdd6-47d0-b4b5-fb4b299816a6",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "sum-of-multiples",
         "name": "Sum of Multiples",
         "uuid": "a4d3e64a-6bd4-43b8-a754-638d9c2ca763",
