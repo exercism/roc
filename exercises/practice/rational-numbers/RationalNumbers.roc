@@ -28,6 +28,7 @@ expReal : Frac a, [Rational (Int b) (Int b)] -> Frac a
 expReal = \x, r ->
     crash "Please implement the 'expReal' function"
 
+## Reduce a rational number to its lowest terms, e.g., 6 / 8 --> 3 / 4
 reduce : [Rational (Int b) (Int b)] -> [Rational (Int b) (Int b)]
 reduce = \r ->
     crash "Please implement the 'reduce' function"
