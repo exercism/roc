@@ -1,7 +1,7 @@
 module [evaluate]
 
 # Types
-Defs : Dict Str (List Op)
+Defs : Dict Str (List Str)
 Stack : List I16
 Op : [
     Dup,
@@ -13,7 +13,6 @@ Op : [
     Multiply,
     Divide,
     Number I16,
-    Def Str,
 ]
 
 # Evaluation
@@ -36,7 +35,7 @@ interpret = \program ->
             [op, .. as rest] ->
                 when step stack op is
                     Ok newStack -> help rest newStack
-                    Err error -> EvaluationError {error, stack, op, ops} |> Err
+                    Err error -> EvaluationError { error, stack, op, ops } |> Err
     help program []
 
 step : Stack, Op -> Result Stack _
@@ -104,8 +103,6 @@ step = \stack, op ->
 
                 _ -> Err (Arity 2)
 
-        Def _ -> crash "This case is impossible"
-
 # Parsing
 parse : Str -> Result (List Op) _
 parse = \str ->
@@ -113,60 +110,57 @@ parse = \str ->
         [.. as defLines, opLine] ->
             defs = parseDefs? defLines
 
-            parseProgram? opLine defs |> Ok
+            Str.split opLine " "
+            |> replaceDefs defs
+            |> List.mapTry toOp
 
         [] -> Ok [] # We'll let the empty program return the empty list
-
-parseProgram : Str, Defs -> Result (List Op) _
-parseProgram = \line, defs ->
-    Str.split line " "
-    |> List.walkTry [] \ops, token ->
-        when toOp token defs is
-            Def key ->
-                when Dict.get defs key is
-                    Ok body -> List.concat ops body |> Ok
-                    _ -> Err (UnknownDef key)
-
-            op -> List.append ops op |> Ok
 
 parseDefs : List Str -> Result Defs _
 parseDefs = \lines ->
     List.walkTry lines (Dict.empty {}) \defs, line ->
         when Str.split line " " is
             [":", name, .. as tokens, ";"] ->
-                ops = parseDefLine? tokens defs
+                ops = parseDef? tokens defs
                 Dict.insert defs name ops |> Ok
 
             _ -> Err (UnableToParseDef line)
 
-parseDefLine : List Str, Defs -> Result (List Op) _
-parseDefLine = \tokens, defs ->
+parseDef : List Str, Defs -> Result (List Str) _
+parseDef = \tokens, defs ->
     List.walkTry tokens [] \ops, token ->
-        when toOp token defs is
-            Def key ->
-                when Dict.get defs key is
-                    Ok items -> List.concat ops items |> Ok
-                    Err _ -> Err (UnknownDef key)
+        when Dict.get defs token is
+            Ok body -> List.concat ops body |> Ok
+            _ if isBuiltin token -> List.append ops token |> Ok
+            _ -> Err (UnknownDef token)
 
-            node -> List.append ops node |> Ok
+isBuiltin : Str -> Bool
+isBuiltin = \token ->
+    builtins = ["dup", "drop", "swap", "over", "+", "-", "*", "/"]
+    (builtins |> List.contains token) || (Result.isOk (Str.toI16 token))
 
+replaceDefs : List Str, Defs -> List Str
+replaceDefs = \tokens, defs ->
+    List.joinMap tokens \token ->
+        when Dict.get defs token is
+            Ok body -> body
+            _ -> [token]
 
-toOp : Str, Defs -> Op
-toOp = \str, defs ->
+toOp : Str -> Result Op _
+toOp = \str ->
     when str is
-        _ if Dict.contains defs str -> Def str
-        "dup" -> Dup
-        "drop" -> Drop
-        "swap" -> Swap
-        "over" -> Over
-        "+" -> Add
-        "-" -> Subtract
-        "*" -> Multiply
-        "/" -> Divide
+        "dup" -> Ok Dup
+        "drop" -> Ok Drop
+        "swap" -> Ok Swap
+        "over" -> Ok Over
+        "+" -> Ok Add
+        "-" -> Ok Subtract
+        "*" -> Ok Multiply
+        "/" -> Ok Divide
         _ ->
             when Str.toI16 str is
-                Ok num -> Number num
-                Err _ -> Def str
+                Ok num -> Ok (Number num)
+                Err _ -> Err (UnknownDef str)
 # Display
 handleError : _ -> Str
 handleError = \err ->
@@ -178,18 +172,21 @@ handleError = \err ->
             This is supposed to be a definition, but I'm not sure how to parse it:
             $(line)
             """
-        EvaluationError {error, stack, op, ops} ->
+
+        EvaluationError { error, stack, op, ops } ->
             when error is
                 Arity 1 ->
                     """
                     Oops! '$(opToStr op)' expected 1 argument, but the stack was empty.
                     $(showExecution stack ops)
                     """
+
                 Arity n ->
                     """
                     Oops! '$(opToStr op)' expected $(Num.toStr n) arguments, but there weren't enough on the stack.
                     $(showExecution stack ops)
                     """
+
                 DivByZero ->
                     """
                     Sorry, division by zero is not allowed.
@@ -198,9 +195,11 @@ handleError = \err ->
 
 showExecution : Stack, List Op -> Str
 showExecution = \stack, ops ->
-    stackStr = List.map stack Num.toStr
+    stackStr =
+        List.map stack Num.toStr
         |> Str.joinWith " "
-    opsStr = List.map ops opToStr
+    opsStr =
+        List.map ops opToStr
         |> Str.joinWith " "
     "$(stackStr) | $(opsStr)"
 
@@ -216,7 +215,6 @@ opToStr = \op ->
         Multiply -> "*"
         Divide -> "/"
         Number num -> Num.toStr num
-        Def key -> key
 
 toLower : Str -> Result Str _
 toLower = \str ->
