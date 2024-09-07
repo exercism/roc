@@ -5,9 +5,10 @@ evaluate = \program ->
     lowerCase = toLower? program
     { nodes, defs } = parse? lowerCase
 
-    interpret nodes
+    simpleOps = flatten? nodes defs
+    interpret simpleOps
 
-parse : Str -> Result { nodes : List Node, defs : List U8 } _
+parse : Str -> Result { nodes : List Node, defs : Dict Str (List Node) } _
 parse = \str ->
     when Str.split str "\n" is
         [.. as defLines, instructions] ->
@@ -15,12 +16,51 @@ parse = \str ->
                 Str.split instructions " "
                 |> List.map toNode
 
-            Ok { nodes, defs: [] }
+            defs = parseDefs? defLines
 
-        _ -> Err Foo
+            Ok { nodes, defs }
+
+        [] -> Err EmptyProgram
+
+Defs : Dict Str (List Node)
+
+parseDefs : List Str -> Result Defs _
+parseDefs = \lines ->
+    List.walkTry lines (Dict.empty {}) \defs, line ->
+        when Str.split line " " is
+            [":", name, .. as tokens, ";"] ->
+                ops = parseDefLine? tokens defs
+                Dict.insert defs name ops |> Ok
+
+            _ -> Err (UnableToParseDef line)
+
+parseDefLine : List Str, Defs -> Result (List Node) _
+parseDefLine = \tokens, defs ->
+    List.walkTry tokens [] \ops, token ->
+        when toNode token is
+            Def key ->
+                when Dict.get defs key is
+                    Ok items -> List.concat ops items |> Ok
+                    Err _ -> Err (UnknownDef key)
+
+            node -> List.append ops node |> Ok
+
+flatten : List Node, Defs -> Result (List Node) _
+flatten = \nodes, defs ->
+    List.walkTry nodes [] \state, node ->
+        when node is
+            Def key ->
+                when Dict.get defs key is
+                    Err _ -> Err (UnknownDef key)
+                    Ok body ->
+                        flattenedBody = flatten? body defs
+                        List.concat state flattenedBody |> Ok
+
+            _ -> List.append state node |> Ok
 
 interpret : List Node -> Result (List I16) _
 interpret = \nodes ->
+
     List.walkTry nodes [] \stack, node ->
         when node is
             Number x ->
@@ -85,7 +125,7 @@ interpret = \nodes ->
 
                     _ -> Err (Arity node 2)
 
-            Def str -> Err (DefNotImpl str)
+            Def _ -> crash "This case is impossible"
 
 Node : [
     Dup,
@@ -115,17 +155,6 @@ toNode = \str ->
             when Str.toI16 str is
                 Ok num -> Number num
                 Err _ -> Def str
-
-# getDefs : List Str -> Result (Dict Str (List Node)) _
-# getDefs = \lines ->
-#    List.walkTry lines (Dict.empty {}) \dict, line ->
-#        when Str.split line " " is
-#            [":", name, .. as body, ";"] ->
-#                List.map body \term ->
-
-#                |> Ok
-
-#            _ -> Err (UnableToParseDef line)
 
 toLower : Str -> Result Str _
 toLower = \str ->
