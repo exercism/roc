@@ -1,0 +1,18 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import Forth exposing [evaluate]
+
+{% for case in cases -%}
+{% for innerCase in case["cases"] %}
+# {{ case["description"] }}: {{ innerCase["description"] }}
+expect
+    result = evaluate {{ innerCase["input"]["instructions"] | join('\n') | to_roc_multiline_string | indent(8) }}
+    {%- if innerCase["expected"]["error"] %}
+    Result.isErr result
+    {%- else %}
+    result == Ok {{ innerCase["expected"] }}
+    {%- endif %}
+{% endfor %}
+{% endfor %}
