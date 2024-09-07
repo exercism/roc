@@ -2,14 +2,13 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/forth/canonical-data.json
 # File last updated on 2024-09-07
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br"
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
 
 main =
     Task.ok {}
 
 import Forth exposing [evaluate]
-
 
 # parsing and numbers: numbers just get pushed onto the stack
 expect
@@ -20,7 +19,6 @@ expect
 expect
     result = evaluate "-1 -2 -3 -4 -5"
     result == Ok [-1, -2, -3, -4, -5]
-
 
 # addition: can add two numbers
 expect
@@ -37,7 +35,6 @@ expect
     result = evaluate "1 +"
     Result.isErr result
 
-
 # subtraction: can subtract two numbers
 expect
     result = evaluate "3 4 -"
@@ -53,7 +50,6 @@ expect
     result = evaluate "1 -"
     Result.isErr result
 
-
 # multiplication: can multiply two numbers
 expect
     result = evaluate "2 4 *"
@@ -68,7 +64,6 @@ expect
 expect
     result = evaluate "1 *"
     Result.isErr result
-
 
 # division: can divide two numbers
 expect
@@ -95,7 +90,6 @@ expect
     result = evaluate "1 /"
     Result.isErr result
 
-
 # combined arithmetic: addition and subtraction
 expect
     result = evaluate "1 2 + 4 -"
@@ -105,7 +99,6 @@ expect
 expect
     result = evaluate "2 4 * 3 /"
     result == Ok [2]
-
 
 # dup: copies a value on the stack
 expect
@@ -122,7 +115,6 @@ expect
     result = evaluate "dup"
     Result.isErr result
 
-
 # drop: removes the top value on the stack if it is the only one
 expect
     result = evaluate "1 drop"
@@ -137,7 +129,6 @@ expect
 expect
     result = evaluate "drop"
     Result.isErr result
-
 
 # swap: swaps the top two values on the stack if they are the only ones
 expect
@@ -159,7 +150,6 @@ expect
     result = evaluate "1 swap"
     Result.isErr result
 
-
 # over: copies the second element if there are only two
 expect
     result = evaluate "1 2 over"
@@ -179,7 +169,6 @@ expect
 expect
     result = evaluate "1 over"
     Result.isErr result
-
 
 # user-defined words: can consist of built-in words
 expect
