@@ -18,14 +18,12 @@ Op : [
 # Evaluation
 evaluate : Str -> Result Stack Str
 evaluate = \program ->
-    run program
-    |> Result.mapErr handleError
+    result =
+        lower = toLower program
+        operations = parse? lower
+        interpret operations
 
-run : Str -> Result Stack _
-run = \program ->
-    lower = toLower? program
-    defs = parse? lower
-    interpret defs
+    Result.mapErr result handleError
 
 interpret : List Op -> Result Stack _
 interpret = \program ->
@@ -166,7 +164,6 @@ handleError : _ -> Str
 handleError = \err ->
     when err is
         UnknownDef key -> "Hmm, I don't know any operations called '$(key)'. Maybe there's a typo?"
-        BadUtf8 _ _ -> "I couldn't convert the input to lowercase. Make sure your input doesn't contain any unicode."
         UnableToParseDef line ->
             """
             This is supposed to be a definition, but I'm not sure how to parse it:
@@ -216,12 +213,16 @@ opToStr = \op ->
         Divide -> "/"
         Number num -> Num.toStr num
 
-toLower : Str -> Result Str _
+toLower : Str -> Str
 toLower = \str ->
-    Str.toUtf8 str
-    |> List.map \byte ->
-        if 'A' <= byte && byte <= 'Z' then
-            byte - 'A' + 'a'
-        else
-            byte
-    |> Str.fromUtf8
+    result =
+        Str.toUtf8 str
+        |> List.map \byte ->
+            if 'A' <= byte && byte <= 'Z' then
+                byte - 'A' + 'a'
+            else
+                byte
+        |> Str.fromUtf8
+    when result is
+        Ok s -> s
+        _ -> crash "There was an unexpected error converting back to Str"
