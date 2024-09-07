@@ -1,5 +1,5 @@
 module [evaluate]
 
-evaluate : Str -> List U8
+evaluate : Str -> Result (List I16) _
 evaluate = \program ->
-    crash "Please implement the 'forth' function"
+    crash "Please implement 'evaluate'"
