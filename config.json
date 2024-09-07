@@ -19,15 +19,9 @@
     "average_run_time": 2
   },
   "files": {
-    "solution": [
-      "%{pascal_slug}.roc"
-    ],
-    "test": [
-      "%{kebab_slug}-test.roc"
-    ],
-    "example": [
-      ".meta/Example.roc"
-    ]
+    "solution": ["%{pascal_slug}.roc"],
+    "test": ["%{kebab_slug}-test.roc"],
+    "example": [".meta/Example.roc"]
   },
   "exercises": {
     "practice": [
@@ -365,7 +359,7 @@
         "uuid": "37d9480f-7283-4123-abaa-3a9146acd2ca",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 9
       }
     ]
   },

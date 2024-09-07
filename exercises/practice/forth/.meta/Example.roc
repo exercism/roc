@@ -93,11 +93,9 @@ step = \stack, op ->
 
         Divide ->
             when stack is
-                [.., _, 0] ->
-                    Err DivByZero
-
                 [.. as rest, x, y] ->
-                    List.append rest (x // y) |> Ok
+                    quotient = Num.divTruncChecked? x y
+                    List.append rest quotient |> Ok
 
                 _ -> Err (Arity 2)
 
@@ -105,11 +103,11 @@ step = \stack, op ->
 parse : Str -> Result (List Op) _
 parse = \str ->
     when Str.split (Str.trim str) "\n" is
-        [.. as defLines, opLine] ->
+        [.. as defLines, program] ->
             defs = parseDefs? defLines
 
-            Str.split opLine " "
-            |> replaceDefs defs
+            Str.split program " "
+            |> flattenDefs defs
             |> List.mapTry toOp
 
         [] -> Ok [] # We'll let the empty program return the empty list
@@ -130,15 +128,15 @@ parseDef = \tokens, defs ->
         when Dict.get defs token is
             Ok body -> List.concat ops body |> Ok
             _ if isBuiltin token -> List.append ops token |> Ok
-            _ -> Err (UnknownDef token)
+            _ -> Err (UnknownName token)
 
 isBuiltin : Str -> Bool
 isBuiltin = \token ->
     builtins = ["dup", "drop", "swap", "over", "+", "-", "*", "/"]
     (builtins |> List.contains token) || (Result.isOk (Str.toI16 token))
 
-replaceDefs : List Str, Defs -> List Str
-replaceDefs = \tokens, defs ->
+flattenDefs : List Str, Defs -> List Str
+flattenDefs = \tokens, defs ->
     List.joinMap tokens \token ->
         when Dict.get defs token is
             Ok body -> body
@@ -158,12 +156,12 @@ toOp = \str ->
         _ ->
             when Str.toI16 str is
                 Ok num -> Ok (Number num)
-                Err _ -> Err (UnknownDef str)
+                Err _ -> Err (UnknownName str)
 # Display
 handleError : _ -> Str
 handleError = \err ->
     when err is
-        UnknownDef key -> "Hmm, I don't know any operations called '$(key)'. Maybe there's a typo?"
+        UnknownName key -> "Hmm, I don't know any operations called '$(key)'. Maybe there's a typo?"
         UnableToParseDef line ->
             """
             This is supposed to be a definition, but I'm not sure how to parse it:
