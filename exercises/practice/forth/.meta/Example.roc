@@ -3,26 +3,26 @@ module [evaluate]
 evaluate : Str -> Result (List I16) _
 evaluate = \program ->
     lowerCase = toLower? program
-    { nodes, defs } = parse? lowerCase
+    { ops, defs } = parse? lowerCase
 
-    simpleOps = flatten? nodes defs
+    simpleOps = flatten? ops defs
     interpret simpleOps
 
-parse : Str -> Result { nodes : List Node, defs : Dict Str (List Node) } _
+parse : Str -> Result { ops : List Op, defs : Dict Str (List Op) } _
 parse = \str ->
     when Str.split str "\n" is
-        [.. as defLines, instructions] ->
-            nodes =
-                Str.split instructions " "
-                |> List.map toNode
+        [.. as defLines, opLine] ->
+            ops =
+                Str.split opLine " "
+                |> List.map toOp
 
             defs = parseDefs? defLines
 
-            Ok { nodes, defs }
+            Ok { ops, defs }
 
         [] -> Err EmptyProgram
 
-Defs : Dict Str (List Node)
+Defs : Dict Str (List Op)
 
 parseDefs : List Str -> Result Defs _
 parseDefs = \lines ->
@@ -34,10 +34,10 @@ parseDefs = \lines ->
 
             _ -> Err (UnableToParseDef line)
 
-parseDefLine : List Str, Defs -> Result (List Node) _
+parseDefLine : List Str, Defs -> Result (List Op) _
 parseDefLine = \tokens, defs ->
     List.walkTry tokens [] \ops, token ->
-        when toNode token is
+        when toOp token is
             Def key ->
                 when Dict.get defs key is
                     Ok items -> List.concat ops items |> Ok
@@ -45,7 +45,7 @@ parseDefLine = \tokens, defs ->
 
             node -> List.append ops node |> Ok
 
-flatten : List Node, Defs -> Result (List Node) _
+flatten : List Op, Defs -> Result (List Op) _
 flatten = \nodes, defs ->
     List.walkTry nodes [] \state, node ->
         when node is
@@ -58,11 +58,11 @@ flatten = \nodes, defs ->
 
             _ -> List.append state node |> Ok
 
-interpret : List Node -> Result (List I16) _
-interpret = \nodes ->
+interpret : List Op -> Result (List I16) _
+interpret = \ops ->
 
-    List.walkTry nodes [] \stack, node ->
-        when node is
+    List.walkTry ops [] \stack, op ->
+        when op is
             Number x ->
                 List.append stack x |> Ok
 
@@ -71,12 +71,12 @@ interpret = \nodes ->
                     [.., x] ->
                         List.append stack x |> Ok
 
-                    _ -> Err (Arity node 1)
+                    _ -> Err (Arity 1)
 
             Drop ->
                 when stack is
                     [.. as rest, _] -> Ok rest
-                    _ -> Err (Arity node 1)
+                    _ -> Err (Arity 1)
 
             Swap ->
                 when stack is
@@ -85,35 +85,35 @@ interpret = \nodes ->
                         |> List.append x
                         |> Ok
 
-                    _ -> Err (Arity node 2)
+                    _ -> Err (Arity 2)
 
             Over ->
                 when stack is
                     [.. as rest, x, y] ->
                         List.concat rest [x, y, x] |> Ok
 
-                    _ -> Err (Arity node 2)
+                    _ -> Err (Arity 2)
 
             Add ->
                 when stack is
                     [.. as rest, x, y] ->
                         List.append rest (x + y) |> Ok
 
-                    _ -> Err (Arity node 2)
+                    _ -> Err (Arity 2)
 
             Subtract ->
                 when stack is
                     [.. as rest, x, y] ->
                         List.append rest (x - y) |> Ok
 
-                    _ -> Err (Arity node 2)
+                    _ -> Err (Arity 2)
 
             Multiply ->
                 when stack is
                     [.. as rest, x, y] ->
                         List.append rest (x * y) |> Ok
 
-                    _ -> Err (Arity node 2)
+                    _ -> Err (Arity 2)
 
             Divide ->
                 when stack is
@@ -123,11 +123,11 @@ interpret = \nodes ->
                     [.. as rest, x, y] ->
                         List.append rest (x // y) |> Ok
 
-                    _ -> Err (Arity node 2)
+                    _ -> Err (Arity 2)
 
             Def _ -> crash "This case is impossible"
 
-Node : [
+Op : [
     Dup,
     Drop,
     Swap,
@@ -140,8 +140,8 @@ Node : [
     Def Str,
 ]
 
-toNode : Str -> Node
-toNode = \str ->
+toOp : Str -> Op
+toOp = \str ->
     when str is
         "dup" -> Dup
         "drop" -> Drop
