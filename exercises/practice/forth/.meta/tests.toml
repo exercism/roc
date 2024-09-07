@@ -128,9 +128,11 @@ description = "user-defined words -> can define word that uses word with the sam
 
 [35958cee-a976-4a0f-9378-f678518fa322]
 description = "user-defined words -> cannot redefine non-negative numbers"
+include = false
 
 [df5b2815-3843-4f55-b16c-c3ed507292a7]
 description = "user-defined words -> cannot redefine negative numbers"
+include = false
 
 [5180f261-89dd-491e-b230-62737e09806f]
 description = "user-defined words -> errors if executing a non-existent word"

@@ -42,7 +42,7 @@ handleError = \err ->
 
 parse : Str -> Result (List Op) _
 parse = \str ->
-    when Str.split str "\n" is
+    when Str.split (Str.trim str) "\n" is
         [.. as defLines, opLine] ->
             defs = parseDefs? defLines
 
@@ -87,11 +87,15 @@ parseDefLine = \tokens, defs ->
             node -> List.append ops node |> Ok
 
 interpret : List Op -> Result Stack _
-interpret = \ops ->
-    List.walkTry ops [] \stack, op ->
-        step stack op
-        |> Result.mapErr \error ->
-            EvaluationError {error, stack, op, ops}
+interpret = \program ->
+    help = \ops, stack ->
+        when ops is
+            [] -> Ok stack
+            [op, .. as rest] ->
+                when step stack op is
+                    Ok newStack -> help rest newStack
+                    Err error -> EvaluationError {error, stack, op, ops} |> Err
+    help program []
 
 step : Stack, Op -> Result Stack _
 step = \stack, op ->
@@ -179,7 +183,7 @@ showExecution = \stack, ops ->
         |> Str.joinWith " "
     opsStr = List.map ops opToStr
         |> Str.joinWith " "
-    "[$(stackStr)] | $(opsStr)"
+    "$(stackStr) | $(opsStr)"
 
 opToStr : Op -> Str
 opToStr = \op ->
