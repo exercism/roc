@@ -12,11 +12,12 @@ parse : Str -> Result { ops : List Op, defs : Dict Str (List Op) } _
 parse = \str ->
     when Str.split str "\n" is
         [.. as defLines, opLine] ->
+            defs = parseDefs? defLines
+
             ops =
                 Str.split opLine " "
-                |> List.map toOp
-
-            defs = parseDefs? defLines
+                |> List.map \word ->
+                    toOp word defs
 
             Ok { ops, defs }
 
@@ -37,7 +38,7 @@ parseDefs = \lines ->
 parseDefLine : List Str, Defs -> Result (List Op) _
 parseDefLine = \tokens, defs ->
     List.walkTry tokens [] \ops, token ->
-        when toOp token is
+        when toOp token defs is
             Def key ->
                 when Dict.get defs key is
                     Ok items -> List.concat ops items |> Ok
@@ -140,9 +141,10 @@ Op : [
     Def Str,
 ]
 
-toOp : Str -> Op
-toOp = \str ->
+toOp : Str, Defs -> Op
+toOp = \str, defs ->
     when str is
+        _ if Dict.contains defs str -> Def str
         "dup" -> Dup
         "drop" -> Drop
         "swap" -> Swap
