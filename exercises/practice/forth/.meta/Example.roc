@@ -3,20 +3,18 @@ module [evaluate]
 evaluate : Str -> Result (List I16) _
 evaluate = \program ->
     lowerCase = toLower? program
-    { nodes, defs } = parseProgram? lowerCase
+    { nodes, defs } = parse? lowerCase
 
     interpret nodes
 
-# defs =
-#    lines
-#    |> List.dropLast 1
-#    |> getDefs
-#
-parseProgram : Str -> Result { nodes : List Node, defs : List U8 } _
-parseProgram = \str ->
+parse : Str -> Result { nodes : List Node, defs : List U8 } _
+parse = \str ->
     when Str.split str "\n" is
         [.. as defLines, instructions] ->
-            nodes = parse? instructions
+            nodes =
+                Str.split instructions " "
+                |> List.map toNode
+
             Ok { nodes, defs: [] }
 
         _ -> Err Foo
@@ -28,12 +26,66 @@ interpret = \nodes ->
             Number x ->
                 List.append stack x |> Ok
 
-            _ -> Ok []
+            Dup ->
+                when stack is
+                    [.., x] ->
+                        List.append stack x |> Ok
 
-parse : Str -> Result (List Node) _
-parse = \input ->
-    Str.split input " "
-    |> List.mapTry toNode
+                    _ -> Err (Arity node 1)
+
+            Drop ->
+                when stack is
+                    [.. as rest, _] -> Ok rest
+                    _ -> Err (Arity node 1)
+
+            Swap ->
+                when stack is
+                    [.. as rest, x, y] ->
+                        List.append rest y
+                        |> List.append x
+                        |> Ok
+
+                    _ -> Err (Arity node 2)
+
+            Over ->
+                when stack is
+                    [.. as rest, x, y] ->
+                        List.concat rest [x, y, x] |> Ok
+
+                    _ -> Err (Arity node 2)
+
+            Add ->
+                when stack is
+                    [.. as rest, x, y] ->
+                        List.append rest (x + y) |> Ok
+
+                    _ -> Err (Arity node 2)
+
+            Subtract ->
+                when stack is
+                    [.. as rest, x, y] ->
+                        List.append rest (x - y) |> Ok
+
+                    _ -> Err (Arity node 2)
+
+            Multiply ->
+                when stack is
+                    [.. as rest, x, y] ->
+                        List.append rest (x * y) |> Ok
+
+                    _ -> Err (Arity node 2)
+
+            Divide ->
+                when stack is
+                    [.., x, 0] ->
+                        Err (DivByZero x)
+
+                    [.. as rest, x, y] ->
+                        List.append rest (x // y) |> Ok
+
+                    _ -> Err (Arity node 2)
+
+            Def str -> Err (DefNotImpl str)
 
 Node : [
     Dup,
@@ -48,17 +100,21 @@ Node : [
     Def Str,
 ]
 
-toNode : Str -> Result Node _
+toNode : Str -> Node
 toNode = \str ->
     when str is
-        "dup" -> Ok Dup
-        "drop" -> Ok Drop
-        "swap" -> Ok Swap
-        "+" -> Ok Add
-        "-" -> Ok Subtract
-        "*" -> Ok Multiply
-        "/" -> Ok Divide
-        _ -> Ok (Number 10)
+        "dup" -> Dup
+        "drop" -> Drop
+        "swap" -> Swap
+        "over" -> Over
+        "+" -> Add
+        "-" -> Subtract
+        "*" -> Multiply
+        "/" -> Divide
+        _ ->
+            when Str.toI16 str is
+                Ok num -> Number num
+                Err _ -> Def str
 
 # getDefs : List Str -> Result (Dict Str (List Node)) _
 # getDefs = \lines ->
