@@ -2,26 +2,32 @@ module [evaluate]
 
 evaluate : Str -> Result (List I16) _
 evaluate = \program ->
-    lowerCase = toLower? program
-    { ops, defs } = parse? lowerCase
+    lower = toLower? program
+    defs = parse? lower
+    interpret defs
 
-    simpleOps = flatten? ops defs
-    interpret simpleOps
 
-parse : Str -> Result { ops : List Op, defs : Dict Str (List Op) } _
+parse : Str -> Result (List Op) _
 parse = \str ->
     when Str.split str "\n" is
         [.. as defLines, opLine] ->
             defs = parseDefs? defLines
 
-            ops =
-                Str.split opLine " "
-                |> List.map \word ->
-                    toOp word defs
-
-            Ok { ops, defs }
+            parseProgram? opLine defs |> Ok
 
         [] -> Err EmptyProgram
+
+parseProgram : Str, Defs -> Result (List Op) _
+parseProgram = \line, defs ->
+    Str.split line " "
+    |> List.walkTry [] \ops, token ->
+        when toOp token defs is
+            Def key ->
+                when Dict.get defs key is
+                    Ok body -> List.concat ops body |> Ok
+                    _ -> Err (UnknownDef key)
+
+            op -> List.append ops op |> Ok
 
 Defs : Dict Str (List Op)
 
@@ -45,19 +51,6 @@ parseDefLine = \tokens, defs ->
                     Err _ -> Err (UnknownDef key)
 
             node -> List.append ops node |> Ok
-
-flatten : List Op, Defs -> Result (List Op) _
-flatten = \nodes, defs ->
-    List.walkTry nodes [] \state, node ->
-        when node is
-            Def key ->
-                when Dict.get defs key is
-                    Err _ -> Err (UnknownDef key)
-                    Ok body ->
-                        flattenedBody = flatten? body defs
-                        List.concat state flattenedBody |> Ok
-
-            _ -> List.append state node |> Ok
 
 interpret : List Op -> Result (List I16) _
 interpret = \ops ->
