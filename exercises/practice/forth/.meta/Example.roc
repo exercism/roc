@@ -8,13 +8,13 @@ evaluate = \program ->
     simpleOps = flatten? ops defs
     interpret simpleOps
 
-parse : Str -> Result { ops : List Op, defs : Dict Str (List OpsWithDefs) } _
+parse : Str -> Result { ops : List Op, defs : Dict Str (List Op) } _
 parse = \str ->
     when Str.split str "\n" is
         [.. as defLines, opLine] ->
             ops =
                 Str.split opLine " "
-                    |> List.mapTry? toOp
+                |> List.map toOp
 
             defs = parseDefs? defLines
 
@@ -38,14 +38,14 @@ parseDefLine : List Str, Defs -> Result (List Op) _
 parseDefLine = \tokens, defs ->
     List.walkTry tokens [] \ops, token ->
         when toOp token is
-            # Def key ->
-            #    when Dict.get defs key is
-            #        Ok items -> List.concat ops items |> Ok
-            #        Err _ -> Err (UnknownDef key)
-            Ok op -> List.append ops op |> Ok
-            Err e -> Err e
+            Def key ->
+                when Dict.get defs key is
+                    Ok items -> List.concat ops items |> Ok
+                    Err _ -> Err (UnknownDef key)
 
-flatten : List OpsWithDefs, Defs -> Result (List Op) _
+            node -> List.append ops node |> Ok
+
+flatten : List Op, Defs -> Result (List Op) _
 flatten = \nodes, defs ->
     List.walkTry nodes [] \state, node ->
         when node is
@@ -53,10 +53,10 @@ flatten = \nodes, defs ->
                 when Dict.get defs key is
                     Err _ -> Err (UnknownDef key)
                     Ok body ->
-                        List.concat state body |> Ok
+                        flattenedBody = flatten? body defs
+                        List.concat state flattenedBody |> Ok
 
-            Add | Subtract -> [] |> Ok
-            _ -> Ok []
+            _ -> List.append state node |> Ok
 
 interpret : List Op -> Result (List I16) _
 interpret = \ops ->
@@ -125,6 +125,8 @@ interpret = \ops ->
 
                     _ -> Err (Arity 2)
 
+            Def _ -> crash "This case is impossible"
+
 Op : [
     Dup,
     Drop,
@@ -135,25 +137,24 @@ Op : [
     Multiply,
     Divide,
     Number I16,
+    Def Str,
 ]
 
-OpsWithDefs : Op[Def Str]
-
-toOp : Str -> Result Op _
+toOp : Str -> Op
 toOp = \str ->
     when str is
-        "dup" -> Ok Dup
-        "drop" -> Ok Drop
-        "swap" -> Ok Swap
-        "over" -> Ok Over
-        "+" -> Ok Add
-        "-" -> Ok Subtract
-        "*" -> Ok Multiply
-        "/" -> Ok Divide
+        "dup" -> Dup
+        "drop" -> Drop
+        "swap" -> Swap
+        "over" -> Over
+        "+" -> Add
+        "-" -> Subtract
+        "*" -> Multiply
+        "/" -> Divide
         _ ->
             when Str.toI16 str is
-                Ok num -> Number num |> Ok
-                Err _ -> Err (UnknownOp str)
+                Ok num -> Number num
+                Err _ -> Def str
 
 toLower : Str -> Result Str _
 toLower = \str ->
