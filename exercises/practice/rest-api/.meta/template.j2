@@ -1,0 +1,45 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header(imports=["json"]) }}
+
+import {{ exercise | to_pascal }} exposing [get, post]
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+expect
+    database = {
+        users: [
+            {%- for user in case["input"]["database"]["users"] %}
+            {
+                name: {{ user["name"] | to_roc }},
+                owes: [
+                    {%- for (name, amount) in user["owes"].items() %}
+                    { name: {{ name | to_roc }}, amount: {{ amount }} },
+                    {%- endfor -%}
+                ],
+                owedBy: [
+                    {%- for (name, amount) in user["owed_by"].items() %}
+                    { name: {{ name | to_roc }}, amount: {{ amount }} },
+                    {%- endfor -%}
+                ],
+                balance: {{ user["balance"] }},
+            },
+            {%- endfor %}
+        ]
+    }
+    result = database |> {{ case["property"] | to_camel }} {
+        url: {{ case["input"]["url"] | to_roc }},
+    {%- if case["input"].get("payload", {}) != {} %}
+        payload: {{ case["input"]["payload"] | tojson | to_roc }}
+    {%- endif %}
+    }
+    expected = Ok {{ case["expected"] | tojson | replace(" ", "") | to_roc }}
+    result == expected
+
+{% endfor %}
+{% endfor %}

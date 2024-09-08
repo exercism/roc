@@ -366,6 +366,14 @@
         "practices": [],
         "prerequisites": [],
         "difficulty": 7
+      },
+      {
+        "slug": "rest-api",
+        "name": "REST API",
+        "uuid": "1d4dbe7a-6737-49fa-ae74-a1155dcdab40",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
       }
     ]
   },

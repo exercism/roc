@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "RestApi.roc"
+    ],
+    "test": [
+      "rest-api-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Implement a RESTful API for tracking IOUs."
+}
