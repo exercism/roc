@@ -1,7 +1,7 @@
 {
   "language": "Roc",
   "slug": "roc",
-  "active": false,
+  "active": true,
   "status": {
     "concept_exercises": false,
     "test_runner": true,
@@ -352,6 +352,14 @@
         "difficulty": 6
       },
       {
+        "slug": "rational-numbers",
+        "name": "Rational Numbers",
+        "uuid": "6f5c2c74-a087-4f4a-9276-8479c868e784",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "pig-latin",
         "name": "Pig Latin",
         "uuid": "8beb7c89-bf06-4eb1-b97f-36f2d9750dad",
@@ -374,6 +382,13 @@
         "practices": [],
         "prerequisites": [],
         "difficulty": 8
+      },
+        "slug": "forth",
+        "name": "Forth",
+        "uuid": "37d9480f-7283-4123-abaa-3a9146acd2ca",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 9
       }
     ]
   },

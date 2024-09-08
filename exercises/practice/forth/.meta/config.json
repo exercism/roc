@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "isaacvando"
+  ],
+  "files": {
+    "solution": [
+      "Forth.roc"
+    ],
+    "test": [
+      "forth-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Implement an evaluator for a very simple subset of Forth."
+}
