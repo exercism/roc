@@ -1,0 +1,57 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [add, sub, mul, div, abs, exp, expReal, reduce]
+
+{% set property_map = {
+    "abs": "abs",
+    "add": "add",
+    "div": "div",
+    "exprational": "exp",
+    "expreal": "expReal",
+    "mul": "mul",
+    "reduce": "reduce",
+    "sub": "sub",
+}
+%}
+
+{% macro test_case(case) -%}
+# {{ case["description"] }}
+expect
+{%- if "r1" in case["input"] %}
+    result = {{ plugins.to_roc_rational(case["input"]["r1"]) }} |> {{ property_map[case["property"]] | to_camel }} ({{ plugins.to_roc_rational(case["input"]["r2"]) }})
+{%- elif "r" in case["input"] %}
+    {%- if "x" in case["input"] %}
+    result = {{ case["input"]["x"] | to_roc }} |> {{ property_map[case["property"]] | to_camel }} ({{ plugins.to_roc_rational(case["input"]["r"]) }})
+    {%- elif "n" in case["input"] %}
+    result = {{ plugins.to_roc_rational(case["input"]["r"]) }} |> {{ property_map[case["property"]] | to_camel }} {{ case["input"]["n"] | to_roc }}
+    {%- else %}
+    result = {{ plugins.to_roc_rational(case["input"]["r"]) }} |> {{ property_map[case["property"]] | to_camel }}
+    {%- endif %}
+{%- else %}
+    crash "This test case is not implemented yet."
+{%- endif %}
+{%- if case["expected"] is iterable %}
+    result == {{ plugins.to_roc_rational(case["expected"]) }}
+{%- else %}
+    result |> Num.isApproxEq {{ case["expected"] | to_roc }} {}
+{%- endif %}
+
+{% endmacro %}
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+    {%- if "cases" in case %}
+      {%- for subcase in case["cases"] %}
+        {{ test_case(subcase) }}
+      {%- endfor %}
+    {%- else %}
+        {{ test_case(case) }}
+    {%- endif %}
+{% endfor %}
+{% endfor %}
