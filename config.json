@@ -383,6 +383,7 @@
         "prerequisites": [],
         "difficulty": 8
       },
+      {
         "slug": "forth",
         "name": "Forth",
         "uuid": "37d9480f-7283-4123-abaa-3a9146acd2ca",
