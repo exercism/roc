@@ -4,6 +4,15 @@
 
 import {{ exercise | to_pascal }} exposing [get, post]
 
+standardizeResult = \result ->
+    result |> Result.try \string ->
+        string
+        |> Str.replaceEach ".0," ","
+        |> Str.replaceEach ".0}" "}"
+        |> Str.toUtf8
+        |> List.dropIf \c -> [' ', '\t', '\n'] |> List.contains c
+        |> Str.fromUtf8
+
 {% for supercase in cases %}
 ##
 ## {{ supercase["description"] }}
@@ -17,14 +26,14 @@ expect
             {%- for user in case["input"]["database"]["users"] %}
             {
                 name: {{ user["name"] | to_roc }},
-                owes: [
+                owes: Dict.fromList [
                     {%- for (name, amount) in user["owes"].items() %}
-                    { name: {{ name | to_roc }}, amount: {{ amount }} },
+                    ({{ name | to_roc }}, {{ amount }}),
                     {%- endfor -%}
                 ],
-                owedBy: [
+                owedBy: Dict.fromList [
                     {%- for (name, amount) in user["owed_by"].items() %}
-                    { name: {{ name | to_roc }}, amount: {{ amount }} },
+                    ({{ name | to_roc }}, {{ amount }}),
                     {%- endfor -%}
                 ],
                 balance: {{ user["balance"] }},
@@ -37,8 +46,8 @@ expect
     {%- if case["input"].get("payload", {}) != {} %}
         payload: {{ case["input"]["payload"] | tojson | to_roc }}
     {%- endif %}
-    }
-    expected = Ok {{ case["expected"] | tojson | replace(" ", "") | to_roc }}
+    } |> standardizeResult
+    expected = Ok {{ case["expected"] | tojson | replace(".0,", ",") | replace(".0}", "}") | replace(" ", "") | to_roc }}
     result == expected
 
 {% endfor %}
