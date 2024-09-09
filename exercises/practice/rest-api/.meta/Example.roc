@@ -20,9 +20,7 @@ get = \database, { url, payload ? "" } ->
         "/users" ->
             database
             |> getUsers payload
-            |> Result.mapErr \err ->
-                when err is
-                    InvalidJson -> Http422 payload
+            |> Result.mapErr \InvalidJson -> Http422 payload
 
         badUrl -> Err (Http404 badUrl)
 
