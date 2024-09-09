@@ -70,10 +70,10 @@ userToJson : User -> Str
 userToJson = \user ->
     """
     {
-        \"balance\" : $(user.balance |> Num.toStr),
-        \"name\" : $(user.name |> stringToJson),
-        \"owed_by\" : $(user.owedBy |> oweDictToJson),
-        \"owes\" : $(user.owes |> oweDictToJson)
+        "balance" : $(user.balance |> Num.toStr),
+        "name" : $(user.name |> stringToJson),
+        "owed_by" : $(user.owedBy |> oweDictToJson),
+        "owes" : $(user.owes |> oweDictToJson)
     }
     """
 
@@ -116,7 +116,6 @@ getUserNames = \payload ->
 parseJsonUser : Str -> Result { user : Str } [InvalidJson]
 parseJsonUser = \payload ->
     bytes = payload |> Str.toUtf8
-    maybeUser : Decode.DecodeResult { user : Str }
     maybeUser = Decode.fromBytesPartial bytes Json.utf8
     maybeUser.result |> Result.mapErr \_ -> InvalidJson
 
@@ -124,7 +123,6 @@ parseJsonUser = \payload ->
 parseJsonUsers : Str -> Result { users : List Str } [InvalidJson]
 parseJsonUsers = \payload ->
     bytes = payload |> Str.toUtf8
-    maybeUserList : Decode.DecodeResult { users : List Str }
     maybeUserList = Decode.fromBytesPartial bytes Json.utf8
     maybeUserList.result |> Result.mapErr \_ -> InvalidJson
 
@@ -132,7 +130,6 @@ parseJsonUsers = \payload ->
 parseJsonLoan : Str -> Result Loan [InvalidJson]
 parseJsonLoan = \payload ->
     bytes = payload |> Str.toUtf8
-    maybeLoan : Decode.DecodeResult Loan
     maybeLoan = Decode.fromBytesPartial bytes Json.utf8
     maybeLoan.result |> Result.mapErr \_ -> InvalidJson
 
