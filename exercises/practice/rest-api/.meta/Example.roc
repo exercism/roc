@@ -20,7 +20,9 @@ get = \database, { url, payload ? "" } ->
         "/users" ->
             database
             |> getUsers payload
-            |> Result.mapErr \_ -> Http422 payload
+            |> Result.mapErr \err ->
+                when err is
+                    InvalidJson -> Http422 payload
 
         badUrl -> Err (Http404 badUrl)
 
@@ -33,12 +35,12 @@ compareStrings = \string1, string2 ->
     b2 = string2 |> Str.toUtf8
     result =
         List.map2 b1 b2 \c1, c2 -> Num.compare c1 c2
-        |> List.walkTry (Ok EQ) \_, cmp ->
+        |> List.walkTry (Ok EQ) \_state, cmp ->
             when cmp is
                 EQ -> Ok EQ
                 res -> Err res
     when result is
-        Ok _ -> Num.compare (List.len b1) (List.len b2)
+        Ok _cmp -> Num.compare (List.len b1) (List.len b2)
         Err res -> res
 
 ## Convert the owes and owedBy dictionaries to JSON
@@ -48,7 +50,7 @@ oweDictToJson = \dict ->
     dictContent =
         dict
         |> Dict.toList
-        |> List.sortWith \(name1, _), (name2, _) -> compareStrings name1 name2
+        |> List.sortWith \(name1, _amount1), (name2, _amount2) -> compareStrings name1 name2
         |> List.map \(name, amount) -> "$(name |> stringToJson): $(amount |> Num.toStr)"
         |> Str.joinWith ","
     "{$(dictContent)}"
@@ -60,7 +62,7 @@ stringToJson = \string ->
         |> Str.fromUtf8
     when result is
         Ok json -> json
-        Err _ -> crash "Unreachable: encoding a string to JSON should never fail"
+        Err (BadUtf8 _ _) -> crash "Unreachable: encoding a string to JSON should never fail"
 
 ## Convert a user to a JSON representation
 ## Note: this will be simpler once Roc supports Encoding & Decoding Dict
@@ -106,7 +108,7 @@ getUserNames : Str -> Result (List Str) [InvalidJson]
 getUserNames = \payload ->
     when parseJsonUser payload is
         Ok userRecord -> Ok [userRecord.user]
-        Err _ ->
+        Err InvalidJson ->
             usersRecord = parseJsonUsers? payload
             Ok usersRecord.users
 
@@ -144,7 +146,7 @@ post = \database, { url, payload ? "" } ->
     when url is
         "/add" -> database |> addUser payload |> Result.mapErr handleError
         "/iou" -> database |> addLoan payload |> Result.mapErr handleError
-        _ -> Err (Http404 url)
+        badUrl -> Err (Http404 badUrl)
 
 ## Add a new user to the (mock) database
 addUser : Database, Str -> Result Str [InvalidJson]
