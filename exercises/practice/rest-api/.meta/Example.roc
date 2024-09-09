@@ -116,7 +116,6 @@ getUserNames = \payload ->
 parseJsonUser : Str -> Result { user : Str } [InvalidJson]
 parseJsonUser = \payload ->
     bytes = payload |> Str.toUtf8
-    maybeUser : Decode.DecodeResult { user : Str }
     maybeUser = Decode.fromBytesPartial bytes Json.utf8
     maybeUser.result |> Result.mapErr \_ -> InvalidJson
 
