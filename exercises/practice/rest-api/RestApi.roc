@@ -4,9 +4,9 @@ import json.Json
 
 User : {
     name : Str,
-    owes : Dict Str Dec,
-    owedBy : Dict Str Dec,
-    balance : Dec,
+    owes : Dict Str F64,
+    owedBy : Dict Str F64,
+    balance : F64,
 }
 
 Database : { users : List User }
