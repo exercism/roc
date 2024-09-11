@@ -232,6 +232,14 @@
         "difficulty": 3
       },
       {
+        "slug": "rectangles",
+        "name": "Rectangles",
+        "uuid": "2eb30b47-a1e0-44e5-bb22-6085a938ddb5",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
         "slug": "reverse-string",
         "name": "Reverse String",
         "uuid": "7bd2e210-08aa-45e9-8a19-f2213a22ac27",
