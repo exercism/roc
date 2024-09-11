@@ -152,6 +152,14 @@
         "difficulty": 2
       },
       {
+        "slug": "series",
+        "name": "Series",
+        "uuid": "fac9c337-2216-414d-a7be-50205d161f3f",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "sublist",
         "name": "Sublist",
         "uuid": "2b64b4ad-fdd6-47d0-b4b5-fb4b299816a6",
