@@ -264,6 +264,14 @@
         "difficulty": 3
       },
       {
+        "slug": "transpose",
+        "name": "Transpose",
+        "uuid": "d41e71c8-1b2d-4ea7-a3c4-def79b5827d0",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
         "slug": "anagram",
         "name": "Anagram",
         "uuid": "40942be8-7c32-4da3-acff-a2365087cd5d",
