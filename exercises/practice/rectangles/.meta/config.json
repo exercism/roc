@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "Rectangles.roc"
+    ],
+    "test": [
+      "rectangles-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Count the rectangles in an ASCII diagram."
+}
