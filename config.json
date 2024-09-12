@@ -237,7 +237,7 @@
         "uuid": "2eb30b47-a1e0-44e5-bb22-6085a938ddb5",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 3
       },
       {
         "slug": "reverse-string",
