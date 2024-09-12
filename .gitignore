@@ -30,9 +30,7 @@ bin/configlet
 *.beam
 *.pyc
 .ropeproject
-tmp
 .mypy_cache/
-.cache
 .pytest_cache
 __pycache__
 .venv
@@ -48,7 +46,8 @@ __pycache__
 .vimrc
 .nvimrc
 
-# Other files to ignore
+# Other files and directories to ignore
+.cache
 .envrc
 *.a
 *.bak
@@ -66,6 +65,7 @@ __pycache__
 *.swp
 *.tmp
 *.wasm
+tmp
 
 # valgrind
 vgcore.*
