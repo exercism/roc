@@ -312,6 +312,14 @@
         "difficulty": 5
       },
       {
+        "slug": "error-handling",
+        "name": "Error Handling",
+        "uuid": "a804dd5f-02cc-42e1-ab43-1f2c9ef0d0c4",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
         "slug": "flatten-array",
         "name": "Flatten Array",
         "uuid": "9962e586-f68f-40c8-8547-75cec77c0380",
