@@ -13,6 +13,6 @@ Color : [
     White,
 ]
 
-value : List Color -> Result U64 _
-value = \colors ->
+value : Color, Color -> U8
+value = \first, second ->
     crash "Please implement the 'value' function"

@@ -13,11 +13,9 @@ Color : [
     White,
 ]
 
-value : List Color -> Result U8 _
-value = \colors ->
-    when colors is
-        [first, second, ..] -> 10 * getCode first + getCode second |> Ok
-        _ -> Err InputTooShort
+value : Color, Color -> U8
+value = \first, second ->
+    10 * getCode first + getCode second
 
 getCode : Color -> U8
 getCode = \color ->
