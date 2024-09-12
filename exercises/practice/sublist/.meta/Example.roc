@@ -1,6 +1,6 @@
 module [sublist]
 
-sublist : List a, List a -> [Equal, Sublist, Superlist, Unequal] where a implements Eq
+sublist : List U8, List U8 -> [Equal, Sublist, Superlist, Unequal]
 sublist = \list1, list2 ->
     when List.len list1 |> Num.compare (List.len list2) is
         GT ->
