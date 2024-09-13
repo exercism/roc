@@ -1,12 +1,32 @@
 module [value]
 
-allColors = ["black", "brown", "red", "orange", "yellow", "green", "blue", "violet", "grey", "white"]
+Color : [
+    Black,
+    Brown,
+    Red,
+    Orange,
+    Yellow,
+    Green,
+    Blue,
+    Violet,
+    Grey,
+    White,
+]
 
-colorCode = \color ->
-    allColors |> List.findFirstIndex \elem -> elem == color
+value : Color, Color -> U8
+value = \first, second ->
+    10 * getCode first + getCode second
 
-value : List Str -> Result U64 [NotFound, OutOfBounds]
-value = \colors ->
-    first = colors |> List.get? 0 |> colorCode?
-    second = colors |> List.get? 1 |> colorCode?
-    10 * first + second |> Ok
+getCode : Color -> U8
+getCode = \color ->
+    when color is
+        Black -> 0
+        Brown -> 1
+        Red -> 2
+        Orange -> 3
+        Yellow -> 4
+        Green -> 5
+        Blue -> 6
+        Violet -> 7
+        Grey -> 8
+        White -> 9

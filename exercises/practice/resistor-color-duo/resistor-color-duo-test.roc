@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/resistor-color-duo/canonical-data.json
-# File last updated on 2024-08-27
+# File last updated on 2024-09-12
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
@@ -12,36 +12,31 @@ import ResistorColorDuo exposing [value]
 
 # Brown and black
 expect
-    result = value ["brown", "black"]
-    result == Ok 10
+    result = value Brown Black
+    result == 10
 
 # Blue and grey
 expect
-    result = value ["blue", "grey"]
-    result == Ok 68
+    result = value Blue Grey
+    result == 68
 
 # Yellow and violet
 expect
-    result = value ["yellow", "violet"]
-    result == Ok 47
+    result = value Yellow Violet
+    result == 47
 
 # White and red
 expect
-    result = value ["white", "red"]
-    result == Ok 92
+    result = value White Red
+    result == 92
 
 # Orange and orange
 expect
-    result = value ["orange", "orange"]
-    result == Ok 33
-
-# Ignore additional colors
-expect
-    result = value ["green", "brown", "orange"]
-    result == Ok 51
+    result = value Orange Orange
+    result == 33
 
 # Black and brown, one-digit
 expect
-    result = value ["black", "brown"]
-    result == Ok 1
+    result = value Black Brown
+    result == 1
 
