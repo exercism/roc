@@ -7,14 +7,12 @@ slices = \string, sliceLength ->
     if len == 0 || sliceLength == 0 || sliceLength > len then
         []
     else
-        maybeResult =
+        maybeList =
             List.range { start: At 0, end: At (len - sliceLength) }
-            |> List.map \startIndex ->
+            |> List.mapTry \startIndex ->
                 chars
                 |> List.sublist { start: startIndex, len: sliceLength }
                 |> Str.fromUtf8
-        if maybeResult |> List.any Result.isErr then
-            []
-        else
-            maybeResult
-            |> List.keepOks \x -> x
+        when maybeList is
+            Ok list -> list
+            Err (BadUtf8 _ _) -> crash "Only ASCII strings are supported"
