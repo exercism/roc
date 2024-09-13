@@ -1,0 +1,18 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+{%- if case["expected"]["error"] %} – just return an empty list{%- endif %}
+expect
+    result = {{ case["input"]["series"] | to_roc }} |> {{ case["property"] | to_camel }} {{ case["input"]["sliceLength"] | to_roc }}
+    {%- if case["expected"]["error"] %}
+    result == []
+    {%- else %}
+    result == {{ case["expected"] | to_roc }}
+    {%- endif %}
+
+{% endfor %}
