@@ -1,0 +1,38 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% set accumulators = {
+    "(x) => x * x": "\\x ->\n        x * x",
+    "(x) => upcase(x)": "toUpper",
+    "(x) => reverse(x)": "reverse",
+    "(x) => accumulate([\"1\", \"2\", \"3\"], (y) => x + y)": "\\x ->\n        accumulate [\"1\", \"2\", \"3\"] (\\y -> Str.concat x y)"
+} -%}
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    result = {{ case["property"] | to_camel }} {{ case["input"]["list"] | to_roc }} {{ accumulators[case["input"]["accumulator"]] }}
+    result == {{ case["expected"] | to_roc }}
+
+{% endfor %}
+
+reverse : Str -> Str
+reverse = \str ->
+    Str.toUtf8 str
+    |> List.reverse
+    |> Str.fromUtf8
+    |> Result.withDefault ""
+
+toUpper : Str -> Str
+toUpper = \str ->
+    Str.toUtf8 str
+    |> List.map \byte ->
+        if 'a' <= byte && byte <= 'z' then
+            byte - 'a' + 'A'
+        else
+            byte
+    |> Str.fromUtf8
+    |> Result.withDefault ""
