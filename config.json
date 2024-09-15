@@ -424,6 +424,14 @@
         "difficulty": 7
       },
       {
+        "slug": "grep",
+        "name": "Grep",
+        "uuid": "eefaa478-9e56-40b5-a378-4af53008c71d",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
+      },
+      {
         "slug": "rest-api",
         "name": "REST API",
         "uuid": "1d4dbe7a-6737-49fa-ae74-a1155dcdab40",
