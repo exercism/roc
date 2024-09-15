@@ -1,0 +1,15 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [grep]
+
+{% for case in cases -%}
+{% for innerCase in case["cases"] -%}
+# {{ case["description"] }} - {{ innerCase["description"] }}
+expect
+    result = {{ innerCase["property"] | to_camel }} {{ innerCase["input"]["pattern"] | to_roc }} {{ innerCase["input"]["flags"] | to_roc }} {{ innerCase["input"]["files"] | to_roc }}
+    result == Ok {{ innerCase["expected"] | join('\n') | to_roc_multiline_string | indent(8) }}
+
+{% endfor %}
+{% endfor %}

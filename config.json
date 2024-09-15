@@ -19,15 +19,9 @@
     "average_run_time": 2
   },
   "files": {
-    "solution": [
-      "%{pascal_slug}.roc"
-    ],
-    "test": [
-      "%{kebab_slug}-test.roc"
-    ],
-    "example": [
-      ".meta/Example.roc"
-    ]
+    "solution": ["%{pascal_slug}.roc"],
+    "test": ["%{kebab_slug}-test.roc"],
+    "example": [".meta/Example.roc"]
   },
   "exercises": {
     "practice": [
@@ -398,6 +392,14 @@
         "practices": [],
         "prerequisites": [],
         "difficulty": 6
+      },
+      {
+        "slug": "grep",
+        "name": "Grep",
+        "uuid": "eefaa478-9e56-40b5-a378-4af53008c71d",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 7
       },
       {
         "slug": "pig-latin",
