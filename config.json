@@ -288,6 +288,14 @@
         "difficulty": 3
       },
       {
+        "slug": "sieve",
+        "name": "Sieve",
+        "uuid": "47e2f7c0-94f7-49a1-b423-32c7e77d0a97",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "square-root",
         "name": "Square Root",
         "uuid": "c2b5fc60-aac2-46fb-b060-8482aa9f60a5",
