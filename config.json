@@ -72,6 +72,14 @@
         "difficulty": 1
       },
       {
+        "slug": "accumulate",
+        "name": "Accumulate",
+        "uuid": "8e8ad2db-88c2-4cca-88df-5add42efb3dc",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "clock",
         "name": "Clock",
         "uuid": "b1ebc201-5d23-4953-88d7-58c82def95b3",
@@ -181,7 +189,7 @@
         "uuid": "a4d3e64a-6bd4-43b8-a754-638d9c2ca763",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 2
       },
       {
         "slug": "triangle",
