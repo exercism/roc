@@ -1,8 +1,9 @@
 module [getUser, parseUserId, getPage, errorMessage]
 
 User : { name : Str }
+UserId : U64
 
-users : Dict U64 User
+users : Dict UserId User
 users =
     Dict.fromList [
         (123, { name: "Alice" }),
@@ -10,11 +11,11 @@ users =
         (789, { name: "Charlie" }),
     ]
 
-getUser : U64 -> Result User [UserNotFound U64]
+getUser : UserId -> Result User [UserNotFound UserId]
 getUser = \userId ->
     users |> Dict.get userId |> Result.mapErr \KeyNotFound -> UserNotFound userId
 
-parseUserId : Str -> Result U64 [InvalidUserId Str]
+parseUserId : Str -> Result UserId [InvalidUserId Str]
 parseUserId = \path ->
     userIdStr = path |> Str.replaceFirst "/users/" ""
     userIdStr |> Str.toU64 |> Result.mapErr \InvalidNumStr -> InvalidUserId userIdStr
@@ -29,7 +30,7 @@ parsePath = \url ->
     else
         Err (InsecureConnection url)
 
-getPage : Str -> Result Str [InsecureConnection Str, InvalidDomain Str, InvalidUserId Str, UserNotFound U64, PageNotFound Str]
+getPage : Str -> Result Str [InsecureConnection Str, InvalidDomain Str, InvalidUserId Str, UserNotFound UserId, PageNotFound Str]
 getPage = \url ->
     when parsePath? url is
         "/" -> Ok "Home page"
@@ -41,7 +42,7 @@ getPage = \url ->
 
         unknownPath -> Err (PageNotFound unknownPath)
 
-errorMessage : [InsecureConnection Str, InvalidDomain Str, InvalidUserId Str, UserNotFound U64, PageNotFound Str], [English, French] -> Str
+errorMessage : [InsecureConnection Str, InvalidDomain Str, InvalidUserId Str, UserNotFound UserId, PageNotFound Str], [English, French] -> Str
 errorMessage = \err, language ->
     when language is
         English ->

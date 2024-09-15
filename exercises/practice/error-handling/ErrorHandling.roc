@@ -1,8 +1,9 @@
 module [getUser, parseUserId, getPage, errorMessage]
 
 User : { name : Str }
+UserId : U64
 
-users : Dict U64 User
+users : Dict UserId User
 users =
     Dict.fromList [
         (123, { name: "Alice" }),
@@ -10,11 +11,11 @@ users =
         (789, { name: "Charlie" }),
     ]
 
-getUser : U64 -> Result User [UserNotFound Str]
+getUser : UserId -> Result User [UserNotFound Str]
 getUser = \userId ->
     crash "Please implement the 'getUser' function"
 
-parseUserId : Str -> Result U64 [InvalidUserId Str]
+parseUserId : Str -> Result UserId [InvalidUserId Str]
 parseUserId = \path ->
     crash "Please implement the 'parseUserId' function"
 
