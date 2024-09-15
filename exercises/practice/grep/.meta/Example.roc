@@ -9,12 +9,11 @@ grep = \pattern, flags, fileNames ->
     config = parseFlags? flags
     files = collectFiles? fileNames
     displayFileNames = List.len files > 1
-    List.joinMap files \{ name, text } ->
-        matches = findMatches config pattern text
-        when matches is
+    List.joinMap files \file ->
+        when findMatches config pattern file.text is
             [] -> []
-            _ if config.displayFileNames -> [name]
-            _ ->
+            _ if config.displayFileNames -> [file.name]
+            matches ->
                 List.map matches \{ line, index } ->
                     lineNumber =
                         if config.displayLineNumbers then
@@ -23,7 +22,7 @@ grep = \pattern, flags, fileNames ->
                             ""
                     fileName =
                         if displayFileNames then
-                            "$(name):"
+                            "$(file.name):"
                         else
                             ""
                     "$(fileName)$(lineNumber)$(line)"
@@ -48,10 +47,8 @@ findMatches = \config, pattern, text ->
             else
                 Str.contains lineToMatch patternToMatch
 
-        if config.invertResults then
-            !matches
-        else
-            matches
+        # Using != is equivalent to xor which inverts `matches`
+        config.invertResults != matches
 
 toLower : Str -> Str
 toLower = \str ->
