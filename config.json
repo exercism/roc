@@ -360,6 +360,14 @@
         "difficulty": 5
       },
       {
+        "slug": "circular-buffer",
+        "name": "Circular Buffer",
+        "uuid": "521c505e-edb6-4a9c-82e8-44eed527e9ff",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "flatten-array",
         "name": "Flatten Array",
         "uuid": "9962e586-f68f-40c8-8547-75cec77c0380",

@@ -1,0 +1,46 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [create, read, write, overwrite, clear]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+runOperations{{ loop.index }} =
+    result =
+        create { capacity: {{ case["input"]["capacity"] }} }
+        {%- for op in case["input"]["operations"] -%}
+        {%- if op["operation"] == "clear" %}
+        |> clear
+        {%- elif op["operation"] == "overwrite" %}
+        |> overwrite {{ op["item"] }}
+        {%- elif op["operation"] == "write" %}
+        {%- if op["should_succeed"] %}
+        |> write? {{ op["item"] }}
+        {%- else %}
+        |> \bufferBeforeWrite ->
+            writeResult = bufferBeforeWrite |> write {{ op["item"] }}
+            expect writeResult == Err BufferFull
+            bufferBeforeWrite
+        {%- endif %}
+        {%- elif op["operation"] == "read" %}
+        {%- if op["should_succeed"] %}
+        |> read? |> \readResult ->
+            expect readResult.value == {{ op["expected"] }}
+            readResult.newBuffer
+        {%- else %}
+        |> \bufferBeforeRead ->
+            readResult = bufferBeforeRead |> read
+            expect readResult == Err BufferEmpty
+            bufferBeforeRead
+        {%- endif %}
+        {%- endif %}
+        {%- endfor %}
+    Ok result
+
+expect
+    
+    result = runOperations{{ loop.index }}
+    result |> Result.isOk
+
+{% endfor %}
