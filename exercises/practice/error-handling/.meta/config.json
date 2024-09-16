@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "ErrorHandling.roc"
+    ],
+    "test": [
+      "error-handling-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Implement various kinds of error handling and resource management."
+}
