@@ -1,0 +1,38 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [create, add, subtract, toStr]
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+{%- if case["property"] == "create" %}
+expect
+    clock = create {{ plugins.to_hours_minutes_record(case["input"]) }}
+    result = clock |> toStr
+    expected = {{ case["expected"] | to_roc }} 
+    result == expected
+{%- elif case["property"] in ["add", "subtract"] %}
+expect
+    clock = create {{ plugins.to_hours_minutes_record(case["input"]) }}
+    result = clock |> {{ case["property"] | to_camel }} { minutes: {{ case["input"]["value"] }} } |> toStr
+    expected = {{ case["expected"] | to_roc }} 
+    result == expected
+{%- elif case["property"] == "equal" %}
+expect
+    clock1 = create {{ plugins.to_hours_minutes_record(case["input"]["clock1"]) }}
+    clock2 = create {{ plugins.to_hours_minutes_record(case["input"]["clock2"]) }}
+    clock1 {%- if case["expected"] %} == {%- else %} != {% endif %} clock2
+
+{%- else %}
+# this test case is not implemented yet. Perhaps you can give it a try?
+{%- endif %}
+
+{% endfor %}
+{% endfor %}
+

@@ -1,6 +1,77 @@
-*.swp
-.DS_Store
-bin/configlet
+### Do not modify these first three ignore rules.  Needed to ignore files with no extension ###
+# Ignore all files including binary files that have no extension
+*
+# Unignore all files with extensions
+!*.*
+# Unignore all directories
+!*/
+
+# Specifically keep these files with no extension
+!Dockerfile
+!LICENSE*
+!LEGAL*
+!bin/add-exercise
+!bin/fetch-configlet
+!bin/install-roc
+!bin/verify-exercises
+
+# Ignore *.exe files except those in bin/
+*.exe
+!bin/*.exe
+
+# Ignore configlet
 bin/configlet.exe
+bin/configlet
+
+# Ignore problem specs directory
 .problem-specifications/
-**/__pycache__/
+
+# Ignore Python files
+*.beam
+*.pyc
+.ropeproject
+.mypy_cache/
+.pytest_cache
+__pycache__
+.venv
+
+# macOS .DS_Store files
+.DS_Store
+
+#editors
+.idea/
+.vscode/
+.ignore
+.exrc
+.vimrc
+.nvimrc
+
+# Other files and directories to ignore
+.cache
+.envrc
+*.a
+*.bak
+*.bc
+*.bk
+*.def
+*.dll
+*.dylib
+*.lib
+*.ll
+*.obj
+*.pdb
+*.so
+*.so.*
+*.swp
+*.tmp
+*.wasm
+tmp
+
+# valgrind
+vgcore.*
+
+# roc cache files
+*.rh*
+*.rm*
+preprocessedhost
+metadata

@@ -72,6 +72,22 @@
         "difficulty": 1
       },
       {
+        "slug": "accumulate",
+        "name": "Accumulate",
+        "uuid": "8e8ad2db-88c2-4cca-88df-5add42efb3dc",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
+        "slug": "clock",
+        "name": "Clock",
+        "uuid": "b1ebc201-5d23-4953-88d7-58c82def95b3",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "collatz-conjecture",
         "name": "Collatz Conjecture",
         "uuid": "39d17f08-a506-4d0e-8846-34e7c622160b",
@@ -152,6 +168,14 @@
         "difficulty": 2
       },
       {
+        "slug": "series",
+        "name": "Series",
+        "uuid": "fac9c337-2216-414d-a7be-50205d161f3f",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "sublist",
         "name": "Sublist",
         "uuid": "2b64b4ad-fdd6-47d0-b4b5-fb4b299816a6",
@@ -165,7 +189,7 @@
         "uuid": "a4d3e64a-6bd4-43b8-a754-638d9c2ca763",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 2
       },
       {
         "slug": "triangle",
@@ -240,6 +264,14 @@
         "difficulty": 3
       },
       {
+        "slug": "rectangles",
+        "name": "Rectangles",
+        "uuid": "2eb30b47-a1e0-44e5-bb22-6085a938ddb5",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "reverse-string",
         "name": "Reverse String",
         "uuid": "7bd2e210-08aa-45e9-8a19-f2213a22ac27",
@@ -256,9 +288,25 @@
         "difficulty": 3
       },
       {
+        "slug": "sieve",
+        "name": "Sieve",
+        "uuid": "47e2f7c0-94f7-49a1-b423-32c7e77d0a97",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "square-root",
         "name": "Square Root",
         "uuid": "c2b5fc60-aac2-46fb-b060-8482aa9f60a5",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "transpose",
+        "name": "Transpose",
+        "uuid": "d41e71c8-1b2d-4ea7-a3c4-def79b5827d0",
         "practices": [],
         "prerequisites": [],
         "difficulty": 3
@@ -312,12 +360,20 @@
         "difficulty": 5
       },
       {
+        "slug": "circular-buffer",
+        "name": "Circular Buffer",
+        "uuid": "521c505e-edb6-4a9c-82e8-44eed527e9ff",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "error-handling",
         "name": "Error Handling",
         "uuid": "a804dd5f-02cc-42e1-ab43-1f2c9ef0d0c4",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 1
+        "difficulty": 5
       },
       {
         "slug": "flatten-array",
@@ -390,6 +446,14 @@
         "practices": [],
         "prerequisites": [],
         "difficulty": 7
+      },
+      {
+        "slug": "grep",
+        "name": "Grep",
+        "uuid": "eefaa478-9e56-40b5-a378-4af53008c71d",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
       },
       {
         "slug": "rest-api",

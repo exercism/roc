@@ -1,0 +1,19 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "CircularBuffer.roc"
+    ],
+    "test": [
+      "circular-buffer-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "A data structure that uses a single, fixed-size buffer as if it were connected end-to-end.",
+  "source": "Wikipedia",
+  "source_url": "https://en.wikipedia.org/wiki/Circular_buffer"
+}
