@@ -9,19 +9,17 @@ isPaired = \string ->
         when remainingChars is
             [] -> List.isEmpty openBrackets # ok or missing closing bracket
             [nextChar, .. as restChars] ->
-                when nextChar is
-                    open if isOpen open ->
-                        help (openBrackets |> List.append open) restChars
-
-                    close if isClose close ->
-                        when openBrackets is
-                            [] -> Bool.false # missing opening bracket
-                            [.. as restOpen, open] ->
-                                if isMatch (open, close) then
-                                    help restOpen restChars
-                                else
-                                    Bool.false # mismatching brackets
-
-                    _otherChar -> help openBrackets restChars
+                if isOpen nextChar then
+                    help (openBrackets |> List.append nextChar) restChars
+                else if isClose nextChar then
+                    when openBrackets is
+                        [] -> Bool.false # missing opening bracket
+                        [.. as previousOpens, lastOpen] ->
+                            if isMatch (lastOpen, nextChar) then
+                                help previousOpens restChars
+                            else
+                                Bool.false # mismatching brackets
+                else
+                    help openBrackets restChars
 
     help [] (string |> Str.toUtf8)
