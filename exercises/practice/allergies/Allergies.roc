@@ -1,15 +1,6 @@
 module [allergicTo, list]
 
-Allergen : [
-    Eggs,
-    Peanuts,
-    Shellfish,
-    Strawberries,
-    Tomatoes,
-    Chocolate,
-    Pollen,
-    Cats,
-]
+Allergen : [Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]
 
 allergicTo : Allergen, U64 -> Bool
 allergicTo = \allergen, score ->

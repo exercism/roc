@@ -320,6 +320,14 @@
         "difficulty": 3
       },
       {
+        "slug": "allergies",
+        "name": "Allergies",
+        "uuid": "f87c8bf3-fcad-4049-af89-73bc38e1b3c6",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "anagram",
         "name": "Anagram",
         "uuid": "40942be8-7c32-4da3-acff-a2365087cd5d",
