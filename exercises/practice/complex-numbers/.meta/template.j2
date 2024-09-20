@@ -1,0 +1,51 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [real, imaginary, add, sub, mul, div, conjugate, abs, exp]
+
+isApproxEq = \z1, z2 ->
+    z1.re |> Num.isApproxEq z2.re {} && z1.im |> Num.isApproxEq z2.im {}
+
+{% for supercase in cases %}
+###
+### {{ supercase["description"] }}
+###
+
+{% for case in supercase["cases"] -%}
+{%- if case["cases"] %}
+## {{ case["description"] }}
+{%- set subcases = case["cases"] %}
+{%- else %}
+{%- set subcases = [case] %}
+{%- endif %}
+
+{% for subcase in subcases -%}
+# {{ subcase["description"] }}
+{%- if subcase["input"]["z"] %}
+expect
+    z = {{ plugins.to_complex_number(subcase["input"]["z"]) }}
+    result = {{ subcase["property"] }} z
+    {%- if subcase["expected"] is iterable and subcase["expected"] is not string %}
+    expected = {{ plugins.to_complex_number(subcase["expected"]) }}
+    result |> isApproxEq expected
+    {%- else %}
+    result |> Num.isApproxEq {{ subcase["expected"] | to_roc }} {}
+    {%- endif %}
+    
+{%- elif subcase["input"]["z1"] %}
+expect
+    z1 = {{ plugins.to_complex_number(subcase["input"]["z1"]) }}
+    z2 = {{ plugins.to_complex_number(subcase["input"]["z2"]) }}
+    result = z1 |> {{ subcase["property"] }} z2
+    expected = {{ plugins.to_complex_number(subcase["expected"]) }}
+    result |> isApproxEq expected
+{%- else %}
+# This test case is not implemented: perhaps you can implement it?
+{%- endif %}
+
+{% endfor %}
+
+{% endfor %}
+{% endfor %}
+
