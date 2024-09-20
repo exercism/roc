@@ -264,6 +264,14 @@
         "difficulty": 3
       },
       {
+        "slug": "matrix",
+        "name": "Matrix",
+        "uuid": "c82cc59d-9428-48c8-8c17-908f1dc0ffb3",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
         "slug": "pangram",
         "name": "Pangram",
         "uuid": "b760f4aa-bc7d-4e88-b57d-ce424f44f2be",
