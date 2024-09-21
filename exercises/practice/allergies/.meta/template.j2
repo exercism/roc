@@ -1,0 +1,20 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [allergicTo, set]
+
+{% for outerCase in cases -%}
+{% for case in outerCase["cases"] %}
+# {{ outerCase["description"] }} {{ case["description"] | default('') }}
+expect
+    {%- if case["property"] == "allergicTo" %}
+    result = allergicTo {{ case["input"]["item"] | to_pascal }} {{ case["input"]["score"] | to_roc }}
+    result == {{ case["expected"] | to_roc }}
+    {%- else %}
+    result = set {{ case["input"]["score"] }}
+    result == Set.fromList [{{ case["expected"] | map('to_pascal') | join(", ") }}]
+    {%- endif %}
+
+{% endfor %}
+{% endfor %}
