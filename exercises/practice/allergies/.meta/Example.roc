@@ -1,39 +1,16 @@
-module [allergicTo, list]
+module [allergicTo, set]
 
 Allergen : [Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]
 
 allergicTo : Allergen, U64 -> Bool
 allergicTo = \allergen, score ->
-    list score
+    set score
     |> Set.contains allergen
 
-list : U64 -> Set Allergen
-list = \score ->
-    removeLargePowers = \s ->
-        if s >= 256 then
-            removeLargePowers (s - largestPowerOfTwo s)
-        else
-            s
-
-    List.walk values { set: Set.empty {}, remaining: removeLargePowers score } \{ set, remaining }, { allergen, value } ->
-        if value <= remaining then
-            { set: Set.insert set allergen, remaining: remaining - value }
-        else
-            { set, remaining }
-    |> .set
-
-largestPowerOfTwo : U64 -> U64
-largestPowerOfTwo = \number ->
-    help = \remaining, power ->
-        if remaining < 2 then
-            power
-        else
-            help (remaining // 2) (power * 2)
-    help number 1
-
-values : List { allergen : Allergen, value : U64 }
-values =
+set : U64 -> Set Allergen
+set = \score ->
     [Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]
-    |> List.mapWithIndex \allergen, index ->
-        { allergen, value: Num.powInt 2 index }
-    |> List.reverse
+    |> List.walk { bits: score, allergies: Set.empty {} } \{ bits, allergies }, allergy ->
+        updatedAllergies = if bits % 2 == 0 then allergies else allergies |> Set.insert allergy
+        { bits: bits // 2, allergies: updatedAllergies }
+    |> .allergies

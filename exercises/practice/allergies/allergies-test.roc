@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/allergies/canonical-data.json
-# File last updated on 2024-09-20
+# File last updated on 2024-09-21
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
@@ -8,7 +8,7 @@ app [main] {
 main =
     Task.ok {}
 
-import Allergies exposing [allergicTo, list]
+import Allergies exposing [allergicTo, set]
 
 # testing for eggs allergy not allergic to anything
 expect
@@ -212,51 +212,51 @@ expect
 
 # list when: no allergies
 expect
-    result = list 0
+    result = set 0
     result == Set.fromList []
 
 # list when: just eggs
 expect
-    result = list 1
+    result = set 1
     result == Set.fromList [Eggs]
 
 # list when: just peanuts
 expect
-    result = list 2
+    result = set 2
     result == Set.fromList [Peanuts]
 
 # list when: just strawberries
 expect
-    result = list 8
+    result = set 8
     result == Set.fromList [Strawberries]
 
 # list when: eggs and peanuts
 expect
-    result = list 3
+    result = set 3
     result == Set.fromList [Eggs, Peanuts]
 
 # list when: more than eggs but not peanuts
 expect
-    result = list 5
+    result = set 5
     result == Set.fromList [Eggs, Shellfish]
 
 # list when: lots of stuff
 expect
-    result = list 248
+    result = set 248
     result == Set.fromList [Strawberries, Tomatoes, Chocolate, Pollen, Cats]
 
 # list when: everything
 expect
-    result = list 255
+    result = set 255
     result == Set.fromList [Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]
 
 # list when: no allergen score parts
 expect
-    result = list 509
+    result = set 509
     result == Set.fromList [Eggs, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]
 
 # list when: no allergen score parts without highest valid score
 expect
-    result = list 257
+    result = set 257
     result == Set.fromList [Eggs]
 

@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [allergicTo, list]
+import {{ exercise | to_pascal }} exposing [allergicTo, set]
 
 {% for outerCase in cases -%}
 {% for case in outerCase["cases"] %}
@@ -12,7 +12,7 @@ expect
     result = allergicTo {{ case["input"]["item"] | to_pascal }} {{ case["input"]["score"] | to_roc }}
     result == {{ case["expected"] | to_roc }}
     {%- else %}
-    result = list {{ case["input"]["score"] }}
+    result = set {{ case["input"]["score"] }}
     result == Set.fromList [{{ case["expected"] | map('to_pascal') | join(", ") }}]
     {%- endif %}
 
