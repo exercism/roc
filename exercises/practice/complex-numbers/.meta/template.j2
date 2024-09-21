@@ -32,7 +32,6 @@ expect
     {%- else %}
     result |> Num.isApproxEq {{ subcase["expected"] | to_roc }} {}
     {%- endif %}
-    
 {%- elif subcase["input"]["z1"] %}
 expect
     z1 = {{ plugins.to_complex_number(subcase["input"]["z1"]) }}
@@ -40,8 +39,6 @@ expect
     result = z1 |> {{ subcase["property"] }} z2
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
     result |> isApproxEq expected
-{%- else %}
-# This test case is not implemented: perhaps you can implement it?
 {%- endif %}
 
 {% endfor %}
