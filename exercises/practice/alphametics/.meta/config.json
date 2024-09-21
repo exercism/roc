@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "isaacvando"
+  ],
+  "files": {
+    "solution": [
+      "Alphametics.roc"
+    ],
+    "test": [
+      "alphametics-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Given an alphametics puzzle, find the correct solution."
+}

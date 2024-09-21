@@ -1,0 +1,20 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    result = {{ case["property"] | to_camel }} {{ case["input"]["puzzle"] | to_roc }}
+    {%- if case["expected"] %}
+    result == Set.fromList [
+    {%- for letter, value in case["expected"].items() %}
+        ('{{ letter }}', {{ value }}),
+    {%- endfor %}
+        ]
+    {%- else %}
+    Result.isErr result
+    {%- endif %}
+{% endfor %}
