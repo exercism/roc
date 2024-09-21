@@ -1,0 +1,34 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [create, canAttack]
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+{%- if case["property"] == "create" %}
+expect
+    result = create { row : {{ case["input"]["queen"]["position"]["row"] }}, column : {{ case["input"]["queen"]["position"]["column"] }} }
+    {%- if case["expected"] == 0 %}
+    expected = Ok { row : {{ case["input"]["queen"]["position"]["row"] }}, column : {{ case["input"]["queen"]["position"]["column"] }} }
+    result == expected
+    {%- else %}
+    result |> Result.isErr
+    {%- endif %}
+{%- elif case["property"] == "canAttack" %}
+expect
+    maybeWhiteQueen = create { row : {{ case["input"]["white_queen"]["position"]["row"] }}, column : {{ case["input"]["white_queen"]["position"]["column"] }} }
+    maybeBlackQueen = create { row : {{ case["input"]["black_queen"]["position"]["row"] }}, column : {{ case["input"]["black_queen"]["position"]["column"] }} }
+    result = when (maybeWhiteQueen, maybeBlackQueen) is
+        (Ok whiteQueen, Ok blackQueen) -> whiteQueen |> canAttack blackQueen
+        _ -> Bool.false
+    result == {{ case["expected"] | to_roc }}
+{%- endif %}
+
+{% endfor %}
+{% endfor %}
