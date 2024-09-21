@@ -9,29 +9,29 @@ imaginary : Complex -> F64
 imaginary = \z -> z.im
 
 add : Complex, Complex -> Complex
-add = \z1, z2 -> {
-    re: z1.re + z2.re,
-    im: z1.im + z2.im,
+add = \{ re: a, im: b }, { re: c, im: d } -> {
+    re: a + c,
+    im: b + d,
 }
 
 sub : Complex, Complex -> Complex
-sub = \z1, z2 -> {
-    re: z1.re - z2.re,
-    im: z1.im - z2.im,
+sub = \{ re: a, im: b }, { re: c, im: d } -> {
+    re: a - c,
+    im: b - d,
 }
 
 mul : Complex, Complex -> Complex
-mul = \z1, z2 -> {
-    re: z1.re * z2.re - z1.im * z2.im,
-    im: z1.re * z2.im + z1.im * z2.re,
+mul = \{ re: a, im: b }, { re: c, im: d } -> {
+    re: a * c - b * d,
+    im: a * d + b * c,
 }
 
 div : Complex, Complex -> Complex
-div = \z1, z2 ->
-    denominator = z2.re * z2.re + z2.im * z2.im
+div = \{ re: a, im: b }, { re: c, im: d } ->
+    denominator = c * c + d * d
     {
-        re: (z1.re * z2.re + z1.im * z2.im) / denominator,
-        im: (z1.im * z2.re - z1.re * z2.im) / denominator,
+        re: (a * c + b * d) / denominator,
+        im: (b * c - a * d) / denominator,
     }
 
 conjugate : Complex -> Complex
@@ -41,8 +41,8 @@ conjugate = \z -> {
 }
 
 abs : Complex -> F64
-abs = \z ->
-    z.re * z.re + z.im * z.im |> Num.sqrt
+abs = \{ re: a, im: b } ->
+    a * a + b * b |> Num.sqrt
 
 exp : Complex -> Complex
 exp = \z ->
