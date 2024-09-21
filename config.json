@@ -296,6 +296,14 @@
         "difficulty": 3
       },
       {
+        "slug": "queen-attack",
+        "name": "Queen Attack",
+        "uuid": "a246b648-cad7-4cff-b776-562896689a13",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "rectangles",
         "name": "Rectangles",
         "uuid": "2eb30b47-a1e0-44e5-bb22-6085a938ddb5",
