@@ -496,6 +496,14 @@
         "difficulty": 7
       },
       {
+        "slug": "alphametics",
+        "name": "Alphametics",
+        "uuid": "6bd98d4f-f95a-4fa2-981a-1684bd42334d",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
+      },
+      {
         "slug": "dominoes",
         "name": "Dominoes",
         "uuid": "baeabe4e-6d9b-4fa5-b8a7-22b1977d840e",
