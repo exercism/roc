@@ -12,8 +12,7 @@ solve = \problem ->
             insertTerm dict term 1
         |> insertTerm sum -1
 
-    # Leading digits can't be zero
-    cantBeZero =
+    leadingDigits =
         List.map addends \letters ->
             List.first letters |> Result.withDefault 0
         |> Set.fromList
@@ -35,14 +34,14 @@ solve = \problem ->
 
                 Ok assignments
 
-            [variable, .. as rest] ->
+            [letter, .. as rest] ->
                 findFirstOk remainingDigits \digit ->
-                    if digit == 0 && Set.contains cantBeZero variable then
+                    if digit == 0 && Set.contains leadingDigits letter then
                         Err InvalidAssignment
                         else
 
                     # Each digit has to be unique, so once we use a digit we remove it from the pool
-                    findMatch (List.append assignments (variable, digit)) rest (Set.remove remainingDigits digit)
+                    findMatch (List.append assignments (letter, digit)) rest (Set.remove remainingDigits digit)
 
     digits = List.range { start: At 0, end: At 9 } |> Set.fromList
     findMatch [] (Dict.keys equation) digits
