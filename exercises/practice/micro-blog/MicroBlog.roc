@@ -1,4 +1,7 @@
-module [microBlog]
+module [truncate]
 
-microBlog = \myArg ->
-    crash "Please implement the 'microBlog' function"
+import unicode.CodePoint
+
+truncate : Str -> Result Str _
+truncate = \input ->
+    crash "Please implement 'truncate'"
