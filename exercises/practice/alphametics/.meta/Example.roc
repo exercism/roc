@@ -4,11 +4,15 @@ solve : Str -> Result (List (U8, U8)) _
 solve = \problem ->
     { addends, sum } = parse? problem
 
+    # We can represent the equation as a dictionary of the letters mapped to their coefficients
+    # when we simplify the equation. For example, we can write AB + A + B == C as 11A + 2B + (-1)C == 0.
+    # That then becomes this dictionary: `Dict.fromList [('A', 11), ('B', 2), ('C', -1)]
     equation =
         List.walk addends (Dict.empty {}) \dict, term ->
             insertTerm dict term 1
         |> insertTerm sum -1
 
+    # Leading digits can't be zero
     cantBeZero =
         List.map addends \letters ->
             List.first letters |> Result.withDefault 0
@@ -32,23 +36,24 @@ solve = \problem ->
                 Ok assignments
 
             [variable, .. as rest] ->
-                findFirstOk (Set.toList remainingDigits) \digit ->
+                findFirstOk remainingDigits \digit ->
                     if digit == 0 && Set.contains cantBeZero variable then
                         Err InvalidAssignment
                         else
 
+                    # Each digit has to be unique, so once we use a digit we remove it from the pool
                     findMatch (List.append assignments (variable, digit)) rest (Set.remove remainingDigits digit)
 
-    findMatch [] (Dict.keys equation) (List.range { start: At 0, end: At 9 } |> Set.fromList)
+    digits = List.range { start: At 0, end: At 9 } |> Set.fromList
+    findMatch [] (Dict.keys equation) digits
 
-# Apply a function to each element of a list until the function returns an Ok, then return that value.
-findFirstOk : List a, (a -> Result b err) -> Result b [NotFound]
-findFirstOk = \list, func ->
-    when list is
-        [] -> Err NotFound
-        [first, .. as rest] ->
-            func first
-            |> Result.onErr \_ -> findFirstOk rest func
+# Apply a function to each element of a list until the function returns an Ok, then return that value
+findFirstOk : Set a, (a -> Result b err) -> Result b [NotFound]
+findFirstOk = \set, func ->
+    Set.walkUntil set (Err NotFound) \state, elem ->
+        when func elem is
+            Err _ -> Continue state
+            Ok val -> Break (Ok val)
 
 # Update the equation with the values of a term
 insertTerm : Dict U8 I64, List U8, I64 -> Dict U8 I64
