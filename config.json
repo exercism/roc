@@ -376,6 +376,14 @@
         "difficulty": 4
       },
       {
+        "slug": "food-chain",
+        "name": "Food Chain",
+        "uuid": "8677f6c7-fd79-4212-b151-cbf9bc8bfaa1",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "house",
         "name": "House",
         "uuid": "3e832749-3036-432b-a4a4-3aab4e599377",
@@ -534,14 +542,6 @@
         "practices": [],
         "prerequisites": [],
         "difficulty": 9
-      },
-      {
-        "slug": "food-chain",
-        "name": "Food Chain",
-        "uuid": "8677f6c7-fd79-4212-b151-cbf9bc8bfaa1",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 1
       }
     ]
   },

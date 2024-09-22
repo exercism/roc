@@ -10,23 +10,34 @@ verseList =
     initialState = { verses: [], verseBody: "I don't know why she swallowed the fly. Perhaps she'll die.", previousAnimal: "fly" }
     result =
         List.walk animals initialState \{ verses, verseBody, previousAnimal }, animal ->
-            firstLine = "I know an old lady who swallowed a $(animal.name)."
+            description = Dict.get animalDescriptions previousAnimal |> Result.withDefault ""
             newVerseBody =
                 """
-                She swallowed the $(animal.name) to catch the $(previousAnimal)$(Dict.get animalDescriptions previousAnimal |> Result.withDefault "").
+                She swallowed the $(animal.name) to catch the $(previousAnimal)$(description).
                 $(verseBody)
                 """
-            verse =
+            exclamation =
                 when animal.exclamation is
-                    Ok e -> [firstLine, e, newVerseBody] |> Str.joinWith "\n"
-                    Err _ -> [firstLine, newVerseBody] |> Str.joinWith "\n"
-
-            { verses: List.append verses verse, verseBody: newVerseBody, previousAnimal: animal.name }
+                    Ok e -> "\n$(e)"
+                    Err _ -> ""
+            verse =
+                """
+                I know an old lady who swallowed a $(animal.name).$(exclamation)
+                $(newVerseBody)
+                """
+            {
+                verses: List.append verses verse,
+                verseBody: newVerseBody,
+                previousAnimal: animal.name,
+            }
     List.join [[firstVerse], result.verses, [lastVerse]]
 
+# I would prefer to use an if expression here, but I ran into a compiler bug doing that
+animalDescriptions : Dict Str Str
 animalDescriptions =
     Dict.single "spider" " that wriggled and jiggled and tickled inside her"
 
+animals : List { name : Str, exclamation : Result Str {} }
 animals = [
     { name: "spider", exclamation: Ok "It wriggled and jiggled and tickled inside her." },
     { name: "bird", exclamation: Ok "How absurd to swallow a bird!" },
@@ -36,12 +47,14 @@ animals = [
     { name: "cow", exclamation: Ok "I don't know how she swallowed a cow!" },
 ]
 
+firstVerse : Str
 firstVerse =
     """
     I know an old lady who swallowed a fly.
     I don't know why she swallowed the fly. Perhaps she'll die.
     """
 
+lastVerse : Str
 lastVerse =
     """
     I know an old lady who swallowed a horse.
