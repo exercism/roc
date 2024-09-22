@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "isaacvando"
+  ],
+  "files": {
+    "solution": [
+      "MicroBlog.roc"
+    ],
+    "test": [
+      "micro-blog-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Given an input string, truncate it to 5 characters."
+}

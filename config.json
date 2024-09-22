@@ -136,6 +136,14 @@
         "difficulty": 2
       },
       {
+        "slug": "micro-blog",
+        "name": "Micro Blog",
+        "uuid": "9e0dc2b5-48f8-4db7-b36f-45be89db7602",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "nucleotide-count",
         "name": "Nucleotide Count",
         "uuid": "9f07740b-eb8a-45f9-a137-e2930a224815",
@@ -379,6 +387,14 @@
         "slug": "eliuds-eggs",
         "name": "Eliud's Eggs",
         "uuid": "697273e9-a30c-47bc-bcb7-21aa0b776dd1",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
+        "slug": "food-chain",
+        "name": "Food Chain",
+        "uuid": "8677f6c7-fd79-4212-b151-cbf9bc8bfaa1",
         "practices": [],
         "prerequisites": [],
         "difficulty": 4
