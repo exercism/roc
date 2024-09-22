@@ -496,6 +496,14 @@
         "difficulty": 7
       },
       {
+        "slug": "dominoes",
+        "name": "Dominoes",
+        "uuid": "baeabe4e-6d9b-4fa5-b8a7-22b1977d840e",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
+      },
+      {
         "slug": "grep",
         "name": "Grep",
         "uuid": "eefaa478-9e56-40b5-a378-4af53008c71d",
