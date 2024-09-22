@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/grep/canonical-data.json
 # File last updated on 2024-09-15
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br"
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
 
 main =
@@ -43,7 +43,8 @@ expect
 # Test grepping a single file - One file, several matches, no flags
 expect
     result = grep "may" [] ["midsummer-night.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         Nor how it may concern my modesty,
         But I beseech your grace that I may know
@@ -53,7 +54,8 @@ expect
 # Test grepping a single file - One file, several matches, print line numbers flag
 expect
     result = grep "may" ["-n"] ["midsummer-night.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         3:Nor how it may concern my modesty,
         5:But I beseech your grace that I may know
@@ -68,7 +70,8 @@ expect
 # Test grepping a single file - One file, several matches, case-insensitive flag
 expect
     result = grep "ACHILLES" ["-i"] ["iliad.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         Achilles sing, O Goddess! Peleus' son;
         The noble Chief Achilles from the son
@@ -77,7 +80,8 @@ expect
 # Test grepping a single file - One file, several matches, inverted flag
 expect
     result = grep "Of" ["-v"] ["paradise-lost.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         Brought Death into the World, and all our woe,
         With loss of Eden, till one greater Man
@@ -99,7 +103,8 @@ expect
 # Test grepping a single file - One file, several matches, inverted and match entire lines flags
 expect
     result = grep "Illustrious into Ades premature," ["-x", "-v"] ["iliad.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         Achilles sing, O Goddess! Peleus' son;
         His wrath pernicious, who ten thousand woes
@@ -111,7 +116,6 @@ expect
         Of Atreus, Agamemnon, King of men.
         """
 
-
 # Test grepping multiples files at once - Multiple files, one match, no flags
 expect
     result = grep "Agamemnon" [] ["iliad.txt", "midsummer-night.txt", "paradise-lost.txt"]
@@ -120,7 +124,8 @@ expect
 # Test grepping multiples files at once - Multiple files, several matches, no flags
 expect
     result = grep "may" [] ["iliad.txt", "midsummer-night.txt", "paradise-lost.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         midsummer-night.txt:Nor how it may concern my modesty,
         midsummer-night.txt:But I beseech your grace that I may know
@@ -130,7 +135,8 @@ expect
 # Test grepping multiples files at once - Multiple files, several matches, print line numbers flag
 expect
     result = grep "that" ["-n"] ["iliad.txt", "midsummer-night.txt", "paradise-lost.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         midsummer-night.txt:5:But I beseech your grace that I may know
         midsummer-night.txt:6:The worst that may befall me in this case,
@@ -141,7 +147,8 @@ expect
 # Test grepping multiples files at once - Multiple files, one match, print file names flag
 expect
     result = grep "who" ["-l"] ["iliad.txt", "midsummer-night.txt", "paradise-lost.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         iliad.txt
         paradise-lost.txt
@@ -150,7 +157,8 @@ expect
 # Test grepping multiples files at once - Multiple files, several matches, case-insensitive flag
 expect
     result = grep "TO" ["-i"] ["iliad.txt", "midsummer-night.txt", "paradise-lost.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         iliad.txt:Caused to Achaia's host, sent many a soul
         iliad.txt:Illustrious into Ades premature,
@@ -167,7 +175,8 @@ expect
 # Test grepping multiples files at once - Multiple files, several matches, inverted flag
 expect
     result = grep "a" ["-v"] ["iliad.txt", "midsummer-night.txt", "paradise-lost.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         iliad.txt:Achilles sing, O Goddess! Peleus' son;
         iliad.txt:The noble Chief Achilles from the son
@@ -192,7 +201,8 @@ expect
 # Test grepping multiples files at once - Multiple files, several matches, file flag takes precedence over line number flag
 expect
     result = grep "who" ["-n", "-l"] ["iliad.txt", "midsummer-night.txt", "paradise-lost.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         iliad.txt
         paradise-lost.txt
@@ -201,7 +211,8 @@ expect
 # Test grepping multiples files at once - Multiple files, several matches, inverted and match entire lines flags
 expect
     result = grep "Illustrious into Ades premature," ["-x", "-v"] ["iliad.txt", "midsummer-night.txt", "paradise-lost.txt"]
-    result == Ok 
+    result
+    == Ok
         """
         iliad.txt:Achilles sing, O Goddess! Peleus' son;
         iliad.txt:His wrath pernicious, who ten thousand woes
@@ -227,6 +238,4 @@ expect
         paradise-lost.txt:Of Oreb, or of Sinai, didst inspire
         paradise-lost.txt:That Shepherd, who first taught the chosen Seed
         """
-
-
 

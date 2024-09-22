@@ -1,0 +1,44 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [create, rank, file, queenCanAttack]
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+{%- if case["property"] == "create" %}
+    {%- if case["expected"] == 0 %}
+expect
+    maybeSquare = create "{{ plugins.to_square(case["input"]["queen"]) }}"
+    result = maybeSquare |> Result.try \square ->
+        Ok (rank square)
+    result == Ok {{ plugins.to_rank(case["input"]["queen"]["position"]["row"]) }}
+
+expect
+    maybeSquare = create "{{ plugins.to_square(case["input"]["queen"]) }}"
+    result = maybeSquare |> Result.try \square ->
+        Ok (file square)
+    result == Ok '{{ plugins.to_file(case["input"]["queen"]["position"]["column"]) }}'
+    {%- else %}
+expect
+    result = create "{{ plugins.to_square(case["input"]["queen"]) }}"
+    result |> Result.isErr
+    {%- endif %}
+{%- elif case["property"] == "canAttack" %}
+expect
+    maybeSquare1 = create "{{ plugins.to_square(case["input"]["white_queen"]) }}"
+    maybeSquare2 = create "{{ plugins.to_square(case["input"]["black_queen"]) }}"
+    result = when (maybeSquare1, maybeSquare2) is
+        (Ok square1, Ok square2) ->
+            square1 |> queenCanAttack square2
+        _ -> crash "Unreachable: {{ plugins.to_square(case["input"]["white_queen"]) }} and {{ plugins.to_square(case["input"]["black_queen"]) }} are both valid squares"
+    result == {{ case["expected"] | to_roc }}
+{%- endif %}
+
+{% endfor %}
+{% endfor %}

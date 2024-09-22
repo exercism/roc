@@ -96,6 +96,14 @@
         "difficulty": 2
       },
       {
+        "slug": "complex-numbers",
+        "name": "Complex Numbers",
+        "uuid": "b7934691-ac3e-4aee-acd2-5e01536c43e8",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "darts",
         "name": "Darts",
         "uuid": "482902d5-47ed-430e-86d3-958a7817edf7",
@@ -200,6 +208,14 @@
         "difficulty": 2
       },
       {
+        "slug": "allergies",
+        "name": "Allergies",
+        "uuid": "f87c8bf3-fcad-4049-af89-73bc38e1b3c6",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "armstrong-numbers",
         "name": "Armstrong Numbers",
         "uuid": "da8055c2-c2f0-43ad-85f2-dd55f10e84be",
@@ -264,9 +280,25 @@
         "difficulty": 3
       },
       {
+        "slug": "matrix",
+        "name": "Matrix",
+        "uuid": "c82cc59d-9428-48c8-8c17-908f1dc0ffb3",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "pangram",
         "name": "Pangram",
         "uuid": "b760f4aa-bc7d-4e88-b57d-ce424f44f2be",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "queen-attack",
+        "name": "Queen Attack",
+        "uuid": "a246b648-cad7-4cff-b776-562896689a13",
         "practices": [],
         "prerequisites": [],
         "difficulty": 3
@@ -291,6 +323,14 @@
         "slug": "rotational-cipher",
         "name": "Rotational Cipher",
         "uuid": "d18a540a-36bf-4637-a810-4fe715cf0ec9",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "say",
+        "name": "Say",
+        "uuid": "23345ef2-4b3c-4c67-91d0-58bc472fc22b",
         "practices": [],
         "prerequisites": [],
         "difficulty": 3
@@ -459,6 +499,14 @@
         "slug": "alphametics",
         "name": "Alphametics",
         "uuid": "6bd98d4f-f95a-4fa2-981a-1684bd42334d",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
+      },
+      {
+        "slug": "dominoes",
+        "name": "Dominoes",
+        "uuid": "baeabe4e-6d9b-4fa5-b8a7-22b1977d840e",
         "practices": [],
         "prerequisites": [],
         "difficulty": 8
