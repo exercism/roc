@@ -16,13 +16,10 @@ verseList =
                 She swallowed the $(animal.name) to catch the $(previousAnimal)$(description).
                 $(verseBody)
                 """
-            exclamation =
-                when animal.exclamation is
-                    Ok e -> "\n$(e)"
-                    Err _ -> ""
             verse =
                 """
-                I know an old lady who swallowed a $(animal.name).$(exclamation)
+                I know an old lady who swallowed a $(animal.name).
+                $(animal.exclamation)
                 $(newVerseBody)
                 """
             {
@@ -37,14 +34,14 @@ animalDescriptions : Dict Str Str
 animalDescriptions =
     Dict.single "spider" " that wriggled and jiggled and tickled inside her"
 
-animals : List { name : Str, exclamation : Result Str {} }
+animals : List { name : Str, exclamation : Str }
 animals = [
-    { name: "spider", exclamation: Ok "It wriggled and jiggled and tickled inside her." },
-    { name: "bird", exclamation: Ok "How absurd to swallow a bird!" },
-    { name: "cat", exclamation: Ok "Imagine that, to swallow a cat!" },
-    { name: "dog", exclamation: Ok "What a hog, to swallow a dog!" },
-    { name: "goat", exclamation: Ok "Just opened her throat and swallowed a goat!" },
-    { name: "cow", exclamation: Ok "I don't know how she swallowed a cow!" },
+    { name: "spider", exclamation: "It wriggled and jiggled and tickled inside her." },
+    { name: "bird", exclamation: "How absurd to swallow a bird!" },
+    { name: "cat", exclamation: "Imagine that, to swallow a cat!" },
+    { name: "dog", exclamation: "What a hog, to swallow a dog!" },
+    { name: "goat", exclamation: "Just opened her throat and swallowed a goat!" },
+    { name: "cow", exclamation: "I don't know how she swallowed a cow!" },
 ]
 
 firstVerse : Str
