@@ -534,6 +534,14 @@
         "practices": [],
         "prerequisites": [],
         "difficulty": 9
+      },
+      {
+        "slug": "micro-blog",
+        "name": "Micro Blog",
+        "uuid": "9e0dc2b5-48f8-4db7-b36f-45be89db7602",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
       }
     ]
   },
