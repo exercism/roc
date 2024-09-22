@@ -9,7 +9,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }
 expect
     result = {{ case["property"] | to_camel }} {{ case["input"]["puzzle"] | to_roc }}
     {%- if case["expected"] %}
-    Result.withDefault result (Set.empty {}) == Set.fromList [
+    Result.withDefault result [] |> Set.fromList == Set.fromList [
     {%- for letter, value in case["expected"].items() %}
         ('{{ letter }}', {{ value }}),
     {%- endfor %}

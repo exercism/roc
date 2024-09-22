@@ -1,6 +1,6 @@
 module [solve]
 
-solve : Str -> Result (Set (U8, U8)) _
+solve : Str -> Result (List (U8, U8)) _
 solve = \problem ->
     { addends, sum } = parse? problem
     coefficients =
@@ -43,7 +43,6 @@ solve = \problem ->
                     findMatch (List.append assignments (variable, digit)) rest (Set.remove remainingDigits digit)
 
     findMatch [] (Dict.keys coefficients) (List.range { start: At 0, end: At 9 } |> Set.fromList)
-    |> Result.map Set.fromList
 
 keepFirstOk : List a, (a -> Result b err) -> Result b [NotFound]
 keepFirstOk = \list, func ->
