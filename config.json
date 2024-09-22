@@ -328,6 +328,14 @@
         "difficulty": 3
       },
       {
+        "slug": "say",
+        "name": "Say",
+        "uuid": "23345ef2-4b3c-4c67-91d0-58bc472fc22b",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "sieve",
         "name": "Sieve",
         "uuid": "47e2f7c0-94f7-49a1-b423-32c7e77d0a97",
