@@ -376,6 +376,14 @@
         "difficulty": 3
       },
       {
+        "slug": "yacht",
+        "name": "Yacht",
+        "uuid": "c2e49f04-0fbb-4264-b868-811152de5063",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "anagram",
         "name": "Anagram",
         "uuid": "40942be8-7c32-4da3-acff-a2365087cd5d",
