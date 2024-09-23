@@ -144,6 +144,14 @@
         "difficulty": 2
       },
       {
+        "slug": "nucleotide-count",
+        "name": "Nucleotide Count",
+        "uuid": "9f07740b-eb8a-45f9-a137-e2930a224815",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "proverb",
         "name": "Proverb",
         "uuid": "1e7b941b-f02e-4b54-ac19-561c765b4313",
@@ -163,6 +171,14 @@
         "slug": "resistor-color-duo",
         "name": "Resistor Color Duo",
         "uuid": "04ac004e-4f05-467b-833e-a180a8431700",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
+        "slug": "robot-simulator",
+        "name": "Robot Simulator",
+        "uuid": "609aac37-6b82-4d29-a540-bcad0e80981b",
         "practices": [],
         "prerequisites": [],
         "difficulty": 2
@@ -371,6 +387,14 @@
         "slug": "transpose",
         "name": "Transpose",
         "uuid": "d41e71c8-1b2d-4ea7-a3c4-def79b5827d0",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "yacht",
+        "name": "Yacht",
+        "uuid": "c2e49f04-0fbb-4264-b868-811152de5063",
         "practices": [],
         "prerequisites": [],
         "difficulty": 3
