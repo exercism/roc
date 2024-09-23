@@ -160,6 +160,14 @@
         "difficulty": 2
       },
       {
+        "slug": "robot-simulator",
+        "name": "Robot Simulator",
+        "uuid": "609aac37-6b82-4d29-a540-bcad0e80981b",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "scrabble-score",
         "name": "Scrabble Score",
         "uuid": "580847f5-1eb0-49c4-90f9-5028ef21e5ef",
