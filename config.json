@@ -152,6 +152,14 @@
         "difficulty": 2
       },
       {
+        "slug": "proverb",
+        "name": "Proverb",
+        "uuid": "1e7b941b-f02e-4b54-ac19-561c765b4313",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "rna-transcription",
         "name": "RNA Transcription",
         "uuid": "602814f7-dc7b-490e-9242-aad924c81ae4",
