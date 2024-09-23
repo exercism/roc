@@ -144,6 +144,14 @@
         "difficulty": 2
       },
       {
+        "slug": "nucleotide-count",
+        "name": "Nucleotide Count",
+        "uuid": "9f07740b-eb8a-45f9-a137-e2930a224815",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "rna-transcription",
         "name": "RNA Transcription",
         "uuid": "602814f7-dc7b-490e-9242-aad924c81ae4",

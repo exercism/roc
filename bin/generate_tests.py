@@ -167,6 +167,15 @@ def to_roc_tuple(values: Any):
     list_content = ", ".join([to_roc(v) for v in tuple(values)])
     return f"({list_content})"
 
+def to_roc_record(obj: Dict[str, Any]):
+    items = []
+    for key, value in obj.items():
+        camel_key = to_camel(key)
+        roc_value = to_roc(value)
+        items.append(f"{camel_key}: {roc_value}")
+
+    return "{ " + ", ".join(items) + " }"
+
 
 def to_roc_bool(value: bool):
     return "Bool.true" if value else "Bool.false"
@@ -193,6 +202,8 @@ def to_roc(value: Any) -> str:
         return to_roc_list(value)
     elif isinstance(value, tuple):
         return to_roc_tuple(value)
+    elif isinstance(value, dict):
+        return to_roc_record(value)
     elif value is None:
         return "{}"
     else:
@@ -481,7 +492,7 @@ def generate_exercise(
             logger.debug(f"{slug}: formatting tmp file {tmpfile}")
             format_file(tmpfile)
         except subprocess.CalledProcessError as e:
-            return False
+            pass
 
         if check:
             return check_template(slug, tests_path, tmpfile)
@@ -545,6 +556,7 @@ def generate(
     env.filters["to_roc_bool"] = to_roc_bool
     env.filters["to_roc_list"] = to_roc_list
     env.filters["to_roc_tuple"] = to_roc_tuple
+    env.filters["to_roc_record"] = to_roc_record
     env.filters["wrap_overlong"] = wrap_overlong
     env.filters["regex_replace"] = regex_replace
     env.filters["regex_find"] = regex_find
