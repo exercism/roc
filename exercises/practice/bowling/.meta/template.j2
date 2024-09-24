@@ -1,0 +1,47 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [Game, create, roll, score]
+
+replayGame : List U64 -> Result Game _
+replayGame = \rolls ->
+    newGame = create? {}
+    rolls
+    |> List.walkUntil (Ok newGame) \state, pins ->
+        when state is
+            Ok game ->
+                when game |> roll pins is
+                    Ok updatedGame -> Continue (Ok updatedGame)
+                    Err err -> Break (Err err)
+
+            Err _ -> crash "Impossible, we don't start or Continue with an Err"
+
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    maybeGame = create { previousRolls : {{ case["input"]["previousRolls"] | to_roc }} }
+    {%- if case["property"] == "score" %}
+    result = maybeGame |> Result.try \game -> score game
+    {%- else %}
+    result = maybeGame |> Result.try \game ->
+        game |> {{ case["property"] | to_camel }} {{ case["input"]["roll"] }}
+    {%- endif %}
+    {%- if case["expected"]["error"] %}
+    result |> Result.isErr
+    {%- else %}
+    result == Ok {{ case["expected"] | to_roc }}
+    {%- endif %}
+    {%- if case["property"] == "score" and not case["expected"]["error"] %}
+
+# should be able to replay this finished game from the start
+expect
+    rolls = {{ case["input"]["previousRolls"] | to_roc }}
+    result = replayGame rolls
+    result |> Result.isOk
+
+    {%- endif %}
+
+
+{% endfor %}

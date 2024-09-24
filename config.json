@@ -504,6 +504,14 @@
         "difficulty": 6
       },
       {
+        "slug": "bowling",
+        "name": "Bowling",
+        "uuid": "308493bb-182f-4a48-bafb-56c5b2f214e5",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 7
+      },
+      {
         "slug": "pig-latin",
         "name": "Pig Latin",
         "uuid": "8beb7c89-bf06-4eb1-b97f-36f2d9750dad",
