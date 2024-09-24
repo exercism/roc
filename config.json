@@ -160,14 +160,6 @@
         "difficulty": 2
       },
       {
-        "slug": "rna-transcription",
-        "name": "RNA Transcription",
-        "uuid": "602814f7-dc7b-490e-9242-aad924c81ae4",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 2
-      },
-      {
         "slug": "resistor-color-duo",
         "name": "Resistor Color Duo",
         "uuid": "04ac004e-4f05-467b-833e-a180a8431700",
@@ -176,9 +168,25 @@
         "difficulty": 2
       },
       {
+        "slug": "rna-transcription",
+        "name": "RNA Transcription",
+        "uuid": "602814f7-dc7b-490e-9242-aad924c81ae4",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "robot-simulator",
         "name": "Robot Simulator",
         "uuid": "609aac37-6b82-4d29-a540-bcad0e80981b",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
+        "slug": "roman-numerals",
+        "name": "Roman Numerals",
+        "uuid": "be4df7f4-e7fa-4575-bdfa-16e111157199",
         "practices": [],
         "prerequisites": [],
         "difficulty": 2
@@ -200,17 +208,17 @@
         "difficulty": 2
       },
       {
-        "slug": "space-age",
-        "name": "Space Age",
-        "uuid": "7f031524-9eb8-4c7d-af64-105708b40e9c",
+        "slug": "series",
+        "name": "Series",
+        "uuid": "fac9c337-2216-414d-a7be-50205d161f3f",
         "practices": [],
         "prerequisites": [],
         "difficulty": 2
       },
       {
-        "slug": "series",
-        "name": "Series",
-        "uuid": "fac9c337-2216-414d-a7be-50205d161f3f",
+        "slug": "space-age",
+        "name": "Space Age",
+        "uuid": "7f031524-9eb8-4c7d-af64-105708b40e9c",
         "practices": [],
         "prerequisites": [],
         "difficulty": 2
