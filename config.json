@@ -80,6 +80,14 @@
         "difficulty": 2
       },
       {
+        "slug": "binary",
+        "name": "Binary",
+        "uuid": "4188031d-ae8c-4ce5-b4e4-dd4ac14c7729",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "clock",
         "name": "Clock",
         "uuid": "b1ebc201-5d23-4953-88d7-58c82def95b3",
