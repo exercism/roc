@@ -65,8 +65,8 @@ insertTerm = \equation, letters, polarity ->
             |> Num.mul polarity
         Dict.update dict letter \val ->
             when val is
-                Missing -> Present coeff
-                Present c -> Present (c + coeff)
+                Err Missing -> Ok coeff
+                Ok c -> Ok (c + coeff)
 
 parse : Str -> Result { addends : List (List U8), sum : List U8 } _
 parse = \problem ->
