@@ -568,6 +568,14 @@
         "difficulty": 8
       },
       {
+        "slug": "connect",
+        "name": "Connect",
+        "uuid": "93bcc6cd-07c3-435d-a789-255dc4e4e934",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
+      },
+      {
         "slug": "dominoes",
         "name": "Dominoes",
         "uuid": "baeabe4e-6d9b-4fa5-b8a7-22b1977d840e",

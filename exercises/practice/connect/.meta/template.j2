@@ -1,0 +1,14 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    board = {{ case["input"]["board"] | to_roc_multiline_string | indent(8) }}
+    result = board |> {{ case["property"] | to_camel }}
+    result == {% if case["expected"] == "" %}Err NotFinished{% else %}Ok Player{{ case["expected"] }}{% endif %}
+
+{% endfor %}
