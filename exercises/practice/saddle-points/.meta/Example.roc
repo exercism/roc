@@ -12,8 +12,8 @@ saddlePoints = \treeHeights ->
             row
             |> List.mapWithIndex \height, columnIndex ->
                 if height == maxInRow then [{ row: rowIndex + 1, column: columnIndex + 1 }] else []
-            |> List.joinMap \id -> id
-        |> List.joinMap \id -> id
+            |> List.join
+        |> List.join
         |> Set.fromList
 
     numColumns = treeHeights |> List.map List.len |> List.max |> Result.withDefault 0
