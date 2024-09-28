@@ -496,6 +496,14 @@
         "difficulty": 5
       },
       {
+        "slug": "robot-name",
+        "name": "Robot Name",
+        "uuid": "88eac1aa-a4ae-405a-88ab-0dedd5ac7ae2",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "acronym",
         "name": "Acronym",
         "uuid": "5bc989a9-f7a8-489d-b9fc-6f65c2425fd7",
