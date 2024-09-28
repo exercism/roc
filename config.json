@@ -504,6 +504,14 @@
         "difficulty": 5
       },
       {
+        "slug": "killer-sudoku-helper",
+        "name": "Killer Sudoku Helper",
+        "uuid": "e12846f9-8905-406d-8b3d-b5e0fa4e3c0a",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "acronym",
         "name": "Acronym",
         "uuid": "5bc989a9-f7a8-489d-b9fc-6f65c2425fd7",

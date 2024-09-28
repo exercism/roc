@@ -1,0 +1,31 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [combinations]
+
+{% macro to_cage(cage) -%}
+{ sum: {{ cage["sum"] }}, size: {{ cage["size"] }}
+{%- if cage["exclude"] != [] -%}
+, exclude: {{ cage["exclude"] | to_roc }}
+{%- endif %} }
+{%- endmacro %}
+
+{% for supercase in cases %}
+## {{ supercase["description"] }}
+{%- if supercase["cases"] -%}
+{%- set cases = supercase["cases"] -%}
+{%- else -%}
+{%- set cases = [supercase] -%}
+{%- endif -%}
+{%- for case in cases %}
+{%- if case["description"] != supercase["description"] %}
+# {{ case["description"] }}
+{%- endif %}
+expect
+    result = {{ case["property"] }} {{ to_cage(case["input"]["cage"]) }}
+    result == {{ case["expected"] | to_roc }}
+
+{% endfor -%}
+{%- endfor %}
+
