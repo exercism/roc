@@ -14,19 +14,8 @@ Game := { frames : List Frame }
 
 create : { previousRolls ? List U64 } -> Result Game [MoreThan10Pins, GameOver]
 create = \{ previousRolls ? [] } ->
-    newGame = @Game { frames: [] }
-    when previousRolls is
-        [] -> Ok newGame
-        rolls ->
-            rolls
-            |> List.walkUntil (Ok newGame) \state, pins ->
-                when state is
-                    Ok game ->
-                        when game |> roll pins is
-                            Ok updatedGame -> Continue (Ok updatedGame)
-                            Err err -> Break (Err err)
-
-                    Err _ -> crash "Impossible: state can never be an error since we never start or continue with an error"
+    List.walkTry previousRolls (@Game { frames: [] }) \game, pins ->
+        roll game pins
 
 checkMax10Pins : Frame, U64 -> Result {} [MoreThan10Pins, GameOver]
 checkMax10Pins = \lastFrame, pins ->
