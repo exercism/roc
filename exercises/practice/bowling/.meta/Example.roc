@@ -29,13 +29,11 @@ checkMax10Pins = \lastFrame, pins ->
 
 isOver : Game -> Bool
 isOver = \@Game { frames } ->
-    if List.len frames < 10 then
-        Bool.false
-    else
-        when frames |> List.last is
-            Ok (Ball1 _) | Ok (Spare _ _) | Ok Strike | Ok (StrikeFill1 _) -> Bool.false
-            Ok (Ball2 _ _) | Ok (SpareFill _) | Ok (StrikeFill2 _ _) -> Bool.true
-            Err ListWasEmpty -> crash "Impossible, we ensured that length is at least 10"
+    when frames is
+        _ if List.len frames < 10 -> Bool.false
+        [.., Ball1 _] | [.., Spare _ _] | [.., Strike] | [.., StrikeFill1 _] -> Bool.false
+        [.., Ball2 _ _] | [.., SpareFill _] | [.., StrikeFill2 _ _] -> Bool.true
+        _ -> Bool.false
 
 roll : Game, U64 -> Result Game [MoreThan10Pins, GameOver]
 roll = \@Game { frames }, pins ->
