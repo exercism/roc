@@ -3,14 +3,21 @@ module [plants]
 Student : [Alice, Bob, Charlie, David, Eve, Fred, Ginny, Harriet, Ileana, Joseph, Kincaid, Larry]
 Plant : [Grass, Clover, Radishes, Violets]
 
-students : List Student
-students = [Alice, Bob, Charlie, David, Eve, Fred, Ginny, Harriet, Ileana, Joseph, Kincaid, Larry]
-
 studentIndex : Student -> U64
 studentIndex = \student ->
-    when students |> List.findFirstIndex \s -> s == student is
-        Ok index -> index
-        Err NotFound -> crash "Unreachable: all possible students are present in the students list"
+    when student is
+        Alice -> 0
+        Bob -> 1
+        Charlie -> 2
+        David -> 3
+        Eve -> 4
+        Fred -> 5
+        Ginny -> 6
+        Harriet -> 7
+        Ileana -> 8
+        Joseph -> 9
+        Kincaid -> 10
+        Larry -> 11
 
 plants : Str, Student -> Result (List Plant) _
 plants = \diagram, student ->
