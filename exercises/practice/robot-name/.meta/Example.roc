@@ -41,7 +41,7 @@ reset = \robot ->
 
     resetRobot |> boot
 
-getName : Robot -> Result Str _
+getName : Robot -> Result Str [NoName]
 getName = \@Robot { maybeName } ->
     maybeName
 
