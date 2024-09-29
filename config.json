@@ -168,6 +168,14 @@
         "difficulty": 2
       },
       {
+        "slug": "octal",
+        "name": "Octal",
+        "uuid": "98f71971-66cd-48b0-8f54-dab6b1505086",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "proverb",
         "name": "Proverb",
         "uuid": "1e7b941b-f02e-4b54-ac19-561c765b4313",
