@@ -22,18 +22,18 @@ parse = \boardStr ->
                 _ -> Err (InvalidCharacter char)
 
 ## Ensure that the board has a least one cell, and that all rows have the same length
-validate : Board -> Result Board [InvalidBoardShape]
+validate : Board -> Result {} [InvalidBoardShape]
 validate = \board ->
     rowLengths = board |> List.map List.len |> Set.fromList
     if Set.len rowLengths != 1 || rowLengths == Set.fromList [0] then
         Err InvalidBoardShape
     else
-        Ok board
+        Ok {}
 
 winner : Str -> Result [PlayerO, PlayerX] [NotFinished, InvalidCharacter U8, InvalidBoardShape]
 winner = \boardStr ->
-    maybeBoard = boardStr |> parse?
-    board = maybeBoard |> validate?
+    board = parse? boardStr
+    validate? board
     if board |> hasNorthSouthPath StoneO then
         Ok PlayerO
     else if board |> transpose |> hasNorthSouthPath StoneX then
