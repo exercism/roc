@@ -320,6 +320,14 @@
         "difficulty": 3
       },
       {
+        "slug": "hexadecimal",
+        "name": "Hexadecimal",
+        "uuid": "e63a6404-5e3a-41bc-b8bd-9a91b6513bf4",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "isbn-verifier",
         "name": "ISBN Verifier",
         "uuid": "4c218d70-b895-46a8-b43f-d68906372fb8",
