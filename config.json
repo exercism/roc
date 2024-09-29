@@ -520,6 +520,14 @@
         "difficulty": 6
       },
       {
+        "slug": "connect",
+        "name": "Connect",
+        "uuid": "93bcc6cd-07c3-435d-a789-255dc4e4e934",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "gigasecond",
         "name": "Gigasecond",
         "uuid": "8ab57d21-e5ec-49bb-b75d-c3f1da8e77ab",
