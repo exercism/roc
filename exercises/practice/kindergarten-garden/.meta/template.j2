@@ -1,0 +1,30 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [plants]
+
+{% for supercase in cases %}
+###
+### {{ supercase["description"] }}
+###
+
+{% for case in supercase["cases"] -%}
+{%- if case["cases"] %}
+## {{ case["description"] }}
+{%- set subcases = case["cases"] %}
+{%- else %}
+{%- set subcases = [case] %}
+{%- endif %}
+
+{% for subcase in subcases -%}
+# {{ subcase["description"] }}
+expect
+    diagram = {{ subcase["input"]["diagram"] | to_roc_multiline_string | indent(8) }}
+    result = diagram |> {{ subcase["property"] | to_camel }} {{ subcase["input"]["student"] | to_pascal }}
+    result == Ok [{% for plant in subcase["expected"] %}{{ plant | to_pascal }}, {% endfor %}]
+
+{% endfor %}
+
+{% endfor %}
+{% endfor %}

@@ -144,6 +144,14 @@
         "difficulty": 2
       },
       {
+        "slug": "kindergarten-garden",
+        "name": "Kindergarten Garden",
+        "uuid": "5c3e5171-d541-47fb-9cf3-a3965f5b3118",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "micro-blog",
         "name": "Micro Blog",
         "uuid": "9e0dc2b5-48f8-4db7-b36f-45be89db7602",
