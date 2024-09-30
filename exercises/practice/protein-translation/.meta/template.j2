@@ -1,0 +1,19 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [toProtein]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    rna = {{ case["input"]["strand"] | to_roc }}
+    result = rna |> toProtein
+    {%- if case["expected"]["error"] %}
+    result |> Result.isErr
+    {%- else %}
+    result == Ok [{%- for aminoAcid in case["expected"] -%}{{ aminoAcid | to_pascal }}, {%- endfor %}]
+    {%- endif %}
+
+{% endfor %}
+
