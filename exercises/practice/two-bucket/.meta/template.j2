@@ -1,0 +1,27 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    result = {{ case["property"] | to_camel }} {
+        bucketOne: {{ case["input"]["bucketOne"] }},
+        bucketTwo: {{ case["input"]["bucketTwo"] }},
+        goal: {{ case["input"]["goal"] }},
+        startBucket: {{ case["input"]["startBucket"] | to_pascal }},
+    }
+    {%- if case["expected"]["error"] %}
+    result |> Result.isErr
+    {%- else %}
+    expected = {
+        moves: {{ case["expected"]["moves"] }},
+        goalBucket: {{ case["expected"]["goalBucket"] | to_pascal }},
+        otherBucket: {{ case["expected"]["otherBucket"] }},
+    }
+    result == expected
+    {%- endif %}
+
+{% endfor %}
