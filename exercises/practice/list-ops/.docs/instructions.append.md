@@ -5,7 +5,7 @@ elements to a list. In other languages you might use operators such as `:`
 in Haskell or `+=` in Python, but in Roc you have to use the
 [`List` functions](https://www.roc-lang.org/builtins/List).
 
-So for this exercise you're allowed to use `List.prepend` (but avoid using any
+So for this exercise you're allowed to use `List.append` (but avoid using any
 other built-in function).
 
 Hint: try using:

@@ -3,30 +3,32 @@ module [append, concat, filter, length, map, foldl, foldr, reverse]
 append : List a, List a -> List a
 append = \list1, list2 ->
     # Cheating: list1 |> List.concat list2
-    when list1 is
-        [] -> list2
-        [first, .. as rest] -> (append rest list2) |> List.prepend first
+    when list2 is
+        [] -> list1
+        [first, .. as rest] -> List.append list1 first |> append rest
 
 concat : List (List a) -> List a
 concat = \lists ->
+    # Cheating: list |> List.join
     when lists is
         [] -> []
-        [sublist1, .. as rest] -> sublist1 |> append (concat rest)
+        [one] -> one
+        [.. as rest, one, two] -> rest |> List.append (append one two) |> concat
 
 filter : List a, (a -> Bool) -> List a
 filter = \list, function ->
     # Cheating: list |> List.keepIf function
     when list is
         [] -> []
-        [first, .. as rest] ->
-            if function first then
-                filter rest function |> List.prepend first
+        [.. as rest, last] ->
+            if function last then
+                filter rest function |> List.append last
             else
                 filter rest function
 
 length : List a -> U64
 length = \list ->
-    # Cheating: List.len list
+    # Cheating: list |> List.len
     when list is
         [] -> 0
         [_, .. as rest] -> 1 + length rest
@@ -36,7 +38,7 @@ map = \list, function ->
     # Cheating: list |> List.map function
     when list is
         [] -> []
-        [first, .. as rest] -> map rest function |> List.prepend (function first)
+        [.. as rest, last] -> map rest function |> List.append (function last)
 
 foldl : List a, b, (b, a -> b) -> b
 foldl = \list, initial, function ->
@@ -54,7 +56,7 @@ foldr = \list, initial, function ->
 
 reverse : List a -> List a
 reverse = \list ->
-    # Cheating: List.reverse list
+    # Cheating: list |> List.reverse
     when list is
         [] -> []
-        [.. as rest, last] -> reverse rest |> List.prepend last
+        [first, .. as rest] -> reverse rest |> List.append first
