@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/two-bucket/canonical-data.json
-# File last updated on 2024-09-30
+# File last updated on 2024-10-01
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
@@ -18,7 +18,7 @@ expect
         goal: 1,
         startBucket: One,
     }
-    expected = {
+    expected = Ok {
         moves: 4,
         goalBucket: One,
         otherBucket: 5,
@@ -33,7 +33,7 @@ expect
         goal: 1,
         startBucket: Two,
     }
-    expected = {
+    expected = Ok {
         moves: 8,
         goalBucket: Two,
         otherBucket: 3,
@@ -48,7 +48,7 @@ expect
         goal: 2,
         startBucket: One,
     }
-    expected = {
+    expected = Ok {
         moves: 14,
         goalBucket: One,
         otherBucket: 11,
@@ -63,7 +63,7 @@ expect
         goal: 2,
         startBucket: Two,
     }
-    expected = {
+    expected = Ok {
         moves: 18,
         goalBucket: Two,
         otherBucket: 7,
@@ -78,7 +78,7 @@ expect
         goal: 3,
         startBucket: Two,
     }
-    expected = {
+    expected = Ok {
         moves: 1,
         goalBucket: Two,
         otherBucket: 0,
@@ -93,7 +93,7 @@ expect
         goal: 3,
         startBucket: One,
     }
-    expected = {
+    expected = Ok {
         moves: 2,
         goalBucket: Two,
         otherBucket: 2,
@@ -118,7 +118,7 @@ expect
         goal: 9,
         startBucket: One,
     }
-    expected = {
+    expected = Ok {
         moves: 10,
         goalBucket: Two,
         otherBucket: 0,

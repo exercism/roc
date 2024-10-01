@@ -16,7 +16,7 @@ expect
     {%- if case["expected"]["error"] %}
     result |> Result.isErr
     {%- else %}
-    expected = {
+    expected = Ok {
         moves: {{ case["expected"]["moves"] }},
         goalBucket: {{ case["expected"]["goalBucket"] | to_pascal }},
         otherBucket: {{ case["expected"]["otherBucket"] }},
