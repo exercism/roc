@@ -5,7 +5,7 @@ append = \list1, list2 ->
     # Cheating: list1 |> List.concat list2
     when list2 is
         [] -> list1
-        [first, .. as rest] -> List.append list1 first |> append rest
+        [first, .. as rest] -> list1 |> List.append first |> append rest
 
 concat : List (List a) -> List a
 concat = \lists ->
@@ -18,45 +18,54 @@ concat = \lists ->
 filter : List a, (a -> Bool) -> List a
 filter = \list, function ->
     # Cheating: list |> List.keepIf function
-    when list is
-        [] -> []
-        [.. as rest, last] ->
-            if function last then
-                filter rest function |> List.append last
-            else
-                filter rest function
+    loop = \l, acc ->
+        when l is
+            [] -> acc
+            [first, .. as rest] ->
+                if function first then
+                    rest |> loop (List.append acc first)
+                else
+                    rest |> loop acc
+
+    loop list []
 
 length : List a -> U64
 length = \list ->
     # Cheating: list |> List.len
-    when list is
-        [] -> 0
-        [_, .. as rest] -> 1 + length rest
+    loop = \l, acc ->
+        when l is
+            [] -> acc
+            [_, .. as rest] -> rest |> loop (acc + 1)
+    loop list 0
 
 map : List a, (a -> b) -> List b
 map = \list, function ->
     # Cheating: list |> List.map function
-    when list is
-        [] -> []
-        [.. as rest, last] -> map rest function |> List.append (function last)
+    loop = \l, acc ->
+        when l is
+            [] -> acc
+            [first, .. as rest] -> rest |> loop (List.append acc (function first))
+    loop list []
 
 foldl : List a, b, (b, a -> b) -> b
 foldl = \list, initial, function ->
     # Cheating: list |> List.walk initial function
     when list is
         [] -> initial
-        [first, .. as rest] -> foldl rest (function initial first) function
+        [first, .. as rest] -> rest |> foldl (function initial first) function
 
 foldr : List a, b, (b, a -> b) -> b
 foldr = \list, initial, function ->
     # Cheating: list |> List.walkBackwards initial function
     when list is
         [] -> initial
-        [.. as rest, last] -> foldr rest (function initial last) function
+        [.. as rest, last] -> rest |> foldr (function initial last) function
 
 reverse : List a -> List a
 reverse = \list ->
     # Cheating: list |> List.reverse
-    when list is
-        [] -> []
-        [first, .. as rest] -> reverse rest |> List.append first
+    loop = \l, acc ->
+        when l is
+            [] -> acc
+            [.. as rest, last] -> rest |> loop (List.append acc last)
+    loop list []
