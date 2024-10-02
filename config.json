@@ -584,6 +584,14 @@
         "difficulty": 6
       },
       {
+        "slug": "two-bucket",
+        "name": "Two Bucket",
+        "uuid": "4d743bc2-1d84-49f8-babe-894e59006264",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "bowling",
         "name": "Bowling",
         "uuid": "308493bb-182f-4a48-bafb-56c5b2f214e5",
