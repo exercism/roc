@@ -1,11 +1,14 @@
 module [parse]
 
 parseNibble = \char ->
-    when char is
-        c if c >= '0' && c <= '9' -> Ok (c - '0' |> Num.toU64)
-        c if c >= 'A' && c <= 'F' -> Ok (c - 'A' + 10 |> Num.toU64)
-        c if c >= 'a' && c <= 'f' -> Ok (c - 'a' + 10 |> Num.toU64)
-        _ -> Err InvalidNumStr
+    if char >= '0' && char <= '9' then
+        Ok (char - '0' |> Num.toU64)
+    else if char >= 'A' && char <= 'F' then
+        Ok (char - 'A' + 10 |> Num.toU64)
+    else if char >= 'a' && char <= 'f' then
+        Ok (char - 'a' + 10 |> Num.toU64)
+    else
+        Err InvalidNumStr
 
 parse : Str -> Result U64 _
 parse = \string ->
