@@ -1,0 +1,18 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    result = {{ case["property"] | to_camel }} {{ case["input"]["sentence"] | to_roc }}
+    expected = Dict.fromList [
+      {%- for word, count in case["expected"].items() %}
+      ({{ word | to_roc }}, {{ count }}),
+      {%- endfor %}
+    ]
+    result == expected
+
+{% endfor %}
