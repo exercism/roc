@@ -1,9 +1,10 @@
 module [parse]
 
 parseOctalDigit = \char ->
-    when char is
-        c if c >= '0' && c <= '7' -> Ok (c - '0' |> Num.toU64)
-        _ -> Err InvalidNumStr
+    if char >= '0' && char <= '7' then
+        Ok (char - '0' |> Num.toU64)
+    else
+        Err InvalidNumStr
 
 parse : Str -> Result U64 _
 parse = \string ->
