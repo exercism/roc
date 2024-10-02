@@ -22,15 +22,15 @@ bfs = \{ start, neighbors, success } ->
                     pathBackToStart [] node |> List.reverse |> Ok
                     else
 
-                neighorNodes = neighbors node
+                neighborNodes = neighbors node
                 newFrom =
-                    neighorNodes
+                    neighborNodes
                     |> List.dropIf \neighbor -> visited |> Set.contains neighbor
                     |> List.map \neighbor -> (neighbor, node)
                     |> Dict.fromList
                 updatedFrom = from |> Dict.insertAll newFrom
                 updatedVisited = visited |> Set.insert node
-                updatedToVisit = restToVisit |> List.concat neighorNodes
+                updatedToVisit = restToVisit |> List.concat neighborNodes
                 help updatedToVisit updatedVisited updatedFrom
     help [start] (Set.empty {}) (Dict.empty {})
 
