@@ -136,9 +136,25 @@
         "difficulty": 2
       },
       {
+        "slug": "hexadecimal",
+        "name": "Hexadecimal",
+        "uuid": "e63a6404-5e3a-41bc-b8bd-9a91b6513bf4",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "isogram",
         "name": "Isogram",
         "uuid": "826611f6-0420-48ba-b3f1-3e2a765e932f",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
+        "slug": "kindergarten-garden",
+        "name": "Kindergarten Garden",
+        "uuid": "5c3e5171-d541-47fb-9cf3-a3965f5b3118",
         "practices": [],
         "prerequisites": [],
         "difficulty": 2
@@ -155,6 +171,14 @@
         "slug": "nucleotide-count",
         "name": "Nucleotide Count",
         "uuid": "9f07740b-eb8a-45f9-a137-e2930a224815",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
+        "slug": "octal",
+        "name": "Octal",
+        "uuid": "98f71971-66cd-48b0-8f54-dab6b1505086",
         "practices": [],
         "prerequisites": [],
         "difficulty": 2
@@ -344,6 +368,14 @@
         "difficulty": 3
       },
       {
+        "slug": "protein-translation",
+        "name": "Protein Translation",
+        "uuid": "94130e39-1026-4d8e-9715-9c926215c470",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "queen-attack",
         "name": "Queen Attack",
         "uuid": "a246b648-cad7-4cff-b776-562896689a13",
@@ -376,6 +408,14 @@
         "difficulty": 3
       },
       {
+        "slug": "saddle-points",
+        "name": "Saddle Points",
+        "uuid": "8e5ccab6-ebb1-44c5-b337-6ddbe9d7cec8",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "say",
         "name": "Say",
         "uuid": "23345ef2-4b3c-4c67-91d0-58bc472fc22b",
@@ -403,6 +443,14 @@
         "slug": "transpose",
         "name": "Transpose",
         "uuid": "d41e71c8-1b2d-4ea7-a3c4-def79b5827d0",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "word-count",
+        "name": "Word Count",
+        "uuid": "225716ce-363d-4ece-bfe2-b25e2cb25d52",
         "practices": [],
         "prerequisites": [],
         "difficulty": 3
@@ -496,6 +544,14 @@
         "difficulty": 5
       },
       {
+        "slug": "killer-sudoku-helper",
+        "name": "Killer Sudoku Helper",
+        "uuid": "e12846f9-8905-406d-8b3d-b5e0fa4e3c0a",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "robot-name",
         "name": "Robot Name",
         "uuid": "88eac1aa-a4ae-405a-88ab-0dedd5ac7ae2",
@@ -507,6 +563,14 @@
         "slug": "acronym",
         "name": "Acronym",
         "uuid": "5bc989a9-f7a8-489d-b9fc-6f65c2425fd7",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
+        "slug": "connect",
+        "name": "Connect",
+        "uuid": "93bcc6cd-07c3-435d-a789-255dc4e4e934",
         "practices": [],
         "prerequisites": [],
         "difficulty": 6
@@ -550,6 +614,22 @@
         "practices": [],
         "prerequisites": [],
         "difficulty": 6
+      },
+      {
+        "slug": "two-bucket",
+        "name": "Two Bucket",
+        "uuid": "4d743bc2-1d84-49f8-babe-894e59006264",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
+        "slug": "bowling",
+        "name": "Bowling",
+        "uuid": "308493bb-182f-4a48-bafb-56c5b2f214e5",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 7
       },
       {
         "slug": "pig-latin",
