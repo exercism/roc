@@ -496,6 +496,14 @@
         "difficulty": 4
       },
       {
+        "slug": "knapsack",
+        "name": "Knapsack",
+        "uuid": "07b3e979-9c13-4075-8608-95398a67a4dc",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "perfect-numbers",
         "name": "Perfect Numbers",
         "uuid": "6bc05800-d03a-401d-be45-8b492297aa41",
