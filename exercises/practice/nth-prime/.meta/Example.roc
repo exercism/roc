@@ -4,7 +4,7 @@ prime : U64 -> Result U64 [NoPrime0]
 prime = \number ->
     if number == 0 then
         Err NoPrime0
-    else if number < 1 then
+    else if number == 1 then
         Ok 2
     else if number == 2 then
         Ok 3
