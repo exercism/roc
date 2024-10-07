@@ -432,6 +432,14 @@
         "difficulty": 3
       },
       {
+        "slug": "spiral-matrix",
+        "name": "Spiral Matrix",
+        "uuid": "7f8e880a-def6-463a-99b6-8864ef69177b",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "square-root",
         "name": "Square Root",
         "uuid": "c2b5fc60-aac2-46fb-b060-8482aa9f60a5",
