@@ -568,6 +568,14 @@
         "difficulty": 6
       },
       {
+        "slug": "go-counting",
+        "name": "Go Counting",
+        "uuid": "8c81bf5c-5188-4e1b-9814-1f0f0fcdeec2",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "gigasecond",
         "name": "Gigasecond",
         "uuid": "8ab57d21-e5ec-49bb-b75d-c3f1da8e77ab",
