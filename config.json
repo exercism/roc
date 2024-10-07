@@ -616,6 +616,14 @@
         "difficulty": 6
       },
       {
+        "slug": "word-search",
+        "name": "Word Search",
+        "uuid": "6e00fa23-6f9c-412b-9cc4-f257158c8f64",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "bowling",
         "name": "Bowling",
         "uuid": "308493bb-182f-4a48-bafb-56c5b2f214e5",
