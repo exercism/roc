@@ -1,0 +1,23 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [latest, personalBest, personalTopThree]
+
+{% for supercase in cases %}
+## {{ supercase["description"] }}
+{%- if supercase["cases"] -%}
+{%- set cases = supercase["cases"] -%}
+{%- else -%}
+{%- set cases = [supercase] -%}
+{%- endif -%}
+{%- for case in cases %}
+{%- if case["description"] != supercase["description"] %}
+# {{ case["description"] }}
+{%- endif %}
+expect
+    result = {{ case["property"] }} {{ case["input"]["scores"] }}
+    result == {% if case["property"] != "personalTopThree" %}Ok {% endif %}{{ case["expected"] | to_roc }}
+
+{% endfor -%}
+{%- endfor %}

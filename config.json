@@ -40,6 +40,14 @@
         "difficulty": 1
       },
       {
+        "slug": "high-scores",
+        "name": "High Scores",
+        "uuid": "80043e33-2549-435d-8739-14cbfa337b17",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
         "slug": "leap",
         "name": "Leap",
         "uuid": "fd8452d6-b1af-424a-9d03-aadb4945e644",
