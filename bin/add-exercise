@@ -49,6 +49,14 @@ fi
 ./bin/fetch-configlet
 ./bin/configlet create --practice-exercise "${slug}" --author "${author}" --difficulty "${difficulty}"
 
+if [ -e ".problem-specifications/exercises/${slug}/.deprecated" ]; then
+  echo ""
+  printf "\e[31mWARNING: this exercise is deprecated\e[0m\n"
+  echo "-------------------------------------"
+  cat .problem-specifications/exercises/${slug}/.deprecated 
+  echo "-------------------------------------"
+  echo ""
+else
 
 cat << END_TESTER > "exercises/practice/${slug}/.meta/template.j2"
 {%- import "generator_macros.j2" as macros with context -%}
@@ -103,3 +111,5 @@ Your next steps are:
 - Update the 'difficulty' value for the exercise's entry in the 'config.json' file
 - Validate CI using 'bin/configlet lint' and 'bin/configlet fmt'
 NEXT_STEPS
+
+fi
