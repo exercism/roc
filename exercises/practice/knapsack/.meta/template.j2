@@ -1,0 +1,22 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    {%- if case["input"]["items"] == [] %}
+    items = []
+    {%- else %}
+    items = [
+        {%- for item in case["input"]["items"] %}
+        {{ item | to_roc }},
+        {%- endfor %}
+    ]
+    {%- endif %}
+    result = {{ case["property"] | to_camel }} { items, maximumWeight: {{ case["input"]["maximumWeight"] }} }
+    result == {{ case["expected"] | to_roc }}
+
+{% endfor %}
