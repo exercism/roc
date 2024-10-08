@@ -440,6 +440,14 @@
         "difficulty": 3
       },
       {
+        "slug": "strain",
+        "name": "Strain",
+        "uuid": "86f3e354-1452-4791-b099-c2861ff32aac",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "transpose",
         "name": "Transpose",
         "uuid": "d41e71c8-1b2d-4ea7-a3c4-def79b5827d0",
