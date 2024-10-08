@@ -77,7 +77,8 @@
         "uuid": "8e8ad2db-88c2-4cca-88df-5add42efb3dc",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 2
+        "difficulty": 2,
+        "status": "deprecated"
       },
       {
         "slug": "binary",
@@ -85,7 +86,8 @@
         "uuid": "4188031d-ae8c-4ce5-b4e4-dd4ac14c7729",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 2
+        "difficulty": 2,
+        "status": "deprecated"
       },
       {
         "slug": "clock",
@@ -141,7 +143,8 @@
         "uuid": "e63a6404-5e3a-41bc-b8bd-9a91b6513bf4",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 2
+        "difficulty": 2,
+        "status": "deprecated"
       },
       {
         "slug": "isogram",
@@ -181,7 +184,8 @@
         "uuid": "98f71971-66cd-48b0-8f54-dab6b1505086",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 2
+        "difficulty": 2,
+        "status": "deprecated"
       },
       {
         "slug": "proverb",
