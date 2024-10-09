@@ -1,0 +1,57 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+{% macro to_territory(territory) %}
+{%- if territory == [] %}
+Set.empty {}
+{%- else %}
+Set.fromList [
+{%- for intersection in territory %}
+    { x : {{ intersection[0] }}, y : {{ intersection[1] }} },
+{%- endfor %}
+]
+{%- endif %}
+{% endmacro %}
+
+import {{ exercise | to_pascal }} exposing [territory, territories]
+
+## The following two comparison functions are temporary workarounds for Roc issue #7144:
+## comparing tags or records containing sets sometimes returns the wrong result
+## depending on the internal order of the set data, so we have to unwrap the sets
+## in order to compare them properly.
+compareTerritory = \maybeResult, maybeExpected ->
+    when (maybeResult, maybeExpected) is
+      (Ok result, Ok expected) -> result.owner == expected.owner && result.territory == expected.territory
+      _ -> Bool.false
+
+compareTerritories = \maybeResult, maybeExpected ->
+    when (maybeResult, maybeExpected) is
+      (Ok result, Ok expected) -> result.black == expected.black && result.white == expected.white && result.none == expected.none
+      _ -> Bool.false
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    board = {{ case["input"]["board"] | to_roc_multiline_string | replace(" ", "·") | indent(8) }} |> Str.replaceEach "·" " "
+    result = board |> {{ case["property"] | to_camel }}
+    {%- if case["property"] == "territory" %} { x : {{ case["input"]["x"] }}, y : {{ case["input"]["y"] }} }{% endif %}
+    {%- if case["expected"]["error"] %}
+    result |> Result.isErr
+    {%- elif case["expected"]["owner"] %}
+    expected = Ok {
+        owner: {{ case["expected"]["owner"] | to_pascal }},
+        territory: {{ to_territory(case["expected"]["territory"]) }},
+    }
+    result |> compareTerritory expected
+    {%- else %}
+    expected = Ok {
+        black: {{ to_territory(case["expected"]["territoryBlack"]) }},
+        white: {{ to_territory(case["expected"]["territoryWhite"]) }},
+        none: {{ to_territory(case["expected"]["territoryNone"]) }},
+    }
+    result |> compareTerritories expected
+    {%- endif %}
+
+
+{% endfor %}
