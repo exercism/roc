@@ -2,27 +2,27 @@ module [keep, discard]
 
 keep : List a, (a -> Bool) -> List a
 keep = \list, predicate ->
-    loop = \sublist, selected ->
+    loop = \sublist, keptItems ->
         when sublist is
-            [] -> selected
+            [] -> keptItems
             [first, .. as rest] ->
                 if predicate first then
-                    rest |> loop (List.append selected first)
+                    rest |> loop (List.append keptItems first)
                 else
-                    rest |> loop selected
+                    rest |> loop keptItems
 
     loop list []
 
 discard : List a, (a -> Bool) -> List a
 discard = \list, predicate ->
-    loop = \sublist, rejected ->
+    loop = \sublist, nonDiscardedItems ->
         when sublist is
-            [] -> rejected
+            [] -> nonDiscardedItems
             [first, .. as rest] ->
-                if !(predicate first) then
-                    rest |> loop (List.append rejected first)
+                if predicate first then
+                    rest |> loop nonDiscardedItems
                 else
-                    rest |> loop rejected
+                    rest |> loop (List.append nonDiscardedItems first)
 
     loop list []
 
