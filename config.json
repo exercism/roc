@@ -588,6 +588,14 @@
         "difficulty": 6
       },
       {
+        "slug": "change",
+        "name": "Change",
+        "uuid": "2660ff89-57d1-453e-b616-b76ac01c7eb9",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "connect",
         "name": "Connect",
         "uuid": "93bcc6cd-07c3-435d-a789-255dc4e4e934",
