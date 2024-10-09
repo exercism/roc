@@ -9,15 +9,18 @@ prime = \number ->
     else if number == 2 then
         Ok 3
     else
-        nextPrime = \{ primes, index } ->
-            nextIndex = index + 2
-            if primes |> List.any \p -> nextIndex % p == 0 then
-                nextPrime { primes, index: nextIndex }
+        help = \primes, index ->
+            if List.len primes == number then
+                primes
             else
-                nextIndex
-        List.range { start: At 3, end: At number }
-        |> List.walk { primes: [2, 3], index: 3 } \state, _ ->
-            newPrime = nextPrime state
-            { primes: state.primes |> List.append newPrime, index: newPrime }
-        |> .index
-        |> Ok
+                nextIndex = index + 2
+                newPrimes =
+                    if primes |> List.any \p -> nextIndex % p == 0 then
+                        primes
+                    else
+                        primes |> List.append nextIndex
+                help newPrimes nextIndex
+        help [2, 3, 5] 5
+        |> List.last
+        |> Result.mapErr \_ ->
+            crash "Unreachable: list cannot be empty"
