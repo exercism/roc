@@ -684,6 +684,14 @@
         "difficulty": 7
       },
       {
+        "slug": "poker",
+        "name": "Poker",
+        "uuid": "08d1815b-185f-4bf3-b63b-99ee0d25c055",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 7
+      },
+      {
         "slug": "wordy",
         "name": "Wordy",
         "uuid": "0aac3eb0-7e88-4d6e-a519-007ef317f6c9",
