@@ -1,0 +1,14 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    hands = {{ case["input"]["hands"] | to_roc }}
+    result = {{ case["property"] | to_camel }} hands
+    result == Ok {{ case["expected"] | to_roc }}
+
+{% endfor %}
