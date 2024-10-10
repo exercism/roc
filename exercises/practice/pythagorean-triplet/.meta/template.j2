@@ -8,7 +8,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }
 # {{ case["description"] }}
 expect
     result = {{ case["property"] | to_camel }} {{ case["input"]["n"] }}
-    expected = [{%- for triplet in case["expected"] %}
+    expected = Set.fromList [{%- for triplet in case["expected"] %}
       ({{ triplet[0] }}, {{ triplet[1] }}, {{ triplet[2] }}),
       {%- endfor %}]
     result == expected

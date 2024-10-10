@@ -2,7 +2,7 @@ module [tripletsWithSum]
 
 Triplet : (U64, U64, U64)
 
-tripletsWithSum : U64 -> List Triplet
+tripletsWithSum : U64 -> Set Triplet
 tripletsWithSum = \sum ->
     help = \triplets, a, b ->
         if a + b + b + 1 > sum then
@@ -20,4 +20,4 @@ tripletsWithSum = \sum ->
                 else
                     triplets
             help newTriplets a (b + 1) # increment b
-    help [] 1 2
+    help [] 1 2 |> Set.fromList
