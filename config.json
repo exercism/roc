@@ -396,6 +396,14 @@
         "difficulty": 3
       },
       {
+        "slug": "pythagorean-triplet",
+        "name": "Pythagorean Triplet",
+        "uuid": "0b50a6d7-79fc-46a2-a62c-9d003c815896",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "queen-attack",
         "name": "Queen Attack",
         "uuid": "a246b648-cad7-4cff-b776-562896689a13",
