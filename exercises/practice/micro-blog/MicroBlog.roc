@@ -1,6 +1,6 @@
 module [truncate]
 
-import unicode.CodePoint
+import unicode.Grapheme
 
 truncate : Str -> Result Str _
 truncate = \input ->
