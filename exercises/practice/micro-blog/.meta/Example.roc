@@ -1,10 +1,20 @@
 module [truncate]
 
-import unicode.CodePoint
+import unicode.Grapheme
 
-truncate : Str -> Result Str _
+GraphemeErrors : [
+    CodepointTooLarge,
+    EncodesSurrogateHalf,
+    ExpectedContinuation,
+    InvalidUtf8,
+    ListWasEmpty,
+    OverlongEncoding,
+]
+
+truncate : Str -> Result Str GraphemeErrors
 truncate = \input ->
-    Str.toUtf8 input
-        |> CodePoint.parseUtf8?
+    input
+        |> Grapheme.split?
         |> List.takeFirst 5
-        |> CodePoint.toStr
+        |> Str.joinWith ""
+        |> Ok
