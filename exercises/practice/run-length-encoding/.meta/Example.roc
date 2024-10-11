@@ -21,7 +21,7 @@ encode = \string ->
         else
             chars = appendCountAndLetter state
             { chars, lastChar: char, count: 1 }
-    |> \state -> appendCountAndLetter state
+    |> appendCountAndLetter
     |> Str.fromUtf8
 
 decode : Str -> Result Str [BadUtf8 _ _, InvalidNumStr]
