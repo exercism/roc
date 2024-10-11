@@ -1,0 +1,69 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [
+    contains,
+    difference,
+    fromList,
+    insert,
+    intersection,
+    isDisjointWith,
+    isEmpty,
+    isEq,
+    isSubsetOf,
+    toList,
+    union,
+]
+
+{%
+set property_map = {
+    "add": "insert",
+    "disjoint": "isDisjointWith",
+    "empty": "isEmpty",
+    "equal": "isEq",
+    "subset": "isSubsetOf",
+}
+%}
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+{% set property = property_map.get(case["property"], case["property"]) %}
+expect
+    {%- if "set" in case["input"] %}
+    set = fromList {{ case["input"]["set"] | to_roc }}
+    result = set |> {{ property | to_camel }}
+    {%- if "element" in case["input"] %} {{ case["input"]["element"] }}{%- endif %}
+    {%- else %}
+    set1 = fromList {{ case["input"]["set1"] | to_roc }}
+    set2 = fromList {{ case["input"]["set2"] | to_roc }}
+    result = set1 |> {{ property | to_camel }} set2
+    {%- endif %}
+    {%- if case["expected"] is iterable %}
+    expected = {{ case["expected"] | to_roc }} |> fromList
+    {%- else %}
+    expected = {{ case["expected"] | to_roc }}
+    {%- endif %}
+    result == expected
+
+{% endfor %}
+{% endfor %}
+
+##
+## A set can be converted to a list of items
+##
+
+{% for case in additional_cases -%}
+# {{ case["description"] }}
+expect
+    set = fromList {{ case["input"]["set"] | to_roc }}
+    result = set |> toList |> List.sortAsc
+    expected = {{ case["expected"] | to_roc }}
+    result == expected
+
+{% endfor %}

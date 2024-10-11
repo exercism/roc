@@ -340,6 +340,14 @@
         "difficulty": 3
       },
       {
+        "slug": "custom-set",
+        "name": "Custom Set",
+        "uuid": "cad7b3db-6fdc-4df0-90da-3799d4a0e440",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "diamond",
         "name": "Diamond",
         "uuid": "019e2937-b786-4825-9a61-8f462ddb3899",
