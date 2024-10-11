@@ -46,10 +46,11 @@ expect
     {%- endif %}
     {%- if case["expected"] is iterable %}
     expected = {{ case["expected"] | to_roc }} |> fromList
+    result |> isEq expected
     {%- else %}
     expected = {{ case["expected"] | to_roc }}
-    {%- endif %}
     result == expected
+    {%- endif %}
 
 {% endfor %}
 {% endfor %}

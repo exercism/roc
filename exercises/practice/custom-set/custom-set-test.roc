@@ -254,7 +254,7 @@ expect
     set = fromList []
     result = set |> insert 3
     expected = [3] |> fromList
-    result == expected
+    result |> isEq expected
 
 # add to non-empty set
 
@@ -262,7 +262,7 @@ expect
     set = fromList [1, 2, 4]
     result = set |> insert 3
     expected = [1, 2, 3, 4] |> fromList
-    result == expected
+    result |> isEq expected
 
 # adding an existing element does not change the set
 
@@ -270,7 +270,7 @@ expect
     set = fromList [1, 2, 3]
     result = set |> insert 3
     expected = [1, 2, 3] |> fromList
-    result == expected
+    result |> isEq expected
 
 ##
 ## Intersection returns a set of all shared elements
@@ -283,7 +283,7 @@ expect
     set2 = fromList []
     result = set1 |> intersection set2
     expected = [] |> fromList
-    result == expected
+    result |> isEq expected
 
 # intersection of an empty set and non-empty set is an empty set
 
@@ -292,7 +292,7 @@ expect
     set2 = fromList [3, 2, 5]
     result = set1 |> intersection set2
     expected = [] |> fromList
-    result == expected
+    result |> isEq expected
 
 # intersection of a non-empty set and an empty set is an empty set
 
@@ -301,7 +301,7 @@ expect
     set2 = fromList []
     result = set1 |> intersection set2
     expected = [] |> fromList
-    result == expected
+    result |> isEq expected
 
 # intersection of two sets with no shared elements is an empty set
 
@@ -310,7 +310,7 @@ expect
     set2 = fromList [4, 5, 6]
     result = set1 |> intersection set2
     expected = [] |> fromList
-    result == expected
+    result |> isEq expected
 
 # intersection of two sets with shared elements is a set of the shared elements
 
@@ -319,7 +319,7 @@ expect
     set2 = fromList [3, 2, 5]
     result = set1 |> intersection set2
     expected = [2, 3] |> fromList
-    result == expected
+    result |> isEq expected
 
 ##
 ## Difference (or Complement) of a set is a set of all elements that are only in the first set
@@ -332,7 +332,7 @@ expect
     set2 = fromList []
     result = set1 |> difference set2
     expected = [] |> fromList
-    result == expected
+    result |> isEq expected
 
 # difference of empty set and non-empty set is an empty set
 
@@ -341,7 +341,7 @@ expect
     set2 = fromList [3, 2, 5]
     result = set1 |> difference set2
     expected = [] |> fromList
-    result == expected
+    result |> isEq expected
 
 # difference of a non-empty set and an empty set is the non-empty set
 
@@ -350,7 +350,7 @@ expect
     set2 = fromList []
     result = set1 |> difference set2
     expected = [1, 2, 3, 4] |> fromList
-    result == expected
+    result |> isEq expected
 
 # difference of two non-empty sets is a set of elements that are only in the first set
 
@@ -359,7 +359,7 @@ expect
     set2 = fromList [2, 4]
     result = set1 |> difference set2
     expected = [1, 3] |> fromList
-    result == expected
+    result |> isEq expected
 
 # difference removes all duplicates in the first set
 
@@ -368,7 +368,7 @@ expect
     set2 = fromList [1]
     result = set1 |> difference set2
     expected = [] |> fromList
-    result == expected
+    result |> isEq expected
 
 ##
 ## Union returns a set of all elements in either set
@@ -381,7 +381,7 @@ expect
     set2 = fromList []
     result = set1 |> union set2
     expected = [] |> fromList
-    result == expected
+    result |> isEq expected
 
 # union of an empty set and non-empty set is the non-empty set
 
@@ -390,7 +390,7 @@ expect
     set2 = fromList [2]
     result = set1 |> union set2
     expected = [2] |> fromList
-    result == expected
+    result |> isEq expected
 
 # union of a non-empty set and empty set is the non-empty set
 
@@ -399,7 +399,7 @@ expect
     set2 = fromList []
     result = set1 |> union set2
     expected = [1, 3] |> fromList
-    result == expected
+    result |> isEq expected
 
 # union of non-empty sets contains all unique elements
 
@@ -408,7 +408,7 @@ expect
     set2 = fromList [2, 3]
     result = set1 |> union set2
     expected = [3, 2, 1] |> fromList
-    result == expected
+    result |> isEq expected
 
 ##
 ## A set can be converted to a list of items

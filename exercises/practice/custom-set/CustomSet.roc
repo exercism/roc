@@ -21,7 +21,7 @@ CustomSet := {
     todo3 : U64,
     # etc.
 }
-    implements [] # TODO: implement the appropriate abilities
+    implements [Eq]
 
 contains : CustomSet, Element -> Bool
 contains = \set, element ->

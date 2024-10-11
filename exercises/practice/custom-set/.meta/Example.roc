@@ -43,7 +43,10 @@ fromList = \list ->
 
 insert : CustomSet, Element -> CustomSet
 insert = \@CustomSet { items }, element ->
-    items |> List.append element |> List.sortAsc |> fromList
+    if items |> List.contains element then
+        @CustomSet { items }
+    else
+        @CustomSet { items: items |> List.append element }
 
 intersection : CustomSet, CustomSet -> CustomSet
 intersection = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
@@ -60,7 +63,7 @@ isEmpty = \@CustomSet { items } ->
 
 isEq : CustomSet, CustomSet -> Bool
 isEq = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
-    items1 == items2 # items list is always sorted
+    items1 |> List.sortAsc == items2 |> List.sortAsc
 
 isSubsetOf : CustomSet, CustomSet -> Bool
 isSubsetOf = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
