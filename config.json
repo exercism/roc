@@ -308,6 +308,14 @@
         "difficulty": 3
       },
       {
+        "slug": "atbash-cipher",
+        "name": "Atbash Cipher",
+        "uuid": "57e5a257-9afd-46f1-8c43-6fbd6f371ca3",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "binary-search",
         "name": "Binary Search",
         "uuid": "7493b919-d335-46b0-bfde-b3b22e244c46",
