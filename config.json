@@ -540,6 +540,14 @@
         "difficulty": 4
       },
       {
+        "slug": "custom-set",
+        "name": "Custom Set",
+        "uuid": "cad7b3db-6fdc-4df0-90da-3799d4a0e440",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "eliuds-eggs",
         "name": "Eliud's Eggs",
         "uuid": "697273e9-a30c-47bc-bcb7-21aa0b776dd1",

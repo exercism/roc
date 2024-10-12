@@ -1,0 +1,28 @@
+{
+  "cases": [
+    {
+      "description": "an empty set has an empty list of items",
+      "property": "toList",
+      "input": {
+        "set": []
+      },
+      "expected": []
+    },
+    {
+      "description": "a set can provide the list of its items",
+      "property": "toList",
+      "input": {
+        "set": [1, 2, 3, 4]
+      },
+      "expected": [1, 2, 3, 4]
+    },
+    {
+      "description": "duplicate items must be removed",
+      "property": "toList",
+      "input": {
+        "set": [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
+      },
+      "expected": [1, 2, 3, 4]
+    }
+  ]
+}
