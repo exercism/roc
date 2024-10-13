@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/clock/canonical-data.json
-# File last updated on 2024-09-11
+# File last updated on 2024-10-13
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
 }
@@ -373,4 +373,50 @@ expect
     clock1 = create { hours: 24 }
     clock2 = create {}
     clock1 == clock2
+
+##
+## Extreme I64 values should not crash with overflow errors
+##
+
+# Can create a clock with max I64 values
+expect
+    clock = create { hours: 9223372036854775807, minutes: 9223372036854775807 }
+    result = clock |> toStr
+    expected = "01:07"
+    result == expected
+
+# Can create a clock with min I64 values
+expect
+    clock = create { hours: -9223372036854775808, minutes: -9223372036854775808 }
+    result = clock |> toStr
+    expected = "21:52"
+    result == expected
+
+# Can add max I64 values to a clock
+expect
+    clock = create { hours: 23, minutes: 59 }
+    result = clock |> add { minutes: 9223372036854775807 } |> toStr
+    expected = "18:06"
+    result == expected
+
+# Can add min I64 values to a clock
+expect
+    clock = create { hours: 23, minutes: 59 }
+    result = clock |> add { minutes: -9223372036854775808 } |> toStr
+    expected = "05:51"
+    result == expected
+
+# Can subtract max I64 values from a clock
+expect
+    clock = create { hours: 23, minutes: 59 }
+    result = clock |> subtract { minutes: 9223372036854775807 } |> toStr
+    expected = "05:52"
+    result == expected
+
+# Can subtract min I64 values from a clock
+expect
+    clock = create { hours: 23, minutes: 59 }
+    result = clock |> subtract { minutes: -9223372036854775808 } |> toStr
+    expected = "18:07"
+    result == expected
 
