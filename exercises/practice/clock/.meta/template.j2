@@ -4,13 +4,9 @@
 
 import {{ exercise | to_pascal }} exposing [create, add, subtract, toStr]
 
-{% for supercase in cases %}
-##
-## {{ supercase["description"] }}
-##
-
-{% for case in supercase["cases"] -%}
+{% macro test_case(case) %}
 # {{ case["description"] }}
+
 {%- if case["property"] == "create" %}
 expect
     clock = create {{ plugins.to_hours_minutes_record(case["input"]) }}
@@ -33,6 +29,22 @@ expect
 # this test case is not implemented yet. Perhaps you can give it a try?
 {%- endif %}
 
+{% endmacro %}
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+{{ test_case(case) }}
 {% endfor %}
 {% endfor %}
 
+##
+## Extreme I64 values should not crash with overflow errors
+##
+
+{% for case in additional_cases -%}
+{{ test_case(case) }}
+{% endfor %}
