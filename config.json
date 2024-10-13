@@ -372,6 +372,14 @@
         "difficulty": 3
       },
       {
+        "slug": "largest-series-product",
+        "name": "Largest Series Product",
+        "uuid": "30b8f3f3-ccb1-485f-90b9-d0d81a084167",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "matching-brackets",
         "name": "Matching Brackets",
         "uuid": "5c7dbb9d-8816-4bbb-ba33-057ecf4f6329",
