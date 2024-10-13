@@ -572,6 +572,14 @@
         "difficulty": 4
       },
       {
+        "slug": "ocr-numbers",
+        "name": "OCR Numbers",
+        "uuid": "e4d5e487-e017-4a3b-8338-28920d7d5a01",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "perfect-numbers",
         "name": "Perfect Numbers",
         "uuid": "6bc05800-d03a-401d-be45-8b492297aa41",
