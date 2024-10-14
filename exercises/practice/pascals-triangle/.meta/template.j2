@@ -1,0 +1,16 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [pascalsTriangle]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    result = pascalsTriangle {{ case["input"]["count"] | to_roc }}
+    expected = [{%- for row in case["expected"] %}
+        {{ row | to_roc }},
+    {%- endfor %}]
+    result == expected
+
+{% endfor %}
