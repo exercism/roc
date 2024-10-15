@@ -1,0 +1,31 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [smallest, largest]
+
+isEq = \result, expected ->
+    when (result, expected) is
+        (Ok {value, factors}, Ok {value: expectedValue, factors: expectedFactors}) ->
+            value == expectedValue && factors == expectedFactors
+        _ -> Bool.false
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    result = {{ case["property"] | to_camel }} {{ case["input"] | to_roc }}
+    {%- if case["expected"]["error"] %}
+    result |> Result.isErr
+    {%- else %}
+    expected = Ok {
+        value: {% if case["expected"]["value"] is none %}0{% else %}{{ case["expected"]["value"] }}{% endif %},
+        factors: Set.fromList [
+            {%- for pair in case["expected"]["factors"] %}
+            ({{ pair[0] }}, {{ pair[1] }}),{% endfor %}
+        ]
+    }
+    result |> isEq expected
+    {%- endif %}
+
+{% endfor %}
+
