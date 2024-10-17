@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "SgfParsing.roc"
+    ],
+    "test": [
+      "sgf-parsing-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Parsing a Smart Game Format string."
+}
