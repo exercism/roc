@@ -572,6 +572,14 @@
         "difficulty": 4
       },
       {
+        "slug": "meetup",
+        "name": "Meetup",
+        "uuid": "0ef0cb6e-fe81-4988-bc13-26caac30c4d8",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "perfect-numbers",
         "name": "Perfect Numbers",
         "uuid": "6bc05800-d03a-401d-be45-8b492297aa41",

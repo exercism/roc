@@ -1,0 +1,19 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header(imports=["isodate"]) }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    result = {{ case["property"] | to_camel }} {
+        year: {{ case["input"]["year"] | to_roc }},
+        month: {{ case["input"]["month"] | to_roc }},
+        week: {{ case["input"]["week"] | to_pascal }},
+        dayOfWeek: {{ case["input"]["dayofweek"] | to_pascal }},
+    }
+    expected = Ok {{ case["expected"] | to_roc }}
+    result == expected
+
+{% endfor %}
