@@ -6,7 +6,7 @@ import rand.Random
 ## names and the current random state
 Factory := {
     existingNames : Set Str,
-    state : Random.State U32,
+    state : Random.State,
 }
 
 ## A robot must either have no name or a name composed of two letters followed
@@ -52,8 +52,8 @@ getFactory = \@Robot { factory } ->
 generateRandomName : Robot -> Robot
 generateRandomName = \@Robot { maybeName, factory } ->
     (@Factory { state, existingNames }) = factory
-    { updatedState, string: twoLetters } = randomString { state, generator: Random.u32 'A' 'Z', length: 2 }
-    { updatedState: updatedState2, string: threeDigits } = randomString { state: updatedState, generator: Random.u32 '0' '9', length: 3 }
+    { updatedState, string: twoLetters } = randomString { state, generator: Random.boundedU32 'A' 'Z', length: 2 }
+    { updatedState: updatedState2, string: threeDigits } = randomString { state: updatedState, generator: Random.boundedU32 '0' '9', length: 3 }
     possibleName = "$(twoLetters)$(threeDigits)"
 
     if existingNames |> Set.contains possibleName then
@@ -75,7 +75,7 @@ removeName : Factory, Str -> Factory
 removeName = \@Factory { state, existingNames }, robotName ->
     @Factory { state, existingNames: existingNames |> Set.remove robotName }
 
-randomString : { state : Random.State U32, generator : Random.Generator U32 U32, length : U64 } -> { updatedState : Random.State U32, string : Str }
+randomString : { state : Random.State, generator : Random.Generator U32, length : U64 } -> { updatedState : Random.State, string : Str }
 randomString = \{ state, generator, length } ->
     List.range { start: At 0, end: Before length }
     |> List.walk { state, characters: [] } \walk, _ ->
