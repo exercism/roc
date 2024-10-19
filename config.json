@@ -98,14 +98,6 @@
         "status": "deprecated"
       },
       {
-        "slug": "clock",
-        "name": "Clock",
-        "uuid": "b1ebc201-5d23-4953-88d7-58c82def95b3",
-        "practices": [],
-        "prerequisites": [],
-        "difficulty": 2
-      },
-      {
         "slug": "collatz-conjecture",
         "name": "Collatz Conjecture",
         "uuid": "39d17f08-a506-4d0e-8846-34e7c622160b",
@@ -327,6 +319,14 @@
         "slug": "bob",
         "name": "Bob",
         "uuid": "80a035ed-e6d2-47de-ab12-5711cc39bee5",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "clock",
+        "name": "Clock",
+        "uuid": "b1ebc201-5d23-4953-88d7-58c82def95b3",
         "practices": [],
         "prerequisites": [],
         "difficulty": 3
@@ -855,6 +855,14 @@
         "slug": "forth",
         "name": "Forth",
         "uuid": "37d9480f-7283-4123-abaa-3a9146acd2ca",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 9
+      },
+      {
+        "slug": "sgf-parsing",
+        "name": "SGF Parsing",
+        "uuid": "21064949-0320-425e-b2f5-ba67908c1db1",
         "practices": [],
         "prerequisites": [],
         "difficulty": 9
