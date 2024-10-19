@@ -1,0 +1,34 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header(imports=["parser"]) }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{%- macro to_node(node) %}
+GameNode {
+  properties: Dict.fromList [
+      {%- for name, values in node["properties"].items() %}
+      ({{ name | to_roc }}, {{ values | to_roc }}),
+      {%- endfor %}],
+  children: [
+      {%- for child_node in node["children"] %}
+      {{ to_node(child_node) }},
+      {%- endfor %}],
+}
+
+{%- endmacro %}
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    sgf = {{ case["input"]["encoded"] | to_roc }}
+    result = {{ case["property"] | to_camel }} sgf
+    {%- if case["expected"]["error"] %}
+    result |> Result.isErr
+    {%- else %}
+    expected = {{ to_node(case["expected"]) | indent(4) }}
+    result == Ok expected
+    {%- endif %}
+    
+
+{% endfor %}

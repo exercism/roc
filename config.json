@@ -850,6 +850,14 @@
         "practices": [],
         "prerequisites": [],
         "difficulty": 9
+      },
+      {
+        "slug": "sgf-parsing",
+        "name": "SGF Parsing",
+        "uuid": "21064949-0320-425e-b2f5-ba67908c1db1",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 9
       }
     ]
   },
