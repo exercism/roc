@@ -1,9 +1,9 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/gigasecond/canonical-data.json
-# File last updated on 2024-08-27
+# File last updated on 2024-10-18
 app [main] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
-    isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.5.0/ptg0ElRLlIqsxMDZTTvQHgUSkNrUSymQaGwTfv0UEmk.tar.br",
+    isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.5.1/XHx5wx95nuICKpN8sxMwYnCme5oX_YFbJUL1s6D1feU.tar.br",
 }
 
 main =
