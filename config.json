@@ -620,6 +620,14 @@
         "difficulty": 4
       },
       {
+        "slug": "variable-length-quantity",
+        "name": "Variable Length Quantity",
+        "uuid": "3d6cb550-b77f-44f3-a617-1243a4a52dcb",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "all-your-base",
         "name": "All Your Base",
         "uuid": "bb51a364-e9de-4e98-bbd9-a8cdd0bc76b3",
