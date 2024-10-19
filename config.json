@@ -372,6 +372,14 @@
         "difficulty": 3
       },
       {
+        "slug": "largest-series-product",
+        "name": "Largest Series Product",
+        "uuid": "30b8f3f3-ccb1-485f-90b9-d0d81a084167",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "matching-brackets",
         "name": "Matching Brackets",
         "uuid": "5c7dbb9d-8816-4bbb-ba33-057ecf4f6329",
@@ -399,6 +407,14 @@
         "slug": "pangram",
         "name": "Pangram",
         "uuid": "b760f4aa-bc7d-4e88-b57d-ce424f44f2be",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
+        "slug": "pascals-triangle",
+        "name": "Pascal's Triangle",
+        "uuid": "74935bfc-e18f-4dd4-a4b1-22fd540a4c24",
         "practices": [],
         "prerequisites": [],
         "difficulty": 3
@@ -572,6 +588,14 @@
         "difficulty": 4
       },
       {
+        "slug": "meetup",
+        "name": "Meetup",
+        "uuid": "0ef0cb6e-fe81-4988-bc13-26caac30c4d8",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "ocr-numbers",
         "name": "OCR Numbers",
         "uuid": "e4d5e487-e017-4a3b-8338-28920d7d5a01",
@@ -599,6 +623,14 @@
         "slug": "run-length-encoding",
         "name": "Run-Length Encoding",
         "uuid": "d6b8a979-8ce8-4f46-a6cd-35cd44b19701",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
+        "slug": "variable-length-quantity",
+        "name": "Variable Length Quantity",
+        "uuid": "3d6cb550-b77f-44f3-a617-1243a4a52dcb",
         "practices": [],
         "prerequisites": [],
         "difficulty": 4
@@ -716,9 +748,25 @@
         "difficulty": 6
       },
       {
+        "slug": "palindrome-products",
+        "name": "Palindrome Products",
+        "uuid": "a0f2579e-f990-4773-a05d-e7a508fcd53e",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "rational-numbers",
         "name": "Rational Numbers",
         "uuid": "6f5c2c74-a087-4f4a-9276-8479c868e784",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
+        "slug": "tournament",
+        "name": "Tournament",
+        "uuid": "aca2366a-03d8-47c5-b007-2d89f73a54dc",
         "practices": [],
         "prerequisites": [],
         "difficulty": 6
@@ -807,6 +855,14 @@
         "slug": "forth",
         "name": "Forth",
         "uuid": "37d9480f-7283-4123-abaa-3a9146acd2ca",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 9
+      },
+      {
+        "slug": "sgf-parsing",
+        "name": "SGF Parsing",
+        "uuid": "21064949-0320-425e-b2f5-ba67908c1db1",
         "practices": [],
         "prerequisites": [],
         "difficulty": 9
