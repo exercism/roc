@@ -1,0 +1,24 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    grid = {{ case["input"]["grid"] | to_roc_multiline_string | indent(8) }}
+    wordsToSearchFor = {{ case["input"]["wordsToSearchFor"] | to_roc }}
+    result = grid |> {{ case["property"] | to_camel }} wordsToSearchFor
+    expected = Dict.fromList [
+    {%- for word, result in case["expected"].items() %}
+        {%- if result is none %}
+        # {{ word | to_roc }} is not in the grid
+        {%- else %}
+        ({{ word | to_roc }}, {{ result | to_roc }}),
+        {%- endif %}
+    {%- endfor %}
+    ]
+    result == expected
+
+{% endfor %}

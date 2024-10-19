@@ -1,0 +1,18 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect
+    coins = {{ case["input"]["coins"] | to_roc }}
+    result = coins |> {{ case["property"] | to_camel }} {{ case["input"]["target"] }}
+    {%- if case["expected"]["error"] %}
+    result |> Result.isErr
+    {%- else %}
+    result == Ok {{ case["expected"] | to_roc }}
+    {%- endif %}
+
+{% endfor %}
