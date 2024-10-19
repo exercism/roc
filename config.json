@@ -732,6 +732,14 @@
         "difficulty": 6
       },
       {
+        "slug": "palindrome-products",
+        "name": "Palindrome Products",
+        "uuid": "a0f2579e-f990-4773-a05d-e7a508fcd53e",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "rational-numbers",
         "name": "Rational Numbers",
         "uuid": "6f5c2c74-a087-4f4a-9276-8479c868e784",
