@@ -684,6 +684,14 @@
         "difficulty": 5
       },
       {
+        "slug": "rail-fence-cipher",
+        "name": "Rail Fence Cipher",
+        "uuid": "d4569bd5-b6f3-4f2e-bdc0-0c6122540800",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "acronym",
         "name": "Acronym",
         "uuid": "5bc989a9-f7a8-489d-b9fc-6f65c2425fd7",
