@@ -500,6 +500,14 @@
         "difficulty": 3
       },
       {
+        "slug": "simple-linked-list",
+        "name": "Simple Linked List",
+        "uuid": "76693889-80b3-4d93-8fe1-68c3267a1f85",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "spiral-matrix",
         "name": "Spiral Matrix",
         "uuid": "7f8e880a-def6-463a-99b6-8864ef69177b",
