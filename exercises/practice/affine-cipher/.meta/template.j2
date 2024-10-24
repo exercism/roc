@@ -1,0 +1,26 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [encode, decode]
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+expect
+    phrase = {{ case["input"]["phrase"] | to_roc }}
+    key = {a: {{ case["input"]["key"]["a"] }}, b: {{ case["input"]["key"]["b"] }}}
+    result = {{ case["property"] | to_camel }} phrase key
+    {%- if case["expected"]["error"] %}
+    result |> Result.isErr
+    {%- else %}
+    expected = Ok {{ case["expected"] | to_roc }} 
+    result == expected
+    {%- endif %}
+
+{% endfor %}
+{% endfor %}
