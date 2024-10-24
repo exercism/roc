@@ -1,0 +1,50 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [fromList, toList]
+
+{% macro to_int_list(list) -%}
+[{% for item in list %}{{ item }},{% endfor %}]
+{%- endmacro %}
+
+{% macro to_tree(tree) -%}
+{% if tree is none %}Nil{% else %}Node {
+    value: {{ tree["data"] }},
+    left: {{ to_tree(tree["left"]) }},
+    right: {{ to_tree(tree["right"]) }},
+}{% endif %}
+{%- endmacro %}
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+{%- if supercase["cases"] %}
+{%- set subcases = supercase["cases"] %}
+{%- else %}
+{%- set subcases = [supercase] %}
+{%- endif %}
+
+{% for subcase in subcases -%}
+{%- if subcase["description"] != supercase["description"] %}
+# {{ subcase["description"] }}
+{%- endif %}
+expect
+    data = {{ to_int_list(subcase["input"]["treeData"]) }}
+{%- if subcase["property"] == "data" %}
+    result = data |> fromList
+    expected = {{ to_tree(subcase["expected"]) }}
+    result == expected
+{%- else %}
+    tree = data |> fromList
+    result = tree |> toList
+    expected = {{ to_int_list(subcase["expected"]) }}
+    result == expected
+{%- endif %}
+
+{% endfor %}
+
+{% endfor %}
+
+

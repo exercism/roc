@@ -572,6 +572,14 @@
         "difficulty": 4
       },
       {
+        "slug": "binary-search-tree",
+        "name": "Binary Search Tree",
+        "uuid": "c0c96f3d-833e-4d15-b4ae-ccc711a0e165",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "custom-set",
         "name": "Custom Set",
         "uuid": "cad7b3db-6fdc-4df0-90da-3799d4a0e440",
