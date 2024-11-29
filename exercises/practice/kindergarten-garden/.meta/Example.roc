@@ -22,12 +22,7 @@ studentIndex = \student ->
 plants : Str, Student -> Result (List Plant) _
 plants = \diagram, student ->
     startIndex = 2 * studentIndex student
-    grid =
-        diagram
-        |> Str.trim
-        |> Str.split "\n"
-        |> List.map \row ->
-            row |> Str.trim |> Str.toUtf8
+    grid = diagram |> Str.toUtf8 |> List.splitOn '\n'
     [(0, 0), (0, 1), (1, 0), (1, 1)]
         |> List.mapTry \(row, column) ->
             plant = grid |> List.get? row |> List.get? (startIndex + column)

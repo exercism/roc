@@ -72,6 +72,6 @@ parse : Str -> Result { addends : List (List U8), sum : List U8 } _
 parse = \problem ->
     { before, after } = Str.splitFirst? problem " == "
     addends =
-        Str.split before " + "
+        Str.splitOn before " + "
         |> List.map Str.toUtf8
     Ok { addends, sum: Str.toUtf8 after }

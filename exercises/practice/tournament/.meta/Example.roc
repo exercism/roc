@@ -10,9 +10,9 @@ tally = \table ->
         else
 
     table
-        |> Str.split "\n"
+        |> Str.splitOn "\n"
         |> List.mapTry? \row ->
-            when row |> Str.split ";" is
+            when row |> Str.splitOn ";" is
                 [team1, team2, resultStr] ->
                     result = resultStr |> parseResult?
                     Ok (team1, team2, result)

@@ -24,7 +24,7 @@ countNeighbors = \rows, x, y ->
 
 annotate : Str -> Str
 annotate = \minefield ->
-    rows = minefield |> Str.split "\n" |> List.map Str.toUtf8
+    rows = minefield |> Str.toUtf8 |> List.splitOn '\n'
     annotated =
         rows
         |> List.mapWithIndex \row, y ->

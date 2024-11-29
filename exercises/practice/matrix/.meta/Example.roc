@@ -4,7 +4,7 @@ parseRow : Str -> Result (List I64) [InvalidNumStr]
 parseRow = \rowStr ->
     rowStr
     |> Str.trim
-    |> Str.split " "
+    |> Str.splitOn " "
     |> List.map Str.trim
     |> List.dropIf Str.isEmpty
     |> List.mapTry Str.toI64
@@ -12,8 +12,7 @@ parseRow = \rowStr ->
 parseMatrix : Str -> Result (List (List I64)) [InvalidNumStr]
 parseMatrix = \matrixStr ->
     matrixStr
-    |> Str.trim
-    |> Str.split "\n"
+    |> Str.splitOn "\n"
     |> List.mapTry parseRow
 
 column : Str, U64 -> Result (List I64) [InvalidNumStr, OutOfBounds]

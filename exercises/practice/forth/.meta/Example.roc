@@ -102,11 +102,11 @@ step = \stack, op ->
 # Parsing
 parse : Str -> Result (List Op) _
 parse = \str ->
-    when Str.split (Str.trim str) "\n" is
+    when Str.splitOn (Str.trim str) "\n" is
         [.. as defLines, program] ->
             defs = parseDefs? defLines
 
-            Str.split program " "
+            Str.splitOn program " "
             |> flattenDefs defs
             |> List.mapTry toOp
 
@@ -115,7 +115,7 @@ parse = \str ->
 parseDefs : List Str -> Result Defs _
 parseDefs = \lines ->
     List.walkTry lines (Dict.empty {}) \defs, line ->
-        when Str.split line " " is
+        when Str.splitOn line " " is
             [":", name, .. as tokens, ";"] ->
                 ops = parseDef? tokens defs
                 Dict.insert defs name ops |> Ok

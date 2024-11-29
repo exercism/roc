@@ -3,10 +3,7 @@ module [transpose]
 ## Transpose the input string. Input string must be ASCII.
 transpose : Str -> Str
 transpose = \string ->
-    chars =
-        string
-        |> Str.split "\n"
-        |> List.map \row -> row |> Str.toUtf8
+    chars = string |> Str.toUtf8 |> List.splitOn '\n'
     getChar = \row, col ->
         chars |> List.get? row |> List.get col
     maxWidth = chars |> List.map List.len |> List.max |> Result.withDefault 0

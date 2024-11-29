@@ -8,7 +8,7 @@ convert = \grid ->
         Ok ""
         else
 
-    gridChars = grid |> Str.split "\n" |> List.map Str.toUtf8
+    gridChars = grid |> Str.toUtf8 |> List.splitOn '\n'
     size = checkSize? gridChars
     gridChars
     |> List.chunksOf 4 # split vertically into groups of 4 rows

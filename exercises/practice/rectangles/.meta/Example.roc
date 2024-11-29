@@ -24,7 +24,7 @@ rectangles : Str -> U64
 rectangles = \diagram ->
     grid =
         diagram
-        |> Str.split "\n"
+        |> Str.splitOn "\n"
         |> List.map Str.toUtf8
     height = grid |> List.len
     grid
@@ -40,4 +40,3 @@ rectangles = \diagram ->
             |> List.sum
         |> List.sum
     |> List.sum
-
