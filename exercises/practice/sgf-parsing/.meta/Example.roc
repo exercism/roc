@@ -1,6 +1,6 @@
 module [parse]
 
-import parser.Core as P
+import parser.Parser as P
 import parser.String as S
 
 # --- SGF GRAMMAR ---

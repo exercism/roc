@@ -2,8 +2,8 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/meetup/canonical-data.json
 # File last updated on 2024-10-18
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
-    isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.5.1/XHx5wx95nuICKpN8sxMwYnCme5oX_YFbJUL1s6D1feU.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+    isodate: "https://github.com/Anton-4/roc-isodate/releases/download/0.6.0/_n7UX8f5aFVVIXNa2AtOCvd-dcU-n-fp-0o8d22fyuQ.tar.br",
 }
 
 main =
