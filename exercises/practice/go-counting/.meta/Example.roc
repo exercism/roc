@@ -29,10 +29,10 @@ parse = \boardStr ->
 
     rows =
         boardStr
-            |> Str.split "\n"
+            |> Str.toUtf8
+            |> List.splitOn '\n'
             |> List.mapTry? \row ->
                 row
-                |> Str.toUtf8
                 |> List.mapTry \char ->
                     when char is
                         'B' -> Ok Black
@@ -125,4 +125,3 @@ territories = \boardStr ->
                 White -> { black: state.black, white: state.white |> Set.union newTerritory.territory, none: state.none }
                 None -> { black: state.black, white: state.white, none: state.none |> Set.union newTerritory.territory }
     |> Ok
-

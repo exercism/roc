@@ -9,10 +9,10 @@ parse : Str -> Result Board [InvalidCharacter U8]
 parse = \boardStr ->
     boardStr
     |> Str.trim
-    |> Str.split "\n"
+    |> Str.toUtf8
+    |> List.splitOn '\n'
     |> List.mapTry \row ->
         row
-        |> Str.toUtf8
         |> List.dropIf \char -> char == ' '
         |> List.mapTry \char ->
             when char is
@@ -99,4 +99,3 @@ hasNorthSouthPath = \board, stone ->
                 Empty -> Err NotPlayerStone
         |> List.keepOks \id -> id
     hasPathToSouth northStones (Set.empty {})
-

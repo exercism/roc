@@ -18,7 +18,7 @@ bestHands = \hands ->
 
 parseHand : Str -> Result Hand HandParsingError
 parseHand = \handStr ->
-    cards = handStr |> Str.split " "
+    cards = handStr |> Str.splitOn " "
     numCards = List.len cards
     if numCards != 5 then
         Err (InvalidNumberOfCards numCards)

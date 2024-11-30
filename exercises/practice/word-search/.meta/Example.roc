@@ -23,7 +23,7 @@ getChar = \grid, columnIndex, rowIndex ->
 
 search : Str, List Str -> Dict Str WordLocation
 search = \grid, wordsToSearchFor ->
-    { rows, width } = grid |> Str.split "\n" |> List.map Str.toUtf8 |> padRight
+    { rows, width } = grid |> Str.toUtf8 |> List.splitOn '\n' |> padRight
     height = List.len rows
     heightI64 = height |> Num.toI64
     widthI64 = width |> Num.toI64

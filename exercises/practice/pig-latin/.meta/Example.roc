@@ -22,7 +22,7 @@ pigLatinSwap = \chars ->
                     (_, 'y') if index > 0 -> Break (0, index) # rule 4
                     (_, c) if isVowel c -> Break (0, index) # rule 2
                     _ -> Continue (char, index + 1)
-        { before, others } = chars |> List.split splitIndex
+        { before, others } = chars |> List.splitAt splitIndex
         others |> List.concat before
 
 translateWord : Str -> Str
@@ -40,6 +40,6 @@ translateWord = \word ->
 translate : Str -> Str
 translate = \phrase ->
     phrase
-    |> Str.split " "
+    |> Str.splitOn " "
     |> List.map translateWord
     |> Str.joinWith " "

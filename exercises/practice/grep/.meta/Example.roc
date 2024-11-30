@@ -31,7 +31,7 @@ grep = \pattern, flags, fileNames ->
 
 findMatches : Config, Str, Str -> List { line : Str, index : U64 }
 findMatches = \config, pattern, text ->
-    Str.split text "\n"
+    Str.splitOn text "\n"
     |> List.mapWithIndex \line, index ->
         { line, index }
     |> List.keepIf \{ line } ->

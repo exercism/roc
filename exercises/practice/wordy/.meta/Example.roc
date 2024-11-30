@@ -20,7 +20,7 @@ evaluateExpression = \accumulator, operations ->
 
 answer : Str -> Result I64 [QuestionArgHadAnUnknownOperation Str, QuestionArgHadASyntaxError Str]
 answer = \question ->
-    words = question |> Str.replaceEach "?" " ?" |> Str.split " "
+    words = question |> Str.replaceEach "?" " ?" |> Str.splitOn " "
     when words is
         ["What", "is", numberString, .. as operations, "?"] ->
             maybeStartNumber = Str.toI64 numberString
@@ -37,4 +37,3 @@ answer = \question ->
         [_, "is", _, .., "?"] -> Err (QuestionArgHadAnUnknownOperation question)
         [_, "are", .., "?"] -> Err (QuestionArgHadAnUnknownOperation question)
         _ -> Err (QuestionArgHadASyntaxError question)
-
