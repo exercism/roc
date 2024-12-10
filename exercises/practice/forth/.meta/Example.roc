@@ -18,12 +18,12 @@ Op : [
 # Evaluation
 evaluate : Str -> Result Stack Str
 evaluate = \program ->
-    result =
+    result = \_ ->
         lower = toLower program
         operations = parse? lower
         interpret operations
 
-    Result.mapErr result handleError
+    Result.mapErr (result {}) handleError
 
 interpret : List Op -> Result Stack _
 interpret = \program ->

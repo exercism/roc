@@ -25,7 +25,7 @@ expect
     result |> Result.isOk
 
 # can read an item just written
-runOperations2 =
+runOperations2 = \_ ->
     result =
         create { capacity: 1 }
             |> write? 1
@@ -36,11 +36,11 @@ runOperations2 =
     Ok result
 
 expect
-    result = runOperations2
+    result = runOperations2 {}
     result |> Result.isOk
 
 # each item may only be read once
-runOperations3 =
+runOperations3 = \_ ->
     result =
         create { capacity: 1 }
             |> write? 1
@@ -55,11 +55,11 @@ runOperations3 =
     Ok result
 
 expect
-    result = runOperations3
+    result = runOperations3 {}
     result |> Result.isOk
 
 # items are read in the order they are written
-runOperations4 =
+runOperations4 = \_ ->
     result =
         create { capacity: 2 }
             |> write? 1
@@ -75,11 +75,11 @@ runOperations4 =
     Ok result
 
 expect
-    result = runOperations4
+    result = runOperations4 {}
     result |> Result.isOk
 
 # full buffer can't be written to
-runOperations5 =
+runOperations5 = \_ ->
     result =
         create { capacity: 1 }
             |> write? 1
@@ -90,11 +90,11 @@ runOperations5 =
     Ok result
 
 expect
-    result = runOperations5
+    result = runOperations5 {}
     result |> Result.isOk
 
 # a read frees up capacity for another write
-runOperations6 =
+runOperations6 = \_ ->
     result =
         create { capacity: 1 }
             |> write? 1
@@ -110,11 +110,11 @@ runOperations6 =
     Ok result
 
 expect
-    result = runOperations6
+    result = runOperations6 {}
     result |> Result.isOk
 
 # read position is maintained even across multiple writes
-runOperations7 =
+runOperations7 = \_ ->
     result =
         create { capacity: 3 }
             |> write? 1
@@ -135,11 +135,11 @@ runOperations7 =
     Ok result
 
 expect
-    result = runOperations7
+    result = runOperations7 {}
     result |> Result.isOk
 
 # items cleared out of buffer can't be read
-runOperations8 =
+runOperations8 = \_ ->
     result =
         create { capacity: 1 }
             |> write? 1
@@ -151,11 +151,11 @@ runOperations8 =
     Ok result
 
 expect
-    result = runOperations8
+    result = runOperations8 {}
     result |> Result.isOk
 
 # clear frees up capacity for another write
-runOperations9 =
+runOperations9 = \_ ->
     result =
         create { capacity: 1 }
             |> write? 1
@@ -168,11 +168,11 @@ runOperations9 =
     Ok result
 
 expect
-    result = runOperations9
+    result = runOperations9 {}
     result |> Result.isOk
 
 # clear does nothing on empty buffer
-runOperations10 =
+runOperations10 = \_ ->
     result =
         create { capacity: 1 }
             |> clear
@@ -184,11 +184,11 @@ runOperations10 =
     Ok result
 
 expect
-    result = runOperations10
+    result = runOperations10 {}
     result |> Result.isOk
 
 # overwrite acts like write on non-full buffer
-runOperations11 =
+runOperations11 = \_ ->
     result =
         create { capacity: 2 }
             |> write? 1
@@ -204,11 +204,11 @@ runOperations11 =
     Ok result
 
 expect
-    result = runOperations11
+    result = runOperations11 {}
     result |> Result.isOk
 
 # overwrite replaces the oldest item on full buffer
-runOperations12 =
+runOperations12 = \_ ->
     result =
         create { capacity: 2 }
             |> write? 1
@@ -225,11 +225,11 @@ runOperations12 =
     Ok result
 
 expect
-    result = runOperations12
+    result = runOperations12 {}
     result |> Result.isOk
 
 # overwrite replaces the oldest item remaining in buffer following a read
-runOperations13 =
+runOperations13 = \_ ->
     result =
         create { capacity: 3 }
             |> write? 1
@@ -256,11 +256,11 @@ runOperations13 =
     Ok result
 
 expect
-    result = runOperations13
+    result = runOperations13 {}
     result |> Result.isOk
 
 # initial clear does not affect wrapping around
-runOperations14 =
+runOperations14 = \_ ->
     result =
         create { capacity: 2 }
             |> clear
@@ -283,6 +283,6 @@ runOperations14 =
     Ok result
 
 expect
-    result = runOperations14
+    result = runOperations14 {}
     result |> Result.isOk
 
