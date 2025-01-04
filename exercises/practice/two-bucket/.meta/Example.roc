@@ -7,31 +7,31 @@ bfs : { start : a, neighbors : a -> List a, success : a -> Bool }
     ->
     Result (List a) [NoPathExists] where a implements Hash & Eq
 bfs = \{ start, neighbors, success } ->
-    help = \toVisit, visited, from ->
-        when toVisit is
+    help = \to_visit, visited, from ->
+        when to_visit is
             [] -> Err NoPathExists
-            [node, .. as restToVisit] ->
+            [node, .. as rest_to_visit] ->
                 if visited |> Set.contains node then
-                    help restToVisit visited from
+                    help rest_to_visit visited from
                 else if success node then
-                    pathBackToStart = \path, step ->
-                        updatedPath = path |> List.append step
+                    path_back_to_start = \path, step ->
+                        updated_path = path |> List.append step
                         when from |> Dict.get step is
-                            Ok previous -> pathBackToStart updatedPath previous
-                            Err KeyNotFound -> updatedPath
-                    pathBackToStart [] node |> List.reverse |> Ok
+                            Ok previous -> path_back_to_start updated_path previous
+                            Err KeyNotFound -> updated_path
+                    path_back_to_start [] node |> List.reverse |> Ok
                     else
 
-                neighborNodes = neighbors node
-                newFrom =
-                    neighborNodes
+                neighbor_nodes = neighbors node
+                new_from =
+                    neighbor_nodes
                     |> List.dropIf \neighbor -> visited |> Set.contains neighbor
                     |> List.map \neighbor -> (neighbor, node)
                     |> Dict.fromList
-                updatedFrom = from |> Dict.insertAll newFrom
-                updatedVisited = visited |> Set.insert node
-                updatedToVisit = restToVisit |> List.concat neighborNodes
-                help updatedToVisit updatedVisited updatedFrom
+                updated_from = from |> Dict.insertAll new_from
+                updated_visited = visited |> Set.insert node
+                updated_to_visit = rest_to_visit |> List.concat neighbor_nodes
+                help updated_to_visit updated_visited updated_from
     help [start] (Set.empty {}) (Dict.empty {})
 
 measure :
@@ -45,30 +45,30 @@ measure = \{ bucketOne, bucketTwo, goal, startBucket } ->
 
     start =
         when startBucket is
-            One -> { volumeOne: bucketOne, volumeTwo: 0 }
-            Two -> { volumeOne: 0, volumeTwo: bucketTwo }
+            One -> { volume_one: bucketOne, volume_two: 0 }
+            Two -> { volume_one: 0, volume_two: bucketTwo }
 
-    neighbors = \{ volumeOne, volumeTwo } ->
-        volumeOneToTwo = Num.min volumeOne (bucketTwo - volumeTwo)
-        volumeTwoToOne = Num.min volumeTwo (bucketOne - volumeOne)
+    neighbors = \{ volume_one, volume_two } ->
+        volume_one_to_two = Num.min volume_one (bucketTwo - volume_two)
+        volume_two_to_one = Num.min volume_two (bucketOne - volume_one)
         [
-            { volumeOne: 0, volumeTwo }, # empty bucket one
-            { volumeOne, volumeTwo: 0 }, # empty bucket two
-            { volumeOne: bucketOne, volumeTwo }, # fill bucket one
-            { volumeOne, volumeTwo: bucketTwo }, # fill bucket two
+            { volume_one: 0, volume_two }, # empty bucket one
+            { volume_one, volume_two: 0 }, # empty bucket two
+            { volume_one: bucketOne, volume_two }, # fill bucket one
+            { volume_one, volume_two: bucketTwo }, # fill bucket two
             {
                 # pour bucket one into bucket two
-                volumeOne: volumeOne - volumeOneToTwo,
-                volumeTwo: volumeTwo + volumeOneToTwo,
+                volume_one: volume_one - volume_one_to_two,
+                volume_two: volume_two + volume_one_to_two,
             },
             {
                 # pour bucket two into bucket one
-                volumeOne: volumeOne + volumeTwoToOne,
-                volumeTwo: volumeTwo - volumeTwoToOne,
+                volume_one: volume_one + volume_two_to_one,
+                volume_two: volume_two - volume_two_to_one,
             },
         ]
-        |> List.dropIf \{ volumeOne: v1, volumeTwo: v2 } ->
-            (v1 == volumeOne && v2 == volumeTwo) # no change
+        |> List.dropIf \{ volume_one: v1, volume_two: v2 } ->
+            (v1 == volume_one && v2 == volume_two) # no change
             ||
             # forbidden move: cannot end up with the starting bucket empty and
             # the other bucket full
@@ -76,14 +76,14 @@ measure = \{ bucketOne, bucketTwo, goal, startBucket } ->
                 One -> v1 == 0 && v2 == bucketTwo
                 Two -> v1 == bucketOne && v2 == 0
 
-    success = \{ volumeOne, volumeTwo } -> volumeOne == goal || volumeTwo == goal
+    success = \{ volume_one, volume_two } -> volume_one == goal || volume_two == goal
 
     when bfs { start, neighbors, success } is
         Ok [.. as rest, last] ->
             Ok {
                 moves: List.len rest + 1,
-                goalBucket: if last.volumeOne == goal then One else Two,
-                otherBucket: if last.volumeOne == goal then last.volumeTwo else last.volumeOne,
+                goalBucket: if last.volume_one == goal then One else Two,
+                otherBucket: if last.volume_one == goal then last.volume_two else last.volume_one,
             }
 
         _ -> Err NoSolutionExists

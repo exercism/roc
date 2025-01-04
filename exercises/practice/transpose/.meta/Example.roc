@@ -4,17 +4,17 @@ module [transpose]
 transpose : Str -> Str
 transpose = \string ->
     chars = string |> Str.toUtf8 |> List.splitOn '\n'
-    getChar = \row, col ->
+    get_char = \row, col ->
         chars |> List.get? row |> List.get col
-    maxWidth = chars |> List.map List.len |> List.max |> Result.withDefault 0
-    List.range { start: At 0, end: Before maxWidth }
+    max_width = chars |> List.map List.len |> List.max |> Result.withDefault 0
+    List.range { start: At 0, end: Before max_width }
     |> List.map \col ->
-        maxRow =
+        max_row =
             chars
-            |> List.findLastIndex \rowChars -> List.len rowChars > col
+            |> List.findLastIndex \row_chars -> List.len row_chars > col
             |> Result.withDefault 0
-        List.range { start: At 0, end: At maxRow }
-        |> List.map \row -> getChar row col |> Result.withDefault ' '
+        List.range { start: At 0, end: At max_row }
+        |> List.map \row -> get_char row col |> Result.withDefault ' '
         |> Str.fromUtf8
         |> Result.withDefault "" # unreachable because string is ASCII
     |> Str.joinWith "\n"

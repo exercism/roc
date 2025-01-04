@@ -1,14 +1,14 @@
 module [
     contains,
     difference,
-    fromList,
+    from_list,
     insert,
     intersection,
-    isDisjointWith,
-    isEmpty,
-    isEq,
-    isSubsetOf,
-    toList,
+    is_disjoint_with,
+    is_empty,
+    is_eq,
+    is_subset_of,
+    to_list,
     union,
 ]
 
@@ -31,9 +31,9 @@ difference : CustomSet, CustomSet -> CustomSet
 difference = \set1, set2 ->
     crash "Please implement the 'difference' function"
 
-fromList : List Element -> CustomSet
-fromList = \list ->
-    crash "Please implement the 'fromList' function"
+from_list : List Element -> CustomSet
+from_list = \list ->
+    crash "Please implement the 'from_list' function"
 
 insert : CustomSet, Element -> CustomSet
 insert = \set, element ->
@@ -43,25 +43,25 @@ intersection : CustomSet, CustomSet -> CustomSet
 intersection = \set1, set2 ->
     crash "Please implement the 'intersection' function"
 
-isDisjointWith : CustomSet, CustomSet -> Bool
-isDisjointWith = \set1, set2 ->
-    crash "Please implement the 'isDisjointWith' function"
+is_disjoint_with : CustomSet, CustomSet -> Bool
+is_disjoint_with = \set1, set2 ->
+    crash "Please implement the 'is_disjoint_with' function"
 
-isEmpty : CustomSet -> Bool
-isEmpty = \set ->
-    crash "Please implement the 'isEmpty' function"
+is_empty : CustomSet -> Bool
+is_empty = \set ->
+    crash "Please implement the 'is_empty' function"
 
-isEq : CustomSet, CustomSet -> Bool
-isEq = \set1, set2 ->
-    crash "Please implement the 'isEq' function"
+is_eq : CustomSet, CustomSet -> Bool
+is_eq = \set1, set2 ->
+    crash "Please implement the 'is_eq' function"
 
-isSubsetOf : CustomSet, CustomSet -> Bool
-isSubsetOf = \set1, set2 ->
-    crash "Please implement the 'isSubsetOf' function"
+is_subset_of : CustomSet, CustomSet -> Bool
+is_subset_of = \set1, set2 ->
+    crash "Please implement the 'is_subset_of' function"
 
-toList : CustomSet -> List Element
-toList = \set ->
-    crash "Please implement the 'toList' function"
+to_list : CustomSet -> List Element
+to_list = \set ->
+    crash "Please implement the 'to_list' function"
 
 union : CustomSet, CustomSet -> CustomSet
 union = \set1, set2 ->

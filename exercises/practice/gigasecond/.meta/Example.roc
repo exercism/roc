@@ -2,8 +2,8 @@ module [add]
 
 import isodate.DateTime
 
-futureDatetime : Str -> Result Str [InvalidDateTimeFormat]
-futureDatetime = \moment ->
+future_datetime : Str -> Result Str [InvalidDateTimeFormat]
+future_datetime = \moment ->
     Ok
         (
             DateTime.fromIsoStr? moment
@@ -17,6 +17,6 @@ futureDatetime = \moment ->
 
 add : Str -> Str
 add = \moment ->
-    when futureDatetime moment is
+    when future_datetime moment is
         Ok string -> string
         Err _ -> "Unexpected error"

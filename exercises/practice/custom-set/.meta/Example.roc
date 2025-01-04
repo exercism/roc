@@ -1,15 +1,15 @@
 module [
     contains,
     difference,
-    fromList,
+    from_list,
     insert,
     intersection,
-    isDisjointWith,
-    isEmpty,
-    isEq,
-    isSubsetOf,
-    toList,
-    toList,
+    is_disjoint_with,
+    is_empty,
+    is_eq,
+    is_subset_of,
+    to_list,
+    to_list,
     union,
 ]
 
@@ -26,8 +26,8 @@ difference = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
     items = items1 |> List.dropIf \item -> items2 |> List.contains item
     @CustomSet { items }
 
-fromList : List Element -> CustomSet
-fromList = \list ->
+from_list : List Element -> CustomSet
+from_list = \list ->
     when list |> List.sortAsc is
         [] -> @CustomSet { items: [] }
         [first, .. as rest] ->
@@ -53,26 +53,26 @@ intersection = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
     items = items1 |> List.keepIf \item -> items2 |> List.contains item
     @CustomSet { items }
 
-isDisjointWith : CustomSet, CustomSet -> Bool
-isDisjointWith = \set1, set2 ->
-    set1 |> intersection set2 |> isEmpty
+is_disjoint_with : CustomSet, CustomSet -> Bool
+is_disjoint_with = \set1, set2 ->
+    set1 |> intersection set2 |> is_empty
 
-isEmpty : CustomSet -> Bool
-isEmpty = \@CustomSet { items } ->
+is_empty : CustomSet -> Bool
+is_empty = \@CustomSet { items } ->
     items |> List.isEmpty
 
-isEq : CustomSet, CustomSet -> Bool
-isEq = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
+is_eq : CustomSet, CustomSet -> Bool
+is_eq = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
     items1 |> List.sortAsc == items2 |> List.sortAsc
 
-isSubsetOf : CustomSet, CustomSet -> Bool
-isSubsetOf = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
+is_subset_of : CustomSet, CustomSet -> Bool
+is_subset_of = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
     items1 |> List.all \item -> items2 |> List.contains item
 
-toList : CustomSet -> List Element
-toList = \@CustomSet { items } ->
+to_list : CustomSet -> List Element
+to_list = \@CustomSet { items } ->
     items
 
 union : CustomSet, CustomSet -> CustomSet
 union = \set1, set2 ->
-    set1 |> toList |> List.concat (set2 |> toList) |> fromList
+    set1 |> to_list |> List.concat (set2 |> to_list) |> from_list

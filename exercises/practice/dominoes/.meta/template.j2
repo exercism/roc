@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [findChain]
+import {{ exercise | to_pascal }} exposing [find_chain]
 
 {% macro to_list_of_pairs(dominoes) -%}
 [
@@ -23,8 +23,8 @@ canonicalize = \dominoes ->
 
 ## Ensure that the given result is Ok and is a valid chain for the
 ## given list of dominoes
-isValidChainFor : Result (List Domino) _, List Domino -> Bool
-isValidChainFor = \maybeChain, dominoes ->
+is_valid_chain_for : Result (List Domino) _, List Domino -> Bool
+is_valid_chain_for = \maybeChain, dominoes ->
     when maybeChain is
         Err _ -> Bool.false
         Ok chain ->
@@ -48,9 +48,9 @@ isValidChainFor = \maybeChain, dominoes ->
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    result = findChain {{ to_list_of_pairs(case["input"]["dominoes"]) }}
+    result = find_chain {{ to_list_of_pairs(case["input"]["dominoes"]) }}
     {%- if case["expected"] %}
-    result |> isValidChainFor {{ to_list_of_pairs(case["input"]["dominoes"]) }}
+    result |> is_valid_chain_for {{ to_list_of_pairs(case["input"]["dominoes"]) }}
     {%- else %}
     result |> Result.isErr
     {%- endif %}

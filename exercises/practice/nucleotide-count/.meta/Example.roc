@@ -1,7 +1,7 @@
-module [nucleotideCounts]
+module [nucleotide_counts]
 
-nucleotideCounts : Str -> Result { a : U64, c : U64, g : U64, t : U64 } _
-nucleotideCounts = \input ->
+nucleotide_counts : Str -> Result { a : U64, c : U64, g : U64, t : U64 } _
+nucleotide_counts = \input ->
     Str.toUtf8 input
     |> List.walkTry { a: 0, c: 0, g: 0, t: 0 } \state, elem ->
         when elem is

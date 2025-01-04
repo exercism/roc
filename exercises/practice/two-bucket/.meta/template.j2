@@ -8,18 +8,18 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }
 # {{ case["description"] }}
 expect
     result = {{ case["property"] | to_camel }} {
-        bucketOne: {{ case["input"]["bucketOne"] }},
-        bucketTwo: {{ case["input"]["bucketTwo"] }},
+        bucket_one: {{ case["input"]["bucket_one"] }},
+        bucket_two: {{ case["input"]["bucket_two"] }},
         goal: {{ case["input"]["goal"] }},
-        startBucket: {{ case["input"]["startBucket"] | to_pascal }},
+        start_bucket: {{ case["input"]["start_bucket"] | to_pascal }},
     }
     {%- if case["expected"]["error"] %}
     result |> Result.isErr
     {%- else %}
     expected = Ok {
         moves: {{ case["expected"]["moves"] }},
-        goalBucket: {{ case["expected"]["goalBucket"] | to_pascal }},
-        otherBucket: {{ case["expected"]["otherBucket"] }},
+        goal_bucket: {{ case["expected"]["goal_bucket"] | to_pascal }},
+        other_bucket: {{ case["expected"]["other_bucket"] }},
     }
     result == expected
     {%- endif %}

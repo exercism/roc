@@ -1,5 +1,5 @@
-module [countWords]
+module [count_words]
 
-countWords : Str -> Dict Str U64
-countWords = \sentence ->
-    crash "Please implement the 'countWords' function"
+count_words : Str -> Dict Str U64
+count_words = \sentence ->
+    crash "Please implement the 'count_words' function"

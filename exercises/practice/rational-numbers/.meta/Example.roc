@@ -1,4 +1,4 @@
-module [add, sub, mul, div, abs, exp, expReal, reduce]
+module [add, sub, mul, div, abs, exp, exp_real, reduce]
 
 add : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
 add = \r1, r2 ->
@@ -39,8 +39,8 @@ exp = \r, n ->
             m = Num.abs neg
             Rational (b |> Num.powInt m) (a |> Num.powInt m) |> reduce
 
-expReal : Frac a, [Rational (Int b) (Int b)] -> Frac a
-expReal = \x, r ->
+exp_real : Frac a, [Rational (Int b) (Int b)] -> Frac a
+exp_real = \x, r ->
     (Rational a b) = r
     x |> Num.pow (Num.toFrac a / Num.toFrac b)
 
@@ -49,7 +49,7 @@ reduce = \r ->
     (Rational a b) = r
     gcd = \m, n -> if n == 0 then m else gcd n (m % n)
     sign = \n -> if n < 0 then -1 else 1
-    absA = Num.abs a
-    absB = Num.abs b
-    d = gcd absA absB
-    Rational (sign a * sign b * absA // d) (absB // d)
+    abs_a = Num.abs a
+    abs_b = Num.abs b
+    d = gcd abs_a abs_b
+    Rational (sign a * sign b * abs_a // d) (abs_b // d)

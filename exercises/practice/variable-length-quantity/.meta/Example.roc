@@ -2,22 +2,22 @@ module [encode, decode]
 
 encode : List U32 -> List U8
 encode = \integers ->
-    integers |> List.joinMap encodeInteger
+    integers |> List.joinMap encode_integer
 
-encodeInteger : U32 -> List U8
-encodeInteger = \integer ->
+encode_integer : U32 -> List U8
+encode_integer = \integer ->
     help = \bytes, n ->
         if n == 0 then
             bytes
         else
-            nextN = n // 128 # same as n |> Num.shiftRightZfBy 7
-            last7Bits = n % 128 |> Num.toU8 # same as n |> Num.bitwiseAnd 0b1111111 |> Num.toU8
+            next_n = n // 128 # same as n |> Num.shiftRightZfBy 7
+            last_7_bits = n % 128 |> Num.toU8 # same as n |> Num.bitwiseAnd 0b1111111 |> Num.toU8
             byte =
                 if bytes == [] then
-                    last7Bits
+                    last_7_bits
                 else
-                    last7Bits + 128 # same as last7Bits |> Num.bitwiseOr 0b10000000
-            help (bytes |> List.append byte) nextN
+                    last_7_bits + 128 # same as last7Bits |> Num.bitwiseOr 0b10000000
+            help (bytes |> List.append byte) next_n
 
     if integer == 0 then [0] else help [] integer |> List.reverse
 
@@ -29,12 +29,11 @@ decode = \bytes ->
         _ ->
             bytes
             |> List.walk { integers: [], integer: 0 } \state, byte ->
-                last7Bits = byte % 128
-                integer = state.integer * 128 + Num.toU32 last7Bits
+                last_7_bits = byte % 128
+                integer = state.integer * 128 + Num.toU32 last_7_bits
                 if byte >= 128 then
                     { state & integer }
                 else
                     { integers: state.integers |> List.append integer, integer: 0 }
             |> .integers
             |> Ok
-

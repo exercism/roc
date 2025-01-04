@@ -1,14 +1,14 @@
 module [encode, decode]
 
-alphabetSize : U64
-alphabetSize = 26
+alphabet_size : U64
+alphabet_size = 26
 
-groupLength : U64
-groupLength = 5
+group_length : U64
+group_length = 5
 
 encode : Str, { a : U64, b : U64 } -> Result Str [InvalidKey, BadUtf8 _ _]
 encode = \phrase, key ->
-    alphabet = encodedAlphabet? key
+    alphabet = encoded_alphabet? key
     phrase
     |> Str.toUtf8
     |> List.joinMap \char ->
@@ -16,44 +16,44 @@ encode = \phrase, key ->
             [char]
             else
 
-        charLower = if char >= 'A' && char <= 'Z' then char - 'A' + 'a' else char
-        if charLower >= 'a' && charLower <= 'z' then
-            index = charLower - 'a' |> Num.toU64
+        char_lower = if char >= 'A' && char <= 'Z' then char - 'A' + 'a' else char
+        if char_lower >= 'a' && char_lower <= 'z' then
+            index = char_lower - 'a' |> Num.toU64
             when alphabet |> List.get index is
-                Ok encodedChar -> [encodedChar]
+                Ok encoded_char -> [encoded_char]
                 Err OutOfBounds -> crash "Unreachable: index cannot be out of bounds here"
         else
             []
-    |> List.chunksOf groupLength
+    |> List.chunksOf group_length
     |> List.intersperse [' ']
     |> List.join
     |> Str.fromUtf8
 
-encodedAlphabet : { a : U64, b : U64 } -> Result (List U8) [InvalidKey]
-encodedAlphabet = \{ a, b } ->
+encoded_alphabet : { a : U64, b : U64 } -> Result (List U8) [InvalidKey]
+encoded_alphabet = \{ a, b } ->
     encoded =
         List.range { start: At 'a', end: At 'z' }
         |> List.map \char ->
             num = (char - 'a') |> Num.toU64
-            index = (a * num + b) % alphabetSize
+            index = (a * num + b) % alphabet_size
             'a' + Num.toU8 index
-    if (encoded |> Set.fromList |> Set.len) < alphabetSize then
+    if (encoded |> Set.fromList |> Set.len) < alphabet_size then
         Err InvalidKey
     else
         Ok encoded
 
-decodedAlphabet : { a : U64, b : U64 } -> Result (List U8) [InvalidKey]
-decodedAlphabet = \key ->
-    encodedAlphabet? key
-        |> List.mapWithIndex \encoded, decodedIndex -> { encoded, decodedIndex }
+decoded_alphabet : { a : U64, b : U64 } -> Result (List U8) [InvalidKey]
+decoded_alphabet = \key ->
+    encoded_alphabet? key
+        |> List.mapWithIndex \encoded, decoded_index -> { encoded, decoded_index }
         |> List.sortWith \{ encoded: encoded1 }, { encoded: encoded2 } ->
             Num.compare encoded1 encoded2
-        |> List.map \pair -> Num.toU8 pair.decodedIndex + 'a'
+        |> List.map \pair -> Num.toU8 pair.decoded_index + 'a'
         |> Ok
 
 decode : Str, { a : U64, b : U64 } -> Result Str [InvalidKey, BadUtf8 _ _, InvalidCharacter]
 decode = \phrase, key ->
-    alphabet = decodedAlphabet? key
+    alphabet = decoded_alphabet? key
     phrase
         |> Str.toUtf8
         |> List.mapTry? \char ->
@@ -64,7 +64,7 @@ decode = \phrase, key ->
             else if char >= 'a' && char <= 'z' then
                 index = char - 'a' |> Num.toU64
                 when alphabet |> List.get index is
-                    Ok decodedChar -> Ok [decodedChar]
+                    Ok decoded_char -> Ok [decoded_char]
                     Err OutOfBounds -> crash "Unreachable: index cannot be out of bounds here"
             else
                 Err InvalidCharacter

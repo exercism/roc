@@ -1,5 +1,5 @@
 module [winner]
 
 winner : Str -> Result [PlayerO, PlayerX] _
-winner = \boardStr ->
+winner = \board_str ->
     crash "Please implement the 'winner' function"

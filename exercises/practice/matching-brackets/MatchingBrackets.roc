@@ -1,5 +1,5 @@
-module [isPaired]
+module [is_paired]
 
-isPaired : Str -> Bool
-isPaired = \string ->
-    crash "Please implement the 'isPaired' function"
+is_paired : Str -> Bool
+is_paired = \string ->
+    crash "Please implement the 'is_paired' function"

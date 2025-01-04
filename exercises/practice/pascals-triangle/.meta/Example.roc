@@ -1,14 +1,14 @@
-module [pascalsTriangle]
+module [pascals_triangle]
 
-pascalsTriangle : U64 -> List (List U64)
-pascalsTriangle = \count ->
+pascals_triangle : U64 -> List (List U64)
+pascals_triangle = \count ->
     List.range { start: At 0, end: Before count }
     |> List.map \row ->
         List.range { start: At 0, end: At row }
-        |> List.map \column -> binomialCoefficient row column
+        |> List.map \column -> binomial_coefficient row column
 
-binomialCoefficient : U64, U64 -> U64
-binomialCoefficient = \n, k ->
+binomial_coefficient : U64, U64 -> U64
+binomial_coefficient = \n, k ->
     if k == 0 || k == n then
         1
         else

@@ -2,15 +2,15 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/complex-numbers/canonical-data.json
 # File last updated on 2024-09-21
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main =
-    Task.ok {}
+main! = \_args ->
+    Ok {}
 
 import ComplexNumbers exposing [real, imaginary, add, sub, mul, div, conjugate, abs, exp]
 
-isApproxEq = \z1, z2 ->
+is_approx_eq = \z1, z2 ->
     z1.re |> Num.isApproxEq z2.re {} && z1.im |> Num.isApproxEq z2.im {}
 
 ###
@@ -73,7 +73,7 @@ expect
     z2 = { re: 2, im: 0 }
     result = z1 |> add z2
     expected = { re: 3, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Add purely imaginary numbers
 expect
@@ -81,7 +81,7 @@ expect
     z2 = { re: 0, im: 2 }
     result = z1 |> add z2
     expected = { re: 0, im: 3 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Add numbers with real and imaginary part
 expect
@@ -89,7 +89,7 @@ expect
     z2 = { re: 3, im: 4 }
     result = z1 |> add z2
     expected = { re: 4, im: 6 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 ## Subtraction
 
@@ -99,7 +99,7 @@ expect
     z2 = { re: 2, im: 0 }
     result = z1 |> sub z2
     expected = { re: -1, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Subtract purely imaginary numbers
 expect
@@ -107,7 +107,7 @@ expect
     z2 = { re: 0, im: 2 }
     result = z1 |> sub z2
     expected = { re: 0, im: -1 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Subtract numbers with real and imaginary part
 expect
@@ -115,7 +115,7 @@ expect
     z2 = { re: 3, im: 4 }
     result = z1 |> sub z2
     expected = { re: -2, im: -2 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 ## Multiplication
 
@@ -125,7 +125,7 @@ expect
     z2 = { re: 2, im: 0 }
     result = z1 |> mul z2
     expected = { re: 2, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Multiply purely imaginary numbers
 expect
@@ -133,7 +133,7 @@ expect
     z2 = { re: 0, im: 2 }
     result = z1 |> mul z2
     expected = { re: -2, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Multiply numbers with real and imaginary part
 expect
@@ -141,7 +141,7 @@ expect
     z2 = { re: 3, im: 4 }
     result = z1 |> mul z2
     expected = { re: -5, im: 10 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 ## Division
 
@@ -151,7 +151,7 @@ expect
     z2 = { re: 2, im: 0 }
     result = z1 |> div z2
     expected = { re: 0.5, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Divide purely imaginary numbers
 expect
@@ -159,7 +159,7 @@ expect
     z2 = { re: 0, im: 2 }
     result = z1 |> div z2
     expected = { re: 0.5, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Divide numbers with real and imaginary part
 expect
@@ -167,7 +167,7 @@ expect
     z2 = { re: 3, im: 4 }
     result = z1 |> div z2
     expected = { re: 0.44, im: 0.08 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 ###
 ### Absolute value
@@ -212,21 +212,21 @@ expect
     z = { re: 5, im: 0 }
     result = conjugate z
     expected = { re: 5, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Conjugate a purely imaginary number
 expect
     z = { re: 0, im: 5 }
     result = conjugate z
     expected = { re: 0, im: -5 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Conjugate a number with real and imaginary part
 expect
     z = { re: 1, im: 1 }
     result = conjugate z
     expected = { re: 1, im: -1 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 ###
 ### Complex exponential function
@@ -237,35 +237,35 @@ expect
     z = { re: 0, im: Num.pi }
     result = exp z
     expected = { re: -1, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Exponential of 0
 expect
     z = { re: 0, im: 0 }
     result = exp z
     expected = { re: 1, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Exponential of a purely real number
 expect
     z = { re: 1, im: 0 }
     result = exp z
     expected = { re: Num.e, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Exponential of a number with real and imaginary part
 expect
     z = { re: Num.log 2f64, im: Num.pi }
     result = exp z
     expected = { re: -2, im: 0 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Exponential resulting in a number with real and imaginary part
 expect
     z = { re: Num.log 2f64 / 2, im: Num.pi / 4 }
     result = exp z
     expected = { re: 1, im: 1 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 ###
 ### Operations between real numbers and complex numbers
@@ -277,7 +277,7 @@ expect
     z2 = { re: 5, im: 0 }
     result = z1 |> add z2
     expected = { re: 6, im: 2 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Add complex number to real number
 expect
@@ -285,7 +285,7 @@ expect
     z2 = { re: 1, im: 2 }
     result = z1 |> add z2
     expected = { re: 6, im: 2 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Subtract real number from complex number
 expect
@@ -293,7 +293,7 @@ expect
     z2 = { re: 4, im: 0 }
     result = z1 |> sub z2
     expected = { re: 1, im: 7 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Subtract complex number from real number
 expect
@@ -301,7 +301,7 @@ expect
     z2 = { re: 5, im: 7 }
     result = z1 |> sub z2
     expected = { re: -1, im: -7 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Multiply complex number by real number
 expect
@@ -309,7 +309,7 @@ expect
     z2 = { re: 5, im: 0 }
     result = z1 |> mul z2
     expected = { re: 10, im: 25 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Multiply real number by complex number
 expect
@@ -317,7 +317,7 @@ expect
     z2 = { re: 2, im: 5 }
     result = z1 |> mul z2
     expected = { re: 10, im: 25 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Divide complex number by real number
 expect
@@ -325,7 +325,7 @@ expect
     z2 = { re: 10, im: 0 }
     result = z1 |> div z2
     expected = { re: 1, im: 10 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 
 # Divide real number by complex number
 expect
@@ -333,5 +333,5 @@ expect
     z2 = { re: 1, im: 1 }
     result = z1 |> div z2
     expected = { re: 2.5, im: -2.5 }
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 

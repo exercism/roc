@@ -4,11 +4,11 @@ abbreviate : Str -> Str
 abbreviate = \text ->
     bytes = Str.toUtf8 text
 
-    { acronym } = List.walk bytes { acronym: [], readyForLetter: Bool.true } \state, byte ->
-        if state.readyForLetter && isLetter byte then
-            { acronym: List.append state.acronym byte, readyForLetter: Bool.false }
+    { acronym } = List.walk bytes { acronym: [], ready_for_letter: Bool.true } \state, byte ->
+        if state.ready_for_letter && isLetter byte then
+            { acronym: List.append state.acronym byte, ready_for_letter: Bool.false }
         else if byte == ' ' || byte == '-' then
-            { acronym: state.acronym, readyForLetter: Bool.true }
+            { acronym: state.acronym, ready_for_letter: Bool.true }
         else
             state
 

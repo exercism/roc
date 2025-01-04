@@ -11,7 +11,7 @@ expect
         year: {{ case["input"]["year"] | to_roc }},
         month: {{ case["input"]["month"] | to_roc }},
         week: {{ case["input"]["week"] | to_pascal }},
-        dayOfWeek: {{ case["input"]["dayofweek"] | to_pascal }},
+        day_of_week: {{ case["input"]["dayofweek"] | to_pascal }},
     }
     expected = Ok {{ case["expected"] | to_roc }}
     result == expected

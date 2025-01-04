@@ -6,26 +6,26 @@ smallest = \{ min, max } ->
         Err MinWasLargerThanMax
         else
 
-    help = \factor1, factor2, bestValue, factors ->
+    help = \factor1, factor2, best_value, factors ->
         if factor1 > max then
-            finalValue = if factors == [] then 0 else bestValue
-            Ok { value: finalValue, factors: Set.fromList factors }
+            final_value = if factors == [] then 0 else best_value
+            Ok { value: final_value, factors: Set.fromList factors }
         else if factor2 == max + 1 then
-            help (factor1 + 1) (factor1 + 1) bestValue factors
+            help (factor1 + 1) (factor1 + 1) best_value factors
             else
 
         value = factor1 * factor2
-        if value > bestValue then
-            help (factor1 + 1) (factor1 + 1) bestValue factors
+        if value > best_value then
+            help (factor1 + 1) (factor1 + 1) best_value factors
         else
-            nextFactor2 = factor2 + 1
-            if value == bestValue then
-                newFactors = factors |> List.append (factor1, factor2)
-                help factor1 nextFactor2 bestValue newFactors
-            else if value |> isPalindrome then
-                help factor1 nextFactor2 value [(factor1, factor2)]
+            next_factor2 = factor2 + 1
+            if value == best_value then
+                new_factors = factors |> List.append (factor1, factor2)
+                help factor1 next_factor2 best_value new_factors
+            else if value |> is_palindrome then
+                help factor1 next_factor2 value [(factor1, factor2)]
             else
-                help factor1 nextFactor2 bestValue factors
+                help factor1 next_factor2 best_value factors
 
     help min min Num.maxU64 []
 
@@ -35,30 +35,30 @@ largest = \{ min, max } ->
         Err MinWasLargerThanMax
         else
 
-    help = \factor1, factor2, bestValue, factors ->
+    help = \factor1, factor2, best_value, factors ->
         if factor1 < min then
-            finalValue = if factors == [] then 0 else bestValue
-            Ok { value: finalValue, factors: Set.fromList factors }
+            final_value = if factors == [] then 0 else best_value
+            Ok { value: final_value, factors: Set.fromList factors }
         else if factor2 < factor1 then
-            help (factor1 - 1) max bestValue factors
+            help (factor1 - 1) max best_value factors
             else
 
         value = factor1 * factor2
-        if value < bestValue then
-            help (factor1 - 1) max bestValue factors
+        if value < best_value then
+            help (factor1 - 1) max best_value factors
         else
-            nextFactor2 = factor2 - 1
-            if value == bestValue then
-                newFactors = factors |> List.append (factor1, factor2)
-                help factor1 nextFactor2 bestValue newFactors
-            else if value |> isPalindrome then
-                help factor1 nextFactor2 value [(factor1, factor2)]
+            next_factor2 = factor2 - 1
+            if value == best_value then
+                new_factors = factors |> List.append (factor1, factor2)
+                help factor1 next_factor2 best_value new_factors
+            else if value |> is_palindrome then
+                help factor1 next_factor2 value [(factor1, factor2)]
             else
-                help factor1 nextFactor2 bestValue factors
+                help factor1 next_factor2 best_value factors
 
     help max max 0 []
 
-isPalindrome : U64 -> Bool
-isPalindrome = \number ->
+is_palindrome : U64 -> Bool
+is_palindrome = \number ->
     digits = number |> Num.toStr |> Str.toUtf8
     digits == digits |> List.reverse

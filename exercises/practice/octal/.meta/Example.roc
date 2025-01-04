@@ -1,6 +1,6 @@
 module [parse]
 
-parseOctalDigit = \char ->
+parse_octal_digit = \char ->
     if char >= '0' && char <= '7' then
         Ok (char - '0' |> Num.toU64)
     else
@@ -15,8 +15,8 @@ parse = \string ->
     string
         |> Str.toUtf8
         |> List.walkTry 0 \number, char ->
-            octalDigit = parseOctalDigit? char
+            octal_digit = parse_octal_digit? char
             if number > 0x1fffffffffffffff then
                 Err InvalidNumStr
             else
-                number |> Num.shiftLeftBy 3 |> Num.add octalDigit |> Ok
+                number |> Num.shiftLeftBy 3 |> Num.add octal_digit |> Ok

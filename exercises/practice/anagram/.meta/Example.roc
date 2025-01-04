@@ -1,8 +1,8 @@
-module [findAnagrams]
+module [find_anagrams]
 
 import unicode.Grapheme
 
-toUpper = \text ->
+to_upper = \text ->
     text
     |> Str.toUtf8
     |> List.map \c ->
@@ -13,7 +13,7 @@ toUpper = \text ->
     |> Str.fromUtf8
     |> Result.withDefault "Unreachable"
 
-compareGraphemes = \g1, g2 ->
+compare_graphemes = \g1, g2 ->
     s1 = g1 |> Str.toUtf8
     s2 = g2 |> Str.toUtf8
     cmp =
@@ -30,18 +30,18 @@ compareGraphemes = \g1, g2 ->
     else
         cmp
 
-sortedGraphemes = \word ->
+sorted_graphemes = \word ->
     graphemes = word |> Grapheme.split?
-    graphemes |> List.sortWith compareGraphemes |> Ok
+    graphemes |> List.sortWith compare_graphemes |> Ok
 
-isAnagramOf = \word1, word2 ->
-    sorted1 = word1 |> toUpper |> sortedGraphemes?
-    sorted2 = word2 |> toUpper |> sortedGraphemes?
+is_anagram_of = \word1, word2 ->
+    sorted1 = word1 |> to_upper |> sorted_graphemes?
+    sorted2 = word2 |> to_upper |> sorted_graphemes?
     Ok (sorted1 == sorted2)
 
-findAnagrams : Str, List Str -> List Str
-findAnagrams = \subject, candidates ->
+find_anagrams : Str, List Str -> List Str
+find_anagrams = \subject, candidates ->
     candidates
-    |> List.dropIf \word -> toUpper word == toUpper subject
+    |> List.dropIf \word -> to_upper word == to_upper subject
     |> List.keepIf \word ->
-        word |> isAnagramOf subject |> Result.withDefault Bool.false
+        word |> is_anagram_of subject |> Result.withDefault Bool.false

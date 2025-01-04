@@ -1,5 +1,5 @@
-module [pascalsTriangle]
+module [pascals_triangle]
 
-pascalsTriangle : U64 -> List (List U64)
-pascalsTriangle = \count ->
-    crash "Please implement the 'pascalsTriangle' function"
+pascals_triangle : U64 -> List (List U64)
+pascals_triangle = \count ->
+    crash "Please implement the 'pascals_triangle' function"

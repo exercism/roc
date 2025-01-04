@@ -8,8 +8,8 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }
 # {{ case["description"] }}
 expect
     grid = {{ case["input"]["grid"] | to_roc_multiline_string | indent(8) }}
-    wordsToSearchFor = {{ case["input"]["wordsToSearchFor"] | to_roc }}
-    result = grid |> {{ case["property"] | to_camel }} wordsToSearchFor
+    words_to_search_for = {{ case["input"]["words_to_search_for"] | to_roc }}
+    result = grid |> {{ case["property"] | to_camel }} words_to_search_for
     expected = Dict.fromList [
     {%- for word, result in case["expected"].items() %}
         {%- if result is none %}

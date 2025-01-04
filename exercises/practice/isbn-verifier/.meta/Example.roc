@@ -1,6 +1,6 @@
-module [isValid]
+module [is_valid]
 
-charValue = \char, index ->
+char_value = \char, index ->
     if char == 'X' then
         if index == 9 then
             Ok 10
@@ -11,8 +11,8 @@ charValue = \char, index ->
     else
         Err InvalidIsbnBadChar
 
-isValid : Str -> Bool
-isValid = \isbn ->
+is_valid : Str -> Bool
+is_valid = \isbn ->
     chars =
         isbn
         |> Str.toUtf8
@@ -22,6 +22,6 @@ isValid = \isbn ->
     else
         values =
             chars
-            |> List.mapWithIndex charValue
+            |> List.mapWithIndex char_value
             |> List.keepOks \v -> v
         List.len values == 10 && (List.sum values) % 11 == 0

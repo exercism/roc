@@ -1,7 +1,7 @@
-module [isIsogram]
+module [is_isogram]
 
-isIsogram : Str -> Bool
-isIsogram = \phrase ->
+is_isogram : Str -> Bool
+is_isogram = \phrase ->
     chars =
         phrase
         |> Str.toUtf8

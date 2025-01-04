@@ -7,8 +7,8 @@ import {{ exercise | to_pascal }} exposing [row, column]
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    matrixStr = {{ case["input"]["string"] | to_roc_multiline_string | indent(8) }}
-    result = matrixStr |> {{ case["property"] | to_camel }} {{ case["input"]["index"] | to_roc }}
+    matrix_str = {{ case["input"]["string"] | to_roc_multiline_string | indent(8) }}
+    result = matrix_str |> {{ case["property"] | to_camel }} {{ case["input"]["index"] | to_roc }}
     result == Ok {{ case["expected"] | to_roc }}
 
 {% endfor %}

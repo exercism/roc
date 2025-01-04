@@ -1,10 +1,10 @@
-module [findChain]
+module [find_chain]
 
 Domino : (U8, U8)
 
-findChain : List Domino -> Result (List Domino) [NoChainExists]
-findChain = \dominoes ->
-    help = \used, available ->
+find_chain : List Domino -> Result (List Domino) [NoChainExists]
+find_chain = \dominoes ->
+    find_chain_helper = \used, available ->
         when available is
             [] ->
                 when used is
@@ -14,20 +14,20 @@ findChain = \dominoes ->
 
                     [first, .., last] -> if first.0 == last.1 then Ok used else Err NoChainExists
 
-            [firstAvailable, .. as restAvailable] ->
+            [first_available, .. as rest_available] ->
                 when used is
-                    [] -> help [firstAvailable] restAvailable
-                    [.., lastUsed] ->
+                    [] -> find_chain_helper [first_available] rest_available
+                    [.., last_used] ->
                         available
                         |> List.walkWithIndexUntil (Err NoChainExists) \_, domino, index ->
-                            maybeChain =
-                                if lastUsed.1 == domino.0 then
-                                    help (used |> List.append domino) (available |> List.dropAt index)
-                                else if lastUsed.1 == domino.1 then
-                                    help (used |> List.append (domino.1, domino.0)) (available |> List.dropAt index)
+                            maybe_chain =
+                                if last_used.1 == domino.0 then
+                                    find_chain_helper (used |> List.append domino) (available |> List.dropAt index)
+                                else if last_used.1 == domino.1 then
+                                    find_chain_helper (used |> List.append (domino.1, domino.0)) (available |> List.dropAt index)
                                 else
                                     Err NoChainExists
-                            when maybeChain is
+                            when maybe_chain is
                                 Ok chain -> Break (Ok chain)
                                 Err NoChainExists -> Continue (Err NoChainExists)
-    help [] dominoes
+    find_chain_helper [] dominoes

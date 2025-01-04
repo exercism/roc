@@ -2,14 +2,14 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [allergicTo, set]
+import {{ exercise | to_pascal }} exposing [allergic_to, set]
 
 {% for outerCase in cases -%}
 {% for case in outerCase["cases"] %}
 # {{ outerCase["description"] }} {{ case["description"] | default('') }}
 expect
-    {%- if case["property"] == "allergicTo" %}
-    result = allergicTo {{ case["input"]["item"] | to_pascal }} {{ case["input"]["score"] | to_roc }}
+    {%- if case["property"] == "allergic_to" %}
+    result = allergic_to {{ case["input"]["item"] | to_pascal }} {{ case["input"]["score"] | to_roc }}
     result == {{ case["expected"] | to_roc }}
     {%- else %}
     result = set {{ case["input"]["score"] }}

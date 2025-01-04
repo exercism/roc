@@ -1,11 +1,11 @@
-module [toProtein]
+module [to_protein]
 
 Codon : List U8
-AminoAcid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, Tyrosine]
-Protein : List AminoAcid
+amino_acid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, Tyrosine]
+Protein : List amino_acid
 
-toInstruction : Codon -> Result [Append AminoAcid, Stop] [InvalidCodon Codon]
-toInstruction = \codon ->
+to_instruction : Codon -> Result [Append amino_acid, Stop] [InvalidCodon Codon]
+to_instruction = \codon ->
     when codon is
         ['A', 'U', 'G'] -> Ok (Append Methionine)
         ['U', 'U', 'U'] -> Ok (Append Phenylalanine)
@@ -26,14 +26,14 @@ toInstruction = \codon ->
         ['U', 'G', 'A'] -> Ok Stop
         _ -> Err (InvalidCodon codon)
 
-toProtein : Str -> Result Protein [InvalidCodon Codon]
-toProtein = \rna ->
+to_protein : Str -> Result Protein [InvalidCodon Codon]
+to_protein = \rna ->
     help = \protein, codons ->
         when codons is
             [] -> Ok protein
             [codon, .. as rest] ->
-                when codon |> toInstruction is
-                    Ok (Append aminoAcid) -> protein |> List.append aminoAcid |> help rest
+                when codon |> to_instruction is
+                    Ok (Append amino_acid) -> protein |> List.append amino_acid |> help rest
                     Ok Stop -> Ok protein
                     Err err -> Err err
     help [] (rna |> Str.toUtf8 |> List.chunksOf 3)

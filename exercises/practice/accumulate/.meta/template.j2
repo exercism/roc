@@ -6,7 +6,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }
 
 {% set accumulators = {
     "(x) => x * x": "\\x ->\n        x * x",
-    "(x) => upcase(x)": "toUpper",
+    "(x) => upcase(x)": "to_upper",
     "(x) => reverse(x)": "reverse",
     "(x) => accumulate([\"1\", \"2\", \"3\"], (y) => x + y)": "\\x ->\n        accumulate [\"1\", \"2\", \"3\"] (\\y -> Str.concat x y)"
 } -%}
@@ -26,8 +26,8 @@ reverse = \str ->
     |> Str.fromUtf8
     |> Result.withDefault ""
 
-toUpper : Str -> Str
-toUpper = \str ->
+to_upper : Str -> Str
+to_upper = \str ->
     Str.toUtf8 str
     |> List.map \byte ->
         if 'a' <= byte && byte <= 'z' then

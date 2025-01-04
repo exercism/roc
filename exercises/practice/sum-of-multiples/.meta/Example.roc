@@ -1,7 +1,7 @@
-module [sumOfMultiples]
+module [sum_of_multiples]
 
-sumOfMultiples : List U64, U64 -> U64
-sumOfMultiples = \factors, limit ->
+sum_of_multiples : List U64, U64 -> U64
+sum_of_multiples = \factors, limit ->
     factors
     |> List.keepIf \factor -> factor > 0
     |> List.joinMap \factor ->

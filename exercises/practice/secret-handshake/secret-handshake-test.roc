@@ -2,11 +2,11 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/secret-handshake/canonical-data.json
 # File last updated on 2024-09-02
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main =
-    Task.ok {}
+main! = \_args ->
+    Ok {}
 
 import SecretHandshake exposing [commands]
 

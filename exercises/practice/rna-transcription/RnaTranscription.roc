@@ -1,5 +1,5 @@
-module [toRna]
+module [to_rna]
 
-toRna : Str -> Str
-toRna = \dna ->
-    crash "Please implement the 'toRna' function"
+to_rna : Str -> Str
+to_rna = \dna ->
+    crash "Please implement the 'to_rna' function"

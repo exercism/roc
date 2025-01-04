@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [isPangram]
+import {{ exercise | to_pascal }} exposing [is_pangram]
 
 {% for case in cases -%}
 # {{ case["description"] }}

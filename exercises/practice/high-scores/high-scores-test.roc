@@ -2,13 +2,13 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/high-scores/canonical-data.json
 # File last updated on 2024-10-06
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main =
-    Task.ok {}
+main! = \_args ->
+    Ok {}
 
-import HighScores exposing [latest, personalBest, personalTopThree]
+import HighScores exposing [latest, personal_best, personal_top_three]
 
 ## Latest score
 expect
@@ -17,32 +17,32 @@ expect
 
 ## Personal best
 expect
-    result = personalBest [40, 100, 70]
+    result = personal_best [40, 100, 70]
     result == Ok 100
 
 ## Top 3 scores
 # Personal top three from a list of scores
 expect
-    result = personalTopThree [10, 30, 90, 30, 100, 20, 10, 0, 30, 40, 40, 70, 70]
+    result = personal_top_three [10, 30, 90, 30, 100, 20, 10, 0, 30, 40, 40, 70, 70]
     result == [100, 90, 70]
 
 # Personal top highest to lowest
 expect
-    result = personalTopThree [20, 10, 30]
+    result = personal_top_three [20, 10, 30]
     result == [30, 20, 10]
 
 # Personal top when there is a tie
 expect
-    result = personalTopThree [40, 20, 40, 30]
+    result = personal_top_three [40, 20, 40, 30]
     result == [40, 40, 30]
 
 # Personal top when there are less than 3
 expect
-    result = personalTopThree [30, 70]
+    result = personal_top_three [30, 70]
     result == [70, 30]
 
 # Personal top when there is only one
 expect
-    result = personalTopThree [40]
+    result = personal_top_three [40]
     result == [40]
 

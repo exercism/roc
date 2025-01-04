@@ -20,9 +20,9 @@ combinations = \{ sum, size, exclude ? [] } ->
                 help (target - first) rest
                 |> List.map \combi -> combi |> List.append first
                 |> List.concat (help target rest)
-    availableDigits =
+    available_digits =
         [1, 2, 3, 4, 5, 6, 7, 8, 9]
         |> List.dropIf \digit -> exclude |> List.contains digit
-    help sum availableDigits
+    help sum available_digits
     |> List.keepIf \combi -> List.len combi == size |> Num.toU64
     |> List.map List.reverse

@@ -2,9 +2,9 @@ module [valid]
 
 valid : Str -> Bool
 valid = \number ->
-    when toDigits number is
+    when to_digits number is
         Ok digits if List.len digits > 1 ->
-            mapEveryOtherBackwards digits \digit ->
+            map_every_other_backwards digits \digit ->
                 product = digit * 2
                 if product < 10 then product else product - 9
             |> List.sum
@@ -12,8 +12,8 @@ valid = \number ->
 
         _ -> Bool.false
 
-toDigits : Str -> Result (List U16) [IllegalCharacter]
-toDigits = \number ->
+to_digits : Str -> Result (List U16) [IllegalCharacter]
+to_digits = \number ->
     help = \input, digits ->
         when input is
             [] -> Ok digits
@@ -26,8 +26,8 @@ toDigits = \number ->
             _ -> Err IllegalCharacter
     help (Str.toUtf8 number) []
 
-mapEveryOtherBackwards : List a, (a -> a) -> List a
-mapEveryOtherBackwards = \list, func ->
+map_every_other_backwards : List a, (a -> a) -> List a
+map_every_other_backwards = \list, func ->
     help = \state, input ->
         when input is
             [.. as rest, x, y] ->

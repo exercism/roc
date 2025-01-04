@@ -1,8 +1,8 @@
 module [decimal]
 
 decimal : Str -> Result U64 [InvalidCharacter U8]
-decimal = \binaryStr ->
-    binaryStr
+decimal = \binary_str ->
+    binary_str
         |> Str.toUtf8
         |> List.mapTry? \char ->
             when char is

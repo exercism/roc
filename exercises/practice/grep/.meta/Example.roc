@@ -1,57 +1,57 @@
 module [grep]
 
 import "iliad.txt" as iliad : Str
-import "midsummer-night.txt" as midsummerNight : Str
-import "paradise-lost.txt" as paradiseLost : Str
+import "midsummer-night.txt" as midsummer_night : Str
+import "paradise-lost.txt" as paradise_lost : Str
 
 grep : Str, List Str, List Str -> Result Str _
-grep = \pattern, flags, fileNames ->
-    config = parseFlags? flags
-    files = collectFiles? fileNames
-    displayFileNames = List.len files > 1
+grep = \pattern, flags, file_names ->
+    config = parse_flags? flags
+    files = collect_files? file_names
+    display_file_names = List.len files > 1
     List.joinMap files \file ->
-        when findMatches config pattern file.text is
+        when find_matches config pattern file.text is
             [] -> []
-            _ if config.displayFileNames -> [file.name]
+            _ if config.display_file_names -> [file.name]
             matches ->
                 List.map matches \{ line, index } ->
-                    lineNumber =
-                        if config.displayLineNumbers then
+                    line_number =
+                        if config.display_line_numbers then
                             "$(index + 1 |> Num.toStr):"
                         else
                             ""
-                    fileName =
-                        if displayFileNames then
+                    file_name =
+                        if display_file_names then
                             "$(file.name):"
                         else
                             ""
-                    "$(fileName)$(lineNumber)$(line)"
+                    "$(file_name)$(line_number)$(line)"
     |> Str.joinWith "\n"
     |> Ok
 
-findMatches : Config, Str, Str -> List { line : Str, index : U64 }
-findMatches = \config, pattern, text ->
+find_matches : Config, Str, Str -> List { line : Str, index : U64 }
+find_matches = \config, pattern, text ->
     Str.splitOn text "\n"
     |> List.mapWithIndex \line, index ->
         { line, index }
     |> List.keepIf \{ line } ->
-        (lineToMatch, patternToMatch) =
-            if config.ignoreCase then
-                (toLower line, toLower pattern)
+        (line_to_match, pattern_to_match) =
+            if config.ignore_case then
+                (to_lower line, to_lower pattern)
             else
                 (line, pattern)
 
         matches =
-            if config.matchFullLines then
-                lineToMatch == patternToMatch
+            if config.match_full_lines then
+                line_to_match == pattern_to_match
             else
-                Str.contains lineToMatch patternToMatch
+                Str.contains line_to_match pattern_to_match
 
         # Using != is equivalent to xor which inverts `matches`
-        config.invertResults != matches
+        config.invert_results != matches
 
-toLower : Str -> Str
-toLower = \str ->
+to_lower : Str -> Str
+to_lower = \str ->
     Str.toUtf8 str
     |> List.map \byte ->
         if 'A' <= byte && byte <= 'Z' then
@@ -62,36 +62,36 @@ toLower = \str ->
     |> Result.withDefault ""
 
 Config : {
-    displayLineNumbers : Bool,
-    displayFileNames : Bool,
-    ignoreCase : Bool,
-    matchFullLines : Bool,
-    invertResults : Bool,
+    display_line_numbers : Bool,
+    display_file_names : Bool,
+    ignore_case : Bool,
+    match_full_lines : Bool,
+    invert_results : Bool,
 }
 
-parseFlags : List Str -> Result Config _
-parseFlags = \flags ->
-    defaultConfig = {
-        displayLineNumbers: Bool.false,
-        displayFileNames: Bool.false,
-        ignoreCase: Bool.false,
-        matchFullLines: Bool.false,
-        invertResults: Bool.false,
+parse_flags : List Str -> Result Config _
+parse_flags = \flags ->
+    default_config = {
+        display_line_numbers: Bool.false,
+        display_file_names: Bool.false,
+        ignore_case: Bool.false,
+        match_full_lines: Bool.false,
+        invert_results: Bool.false,
     }
-    List.walkTry flags defaultConfig \config, flag ->
+    List.walkTry flags default_config \config, flag ->
         when flag is
-            "-l" -> Ok { config & displayFileNames: Bool.true }
-            "-n" -> Ok { config & displayLineNumbers: Bool.true }
-            "-i" -> Ok { config & ignoreCase: Bool.true }
-            "-x" -> Ok { config & matchFullLines: Bool.true }
-            "-v" -> Ok { config & invertResults: Bool.true }
+            "-l" -> Ok { config & display_file_names: Bool.true }
+            "-n" -> Ok { config & display_line_numbers: Bool.true }
+            "-i" -> Ok { config & ignore_case: Bool.true }
+            "-x" -> Ok { config & match_full_lines: Bool.true }
+            "-v" -> Ok { config & invert_results: Bool.true }
             _ -> Err (UnknownFlag flag)
 
-collectFiles : List Str -> Result (List { name : Str, text : Str }) _
-collectFiles = \names ->
+collect_files : List Str -> Result (List { name : Str, text : Str }) _
+collect_files = \names ->
     List.mapTry names \name ->
         when name is
-            "midsummer-night.txt" -> Ok { name: "midsummer-night.txt", text: midsummerNight }
+            "midsummer-night.txt" -> Ok { name: "midsummer-night.txt", text: midsummer_night }
             "iliad.txt" -> Ok { name: "iliad.txt", text: iliad }
-            "paradise-lost.txt" -> Ok { name: "paradise-lost.txt", text: paradiseLost }
+            "paradise-lost.txt" -> Ok { name: "paradise-lost.txt", text: paradise_lost }
             _ -> Err (FileNotFound name)

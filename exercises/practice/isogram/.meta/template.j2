@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [isIsogram]
+import {{ exercise | to_pascal }} exposing [is_isogram]
 
 {% for case in cases -%}
 # {{ case["description"] }}

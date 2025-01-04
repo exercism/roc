@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [fromList, toList]
+import {{ exercise | to_pascal }} exposing [from_list, to_list]
 
 {% macro to_int_list(list) -%}
 [{% for item in list %}{{ item }},{% endfor %}]
@@ -33,12 +33,12 @@ import {{ exercise | to_pascal }} exposing [fromList, toList]
 expect
     data = {{ to_int_list(subcase["input"]["treeData"]) }}
 {%- if subcase["property"] == "data" %}
-    result = data |> fromList
+    result = data |> from_list
     expected = {{ to_tree(subcase["expected"]) }}
     result == expected
 {%- else %}
-    tree = data |> fromList
-    result = tree |> toList
+    tree = data |> from_list
+    result = tree |> to_list
     expected = {{ to_int_list(subcase["expected"]) }}
     result == expected
 {%- endif %}

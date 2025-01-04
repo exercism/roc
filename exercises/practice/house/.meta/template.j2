@@ -7,7 +7,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    result = {{ case["property"] | to_camel }} {{ case["input"]["startVerse"] }} {{ case["input"]["endVerse"] }}
+    result = {{ case["property"] | to_camel }} {{ case["input"]["start_verse"] }} {{ case["input"]["end_verse"] }}
     result == {{ "\n".join(case["expected"]) | to_roc }}
 
 {% endfor %}

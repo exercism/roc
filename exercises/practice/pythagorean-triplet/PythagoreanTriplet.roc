@@ -1,7 +1,7 @@
-module [tripletsWithSum]
+module [triplets_with_sum]
 
 Triplet : (U64, U64, U64)
 
-tripletsWithSum : U64 -> Set Triplet
-tripletsWithSum = \sum ->
-    crash "Please implement the 'tripletsWithSum' function"
+triplets_with_sum : U64 -> Set Triplet
+triplets_with_sum = \sum ->
+    crash "Please implement the 'triplets_with_sum' function"

@@ -19,11 +19,11 @@ Op : [
 evaluate : Str -> Result Stack Str
 evaluate = \program ->
     result = \_ ->
-        lower = toLower program
+        lower = to_lower program
         operations = parse? lower
         interpret operations
 
-    Result.mapErr (result {}) handleError
+    Result.mapErr (result {}) handle_error
 
 interpret : List Op -> Result Stack _
 interpret = \program ->
@@ -32,7 +32,7 @@ interpret = \program ->
             [] -> Ok stack
             [op, .. as rest] ->
                 when step stack op is
-                    Ok newStack -> help rest newStack
+                    Ok new_stack -> help rest new_stack
                     Err error -> EvaluationError { error, stack, op, ops } |> Err
     help program []
 
@@ -103,47 +103,47 @@ step = \stack, op ->
 parse : Str -> Result (List Op) _
 parse = \str ->
     when Str.splitOn (Str.trim str) "\n" is
-        [.. as defLines, program] ->
-            defs = parseDefs? defLines
+        [.. as def_lines, program] ->
+            defs = parse_defs? def_lines
 
             Str.splitOn program " "
-            |> flattenDefs defs
-            |> List.mapTry toOp
+            |> flatten_defs defs
+            |> List.mapTry to_op
 
         [] -> Ok [] # We'll let the empty program return the empty list
 
-parseDefs : List Str -> Result Defs _
-parseDefs = \lines ->
+parse_defs : List Str -> Result Defs _
+parse_defs = \lines ->
     List.walkTry lines (Dict.empty {}) \defs, line ->
         when Str.splitOn line " " is
             [":", name, .. as tokens, ";"] ->
-                ops = parseDef? tokens defs
+                ops = parse_def? tokens defs
                 Dict.insert defs name ops |> Ok
 
             _ -> Err (UnableToParseDef line)
 
-parseDef : List Str, Defs -> Result (List Str) _
-parseDef = \tokens, defs ->
+parse_def : List Str, Defs -> Result (List Str) _
+parse_def = \tokens, defs ->
     List.walkTry tokens [] \ops, token ->
         when Dict.get defs token is
             Ok body -> List.concat ops body |> Ok
-            _ if isBuiltin token -> List.append ops token |> Ok
+            _ if is_builtin token -> List.append ops token |> Ok
             _ -> Err (UnknownName token)
 
-isBuiltin : Str -> Bool
-isBuiltin = \token ->
+is_builtin : Str -> Bool
+is_builtin = \token ->
     builtins = ["dup", "drop", "swap", "over", "+", "-", "*", "/"]
     (builtins |> List.contains token) || (Result.isOk (Str.toI16 token))
 
-flattenDefs : List Str, Defs -> List Str
-flattenDefs = \tokens, defs ->
+flatten_defs : List Str, Defs -> List Str
+flatten_defs = \tokens, defs ->
     List.joinMap tokens \token ->
         when Dict.get defs token is
             Ok body -> body
             _ -> [token]
 
-toOp : Str -> Result Op _
-toOp = \str ->
+to_op : Str -> Result Op _
+to_op = \str ->
     when str is
         "dup" -> Ok Dup
         "drop" -> Ok Drop
@@ -157,9 +157,10 @@ toOp = \str ->
             when Str.toI16 str is
                 Ok num -> Ok (Number num)
                 Err _ -> Err (UnknownName str)
+
 # Display
-handleError : _ -> Str
-handleError = \err ->
+handle_error : _ -> Str
+handle_error = \err ->
     when err is
         UnknownName key -> "Hmm, I don't know any operations called '$(key)'. Maybe there's a typo?"
         UnableToParseDef line ->
@@ -172,34 +173,34 @@ handleError = \err ->
             when error is
                 Arity 1 ->
                     """
-                    Oops! '$(opToStr op)' expected 1 argument, but the stack was empty.
-                    $(showExecution stack ops)
+                    Oops! '$(op_to_str op)' expected 1 argument, but the stack was empty.
+                    $(show_execution stack ops)
                     """
 
                 Arity n ->
                     """
-                    Oops! '$(opToStr op)' expected $(Num.toStr n) arguments, but there weren't enough on the stack.
-                    $(showExecution stack ops)
+                    Oops! '$(op_to_str op)' expected $(Num.toStr n) arguments, but there weren't enough on the stack.
+                    $(show_execution stack ops)
                     """
 
                 DivByZero ->
                     """
                     Sorry, division by zero is not allowed.
-                    $(showExecution stack ops)
+                    $(show_execution stack ops)
                     """
 
-showExecution : Stack, List Op -> Str
-showExecution = \stack, ops ->
-    stackStr =
+show_execution : Stack, List Op -> Str
+show_execution = \stack, ops ->
+    stack_str =
         List.map stack Num.toStr
         |> Str.joinWith " "
-    opsStr =
-        List.map ops opToStr
+    ops_str =
+        List.map ops op_to_str
         |> Str.joinWith " "
-    "$(stackStr) | $(opsStr)"
+    "$(stack_str) | $(ops_str)"
 
-opToStr : Op -> Str
-opToStr = \op ->
+op_to_str : Op -> Str
+op_to_str = \op ->
     when op is
         Dup -> "dup"
         Drop -> "drop"
@@ -211,8 +212,8 @@ opToStr = \op ->
         Divide -> "/"
         Number num -> Num.toStr num
 
-toLower : Str -> Str
-toLower = \str ->
+to_lower : Str -> Str
+to_lower = \str ->
     result =
         Str.toUtf8 str
         |> List.map \byte ->

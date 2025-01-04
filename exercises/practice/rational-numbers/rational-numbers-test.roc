@@ -2,13 +2,13 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rational-numbers/canonical-data.json
 # File last updated on 2024-09-06
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main =
-    Task.ok {}
+main! = \_args ->
+    Ok {}
 
-import RationalNumbers exposing [add, sub, mul, div, abs, exp, expReal, reduce]
+import RationalNumbers exposing [add, sub, mul, div, abs, exp, exp_real, reduce]
 
 ##
 ## Arithmetic
@@ -193,17 +193,17 @@ expect
 
 # Raise a real number to a positive rational number
 expect
-    result = 8 |> expReal (Rational 4 3)
+    result = 8 |> exp_real (Rational 4 3)
     result |> Num.isApproxEq 16.0f64 {}
 
 # Raise a real number to a negative rational number
 expect
-    result = 9 |> expReal (Rational -1 2)
+    result = 9 |> exp_real (Rational -1 2)
     result |> Num.isApproxEq 0.3333333333333333f64 {}
 
 # Raise a real number to a zero rational number
 expect
-    result = 2 |> expReal (Rational 0 1)
+    result = 2 |> exp_real (Rational 0 1)
     result |> Num.isApproxEq 1.0f64 {}
 
 ##

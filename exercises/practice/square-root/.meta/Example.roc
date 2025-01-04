@@ -1,7 +1,7 @@
-module [squareRoot, squareRootTheSimpleWay]
+module [square_root, square_rootTheSimpleWay]
 
-squareRoot : U64 -> U64
-squareRoot = \radicand ->
+square_root : U64 -> U64
+square_root = \radicand ->
     binarySearch = \min, max ->
         val = (min + max) // 2
         square = val * val
@@ -14,6 +14,6 @@ squareRoot = \radicand ->
 
     binarySearch 0 radicand
 
-squareRootTheSimpleWay = \radicand ->
+square_rootTheSimpleWay = \radicand ->
     # This works too... but it's cheating, right?
     radicand |> Num.toF64 |> Num.sqrt |> Num.round

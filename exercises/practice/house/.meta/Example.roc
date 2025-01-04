@@ -24,7 +24,7 @@ verse = \index ->
     "This is the $(blablabla)"
 
 recite : U64, U64 -> Str
-recite = \startVerse, endVerse ->
-    List.range { start: At startVerse, end: At endVerse }
+recite = \start_verse, end_verse ->
+    List.range { start: At start_verse, end: At end_verse }
     |> List.map verse
     |> Str.joinWith "\n"

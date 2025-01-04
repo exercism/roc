@@ -2,23 +2,23 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/pascals-triangle/canonical-data.json
 # File last updated on 2024-10-14
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main =
-    Task.ok {}
+main! = \_args ->
+    Ok {}
 
-import PascalsTriangle exposing [pascalsTriangle]
+import PascalsTriangle exposing [pascals_triangle]
 
 # zero rows
 expect
-    result = pascalsTriangle 0
+    result = pascals_triangle 0
     expected = []
     result == expected
 
 # single row
 expect
-    result = pascalsTriangle 1
+    result = pascals_triangle 1
     expected = [
         [1],
     ]
@@ -26,7 +26,7 @@ expect
 
 # two rows
 expect
-    result = pascalsTriangle 2
+    result = pascals_triangle 2
     expected = [
         [1],
         [1, 1],
@@ -35,7 +35,7 @@ expect
 
 # three rows
 expect
-    result = pascalsTriangle 3
+    result = pascals_triangle 3
     expected = [
         [1],
         [1, 1],
@@ -45,7 +45,7 @@ expect
 
 # four rows
 expect
-    result = pascalsTriangle 4
+    result = pascals_triangle 4
     expected = [
         [1],
         [1, 1],
@@ -56,7 +56,7 @@ expect
 
 # five rows
 expect
-    result = pascalsTriangle 5
+    result = pascals_triangle 5
     expected = [
         [1],
         [1, 1],
@@ -68,7 +68,7 @@ expect
 
 # six rows
 expect
-    result = pascalsTriangle 6
+    result = pascals_triangle 6
     expected = [
         [1],
         [1, 1],
@@ -81,7 +81,7 @@ expect
 
 # ten rows
 expect
-    result = pascalsTriangle 10
+    result = pascals_triangle 10
     expected = [
         [1],
         [1, 1],

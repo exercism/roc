@@ -1,6 +1,6 @@
 module [say]
 
-zeroToNineteen = [
+zero_to_nineteen = [
     "zero",
     "one",
     "two",
@@ -23,7 +23,7 @@ zeroToNineteen = [
     "nineteen",
 ]
 
-tensAfterTen = [
+tens_after_ten = [
     "twenty",
     "thirty",
     "forty",
@@ -37,15 +37,15 @@ tensAfterTen = [
 say : U64 -> Result Str [OutOfBounds]
 say = \number ->
     if number < 20 then
-        zeroToNineteen |> List.get? number |> Ok
+        zero_to_nineteen |> List.get? number |> Ok
     else if number < 100 then
-        tensWord = tensAfterTen |> List.get? (number // 10 - 2)
+        tens_word = tens_after_ten |> List.get? (number // 10 - 2)
         digit = number % 10
         if digit > 0 then
-            digitWord = say? digit
-            Ok "$(tensWord)-$(digitWord)"
+            digit_word = say? digit
+            Ok "$(tens_word)-$(digit_word)"
         else
-            Ok tensWord
+            Ok tens_word
     else if number < 1_000_000_000_000 then
         [
             (1_000_000_000_000, 1_000_000_000, "billion"),
@@ -55,12 +55,12 @@ say = \number ->
             (100, 1, ""),
         ]
             |> List.keepOks \(modulo, divisor, name) ->
-                howMany = (number % modulo) // divisor
-                if howMany == 0 then
+                how_many = (number % modulo) // divisor
+                if how_many == 0 then
                     Err NothingToSay
                 else
-                    sayHowMany = say? howMany
-                    Ok "$(sayHowMany) $(name)"
+                    say_how_many = say? how_many
+                    Ok "$(say_how_many) $(name)"
             |> Str.joinWith " "
             |> Str.trimEnd
             |> Ok

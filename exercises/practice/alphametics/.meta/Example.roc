@@ -9,54 +9,54 @@ solve = \problem ->
     # That then becomes this dictionary: `Dict.fromList [('A', 11), ('B', 2), ('C', -1)]
     equation =
         List.walk addends (Dict.empty {}) \dict, term ->
-            insertTerm dict term 1
-        |> insertTerm sum -1
+            insert_term dict term 1
+        |> insert_term sum -1
 
-    leadingDigits =
+    leading_digits =
         List.map addends \letters ->
             List.first letters |> Result.withDefault 0
         |> Set.fromList
         |> Set.insert (List.first sum |> Result.withDefault 0)
 
-    findMatch = \assignments, remainingVars, remainingDigits ->
-        when remainingVars is
+    find_match = \assignments, remaining_vars, remaining_digits ->
+        when remaining_vars is
             [] ->
-                totalVal =
+                total_val =
                     List.walk assignments 0 \total, (letter, value) ->
                         Dict.get equation letter
                         |> Result.withDefault 0
                         |> Num.mul (Num.toI64 value)
                         |> Num.add total
 
-                if totalVal != 0 then
+                if total_val != 0 then
                     Err InvalidAssignment
                     else
 
                 Ok assignments
 
             [letter, .. as rest] ->
-                findFirstOk remainingDigits \digit ->
-                    if digit == 0 && Set.contains leadingDigits letter then
+                find_first_ok remaining_digits \digit ->
+                    if digit == 0 && Set.contains leading_digits letter then
                         Err InvalidAssignment
                         else
 
                     # Each digit has to be unique, so once we use a digit we remove it from the pool
-                    findMatch (List.append assignments (letter, digit)) rest (Set.remove remainingDigits digit)
+                    find_match (List.append assignments (letter, digit)) rest (Set.remove remaining_digits digit)
 
     digits = List.range { start: At 0, end: At 9 } |> Set.fromList
-    findMatch [] (Dict.keys equation) digits
+    find_match [] (Dict.keys equation) digits
 
 # Apply a function to each element of a list until the function returns an Ok, then return that value
-findFirstOk : Set a, (a -> Result b err) -> Result b [NotFound]
-findFirstOk = \set, func ->
+find_first_ok : Set a, (a -> Result b err) -> Result b [NotFound]
+find_first_ok = \set, func ->
     Set.walkUntil set (Err NotFound) \state, elem ->
         when func elem is
             Err _ -> Continue state
             Ok val -> Break (Ok val)
 
 # Update the equation with the values of a term
-insertTerm : Dict U8 I64, List U8, I64 -> Dict U8 I64
-insertTerm = \equation, letters, polarity ->
+insert_term : Dict U8 I64, List U8, I64 -> Dict U8 I64
+insert_term = \equation, letters, polarity ->
     List.reverse letters
     |> List.walkWithIndex equation \dict, letter, index ->
         coeff =

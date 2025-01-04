@@ -2,13 +2,13 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/dominoes/canonical-data.json
 # File last updated on 2024-09-21
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main =
-    Task.ok {}
+main! = \_args ->
+    Ok {}
 
-import Dominoes exposing [findChain]
+import Dominoes exposing [find_chain]
 
 Domino : (U8, U8)
 
@@ -21,8 +21,8 @@ canonicalize = \dominoes ->
 
 ## Ensure that the given result is Ok and is a valid chain for the
 ## given list of dominoes
-isValidChainFor : Result (List Domino) _, List Domino -> Bool
-isValidChainFor = \maybeChain, dominoes ->
+is_valid_chain_for : Result (List Domino) _, List Domino -> Bool
+is_valid_chain_for = \maybeChain, dominoes ->
     when maybeChain is
         Err _ -> Bool.false
         Ok chain ->
@@ -45,66 +45,66 @@ isValidChainFor = \maybeChain, dominoes ->
 
 # empty input = empty output
 expect
-    result = findChain []
-    result |> isValidChainFor []
+    result = find_chain []
+    result |> is_valid_chain_for []
 
 # singleton input = singleton output
 expect
-    result = findChain [(1, 1)]
-    result |> isValidChainFor [(1, 1)]
+    result = find_chain [(1, 1)]
+    result |> is_valid_chain_for [(1, 1)]
 
 # singleton that can't be chained
 expect
-    result = findChain [(1, 2)]
+    result = find_chain [(1, 2)]
     result |> Result.isErr
 
 # three elements
 expect
-    result = findChain [(1, 2), (3, 1), (2, 3)]
-    result |> isValidChainFor [(1, 2), (3, 1), (2, 3)]
+    result = find_chain [(1, 2), (3, 1), (2, 3)]
+    result |> is_valid_chain_for [(1, 2), (3, 1), (2, 3)]
 
 # can reverse dominoes
 expect
-    result = findChain [(1, 2), (1, 3), (2, 3)]
-    result |> isValidChainFor [(1, 2), (1, 3), (2, 3)]
+    result = find_chain [(1, 2), (1, 3), (2, 3)]
+    result |> is_valid_chain_for [(1, 2), (1, 3), (2, 3)]
 
 # can't be chained
 expect
-    result = findChain [(1, 2), (4, 1), (2, 3)]
+    result = find_chain [(1, 2), (4, 1), (2, 3)]
     result |> Result.isErr
 
 # disconnected - simple
 expect
-    result = findChain [(1, 1), (2, 2)]
+    result = find_chain [(1, 1), (2, 2)]
     result |> Result.isErr
 
 # disconnected - double loop
 expect
-    result = findChain [(1, 2), (2, 1), (3, 4), (4, 3)]
+    result = find_chain [(1, 2), (2, 1), (3, 4), (4, 3)]
     result |> Result.isErr
 
 # disconnected - single isolated
 expect
-    result = findChain [(1, 2), (2, 3), (3, 1), (4, 4)]
+    result = find_chain [(1, 2), (2, 3), (3, 1), (4, 4)]
     result |> Result.isErr
 
 # need backtrack
 expect
-    result = findChain [(1, 2), (2, 3), (3, 1), (2, 4), (2, 4)]
-    result |> isValidChainFor [(1, 2), (2, 3), (3, 1), (2, 4), (2, 4)]
+    result = find_chain [(1, 2), (2, 3), (3, 1), (2, 4), (2, 4)]
+    result |> is_valid_chain_for [(1, 2), (2, 3), (3, 1), (2, 4), (2, 4)]
 
 # separate loops
 expect
-    result = findChain [(1, 2), (2, 3), (3, 1), (1, 1), (2, 2), (3, 3)]
-    result |> isValidChainFor [(1, 2), (2, 3), (3, 1), (1, 1), (2, 2), (3, 3)]
+    result = find_chain [(1, 2), (2, 3), (3, 1), (1, 1), (2, 2), (3, 3)]
+    result |> is_valid_chain_for [(1, 2), (2, 3), (3, 1), (1, 1), (2, 2), (3, 3)]
 
 # nine elements
 expect
-    result = findChain [(1, 2), (5, 3), (3, 1), (1, 2), (2, 4), (1, 6), (2, 3), (3, 4), (5, 6)]
-    result |> isValidChainFor [(1, 2), (5, 3), (3, 1), (1, 2), (2, 4), (1, 6), (2, 3), (3, 4), (5, 6)]
+    result = find_chain [(1, 2), (5, 3), (3, 1), (1, 2), (2, 4), (1, 6), (2, 3), (3, 4), (5, 6)]
+    result |> is_valid_chain_for [(1, 2), (5, 3), (3, 1), (1, 2), (2, 4), (1, 6), (2, 3), (3, 4), (5, 6)]
 
 # separate three-domino loops
 expect
-    result = findChain [(1, 2), (2, 3), (3, 1), (4, 5), (5, 6), (6, 4)]
+    result = find_chain [(1, 2), (2, 3), (3, 1), (4, 5), (5, 6), (6, 4)]
     result |> Result.isErr
 

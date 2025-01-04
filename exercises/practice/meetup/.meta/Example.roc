@@ -5,40 +5,40 @@ import isodate.Date
 Week : [First, Second, Third, Fourth, Last, Teenth]
 DayOfWeek : [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
 
-meetup : { year : I64, month : U8, week : Week, dayOfWeek : DayOfWeek } -> Result Str [InvalidMonth, InvalidYear]
-meetup = \{ year, month, week, dayOfWeek } ->
+meetup : { year : I64, month : U8, week : Week, day_of_week : DayOfWeek } -> Result Str [InvalidMonth, InvalidYear]
+meetup = \{ year, month, week, day_of_week } ->
     if month == 0 || month > 12 then
         Err InvalidMonth
         else
 
-    firstDay = Date.fromYmd year month 1
-    firstWeekday = Date.weekday firstDay.year firstDay.month firstDay.dayOfMonth
-    firstTime = (7 + dayOfWeekNumber dayOfWeek - firstWeekday) % 7 + 1
-    dayOfMonth =
+    first_day = Date.fromYmd year month 1
+    first_weekday = Date.weekday first_day.year first_day.month first_day.dayOfMonth
+    first_time = (7 + day_of_week_number day_of_week - first_weekday) % 7 + 1
+    day_of_month =
         when week is
-            First -> firstTime
-            Second -> firstTime + 7
-            Third -> firstTime + 14
-            Fourth -> firstTime + 21
+            First -> first_time
+            Second -> first_time + 7
+            Third -> first_time + 14
+            Fourth -> first_time + 21
             Last ->
-                if firstTime + 28 > Date.daysInMonth year month then
-                    firstTime + 21
+                if first_time + 28 > Date.daysInMonth year month then
+                    first_time + 21
                 else
-                    firstTime + 28
+                    first_time + 28
 
             Teenth ->
-                if firstTime == 6 then 13 else firstTime + 14
-    Ok "$(year |> padNumber 4)-$(month |> padNumber 2)-$(dayOfMonth |> padNumber 2)"
+                if first_time == 6 then 13 else first_time + 14
+    Ok "$(year |> pad_number 4)-$(month |> pad_number 2)-$(day_of_month |> pad_number 2)"
 
-padNumber : Num *, U64 -> Str
-padNumber = \number, pad ->
-    numberStr = number |> Num.toStr
-    numZeros = pad |> Num.subSaturated (numberStr |> Str.toUtf8 |> List.len)
-    "$(Str.repeat "0" numZeros)$(numberStr)"
+pad_number : Num *, U64 -> Str
+pad_number = \number, pad ->
+    number_str = number |> Num.toStr
+    num_zeros = pad |> Num.subSaturated (number_str |> Str.toUtf8 |> List.len)
+    "$(Str.repeat "0" num_zeros)$(number_str)"
 
-dayOfWeekNumber : DayOfWeek -> U8
-dayOfWeekNumber = \dayOfWeek ->
-    when dayOfWeek is
+day_of_week_number : DayOfWeek -> U8
+day_of_week_number = \day_of_week ->
+    when day_of_week is
         Sunday -> 0
         Monday -> 1
         Tuesday -> 2

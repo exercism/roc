@@ -6,13 +6,13 @@ primes = \limit ->
         []
         else
 
-    help = \candidates, foundPrimes ->
+    help_sieve = \candidates, found_primes ->
         when candidates is
-            [] -> foundPrimes
-            [0, .. as rest] -> rest |> help foundPrimes
+            [] -> found_primes
+            [0, .. as rest] -> rest |> help_sieve found_primes
             [prime, .. as rest] ->
                 List.range { start: After prime, end: At limit, step: prime }
-                |> List.walk rest \filteredCandidates, multipleOfPrime ->
-                    filteredCandidates |> List.replace (multipleOfPrime - prime - 1) 0 |> .list
-                |> help (foundPrimes |> List.append prime)
-    help (List.range { start: At 2, end: At limit }) []
+                |> List.walk rest \filtered_candidates, multiple_of_prime ->
+                    filtered_candidates |> List.replace (multiple_of_prime - prime - 1) 0 |> .list
+                |> help_sieve (found_primes |> List.append prime)
+    help_sieve (List.range { start: At 2, end: At limit }) []

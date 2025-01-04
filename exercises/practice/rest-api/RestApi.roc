@@ -5,7 +5,7 @@ import json.Json
 User : {
     name : Str,
     owes : Dict Str F64,
-    owedBy : Dict Str F64,
+    owed_by : Dict Str F64,
     balance : F64,
 }
 

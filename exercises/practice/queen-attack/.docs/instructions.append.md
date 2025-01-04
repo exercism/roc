@@ -18,7 +18,7 @@ The `QueenAttack` module also exposes handy `rank` & `file` functions. In the
 example above, `rank` must return the integer `5`, and `file` must return the
 character `'C'`.
 
-Lastly, the `queenCanAttack` function takes two different `Square` values and
+Lastly, the `queen_can_attack` function takes two different `Square` values and
 checks whether or not queens placed on these squares can attack each other.
 
 Take-away: opaque types such as `Square` are great when you want to offer some

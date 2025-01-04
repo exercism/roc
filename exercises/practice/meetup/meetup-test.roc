@@ -2,12 +2,12 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/meetup/canonical-data.json
 # File last updated on 2024-10-18
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
     isodate: "https://github.com/Anton-4/roc-isodate/releases/download/0.6.0/_n7UX8f5aFVVIXNa2AtOCvd-dcU-n-fp-0o8d22fyuQ.tar.br",
 }
 
-main =
-    Task.ok {}
+main! = \_args ->
+    Ok {}
 
 import Meetup exposing [meetup]
 
@@ -17,7 +17,7 @@ expect
         year: 2013,
         month: 5,
         week: Teenth,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-05-13"
     result == expected
@@ -28,7 +28,7 @@ expect
         year: 2013,
         month: 8,
         week: Teenth,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-08-19"
     result == expected
@@ -39,7 +39,7 @@ expect
         year: 2013,
         month: 9,
         week: Teenth,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-09-16"
     result == expected
@@ -50,7 +50,7 @@ expect
         year: 2013,
         month: 3,
         week: Teenth,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-03-19"
     result == expected
@@ -61,7 +61,7 @@ expect
         year: 2013,
         month: 4,
         week: Teenth,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-04-16"
     result == expected
@@ -72,7 +72,7 @@ expect
         year: 2013,
         month: 8,
         week: Teenth,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-08-13"
     result == expected
@@ -83,7 +83,7 @@ expect
         year: 2013,
         month: 1,
         week: Teenth,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-01-16"
     result == expected
@@ -94,7 +94,7 @@ expect
         year: 2013,
         month: 2,
         week: Teenth,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-02-13"
     result == expected
@@ -105,7 +105,7 @@ expect
         year: 2013,
         month: 6,
         week: Teenth,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-06-19"
     result == expected
@@ -116,7 +116,7 @@ expect
         year: 2013,
         month: 5,
         week: Teenth,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-05-16"
     result == expected
@@ -127,7 +127,7 @@ expect
         year: 2013,
         month: 6,
         week: Teenth,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-06-13"
     result == expected
@@ -138,7 +138,7 @@ expect
         year: 2013,
         month: 9,
         week: Teenth,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-09-19"
     result == expected
@@ -149,7 +149,7 @@ expect
         year: 2013,
         month: 4,
         week: Teenth,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-04-19"
     result == expected
@@ -160,7 +160,7 @@ expect
         year: 2013,
         month: 8,
         week: Teenth,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-08-16"
     result == expected
@@ -171,7 +171,7 @@ expect
         year: 2013,
         month: 9,
         week: Teenth,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-09-13"
     result == expected
@@ -182,7 +182,7 @@ expect
         year: 2013,
         month: 2,
         week: Teenth,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-02-16"
     result == expected
@@ -193,7 +193,7 @@ expect
         year: 2013,
         month: 4,
         week: Teenth,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-04-13"
     result == expected
@@ -204,7 +204,7 @@ expect
         year: 2013,
         month: 10,
         week: Teenth,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-10-19"
     result == expected
@@ -215,7 +215,7 @@ expect
         year: 2013,
         month: 5,
         week: Teenth,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-05-19"
     result == expected
@@ -226,7 +226,7 @@ expect
         year: 2013,
         month: 6,
         week: Teenth,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-06-16"
     result == expected
@@ -237,7 +237,7 @@ expect
         year: 2013,
         month: 10,
         week: Teenth,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-10-13"
     result == expected
@@ -248,7 +248,7 @@ expect
         year: 2013,
         month: 3,
         week: First,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-03-04"
     result == expected
@@ -259,7 +259,7 @@ expect
         year: 2013,
         month: 4,
         week: First,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-04-01"
     result == expected
@@ -270,7 +270,7 @@ expect
         year: 2013,
         month: 5,
         week: First,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-05-07"
     result == expected
@@ -281,7 +281,7 @@ expect
         year: 2013,
         month: 6,
         week: First,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-06-04"
     result == expected
@@ -292,7 +292,7 @@ expect
         year: 2013,
         month: 7,
         week: First,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-07-03"
     result == expected
@@ -303,7 +303,7 @@ expect
         year: 2013,
         month: 8,
         week: First,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-08-07"
     result == expected
@@ -314,7 +314,7 @@ expect
         year: 2013,
         month: 9,
         week: First,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-09-05"
     result == expected
@@ -325,7 +325,7 @@ expect
         year: 2013,
         month: 10,
         week: First,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-10-03"
     result == expected
@@ -336,7 +336,7 @@ expect
         year: 2013,
         month: 11,
         week: First,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-11-01"
     result == expected
@@ -347,7 +347,7 @@ expect
         year: 2013,
         month: 12,
         week: First,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-12-06"
     result == expected
@@ -358,7 +358,7 @@ expect
         year: 2013,
         month: 1,
         week: First,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-01-05"
     result == expected
@@ -369,7 +369,7 @@ expect
         year: 2013,
         month: 2,
         week: First,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-02-02"
     result == expected
@@ -380,7 +380,7 @@ expect
         year: 2013,
         month: 3,
         week: First,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-03-03"
     result == expected
@@ -391,7 +391,7 @@ expect
         year: 2013,
         month: 4,
         week: First,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-04-07"
     result == expected
@@ -402,7 +402,7 @@ expect
         year: 2013,
         month: 3,
         week: Second,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-03-11"
     result == expected
@@ -413,7 +413,7 @@ expect
         year: 2013,
         month: 4,
         week: Second,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-04-08"
     result == expected
@@ -424,7 +424,7 @@ expect
         year: 2013,
         month: 5,
         week: Second,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-05-14"
     result == expected
@@ -435,7 +435,7 @@ expect
         year: 2013,
         month: 6,
         week: Second,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-06-11"
     result == expected
@@ -446,7 +446,7 @@ expect
         year: 2013,
         month: 7,
         week: Second,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-07-10"
     result == expected
@@ -457,7 +457,7 @@ expect
         year: 2013,
         month: 8,
         week: Second,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-08-14"
     result == expected
@@ -468,7 +468,7 @@ expect
         year: 2013,
         month: 9,
         week: Second,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-09-12"
     result == expected
@@ -479,7 +479,7 @@ expect
         year: 2013,
         month: 10,
         week: Second,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-10-10"
     result == expected
@@ -490,7 +490,7 @@ expect
         year: 2013,
         month: 11,
         week: Second,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-11-08"
     result == expected
@@ -501,7 +501,7 @@ expect
         year: 2013,
         month: 12,
         week: Second,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-12-13"
     result == expected
@@ -512,7 +512,7 @@ expect
         year: 2013,
         month: 1,
         week: Second,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-01-12"
     result == expected
@@ -523,7 +523,7 @@ expect
         year: 2013,
         month: 2,
         week: Second,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-02-09"
     result == expected
@@ -534,7 +534,7 @@ expect
         year: 2013,
         month: 3,
         week: Second,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-03-10"
     result == expected
@@ -545,7 +545,7 @@ expect
         year: 2013,
         month: 4,
         week: Second,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-04-14"
     result == expected
@@ -556,7 +556,7 @@ expect
         year: 2013,
         month: 3,
         week: Third,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-03-18"
     result == expected
@@ -567,7 +567,7 @@ expect
         year: 2013,
         month: 4,
         week: Third,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-04-15"
     result == expected
@@ -578,7 +578,7 @@ expect
         year: 2013,
         month: 5,
         week: Third,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-05-21"
     result == expected
@@ -589,7 +589,7 @@ expect
         year: 2013,
         month: 6,
         week: Third,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-06-18"
     result == expected
@@ -600,7 +600,7 @@ expect
         year: 2013,
         month: 7,
         week: Third,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-07-17"
     result == expected
@@ -611,7 +611,7 @@ expect
         year: 2013,
         month: 8,
         week: Third,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-08-21"
     result == expected
@@ -622,7 +622,7 @@ expect
         year: 2013,
         month: 9,
         week: Third,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-09-19"
     result == expected
@@ -633,7 +633,7 @@ expect
         year: 2013,
         month: 10,
         week: Third,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-10-17"
     result == expected
@@ -644,7 +644,7 @@ expect
         year: 2013,
         month: 11,
         week: Third,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-11-15"
     result == expected
@@ -655,7 +655,7 @@ expect
         year: 2013,
         month: 12,
         week: Third,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-12-20"
     result == expected
@@ -666,7 +666,7 @@ expect
         year: 2013,
         month: 1,
         week: Third,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-01-19"
     result == expected
@@ -677,7 +677,7 @@ expect
         year: 2013,
         month: 2,
         week: Third,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-02-16"
     result == expected
@@ -688,7 +688,7 @@ expect
         year: 2013,
         month: 3,
         week: Third,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-03-17"
     result == expected
@@ -699,7 +699,7 @@ expect
         year: 2013,
         month: 4,
         week: Third,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-04-21"
     result == expected
@@ -710,7 +710,7 @@ expect
         year: 2013,
         month: 3,
         week: Fourth,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-03-25"
     result == expected
@@ -721,7 +721,7 @@ expect
         year: 2013,
         month: 4,
         week: Fourth,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-04-22"
     result == expected
@@ -732,7 +732,7 @@ expect
         year: 2013,
         month: 5,
         week: Fourth,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-05-28"
     result == expected
@@ -743,7 +743,7 @@ expect
         year: 2013,
         month: 6,
         week: Fourth,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-06-25"
     result == expected
@@ -754,7 +754,7 @@ expect
         year: 2013,
         month: 7,
         week: Fourth,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-07-24"
     result == expected
@@ -765,7 +765,7 @@ expect
         year: 2013,
         month: 8,
         week: Fourth,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-08-28"
     result == expected
@@ -776,7 +776,7 @@ expect
         year: 2013,
         month: 9,
         week: Fourth,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-09-26"
     result == expected
@@ -787,7 +787,7 @@ expect
         year: 2013,
         month: 10,
         week: Fourth,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-10-24"
     result == expected
@@ -798,7 +798,7 @@ expect
         year: 2013,
         month: 11,
         week: Fourth,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-11-22"
     result == expected
@@ -809,7 +809,7 @@ expect
         year: 2013,
         month: 12,
         week: Fourth,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-12-27"
     result == expected
@@ -820,7 +820,7 @@ expect
         year: 2013,
         month: 1,
         week: Fourth,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-01-26"
     result == expected
@@ -831,7 +831,7 @@ expect
         year: 2013,
         month: 2,
         week: Fourth,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-02-23"
     result == expected
@@ -842,7 +842,7 @@ expect
         year: 2013,
         month: 3,
         week: Fourth,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-03-24"
     result == expected
@@ -853,7 +853,7 @@ expect
         year: 2013,
         month: 4,
         week: Fourth,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-04-28"
     result == expected
@@ -864,7 +864,7 @@ expect
         year: 2013,
         month: 3,
         week: Last,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-03-25"
     result == expected
@@ -875,7 +875,7 @@ expect
         year: 2013,
         month: 4,
         week: Last,
-        dayOfWeek: Monday,
+        day_of_week: Monday,
     }
     expected = Ok "2013-04-29"
     result == expected
@@ -886,7 +886,7 @@ expect
         year: 2013,
         month: 5,
         week: Last,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-05-28"
     result == expected
@@ -897,7 +897,7 @@ expect
         year: 2013,
         month: 6,
         week: Last,
-        dayOfWeek: Tuesday,
+        day_of_week: Tuesday,
     }
     expected = Ok "2013-06-25"
     result == expected
@@ -908,7 +908,7 @@ expect
         year: 2013,
         month: 7,
         week: Last,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-07-31"
     result == expected
@@ -919,7 +919,7 @@ expect
         year: 2013,
         month: 8,
         week: Last,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2013-08-28"
     result == expected
@@ -930,7 +930,7 @@ expect
         year: 2013,
         month: 9,
         week: Last,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-09-26"
     result == expected
@@ -941,7 +941,7 @@ expect
         year: 2013,
         month: 10,
         week: Last,
-        dayOfWeek: Thursday,
+        day_of_week: Thursday,
     }
     expected = Ok "2013-10-31"
     result == expected
@@ -952,7 +952,7 @@ expect
         year: 2013,
         month: 11,
         week: Last,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-11-29"
     result == expected
@@ -963,7 +963,7 @@ expect
         year: 2013,
         month: 12,
         week: Last,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2013-12-27"
     result == expected
@@ -974,7 +974,7 @@ expect
         year: 2013,
         month: 1,
         week: Last,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-01-26"
     result == expected
@@ -985,7 +985,7 @@ expect
         year: 2013,
         month: 2,
         week: Last,
-        dayOfWeek: Saturday,
+        day_of_week: Saturday,
     }
     expected = Ok "2013-02-23"
     result == expected
@@ -996,7 +996,7 @@ expect
         year: 2013,
         month: 3,
         week: Last,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-03-31"
     result == expected
@@ -1007,7 +1007,7 @@ expect
         year: 2013,
         month: 4,
         week: Last,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2013-04-28"
     result == expected
@@ -1018,7 +1018,7 @@ expect
         year: 2012,
         month: 2,
         week: Last,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2012-02-29"
     result == expected
@@ -1029,7 +1029,7 @@ expect
         year: 2014,
         month: 12,
         week: Last,
-        dayOfWeek: Wednesday,
+        day_of_week: Wednesday,
     }
     expected = Ok "2014-12-31"
     result == expected
@@ -1040,7 +1040,7 @@ expect
         year: 2015,
         month: 2,
         week: Last,
-        dayOfWeek: Sunday,
+        day_of_week: Sunday,
     }
     expected = Ok "2015-02-22"
     result == expected
@@ -1051,7 +1051,7 @@ expect
         year: 2012,
         month: 12,
         week: First,
-        dayOfWeek: Friday,
+        day_of_week: Friday,
     }
     expected = Ok "2012-12-07"
     result == expected

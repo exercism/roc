@@ -1,6 +1,6 @@
 module [parse]
 
-parseNibble = \char ->
+parse_nibble = \char ->
     if char >= '0' && char <= '9' then
         Ok (char - '0' |> Num.toU64)
     else if char >= 'A' && char <= 'F' then
@@ -19,7 +19,7 @@ parse = \string ->
     string
         |> Str.toUtf8
         |> List.walkTry 0 \number, char ->
-            nibble = parseNibble? char
+            nibble = parse_nibble? char
             if number > 0xfffffffffffffff then
                 Err InvalidNumStr
             else

@@ -1,5 +1,5 @@
-module [isValid]
+module [is_valid]
 
-isValid : Str -> Bool
-isValid = \isbn ->
-    crash "Please implement the 'isValid' function"
+is_valid : Str -> Bool
+is_valid = \isbn ->
+    crash "Please implement the 'is_valid' function"

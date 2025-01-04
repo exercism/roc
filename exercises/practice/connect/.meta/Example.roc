@@ -6,8 +6,8 @@ Position : { x : U64, y : U64 }
 
 ## Parse a string to a Board
 parse : Str -> Result Board [InvalidCharacter U8]
-parse = \boardStr ->
-    boardStr
+parse = \board_str ->
+    board_str
     |> Str.trim
     |> Str.toUtf8
     |> List.splitOn '\n'
@@ -24,53 +24,53 @@ parse = \boardStr ->
 ## Ensure that the board has a least one cell, and that all rows have the same length
 validate : Board -> Result {} [InvalidBoardShape]
 validate = \board ->
-    rowLengths = board |> List.map List.len |> Set.fromList
-    if Set.len rowLengths != 1 || rowLengths == Set.fromList [0] then
+    row_lengths = board |> List.map List.len |> Set.fromList
+    if Set.len row_lengths != 1 || row_lengths == Set.fromList [0] then
         Err InvalidBoardShape
     else
         Ok {}
 
 winner : Str -> Result [PlayerO, PlayerX] [NotFinished, InvalidCharacter U8, InvalidBoardShape]
-winner = \boardStr ->
-    board = parse? boardStr
+winner = \board_str ->
+    board = parse? board_str
     validate? board
-    if board |> hasNorthSouthPath StoneO then
+    if board |> has_north_south_path StoneO then
         Ok PlayerO
-    else if board |> transpose |> hasNorthSouthPath StoneX then
+    else if board |> transpose |> has_north_south_path StoneX then
         Ok PlayerX
     else
         Err NotFinished
 
 transpose : Board -> Board
 transpose = \board ->
-    width = board |> firstRow |> List.len
+    width = board |> first_row |> List.len
     List.range { start: At 0, end: Before width }
     |> List.map \x ->
         List.range { start: At 0, end: Before (board |> List.len) }
         |> List.map \y ->
-            when board |> getCell { x, y } is
+            when board |> get_cell { x, y } is
                 Ok cell -> cell
                 Err OutOfBounds -> crash "Unreachable: all rows have the same length"
 
-firstRow : Board -> List Cell
-firstRow = \board ->
+first_row : Board -> List Cell
+first_row = \board ->
     when board |> List.first is
         Ok row -> row
         Err ListWasEmpty -> crash "Unreachable: the board has at least one cell"
 
-getCell : Board, Position -> Result Cell [OutOfBounds]
-getCell = \board, { x, y } ->
+get_cell : Board, Position -> Result Cell [OutOfBounds]
+get_cell = \board, { x, y } ->
     board |> List.get? y |> List.get x
 
-hasNorthSouthPath : Board, Cell -> Bool
-hasNorthSouthPath = \board, stone ->
-    hasPathToSouth : List Position, Set Position -> Bool
-    hasPathToSouth = \toVisit, visited ->
-        when toVisit is
+has_north_south_path : Board, Cell -> Bool
+has_north_south_path = \board, stone ->
+    has_path_to_south : List Position, Set Position -> Bool
+    has_path_to_south = \to_visit, visited ->
+        when to_visit is
             [] -> Bool.false
             [position, .. as rest] ->
-                isPlayerStone = board |> getCell position == Ok stone
-                if isPlayerStone && !(visited |> Set.contains position) then
+                is_player_stone = board |> get_cell position == Ok stone
+                if is_player_stone && !(visited |> Set.contains position) then
                     { x, y } = position
                     if y + 1 == List.len board then
                         Bool.true # we've reached the South!
@@ -85,17 +85,17 @@ hasNorthSouthPath = \board, stone ->
                                 [{ x: nx |> Num.toU64, y: ny |> Num.toU64 }]
                             else
                                 []
-                    hasPathToSouth (rest |> List.concat neighbors) (visited |> Set.insert position)
+                    has_path_to_south (rest |> List.concat neighbors) (visited |> Set.insert position)
                 else
-                    hasPathToSouth rest visited
+                    has_path_to_south rest visited
 
-    northStones : List Position
-    northStones =
+    north_stones : List Position
+    north_stones =
         board
-        |> firstRow
+        |> first_row
         |> List.mapWithIndex \cell, x ->
             when cell is
                 StoneO | StoneX -> if cell == stone then Ok { x, y: 0 } else Err NotPlayerStone
                 Empty -> Err NotPlayerStone
         |> List.keepOks \id -> id
-    hasPathToSouth northStones (Set.empty {})
+    has_path_to_south north_stones (Set.empty {})

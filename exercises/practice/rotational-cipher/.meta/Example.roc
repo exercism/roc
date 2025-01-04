@@ -1,17 +1,17 @@
 module [rotate]
 
-shiftChar = \c, shiftKey ->
+shift_char = \c, shift_key ->
     if c >= 'a' && c <= 'z' then
-        (c - 'a' + shiftKey) % 26 + 'a'
+        (c - 'a' + shift_key) % 26 + 'a'
     else if c >= 'A' && c <= 'Z' then
-        (c - 'A' + shiftKey) % 26 + 'A'
+        (c - 'A' + shift_key) % 26 + 'A'
     else
         c
 
 rotate : Str, U8 -> Str
-rotate = \text, shiftKey ->
+rotate = \text, shift_key ->
     text
     |> Str.toUtf8
-    |> List.map \c -> shiftChar c shiftKey
+    |> List.map \c -> shift_char c shift_key
     |> Str.fromUtf8
     |> Result.withDefault "Unreachable"

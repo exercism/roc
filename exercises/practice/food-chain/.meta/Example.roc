@@ -1,37 +1,37 @@
 module [recite]
 
 recite : U64, U64 -> Str
-recite = \startVerse, endVerse ->
-    List.sublist verseList { start: startVerse - 1, len: endVerse - (startVerse - 1) }
+recite = \start_verse, end_verse ->
+    List.sublist verse_list { start: start_verse - 1, len: end_verse - (start_verse - 1) }
     |> Str.joinWith "\n\n"
 
-verseList : List Str
-verseList =
-    initialState = { verses: [], verseBody: "I don't know why she swallowed the fly. Perhaps she'll die.", previousAnimal: "fly" }
+verse_list : List Str
+verse_list =
+    initial_state = { verses: [], verse_body: "I don't know why she swallowed the fly. Perhaps she'll die.", previous_animal: "fly" }
     result =
-        List.walk animals initialState \{ verses, verseBody, previousAnimal }, animal ->
-            description = Dict.get animalDescriptions previousAnimal |> Result.withDefault ""
-            newVerseBody =
+        List.walk animals initial_state \{ verses, verse_body, previous_animal }, animal ->
+            description = Dict.get animal_descriptions previous_animal |> Result.withDefault ""
+            new_verse_body =
                 """
-                She swallowed the $(animal.name) to catch the $(previousAnimal)$(description).
-                $(verseBody)
+                She swallowed the $(animal.name) to catch the $(previous_animal)$(description).
+                $(verse_body)
                 """
             verse =
                 """
                 I know an old lady who swallowed a $(animal.name).
                 $(animal.exclamation)
-                $(newVerseBody)
+                $(new_verse_body)
                 """
             {
                 verses: List.append verses verse,
-                verseBody: newVerseBody,
-                previousAnimal: animal.name,
+                verse_body: new_verse_body,
+                previous_animal: animal.name,
             }
-    List.join [[firstVerse], result.verses, [lastVerse]]
+    List.join [[first_verse], result.verses, [last_verse]]
 
 # I would prefer to use an if expression here, but I ran into a compiler bug doing that
-animalDescriptions : Dict Str Str
-animalDescriptions =
+animal_descriptions : Dict Str Str
+animal_descriptions =
     Dict.single "spider" " that wriggled and jiggled and tickled inside her"
 
 animals : List { name : Str, exclamation : Str }
@@ -44,15 +44,15 @@ animals = [
     { name: "cow", exclamation: "I don't know how she swallowed a cow!" },
 ]
 
-firstVerse : Str
-firstVerse =
+first_verse : Str
+first_verse =
     """
     I know an old lady who swallowed a fly.
     I don't know why she swallowed the fly. Perhaps she'll die.
     """
 
-lastVerse : Str
-lastVerse =
+last_verse : Str
+last_verse =
     """
     I know an old lady who swallowed a horse.
     She's dead, of course!

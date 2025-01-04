@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [isArmstrongNumber]
+import {{ exercise | to_pascal }} exposing [is_armstrong_number]
 
 {% for case in cases -%}
 # {{ case["description"] }}

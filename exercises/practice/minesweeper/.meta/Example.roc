@@ -1,7 +1,7 @@
 module [annotate]
 
-isBomb : List (List U8), I64, I64 -> Result Bool [OutOfBounds]
-isBomb = \rows, nx, ny ->
+is_bomb : List (List U8), I64, I64 -> Result Bool [OutOfBounds]
+is_bomb = \rows, nx, ny ->
     x = Num.toU64Checked? nx
     y = Num.toU64Checked? ny
     rows
@@ -10,13 +10,13 @@ isBomb = \rows, nx, ny ->
         |> Bool.isEq '*'
         |> Ok
 
-countNeighbors : List (List U8), U64, U64 -> Num *
-countNeighbors = \rows, x, y ->
+count_neighbors : List (List U8), U64, U64 -> Num *
+count_neighbors = \rows, x, y ->
     [-1, 0, 1]
     |> List.map \dy ->
         [-1, 0, 1]
         |> List.map \dx ->
-            when isBomb rows (Num.toI64 x + dx) (Num.toI64 y + dy) is
+            when is_bomb rows (Num.toI64 x + dx) (Num.toI64 y + dy) is
                 Ok bomb -> if bomb then 1 else 0
                 Err OutOfBounds -> 0
         |> List.sum
@@ -33,14 +33,14 @@ annotate = \minefield ->
                 if cell == '*' then
                     '*'
                 else
-                    when countNeighbors rows x y is
+                    when count_neighbors rows x y is
                         0 -> ' '
                         n -> '0' + n
             |> Str.fromUtf8
 
     annotated
-    |> List.map \maybeRow ->
-        when maybeRow is
+    |> List.map \maybe_row ->
+        when maybe_row is
             Ok row -> row
             Err _ -> crash "Unreachable" # fromUtf8 cannot fail in the code above
     |> Str.joinWith "\n"

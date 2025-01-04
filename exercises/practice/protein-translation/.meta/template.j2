@@ -2,13 +2,13 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [toProtein]
+import {{ exercise | to_pascal }} exposing [to_protein]
 
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
     rna = {{ case["input"]["strand"] | to_roc }}
-    result = rna |> toProtein
+    result = rna |> to_protein
     {%- if case["expected"]["error"] %}
     result |> Result.isErr
     {%- else %}

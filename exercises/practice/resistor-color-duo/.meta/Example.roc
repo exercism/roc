@@ -15,10 +15,10 @@ Color : [
 
 value : Color, Color -> U8
 value = \first, second ->
-    10 * getCode first + getCode second
+    10 * get_code first + get_code second
 
-getCode : Color -> U8
-getCode = \color ->
+get_code : Color -> U8
+get_code = \color ->
     when color is
         Black -> 0
         Brown -> 1

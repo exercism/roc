@@ -1,4 +1,4 @@
-module [bestHands]
+module [best_hands]
 
 Value : U8
 Suit : [Spades, Hearts, Diamonds, Clubs]
@@ -6,37 +6,37 @@ Card : { value : Value, suit : Suit }
 Hand : List Card
 HandParsingError : [InvalidNumberOfCards U64, CardWasEmpty, InvalidCardValue (List U8), InvalidCardSuit U8]
 
-bestHands : List Str -> Result (List Str) HandParsingError
-bestHands = \hands ->
-    parsedHands = hands |> List.mapTry? parseHand
-    ranks = parsedHands |> List.map getRank
-    topRank = ranks |> List.max |> Result.withDefault 0
+best_hands : List Str -> Result (List Str) HandParsingError
+best_hands = \hands ->
+    parsed_hands = hands |> List.mapTry? parse_hand
+    ranks = parsed_hands |> List.map get_rank
+    top_rank = ranks |> List.max |> Result.withDefault 0
     List.map2 hands ranks \hand, rank -> { hand, rank }
     |> List.joinMap \{ hand, rank } ->
-        if rank == topRank then [hand] else []
+        if rank == top_rank then [hand] else []
     |> Ok
 
-parseHand : Str -> Result Hand HandParsingError
-parseHand = \handStr ->
-    cards = handStr |> Str.splitOn " "
-    numCards = List.len cards
-    if numCards != 5 then
-        Err (InvalidNumberOfCards numCards)
+parse_hand : Str -> Result Hand HandParsingError
+parse_hand = \hand_str ->
+    cards = hand_str |> Str.splitOn " "
+    num_cards = List.len cards
+    if num_cards != 5 then
+        Err (InvalidNumberOfCards num_cards)
         else
 
-    cards |> List.mapTry parseCard
+    cards |> List.mapTry parse_card
 
-parseCard : Str -> Result Card [CardWasEmpty, InvalidCardValue (List U8), InvalidCardSuit U8]
-parseCard = \cardStr ->
-    when cardStr |> Str.toUtf8 is
+parse_card : Str -> Result Card [CardWasEmpty, InvalidCardValue (List U8), InvalidCardSuit U8]
+parse_card = \card_str ->
+    when card_str |> Str.toUtf8 is
         [] -> Err CardWasEmpty
-        [.. as valueChars, suitChar] ->
-            value = parseValue? valueChars
-            suit = parseSuit? suitChar
+        [.. as value_chars, suit_char] ->
+            value = parse_value? value_chars
+            suit = parse_suit? suit_char
             Ok { value, suit }
 
-parseValue : List U8 -> Result Value [InvalidCardValue (List U8)]
-parseValue = \chars ->
+parse_value : List U8 -> Result Value [InvalidCardValue (List U8)]
+parse_value = \chars ->
     when chars is
         [val] if val >= '2' && val <= '9' -> Ok (val - '0')
         ['1', '0'] -> Ok 10
@@ -46,8 +46,8 @@ parseValue = \chars ->
         ['A'] -> Ok 14
         _ -> Err (InvalidCardValue chars)
 
-parseSuit : U8 -> Result Suit [InvalidCardSuit U8]
-parseSuit = \char ->
+parse_suit : U8 -> Result Suit [InvalidCardSuit U8]
+parse_suit = \char ->
     when char is
         'S' -> Ok Spades
         'H' -> Ok Hearts
@@ -55,54 +55,54 @@ parseSuit = \char ->
         'C' -> Ok Clubs
         _ -> Err (InvalidCardSuit char)
 
-getRank : Hand -> U64
-getRank = \hand ->
-    cardValues = hand |> List.map .value |> List.map Num.toU64 |> List.sortAsc
-    isConsecutive =
-        List.map2 cardValues (cardValues |> List.takeLast 4) \card1, card2 -> (card1, card2)
+get_rank : Hand -> U64
+get_rank = \hand ->
+    card_values = hand |> List.map .value |> List.map Num.toU64 |> List.sortAsc
+    is_consecutive =
+        List.map2 card_values (card_values |> List.takeLast 4) \card1, card2 -> (card1, card2)
         |> List.all \(card1, card2) -> card2 - card1 == 1
-    isSpecialStraight = cardValues == [2, 3, 4, 5, 14] # straight starting with Ace
-    isStraight = isConsecutive || isSpecialStraight
-    isFlush = (hand |> List.map .suit |> Set.fromList |> Set.len) == 1
+    is_special_straight = card_values == [2, 3, 4, 5, 14] # straight starting with Ace
+    is_straight = is_consecutive || is_special_straight
+    is_flush = (hand |> List.map .suit |> Set.fromList |> Set.len) == 1
 
-    valueGroups =
+    value_groups =
         # Example: [4, 4, 4, 7, 7] -> [{size: 3, value: 4}, {size: 2, value: 7}]
-        cardValues
-        |> List.walk (List.repeat 0 13) \counters, cardValue ->
-            counters |> List.update (cardValue - 2) \groupSize -> groupSize + 1
+        card_values
+        |> List.walk (List.repeat 0 13) \counters, card_value ->
+            counters |> List.update (card_value - 2) \group_size -> group_size + 1
         |> List.mapWithIndex \counter, value -> counter * 13 + value
         |> List.sortDesc
-        |> List.map \groupRank -> { size: groupRank // 13, value: groupRank % 13 + 2 }
+        |> List.map \group_rank -> { size: group_rank // 13, value: group_rank % 13 + 2 }
         |> List.dropIf \{ size } -> size == 0
 
-    groupSizes = valueGroups |> List.map .size
+    group_sizes = value_groups |> List.map .size
 
     category =
-        if isFlush && isStraight then
+        if is_flush && is_straight then
             8 # Straight flush
-        else if groupSizes == [4, 1] then
+        else if group_sizes == [4, 1] then
             7 # Four of a kind
-        else if groupSizes == [3, 2] then
+        else if group_sizes == [3, 2] then
             6 # Full house
-        else if isFlush then
+        else if is_flush then
             5 # Flush
-        else if isStraight then
+        else if is_straight then
             4 # Straight
-        else if groupSizes == [3, 1, 1] then
+        else if group_sizes == [3, 1, 1] then
             3 # Three of a kind
-        else if groupSizes == [2, 2, 1] then
+        else if group_sizes == [2, 2, 1] then
             2 # Two pairs
-        else if groupSizes == [2, 1, 1, 1] then
+        else if group_sizes == [2, 1, 1, 1] then
             1 # One pair
         else
             0 # High card
 
-    rankWithinCategory =
-        if isSpecialStraight then
+    rank_within_category =
+        if is_special_straight then
             0 # the straight starting with an Ace is the smallest straight
         else
-            valueGroups
+            value_groups
             |> List.walk 0 \rank, { value } ->
                 rank * 13 + value - 2
 
-    category * Num.powInt 13 5 + rankWithinCategory
+    category * Num.powInt 13 5 + rank_within_category

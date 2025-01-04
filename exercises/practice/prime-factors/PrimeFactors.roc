@@ -1,5 +1,5 @@
-module [primeFactors]
+module [prime_factors]
 
-primeFactors : U64 -> List U64
-primeFactors = \value ->
-    crash "Please implement the 'primeFactors' function"
+prime_factors : U64 -> List U64
+prime_factors = \value ->
+    crash "Please implement the 'prime_factors' function"

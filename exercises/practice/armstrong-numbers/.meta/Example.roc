@@ -1,14 +1,14 @@
-module [isArmstrongNumber]
+module [is_armstrong_number]
 
-listDigits = \number ->
+list_digits = \number ->
     if number < 10 then
         [number]
     else
-        (listDigits (number // 10)) |> List.append (number % 10)
+        (list_digits (number // 10)) |> List.append (number % 10)
 
-isArmstrongNumber : U64 -> Bool
-isArmstrongNumber = \number ->
-    digits = listDigits number
+is_armstrong_number : U64 -> Bool
+is_armstrong_number = \number ->
+    digits = list_digits number
     len = List.len digits
     candidate =
         digits

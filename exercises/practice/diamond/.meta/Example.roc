@@ -1,24 +1,24 @@
 module [diamond]
 
-getChar : I8, I8, I8 -> U8
-getChar = \rowIndex, colIndex, letterIndex ->
-    if Num.abs rowIndex + Num.abs colIndex == letterIndex then
-        letterIndex - Num.abs rowIndex |> Num.toU8 |> Num.add 'A'
+get_char : I8, I8, I8 -> U8
+get_char = \row_index, col_index, letter_index ->
+    if Num.abs row_index + Num.abs col_index == letter_index then
+        letter_index - Num.abs row_index |> Num.toU8 |> Num.add 'A'
     else
         ' '
 
-unwrapFromUtf8 : List U8 -> Str
-unwrapFromUtf8 = \chars ->
+unwrap_from_utf8 : List U8 -> Str
+unwrap_from_utf8 = \chars ->
     when chars |> Str.fromUtf8 is
         Ok result -> result
         Err _ -> crash "Str.fromUtf8 should never fail here"
 
 diamond : U8 -> Str
 diamond = \letter ->
-    letterIndex = letter - 'A' |> Num.toI8
-    List.range { start: At -letterIndex, end: At letterIndex }
-    |> List.map \rowIndex ->
-        List.range { start: At -letterIndex, end: At letterIndex }
-        |> List.map \colIndex -> getChar rowIndex colIndex letterIndex
-        |> unwrapFromUtf8
+    letter_index = letter - 'A' |> Num.toI8
+    List.range { start: At -letter_index, end: At letter_index }
+    |> List.map \row_index ->
+        List.range { start: At -letter_index, end: At letter_index }
+        |> List.map \col_index -> get_char row_index col_index letter_index
+        |> unwrap_from_utf8
     |> Str.joinWith "\n"

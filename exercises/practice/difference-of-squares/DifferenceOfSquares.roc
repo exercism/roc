@@ -1,13 +1,13 @@
-module [squareOfSum, sumOfSquares, differenceOfSquares]
+module [square_of_sum, sum_of_squares, difference_of_squares]
 
-squareOfSum : U64 -> U64
-squareOfSum = \number ->
-    crash "Please implement the `squareOfSum` function"
+square_of_sum : U64 -> U64
+square_of_sum = \number ->
+    crash "Please implement the `square_of_sum` function"
 
-sumOfSquares : U64 -> U64
-sumOfSquares = \number ->
-    crash "Please implement the `sumOfSquares` function"
+sum_of_squares : U64 -> U64
+sum_of_squares = \number ->
+    crash "Please implement the `sum_of_squares` function"
 
-differenceOfSquares : U64 -> U64
-differenceOfSquares = \number ->
-    crash "Please implement the `differenceOfSquares` function"
+difference_of_squares : U64 -> U64
+difference_of_squares = \number ->
+    crash "Please implement the `difference_of_squares` function"

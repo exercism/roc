@@ -2,26 +2,26 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/two-fer/canonical-data.json
 # File last updated on 2024-08-27
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main =
-    Task.ok {}
+main! = \_args ->
+    Ok {}
 
-import TwoFer exposing [twoFer]
+import TwoFer exposing [two_fer]
 
 # no name given
 expect
-    result = twoFer Anonymous
+    result = two_fer Anonymous
     result == "One for you, one for me."
 
 # a name given
 expect
-    result = twoFer (Name "Alice")
+    result = two_fer (Name "Alice")
     result == "One for Alice, one for me."
 
 # another name given
 expect
-    result = twoFer (Name "Bob")
+    result = two_fer (Name "Bob")
     result == "One for Bob, one for me."
 

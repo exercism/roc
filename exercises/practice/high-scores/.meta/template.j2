@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [latest, personalBest, personalTopThree]
+import {{ exercise | to_pascal }} exposing [latest, personal_best, personal_top_three]
 
 {% for supercase in cases %}
 ## {{ supercase["description"] }}
@@ -17,7 +17,7 @@ import {{ exercise | to_pascal }} exposing [latest, personalBest, personalTopThr
 {%- endif %}
 expect
     result = {{ case["property"] }} {{ case["input"]["scores"] }}
-    result == {% if case["property"] != "personalTopThree" %}Ok {% endif %}{{ case["expected"] | to_roc }}
+    result == {% if case["property"] != "personal_top_three" %}Ok {% endif %}{{ case["expected"] | to_roc }}
 
 {% endfor -%}
 {%- endfor %}

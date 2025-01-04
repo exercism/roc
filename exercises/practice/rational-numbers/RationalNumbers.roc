@@ -1,4 +1,4 @@
-module [add, sub, mul, div, abs, exp, expReal, reduce]
+module [add, sub, mul, div, abs, exp, exp_real, reduce]
 
 add : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
 add = \r1, r2 ->
@@ -24,9 +24,9 @@ exp : [Rational (Int a) (Int a)], Int a -> [Rational (Int a) (Int a)]
 exp = \r, n ->
     crash "Please implement the 'exp' function"
 
-expReal : Frac a, [Rational (Int b) (Int b)] -> Frac a
-expReal = \x, r ->
-    crash "Please implement the 'expReal' function"
+exp_real : Frac a, [Rational (Int b) (Int b)] -> Frac a
+exp_real = \x, r ->
+    crash "Please implement the 'exp_real' function"
 
 ## Reduce a rational number to its lowest terms, e.g., 6 / 8 --> 3 / 4
 reduce : [Rational (Int b) (Int b)] -> [Rational (Int b) (Int b)]

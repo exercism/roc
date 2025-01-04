@@ -14,14 +14,14 @@ sublist = \list1, list2 ->
             if list1 == list2 then Equal else Unequal
 
         LT ->
-            lengthDiff = List.len list2 - List.len list1
-            maybeEqualIndex =
-                List.range { start: At 0, end: At lengthDiff }
+            length_diff = List.len list2 - List.len list1
+            maybe_equal_index =
+                List.range { start: At 0, end: At length_diff }
                 |> List.findFirst \start ->
                     list2
                     |> List.sublist { start, len: List.len list1 }
                     |> Bool.isEq list1
 
-            when maybeEqualIndex is
+            when maybe_equal_index is
                 Ok _ -> Sublist
                 Err NotFound -> Unequal

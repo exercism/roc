@@ -1,12 +1,12 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/accumulate/canonical-data.json
 # File last updated on 2024-09-15
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+app [main!] {
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main =
-    Task.ok {}
+main! = \_args ->
+    Ok {}
 
 import Accumulate exposing [accumulate]
 
@@ -24,7 +24,7 @@ expect
 
 # accumulate upcases
 expect
-    result = accumulate ["Hello", "world"] toUpper
+    result = accumulate ["Hello", "world"] to_upper
     result == ["HELLO", "WORLD"]
 
 # accumulate reversed strings
@@ -45,8 +45,8 @@ reverse = \str ->
     |> Str.fromUtf8
     |> Result.withDefault ""
 
-toUpper : Str -> Str
-toUpper = \str ->
+to_upper : Str -> Str
+to_upper = \str ->
     Str.toUtf8 str
     |> List.map \byte ->
         if 'a' <= byte && byte <= 'z' then

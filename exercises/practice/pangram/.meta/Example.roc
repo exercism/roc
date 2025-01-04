@@ -1,10 +1,10 @@
-module [isPangram]
+module [is_pangram]
 
 alphabet =
     List.range { start: At 'A', end: At 'Z' } |> Set.fromList
 
-isPangram : Str -> Bool
-isPangram = \sentence ->
+is_pangram : Str -> Bool
+is_pangram = \sentence ->
     sentence
     |> Str.toUtf8
     |> Set.fromList

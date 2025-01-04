@@ -8,57 +8,57 @@ convert = \grid ->
         Ok ""
         else
 
-    gridChars = grid |> Str.toUtf8 |> List.splitOn '\n'
-    size = checkSize? gridChars
-    gridChars
+    grid_chars = grid |> Str.toUtf8 |> List.splitOn '\n'
+    size = check_size? grid_chars
+    grid_chars
     |> List.chunksOf 4 # split vertically into groups of 4 rows
-    |> List.map \rowGroup ->
-        getDigitGrids rowGroup size.width
-        |> List.map identifyDigit
+    |> List.map \row_group ->
+        get_digit_grids row_group size.width
+        |> List.map identify_digit
         |> Str.joinWith ""
     |> Str.joinWith ","
     |> Ok
 
-checkSize : List (List U8) -> Result { height : U64, width : U64 } BadGridSize
-checkSize = \gridChars ->
-    height = List.len gridChars
+check_size : List (List U8) -> Result { height : U64, width : U64 } BadGridSize
+check_size = \grid_chars ->
+    height = List.len grid_chars
     if height % 4 != 0 then
         Err HeightWasNotAMultipleOf4
         else
 
-    width = gridChars |> List.map List.len |> List.max |> Result.withDefault 0
+    width = grid_chars |> List.map List.len |> List.max |> Result.withDefault 0
     if width % 3 != 0 then
         Err WidthWasNotAMultipleOf3
         else
 
-    isRectangular = gridChars |> List.all \row -> List.len row == width
-    if isRectangular then
+    is_rectangular = grid_chars |> List.all \row -> List.len row == width
+    if is_rectangular then
         Ok { height, width }
     else
         Err GridShapeWasNotRectangular
 
 ## Given four rows from the full grid, return the 3x4 grid for each digit
-getDigitGrids : List (List U8), U64 -> List (List (List U8))
-getDigitGrids = \rowGroup, fullGridWidth ->
-    chunkedRows =
-        rowGroup
+get_digit_grids : List (List U8), U64 -> List (List (List U8))
+get_digit_grids = \row_group, full_grid_width ->
+    chunked_rows =
+        row_group
         |> List.map \row ->
             row |> List.chunksOf 3
-    numHorizontalChunks = fullGridWidth // 3
-    List.range { start: At 0, end: Before numHorizontalChunks }
-    |> List.map \chunkIndex ->
-        chunkedRows
-        |> List.map \chunkedRow ->
-            when chunkedRow |> List.get chunkIndex is
+    num_horizontal_chunks = full_grid_width // 3
+    List.range { start: At 0, end: Before num_horizontal_chunks }
+    |> List.map \chunk_index ->
+        chunked_rows
+        |> List.map \chunked_row ->
+            when chunked_row |> List.get chunk_index is
                 Ok chunk -> chunk
                 Err OutOfBounds -> crash "Unreachable: we checked the grid size"
 
-identifyDigit : List (List U8) -> Str
-identifyDigit = \digitGrid ->
+identify_digit : List (List U8) -> Str
+identify_digit = \digit_grid ->
     #  _     _  _     _  _  _  _  _
     # | |  | _| _||_||_ |_   ||_||_|
     # |_|  ||_  _|  | _||_|  ||_| _|
-    when digitGrid is
+    when digit_grid is
         [[' ', '_', ' '], ['|', ' ', '|'], ['|', '_', '|'], [' ', ' ', ' ']] -> "0"
         [[' ', ' ', ' '], [' ', ' ', '|'], [' ', ' ', '|'], [' ', ' ', ' ']] -> "1"
         [[' ', '_', ' '], [' ', '_', '|'], ['|', '_', ' '], [' ', ' ', ' ']] -> "2"

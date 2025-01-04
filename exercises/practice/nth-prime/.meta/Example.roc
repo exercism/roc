@@ -9,18 +9,18 @@ prime = \number ->
     else if number == 2 then
         Ok 3
     else
-        help = \primes, index ->
+        find_prime = \primes, index ->
             if List.len primes == number then
                 primes
             else
-                nextIndex = index + 2
-                newPrimes =
-                    if primes |> List.any \p -> nextIndex % p == 0 then
+                next_index = index + 2
+                new_primes =
+                    if primes |> List.any \p -> next_index % p == 0 then
                         primes
                     else
-                        primes |> List.append nextIndex
-                help newPrimes nextIndex
-        help [2, 3, 5] 5
+                        primes |> List.append next_index
+                find_prime new_primes next_index
+        find_prime [2, 3, 5] 5
         |> List.last
         |> Result.mapErr \_ ->
             crash "Unreachable: list cannot be empty"

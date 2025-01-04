@@ -1,7 +1,7 @@
 module [classify]
 
-aliquotSum : U64 -> Result U64 [NumberArgIsZero]
-aliquotSum = \number ->
+aliquot_sum : U64 -> Result U64 [NumberArgIsZero]
+aliquot_sum = \number ->
     if number == 0 then
         Err NumberArgIsZero
     else if number == 1 then
@@ -17,7 +17,7 @@ aliquotSum = \number ->
 
 classify : U64 -> Result [Abundant, Deficient, Perfect] [NumberArgIsZero]
 classify = \number ->
-    sum = aliquotSum? number
+    sum = aliquot_sum? number
     if sum == number then
         Ok Perfect
     else if sum > number then

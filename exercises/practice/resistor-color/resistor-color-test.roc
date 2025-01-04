@@ -2,13 +2,13 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/resistor-color/canonical-data.json
 # File last updated on 2024-08-27
 app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main =
-    Task.ok {}
+main! = \_args ->
+    Ok {}
 
-import ResistorColor exposing [colorCode, colors]
+import ResistorColor exposing [color_code, colors]
 
 ##
 ## Color codes
@@ -16,17 +16,17 @@ import ResistorColor exposing [colorCode, colors]
 
 # Black
 expect
-    result = colorCode "black"
+    result = color_code "black"
     result == Ok 0
 
 # White
 expect
-    result = colorCode "white"
+    result = color_code "white"
     result == Ok 9
 
 # Orange
 expect
-    result = colorCode "orange"
+    result = color_code "orange"
     result == Ok 3
 
 ##

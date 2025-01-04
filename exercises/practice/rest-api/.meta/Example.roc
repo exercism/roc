@@ -5,7 +5,7 @@ import json.Json
 User : {
     name : Str,
     owes : Dict Str F64,
-    owedBy : Dict Str F64,
+    owed_by : Dict Str F64,
     balance : F64,
 }
 
@@ -13,22 +13,18 @@ Database : { users : List User }
 
 Loan : { lender : Str, borrower : Str, amount : F64 }
 
-## Handle GET requests
 get : Database, { url : Str, payload ? Str } -> Result Str [Http404 Str, Http422 Str]
 get = \database, { url, payload ? "" } ->
     when url is
         "/users" ->
             database
-            |> getUsers payload
+            |> get_users payload
             |> Result.mapErr \InvalidJson -> Http422 payload
 
-        badUrl -> Err (Http404 badUrl)
+        bad_url -> Err (Http404 bad_url)
 
-## Compare two strings, first by their UTF8 representations, then by length:
-## "" < "ABC" < "abc" < "abcdef"
-## This is used to sort the users in the JSON outputs
-compareStrings : Str, Str -> [LT, EQ, GT]
-compareStrings = \string1, string2 ->
+compare_strings : Str, Str -> [LT, EQ, GT]
+compare_strings = \string1, string2 ->
     b1 = string1 |> Str.toUtf8
     b2 = string2 |> Str.toUtf8
     result =
@@ -41,20 +37,18 @@ compareStrings = \string1, string2 ->
         Ok _cmp -> Num.compare (List.len b1) (List.len b2)
         Err res -> res
 
-## Convert the owes and owedBy dictionaries to JSON
-## Note: this will be simpler once Roc supports Encoding & Decoding Dict
-oweDictToJson : Dict Str F64 -> Str
-oweDictToJson = \dict ->
-    dictContent =
+owe_dict_to_json : Dict Str F64 -> Str
+owe_dict_to_json = \dict ->
+    dict_content =
         dict
         |> Dict.toList
-        |> List.sortWith \(name1, _amount1), (name2, _amount2) -> compareStrings name1 name2
-        |> List.map \(name, amount) -> "$(name |> stringToJson): $(amount |> Num.toStr)"
+        |> List.sortWith \(name1, _amount1), (name2, _amount2) -> compare_strings name1 name2
+        |> List.map \(name, amount) -> "$(name |> string_to_json): $(amount |> Num.toStr)"
         |> Str.joinWith ","
-    "{$(dictContent)}"
+    "{$(dict_content)}"
 
-stringToJson : Str -> Str
-stringToJson = \string ->
+string_to_json : Str -> Str
+string_to_json = \string ->
     result =
         Encode.toBytes string Json.utf8
         |> Str.fromUtf8
@@ -62,148 +56,123 @@ stringToJson = \string ->
         Ok json -> json
         Err (BadUtf8 _ _) -> crash "Unreachable: encoding a string to JSON should never fail"
 
-## Convert a user to a JSON representation
-## Note: this will be simpler once Roc supports Encoding & Decoding Dict
-userToJson : User -> Str
-userToJson = \user ->
+user_to_json : User -> Str
+user_to_json = \user ->
     """
     {
         "balance" : $(user.balance |> Num.toStr),
-        "name" : $(user.name |> stringToJson),
-        "owed_by" : $(user.owedBy |> oweDictToJson),
-        "owes" : $(user.owes |> oweDictToJson)
+        "name" : $(user.name |> string_to_json),
+        "owed_by" : $(user.owed_by |> owe_dict_to_json),
+        "owes" : $(user.owes |> owe_dict_to_json)
     }
     """
 
-## Convert a list of users to a JSON representation
-## Note: this will be simpler once Roc supports Encoding & Decoding Dict
-usersToJson : List User -> Str
-usersToJson = \users ->
-    sortedUsers = users |> List.sortWith \u1, u2 -> compareStrings u1.name u2.name
-    # Encode.toBytes { users: sortedUsers } Json.utf8 |> Str.fromUtf8
-    listContent =
-        sortedUsers
-        |> List.map \user -> userToJson user
+users_to_json : List User -> Str
+users_to_json = \users ->
+    sorted_users = users |> List.sortWith \u1, u2 -> compare_strings u1.name u2.name
+    list_content =
+        sorted_users
+        |> List.map \user -> user_to_json user
         |> Str.joinWith ",\n"
-    "{\"users\": [$(listContent)]}"
+    "{\"users\": [$(list_content)]}"
 
-## Parse the requested user name or list of user names, and load them from
-## the (mock) database
-getUsers : Database, Str -> Result Str [InvalidJson]
-getUsers = \database, payload ->
+get_users : Database, Str -> Result Str [InvalidJson]
+get_users = \database, payload ->
     if payload == "" then
-        database.users |> usersToJson |> Ok
+        database.users |> users_to_json |> Ok
     else
-        names = getUserNames? payload
+        names = get_user_names? payload
         database.users
         |> List.keepIf \user ->
             names |> List.contains user.name
-        |> usersToJson
+        |> users_to_json
         |> Ok
 
-## Parse the requested user names from JSON
-getUserNames : Str -> Result (List Str) [InvalidJson]
-getUserNames = \payload ->
-    when parseJsonUser payload is
-        Ok userRecord -> Ok [userRecord.user]
+get_user_names : Str -> Result (List Str) [InvalidJson]
+get_user_names = \payload ->
+    when parse_json_user payload is
+        Ok user_record -> Ok [user_record.user]
         Err InvalidJson ->
-            usersRecord = parseJsonUsers? payload
-            Ok usersRecord.users
+            users_record = parse_json_users? payload
+            Ok users_record.users
 
-## Parse a JSON { user: name } object
-parseJsonUser : Str -> Result { user : Str } [InvalidJson]
-parseJsonUser = \payload ->
+parse_json_user : Str -> Result { user : Str } [InvalidJson]
+parse_json_user = \payload ->
     bytes = payload |> Str.toUtf8
-    maybeUser = Decode.fromBytesPartial bytes Json.utf8
-    maybeUser.result |> Result.mapErr \_ -> InvalidJson
+    maybe_user = Decode.fromBytesPartial bytes Json.utf8
+    maybe_user.result |> Result.mapErr \_ -> InvalidJson
 
-## Parse a JSON { users: [name1, name2,...] } object
-parseJsonUsers : Str -> Result { users : List Str } [InvalidJson]
-parseJsonUsers = \payload ->
+parse_json_users : Str -> Result { users : List Str } [InvalidJson]
+parse_json_users = \payload ->
     bytes = payload |> Str.toUtf8
-    maybeUserList = Decode.fromBytesPartial bytes Json.utf8
-    maybeUserList.result |> Result.mapErr \_ -> InvalidJson
+    maybe_user_list = Decode.fromBytesPartial bytes Json.utf8
+    maybe_user_list.result |> Result.mapErr \_ -> InvalidJson
 
-## Parse a JSON Loan object
-parseJsonLoan : Str -> Result Loan [InvalidJson]
-parseJsonLoan = \payload ->
+parse_json_loan : Str -> Result Loan [InvalidJson]
+parse_json_loan = \payload ->
     bytes = payload |> Str.toUtf8
-    maybeLoan = Decode.fromBytesPartial bytes Json.utf8
-    maybeLoan.result |> Result.mapErr \_ -> InvalidJson
+    maybe_loan = Decode.fromBytesPartial bytes Json.utf8
+    maybe_loan.result |> Result.mapErr \_ -> InvalidJson
 
-## Handle POST requests
 post : Database, { url : Str, payload ? Str } -> Result Str [Http404 Str, Http422 Str]
 post = \database, { url, payload ? "" } ->
-    handleError = \err ->
+    handle_error = \err ->
         when err is
             InvalidJson -> Http422 payload
             NotFound -> Http404 payload
     when url is
-        "/add" -> database |> addUser payload |> Result.mapErr handleError
-        "/iou" -> database |> addLoan payload |> Result.mapErr handleError
-        badUrl -> Err (Http404 badUrl)
+        "/add" -> database |> add_user payload |> Result.mapErr handle_error
+        "/iou" -> database |> add_loan payload |> Result.mapErr handle_error
+        bad_url -> Err (Http404 bad_url)
 
-## Add a new user to the (mock) database
-addUser : Database, Str -> Result Str [InvalidJson]
-addUser = \_database, payload ->
-    userPayload = parseJsonUser? payload
-    newUser = {
-        name: userPayload.user,
+add_user : Database, Str -> Result Str [InvalidJson]
+add_user = \_database, payload ->
+    user_payload = parse_json_user? payload
+    new_user = {
+        name: user_payload.user,
         owes: Dict.empty {},
-        owedBy: Dict.empty {},
+        owed_by: Dict.empty {},
         balance: 0.0,
     }
-    userToJson newUser |> Ok
+    user_to_json new_user |> Ok
 
-## Pop a key/value from a dictionary and return the updated Dict along with
-## the popped value. If not found, return the original Dict and value 0.0
-popAmount : Dict Str F64, Str -> (Dict Str F64, F64)
-popAmount = \dict, key ->
+pop_amount : Dict Str F64, Str -> (Dict Str F64, F64)
+pop_amount = \dict, key ->
     when dict |> Dict.get key is
         Ok value ->
-            newDict = dict |> Dict.remove key
-            (newDict, value)
+            new_dict = dict |> Dict.remove key
+            (new_dict, value)
 
         Err KeyNotFound -> (dict, 0.0)
 
-## Return the updated User record for the lender, assuming they lent the given
-## amount to the borrower.
-## Note: the amount may be negative, in which case the loan is in the
-## other direction, i.e., borrower to lender, but the function still returns
-## the updated "lender" record.
-updateLender : User, Str, F64 -> User
-updateLender = \lender, borrowerName, amount ->
-    (newOwesDict, owesAmount) = lender.owes |> popAmount borrowerName
-    (newOwedByDict, owedByAmount) = lender.owedBy |> popAmount borrowerName
-    totalLenderOwesToBorrower = owesAmount - owedByAmount - amount
-    finalOwesDict =
-        if totalLenderOwesToBorrower > 0.0 then
-            newOwesDict |> Dict.insert borrowerName totalLenderOwesToBorrower
+update_lender : User, Str, F64 -> User
+update_lender = \lender, borrower_name, amount ->
+    (new_owes_dict, owes_amount) = lender.owes |> pop_amount borrower_name
+    (new_owed_by_dict, owed_by_amount) = lender.owed_by |> pop_amount borrower_name
+    total_lender_owes_to_borrower = owes_amount - owed_by_amount - amount
+    final_owes_dict =
+        if total_lender_owes_to_borrower > 0.0 then
+            new_owes_dict |> Dict.insert borrower_name total_lender_owes_to_borrower
         else
-            newOwesDict
-    finalOwedByDict =
-        if totalLenderOwesToBorrower < 0.0 then
-            newOwedByDict |> Dict.insert borrowerName -totalLenderOwesToBorrower
+            new_owes_dict
+    final_owed_by_dict =
+        if total_lender_owes_to_borrower < 0.0 then
+            new_owed_by_dict |> Dict.insert borrower_name -total_lender_owes_to_borrower
         else
-            newOwedByDict
-    finalBalance = lender.balance + amount
-    { lender & owes: finalOwesDict, owedBy: finalOwedByDict, balance: finalBalance }
+            new_owed_by_dict
+    final_balance = lender.balance + amount
+    { lender & owes: final_owes_dict, owed_by: final_owed_by_dict, balance: final_balance }
 
-## Find a user by name in the (mock) database. Return Err NotFound if not found.
-getUser : Database, Str -> Result User [NotFound]
-getUser = \database, name ->
+get_user : Database, Str -> Result User [NotFound]
+get_user = \database, name ->
     database.users
     |> List.findFirst \user -> user.name == name
 
-## Parse a new loan JSON request and process the loan, returning the
-## updated lender and borrower User records.
-## If either the lender or the borrower does not exist, the function
-## returns Err NotFound. If the JSON payload is invalid, return Err InvalidJson.
-addLoan : Database, Str -> Result Str [NotFound, InvalidJson]
-addLoan = \database, payload ->
-    loan = parseJsonLoan? payload
-    lender = database |> getUser? loan.lender
-    borrower = database |> getUser? loan.borrower
-    updatedLender = lender |> updateLender borrower.name loan.amount
-    updatedBorrower = borrower |> updateLender lender.name -loan.amount
-    [updatedLender, updatedBorrower] |> usersToJson |> Ok
+add_loan : Database, Str -> Result Str [NotFound, InvalidJson]
+add_loan = \database, payload ->
+    loan = parse_json_loan? payload
+    lender = database |> get_user? loan.lender
+    borrower = database |> get_user? loan.borrower
+    updated_lender = lender |> update_lender borrower.name loan.amount
+    updated_borrower = borrower |> update_lender lender.name -loan.amount
+    [updated_lender, updated_borrower] |> users_to_json |> Ok

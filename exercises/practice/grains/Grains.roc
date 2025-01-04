@@ -1,9 +1,9 @@
-module [grainsOnSquare, totalGrains]
+module [grains_on_square, total_grains]
 
-grainsOnSquare : U8 -> Result U64 _
-grainsOnSquare = \square ->
-    crash "Please implement the 'grainsOnSquare' function"
+grains_on_square : U8 -> Result U64 _
+grains_on_square = \square ->
+    crash "Please implement the 'grains_on_square' function"
 
-totalGrains : U64
-totalGrains =
-    crash "Please implement the 'totalGrains' function"
+total_grains : U64
+total_grains =
+    crash "Please implement the 'total_grains' function"

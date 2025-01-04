@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [create, add, subtract, toStr]
+import {{ exercise | to_pascal }} exposing [create, add, subtract, to_str]
 
 {% macro test_case(case) %}
 # {{ case["description"] }}
@@ -10,13 +10,13 @@ import {{ exercise | to_pascal }} exposing [create, add, subtract, toStr]
 {%- if case["property"] == "create" %}
 expect
     clock = create {{ plugins.to_hours_minutes_record(case["input"]) }}
-    result = clock |> toStr
+    result = clock |> to_str
     expected = {{ case["expected"] | to_roc }} 
     result == expected
 {%- elif case["property"] in ["add", "subtract"] %}
 expect
     clock = create {{ plugins.to_hours_minutes_record(case["input"]) }}
-    result = clock |> {{ case["property"] | to_camel }} { minutes: {{ case["input"]["value"] }} } |> toStr
+    result = clock |> {{ case["property"] | to_camel }} { minutes: {{ case["input"]["value"] }} } |> to_str
     expected = {{ case["expected"] | to_roc }} 
     result == expected
 {%- elif case["property"] == "equal" %}

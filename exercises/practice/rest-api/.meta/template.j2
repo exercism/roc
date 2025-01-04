@@ -31,7 +31,7 @@ expect
                     ({{ name | to_roc }}, {{ amount }}),
                     {%- endfor -%}
                 ],
-                owedBy: Dict.fromList [
+                owed_by: Dict.fromList [
                     {%- for (name, amount) in user["owed_by"].items() %}
                     ({{ name | to_roc }}, {{ amount }}),
                     {%- endfor -%}
