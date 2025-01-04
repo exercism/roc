@@ -1,12 +1,14 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/go-counting/canonical-data.json
-# File last updated on 2024-10-07
-app [main] {
+# File last updated on 2025-01-04
+app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
+import pf.Stdout
+
 main! = \_args ->
-    Ok {}
+    Stdout.line! ""
 
 import GoCounting exposing [territory, territories]
 
@@ -14,13 +16,13 @@ import GoCounting exposing [territory, territories]
 ## comparing tags or records containing sets sometimes returns the wrong result
 ## depending on the internal order of the set data, so we have to unwrap the sets
 ## in order to compare them properly.
-compareTerritory = \maybeResult, maybeExpected ->
-    when (maybeResult, maybeExpected) is
+compareTerritory = \maybe_result, maybe_expected ->
+    when (maybe_result, maybe_expected) is
         (Ok result, Ok expected) -> result.owner == expected.owner && result.territory == expected.territory
         _ -> Bool.false
 
-compareTerritories = \maybeResult, maybeExpected ->
-    when (maybeResult, maybeExpected) is
+compareTerritories = \maybe_result, maybe_expected ->
+    when (maybe_result, maybe_expected) is
         (Ok result, Ok expected) -> result.black == expected.black && result.white == expected.white && result.none == expected.none
         _ -> Bool.false
 
@@ -140,7 +142,9 @@ expect
     result = board |> territories
     expected = Ok {
         black: Set.empty {},
+
         white: Set.empty {},
+
         none: Set.fromList [
             { x: 0, y: 0 },
         ],
@@ -161,10 +165,12 @@ expect
             { x: 0, y: 0 },
             { x: 0, y: 1 },
         ],
+
         white: Set.fromList [
             { x: 3, y: 0 },
             { x: 3, y: 1 },
         ],
+
         none: Set.empty {},
     }
     result |> compareTerritories expected
@@ -178,7 +184,9 @@ expect
             { x: 0, y: 0 },
             { x: 2, y: 0 },
         ],
+
         white: Set.empty {},
+
         none: Set.empty {},
     }
     result |> compareTerritories expected

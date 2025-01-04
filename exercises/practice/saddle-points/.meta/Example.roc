@@ -1,39 +1,38 @@
-module [saddlePoints]
+module [saddle_points]
 
 Forest : List (List U8)
 Position : { row : U64, column : U64 }
 
-saddlePoints : Forest -> Set Position
-saddlePoints = \treeHeights ->
-    tallestTreesEastWest =
-        treeHeights
-        |> List.mapWithIndex \row, rowIndex ->
-            maxInRow = row |> List.max |> Result.withDefault 0
+saddle_points : Forest -> Set Position
+saddle_points = \tree_heights ->
+    tallest_trees_east_west =
+        tree_heights
+        |> List.mapWithIndex \row, row_index ->
+            max_in_row = row |> List.max |> Result.withDefault 0
             row
-            |> List.mapWithIndex \height, columnIndex ->
-                if height == maxInRow then [{ row: rowIndex + 1, column: columnIndex + 1 }] else []
+            |> List.mapWithIndex \height, column_index ->
+                if height == max_in_row then [{ row: row_index + 1, column: column_index + 1 }] else []
             |> List.join
         |> List.join
         |> Set.fromList
 
-    numColumns = treeHeights |> List.map List.len |> List.max |> Result.withDefault 0
-    smallestTreeNorthSouth =
-        List.range { start: At 0, end: Before numColumns }
-            |> List.map \columnIndex ->
+    num_columns = tree_heights |> List.map List.len |> List.max |> Result.withDefault 0
+    smallest_trees_north_south =
+        List.range { start: At 0, end: Before num_columns }
+            |> List.map \column_index ->
                 column =
-                    treeHeights
-                        |> List.mapWithIndex \row, rowIndex ->
+                    tree_heights
+                        |> List.mapWithIndex \row, row_index ->
                             row
-                                |> List.get? columnIndex
-                                |> \height -> Ok { height, rowIndex }
+                                |> List.get? column_index
+                                |> \height -> Ok { height, row_index }
                         |> List.keepOks \id -> id
 
-                minInColumn = column |> List.map .height |> List.min |> Result.withDefault 0
+                min_in_column = column |> List.map .height |> List.min |> Result.withDefault 0
                 column
-                |> List.keepIf \{ height } -> height == minInColumn
-                |> List.map \{ rowIndex } -> { row: rowIndex + 1, column: columnIndex + 1 }
+                |> List.keepIf \{ height } -> height == min_in_column
+                |> List.map \{ row_index } -> { row: row_index + 1, column: column_index + 1 }
             |> List.joinMap \id -> id
             |> Set.fromList
 
-    tallestTreesEastWest |> Set.intersection smallestTreeNorthSouth
-
+    tallest_trees_east_west |> Set.intersection smallest_trees_north_south

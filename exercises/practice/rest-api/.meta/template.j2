@@ -41,7 +41,7 @@ expect
             {%- endfor %}
         ]
     }
-    result = database |> {{ case["property"] | to_camel }} {
+    result = database |> {{ case["property"] | to_snake }} {
         url: {{ case["input"]["url"] | to_roc }},
     {%- if case["input"].get("payload", {}) != {} %}
         payload: {{ case["input"]["payload"] | tojson | to_roc }}

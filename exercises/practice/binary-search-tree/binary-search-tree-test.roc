@@ -1,14 +1,16 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/binary-search-tree/canonical-data.json
-# File last updated on 2024-10-21
-app [main] {
+# File last updated on 2025-01-04
+app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main! = \_args ->
-    Ok {}
+import pf.Stdout
 
-import BinarySearchTree exposing [fromList, toList]
+main! = \_args ->
+    Stdout.line! ""
+
+import BinarySearchTree exposing [from_list, to_list]
 
 ##
 ## data is retained
@@ -16,7 +18,7 @@ import BinarySearchTree exposing [fromList, toList]
 
 expect
     data = [4]
-    result = data |> fromList
+    result = data |> from_list
     expected = Node {
         value: 4,
         left: Nil,
@@ -31,7 +33,7 @@ expect
 # smaller number at left node
 expect
     data = [4, 2]
-    result = data |> fromList
+    result = data |> from_list
     expected = Node {
         value: 4,
         left: Node {
@@ -46,7 +48,7 @@ expect
 # same number at left node
 expect
     data = [4, 4]
-    result = data |> fromList
+    result = data |> from_list
     expected = Node {
         value: 4,
         left: Node {
@@ -61,7 +63,7 @@ expect
 # greater number at right node
 expect
     data = [4, 5]
-    result = data |> fromList
+    result = data |> from_list
     expected = Node {
         value: 4,
         left: Nil,
@@ -79,7 +81,7 @@ expect
 
 expect
     data = [4, 2, 6, 1, 3, 5, 7]
-    result = data |> fromList
+    result = data |> from_list
     expected = Node {
         value: 4,
         left: Node {
@@ -118,40 +120,40 @@ expect
 # can sort single number
 expect
     data = [2]
-    tree = data |> fromList
-    result = tree |> toList
+    tree = data |> from_list
+    result = tree |> to_list
     expected = [2]
     result == expected
 
 # can sort if second number is smaller than first
 expect
     data = [2, 1]
-    tree = data |> fromList
-    result = tree |> toList
+    tree = data |> from_list
+    result = tree |> to_list
     expected = [1, 2]
     result == expected
 
 # can sort if second number is same as first
 expect
     data = [2, 2]
-    tree = data |> fromList
-    result = tree |> toList
+    tree = data |> from_list
+    result = tree |> to_list
     expected = [2, 2]
     result == expected
 
 # can sort if second number is greater than first
 expect
     data = [2, 3]
-    tree = data |> fromList
-    result = tree |> toList
+    tree = data |> from_list
+    result = tree |> to_list
     expected = [2, 3]
     result == expected
 
 # can sort complex tree
 expect
     data = [2, 1, 3, 6, 7, 5]
-    tree = data |> fromList
-    result = tree |> toList
+    tree = data |> from_list
+    result = tree |> to_list
     expected = [1, 2, 3, 5, 6, 7]
     result == expected
 

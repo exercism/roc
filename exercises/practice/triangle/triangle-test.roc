@@ -1,14 +1,16 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/triangle/canonical-data.json
-# File last updated on 2024-08-27
-app [main] {
+# File last updated on 2025-01-04
+app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main! = \_args ->
-    Ok {}
+import pf.Stdout
 
-import Triangle exposing [is_equilateral, is_isoceles, is_scalene]
+main! = \_args ->
+    Stdout.line! ""
+
+import Triangle exposing [is_equilateral, is_isosceles, is_scalene]
 
 ##
 ## equilateral triangle
@@ -45,47 +47,47 @@ expect
 
 # last two sides are equal
 expect
-    result = is_isoceles (3, 4, 4)
+    result = is_isosceles (3, 4, 4)
     result == Bool.true
 
 # first two sides are equal
 expect
-    result = is_isoceles (4, 4, 3)
+    result = is_isosceles (4, 4, 3)
     result == Bool.true
 
 # first and last sides are equal
 expect
-    result = is_isoceles (4, 3, 4)
+    result = is_isosceles (4, 3, 4)
     result == Bool.true
 
 # equilateral triangles are also isosceles
 expect
-    result = is_isoceles (4, 4, 4)
+    result = is_isosceles (4, 4, 4)
     result == Bool.true
 
 # no sides are equal
 expect
-    result = is_isoceles (2, 3, 4)
+    result = is_isosceles (2, 3, 4)
     result == Bool.false
 
 # first triangle inequality violation
 expect
-    result = is_isoceles (1, 1, 3)
+    result = is_isosceles (1, 1, 3)
     result == Bool.false
 
 # second triangle inequality violation
 expect
-    result = is_isoceles (1, 3, 1)
+    result = is_isosceles (1, 3, 1)
     result == Bool.false
 
 # third triangle inequality violation
 expect
-    result = is_isoceles (3, 1, 1)
+    result = is_isosceles (3, 1, 1)
     result == Bool.false
 
 # sides may be floats
 expect
-    result = is_isoceles (0.5f64, 0.4f64, 0.5f64)
+    result = is_isosceles (0.5f64, 0.4f64, 0.5f64)
     result == Bool.true
 
 ##

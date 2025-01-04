@@ -1,14 +1,16 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/saddle-points/canonical-data.json
-# File last updated on 2024-09-24
-app [main] {
+# File last updated on 2025-01-04
+app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
-main! = \_args ->
-    Ok {}
+import pf.Stdout
 
-import SaddlePoints exposing [saddlePoints]
+main! = \_args ->
+    Stdout.line! ""
+
+import SaddlePoints exposing [saddle_points]
 
 # Can identify single saddle point
 expect
@@ -17,7 +19,7 @@ expect
         [5, 3, 2],
         [6, 6, 7],
     ]
-    result = treeHeights |> saddlePoints
+    result = treeHeights |> saddle_points
     expected = Set.fromList [
         { row: 2, column: 1 },
     ]
@@ -28,7 +30,7 @@ expect
     treeHeights = [
         [],
     ]
-    result = treeHeights |> saddlePoints
+    result = treeHeights |> saddle_points
     expected = Set.fromList [
     ]
     result == expected
@@ -40,7 +42,7 @@ expect
         [3, 1, 2],
         [2, 3, 1],
     ]
-    result = treeHeights |> saddlePoints
+    result = treeHeights |> saddle_points
     expected = Set.fromList [
     ]
     result == expected
@@ -52,7 +54,7 @@ expect
         [3, 5, 5],
         [1, 5, 4],
     ]
-    result = treeHeights |> saddlePoints
+    result = treeHeights |> saddle_points
     expected = Set.fromList [
         { row: 1, column: 2 },
         { row: 2, column: 2 },
@@ -67,7 +69,7 @@ expect
         [5, 5, 5],
         [7, 5, 6],
     ]
-    result = treeHeights |> saddlePoints
+    result = treeHeights |> saddle_points
     expected = Set.fromList [
         { row: 2, column: 1 },
         { row: 2, column: 2 },
@@ -82,7 +84,7 @@ expect
         [6, 7, 6],
         [3, 2, 5],
     ]
-    result = treeHeights |> saddlePoints
+    result = treeHeights |> saddle_points
     expected = Set.fromList [
         { row: 3, column: 3 },
     ]
@@ -94,7 +96,7 @@ expect
         [3, 1, 3],
         [3, 2, 4],
     ]
-    result = treeHeights |> saddlePoints
+    result = treeHeights |> saddle_points
     expected = Set.fromList [
         { row: 1, column: 3 },
         { row: 1, column: 1 },
@@ -109,7 +111,7 @@ expect
         [4],
         [1],
     ]
-    result = treeHeights |> saddlePoints
+    result = treeHeights |> saddle_points
     expected = Set.fromList [
         { row: 2, column: 1 },
         { row: 4, column: 1 },
@@ -121,7 +123,7 @@ expect
     treeHeights = [
         [2, 5, 3, 5],
     ]
-    result = treeHeights |> saddlePoints
+    result = treeHeights |> saddle_points
     expected = Set.fromList [
         { row: 1, column: 2 },
         { row: 1, column: 4 },

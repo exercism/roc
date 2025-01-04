@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }}]
 
 {% for case in cases -%}
 # {{ case["description"] }}
@@ -16,7 +16,7 @@ expect
         {%- endfor %}
     ]
     {%- endif %}
-    result = {{ case["property"] | to_camel }} { items, maximum_weight: {{ case["input"]["maximum_weight"] }} }
+    result = {{ case["property"] | to_snake }} { items, maximum_weight: {{ case["input"]["maximumWeight"] }} }
     result == {{ case["expected"] | to_roc }}
 
 {% endfor %}

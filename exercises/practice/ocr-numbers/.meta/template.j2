@@ -2,13 +2,13 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }}]
 
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
     grid = {{ case["input"]["rows"] | to_roc_multiline_string | indent(8) }}
-    result = {{ case["property"] | to_camel }} grid
+    result = {{ case["property"] | to_snake }} grid
     {%- if case["expected"]["error"] %}
     result |> Result.isErr
     {%- else %}

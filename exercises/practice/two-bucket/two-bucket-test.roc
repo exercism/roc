@@ -1,137 +1,139 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/two-bucket/canonical-data.json
-# File last updated on 2024-10-01
-app [main] {
+# File last updated on 2025-01-04
+app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
+import pf.Stdout
+
 main! = \_args ->
-    Ok {}
+    Stdout.line! ""
 
 import TwoBucket exposing [measure]
 
 # Measure using bucket one of size 3 and bucket two of size 5 - start with bucket one
 expect
     result = measure {
-        bucketOne: 3,
-        bucketTwo: 5,
+        bucket_one: 3,
+        bucket_two: 5,
         goal: 1,
-        startBucket: One,
+        start_bucket: One,
     }
     expected = Ok {
         moves: 4,
-        goalBucket: One,
-        otherBucket: 5,
+        goal_bucket: One,
+        other_bucket: 5,
     }
     result == expected
 
 # Measure using bucket one of size 3 and bucket two of size 5 - start with bucket two
 expect
     result = measure {
-        bucketOne: 3,
-        bucketTwo: 5,
+        bucket_one: 3,
+        bucket_two: 5,
         goal: 1,
-        startBucket: Two,
+        start_bucket: Two,
     }
     expected = Ok {
         moves: 8,
-        goalBucket: Two,
-        otherBucket: 3,
+        goal_bucket: Two,
+        other_bucket: 3,
     }
     result == expected
 
 # Measure using bucket one of size 7 and bucket two of size 11 - start with bucket one
 expect
     result = measure {
-        bucketOne: 7,
-        bucketTwo: 11,
+        bucket_one: 7,
+        bucket_two: 11,
         goal: 2,
-        startBucket: One,
+        start_bucket: One,
     }
     expected = Ok {
         moves: 14,
-        goalBucket: One,
-        otherBucket: 11,
+        goal_bucket: One,
+        other_bucket: 11,
     }
     result == expected
 
 # Measure using bucket one of size 7 and bucket two of size 11 - start with bucket two
 expect
     result = measure {
-        bucketOne: 7,
-        bucketTwo: 11,
+        bucket_one: 7,
+        bucket_two: 11,
         goal: 2,
-        startBucket: Two,
+        start_bucket: Two,
     }
     expected = Ok {
         moves: 18,
-        goalBucket: Two,
-        otherBucket: 7,
+        goal_bucket: Two,
+        other_bucket: 7,
     }
     result == expected
 
 # Measure one step using bucket one of size 1 and bucket two of size 3 - start with bucket two
 expect
     result = measure {
-        bucketOne: 1,
-        bucketTwo: 3,
+        bucket_one: 1,
+        bucket_two: 3,
         goal: 3,
-        startBucket: Two,
+        start_bucket: Two,
     }
     expected = Ok {
         moves: 1,
-        goalBucket: Two,
-        otherBucket: 0,
+        goal_bucket: Two,
+        other_bucket: 0,
     }
     result == expected
 
 # Measure using bucket one of size 2 and bucket two of size 3 - start with bucket one and end with bucket two
 expect
     result = measure {
-        bucketOne: 2,
-        bucketTwo: 3,
+        bucket_one: 2,
+        bucket_two: 3,
         goal: 3,
-        startBucket: One,
+        start_bucket: One,
     }
     expected = Ok {
         moves: 2,
-        goalBucket: Two,
-        otherBucket: 2,
+        goal_bucket: Two,
+        other_bucket: 2,
     }
     result == expected
 
 # Not possible to reach the goal
 expect
     result = measure {
-        bucketOne: 6,
-        bucketTwo: 15,
+        bucket_one: 6,
+        bucket_two: 15,
         goal: 5,
-        startBucket: One,
+        start_bucket: One,
     }
     result |> Result.isErr
 
 # With the same buckets but a different goal, then it is possible
 expect
     result = measure {
-        bucketOne: 6,
-        bucketTwo: 15,
+        bucket_one: 6,
+        bucket_two: 15,
         goal: 9,
-        startBucket: One,
+        start_bucket: One,
     }
     expected = Ok {
         moves: 10,
-        goalBucket: Two,
-        otherBucket: 0,
+        goal_bucket: Two,
+        other_bucket: 0,
     }
     result == expected
 
 # Goal larger than both buckets is impossible
 expect
     result = measure {
-        bucketOne: 5,
-        bucketTwo: 7,
+        bucket_one: 5,
+        bucket_two: 7,
         goal: 8,
-        startBucket: One,
+        start_bucket: One,
     }
     result |> Result.isErr
 

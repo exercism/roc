@@ -8,7 +8,7 @@ import {{ exercise | to_pascal }} exposing [allergic_to, set]
 {% for case in outerCase["cases"] %}
 # {{ outerCase["description"] }} {{ case["description"] | default('') }}
 expect
-    {%- if case["property"] == "allergic_to" %}
+    {%- if case["property"] == "allergicTo" %}
     result = allergic_to {{ case["input"]["item"] | to_pascal }} {{ case["input"]["score"] | to_roc }}
     result == {{ case["expected"] | to_roc }}
     {%- else %}

@@ -18,7 +18,7 @@ import {{ exercise | to_pascal }} exposing [keep, discard]
 # {{ case["description"] }}
 expect
     list = {{ case["input"]["list"] | to_roc }}
-    result = list |> {{ case["property"] | to_camel }} {{ function_map[case["input"]["predicate"]] }}
+    result = list |> {{ case["property"] | to_snake }} {{ function_map[case["input"]["predicate"]] }}
     expected = {{ case["expected"] | to_roc }}
     result == expected
 

@@ -37,5 +37,5 @@ overwrite = \{ data, start, length }, value ->
         { data: new_data, start, length: length + 1 }
 
 clear : CircularBuffer -> CircularBuffer
-clear = \CircularBuffer ->
-    { data: CircularBuffer.data, start: 0, length: 0 }
+clear = \circular_buffer ->
+    { data: circular_buffer.data, start: 0, length: 0 }

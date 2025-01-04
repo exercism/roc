@@ -35,27 +35,27 @@ bfs = \{ start, neighbors, success } ->
     help [start] (Set.empty {}) (Dict.empty {})
 
 measure :
-    { bucketOne : U64, bucketTwo : U64, goal : U64, startBucket : [One, Two] }
+    { bucket_one : U64, bucket_two : U64, goal : U64, start_bucket : [One, Two] }
     ->
-    Result { moves : U64, goalBucket : [One, Two], otherBucket : U64 } [NoSolutionExists]
-measure = \{ bucketOne, bucketTwo, goal, startBucket } ->
+    Result { moves : U64, goal_bucket : [One, Two], other_bucket : U64 } [NoSolutionExists]
+measure = \{ bucket_one, bucket_two, goal, start_bucket } ->
     if goal == 0 then
-        Ok { moves: 0, goalBucket: One, otherBucket: 0 }
+        Ok { moves: 0, goal_bucket: One, other_bucket: 0 }
         else
 
     start =
-        when startBucket is
-            One -> { volume_one: bucketOne, volume_two: 0 }
-            Two -> { volume_one: 0, volume_two: bucketTwo }
+        when start_bucket is
+            One -> { volume_one: bucket_one, volume_two: 0 }
+            Two -> { volume_one: 0, volume_two: bucket_two }
 
     neighbors = \{ volume_one, volume_two } ->
-        volume_one_to_two = Num.min volume_one (bucketTwo - volume_two)
-        volume_two_to_one = Num.min volume_two (bucketOne - volume_one)
+        volume_one_to_two = Num.min volume_one (bucket_two - volume_two)
+        volume_two_to_one = Num.min volume_two (bucket_one - volume_one)
         [
             { volume_one: 0, volume_two }, # empty bucket one
             { volume_one, volume_two: 0 }, # empty bucket two
-            { volume_one: bucketOne, volume_two }, # fill bucket one
-            { volume_one, volume_two: bucketTwo }, # fill bucket two
+            { volume_one: bucket_one, volume_two }, # fill bucket one
+            { volume_one, volume_two: bucket_two }, # fill bucket two
             {
                 # pour bucket one into bucket two
                 volume_one: volume_one - volume_one_to_two,
@@ -72,9 +72,9 @@ measure = \{ bucketOne, bucketTwo, goal, startBucket } ->
             ||
             # forbidden move: cannot end up with the starting bucket empty and
             # the other bucket full
-            when startBucket is
-                One -> v1 == 0 && v2 == bucketTwo
-                Two -> v1 == bucketOne && v2 == 0
+            when start_bucket is
+                One -> v1 == 0 && v2 == bucket_two
+                Two -> v1 == bucket_one && v2 == 0
 
     success = \{ volume_one, volume_two } -> volume_one == goal || volume_two == goal
 
@@ -82,8 +82,8 @@ measure = \{ bucketOne, bucketTwo, goal, startBucket } ->
         Ok [.. as rest, last] ->
             Ok {
                 moves: List.len rest + 1,
-                goalBucket: if last.volume_one == goal then One else Two,
-                otherBucket: if last.volume_one == goal then last.volume_two else last.volume_one,
+                goal_bucket: if last.volume_one == goal then One else Two,
+                other_bucket: if last.volume_one == goal then last.volume_two else last.volume_one,
             }
 
         _ -> Err NoSolutionExists

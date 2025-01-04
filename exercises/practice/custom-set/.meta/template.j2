@@ -37,12 +37,12 @@ set property_map = {
 expect
     {%- if "set" in case["input"] %}
     set = from_list {{ case["input"]["set"] | to_roc }}
-    result = set |> {{ property | to_camel }}
+    result = set |> {{ property | to_snake }}
     {%- if "element" in case["input"] %} {{ case["input"]["element"] }}{%- endif %}
     {%- else %}
     set1 = from_list {{ case["input"]["set1"] | to_roc }}
     set2 = from_list {{ case["input"]["set2"] | to_roc }}
-    result = set1 |> {{ property | to_camel }} set2
+    result = set1 |> {{ property | to_snake }} set2
     {%- endif %}
     {%- if case["expected"] is iterable %}
     expected = {{ case["expected"] | to_roc }} |> from_list

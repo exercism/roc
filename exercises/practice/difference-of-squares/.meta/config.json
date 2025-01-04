@@ -4,7 +4,7 @@
   ],
   "files": {
     "solution": [
-      "difference_of_squares.roc"
+      "DifferenceOfSquares.roc"
     ],
     "test": [
       "difference-of-squares-test.roc"

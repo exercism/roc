@@ -2,12 +2,12 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }}]
 
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    result = {{ case["property"] | to_camel }} { input_base: {{ case["input"]["input_base"] | to_roc }}, output_base: {{ case["input"]["output_base"] | to_roc }}, digits: {{ case["input"]["digits"] | to_roc }} }
+    result = {{ case["property"] | to_snake }} { input_base: {{ case["input"]["inputBase"] | to_roc }}, output_base: {{ case["input"]["outputBase"] | to_roc }}, digits: {{ case["input"]["digits"] | to_roc }} }
     {%- if case["expected"]["error"] %}
     result |> Result.isErr
     {%- else %}

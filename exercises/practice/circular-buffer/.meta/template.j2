@@ -6,7 +6,7 @@ import {{ exercise | to_pascal }} exposing [create, read, write, overwrite, clea
 
 {% for case in cases -%}
 # {{ case["description"] }}
-run_operations{{ loop.index }} =
+run_operations{{ loop.index }} = \_ ->
     result =
         create { capacity: {{ case["input"]["capacity"] }} }
         {%- for op in case["input"]["operations"] -%}
@@ -27,12 +27,12 @@ run_operations{{ loop.index }} =
         {%- if op["should_succeed"] %}
         |> read? |> \read_result ->
             expect read_result.value == {{ op["expected"] }}
-            read_result.newBuffer
+            read_result.new_buffer
         {%- else %}
-        |> \bufferBeforeRead ->
-            read_result = bufferBeforeRead |> read
+        |> \buffer_before_read ->
+            read_result = buffer_before_read |> read
             expect read_result == Err BufferEmpty
-            bufferBeforeRead
+            buffer_before_read
         {%- endif %}
         {%- endif %}
         {%- endfor %}
@@ -40,7 +40,7 @@ run_operations{{ loop.index }} =
 
 expect
     
-    result = run_operations{{ loop.index }}
+    result = run_operations{{ loop.index }} {}
     result |> Result.isOk
 
 {% endfor %}

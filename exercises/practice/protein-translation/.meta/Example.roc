@@ -1,10 +1,10 @@
 module [to_protein]
 
 Codon : List U8
-amino_acid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, Tyrosine]
-Protein : List amino_acid
+AminoAcid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, Tyrosine]
+Protein : List AminoAcid
 
-to_instruction : Codon -> Result [Append amino_acid, Stop] [InvalidCodon Codon]
+to_instruction : Codon -> Result [Append AminoAcid, Stop] [InvalidCodon Codon]
 to_instruction = \codon ->
     when codon is
         ['A', 'U', 'G'] -> Ok (Append Methionine)

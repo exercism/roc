@@ -1,13 +1,15 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/micro-blog/canonical-data.json
-# File last updated on 2024-09-22
-app [main] {
+# File last updated on 2025-01-04
+app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
     unicode: "https://github.com/roc-lang/unicode/releases/download/0.2.0/odvSckHK9LxWLbsrPmo2s6aQ3bn7C3PALyv0ZI1gAu0.tar.br",
 }
 
+import pf.Stdout
+
 main! = \_args ->
-    Ok {}
+    Stdout.line! ""
 
 import MicroBlog exposing [truncate]
 

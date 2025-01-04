@@ -1,10 +1,12 @@
 # File last updated on 2024-09-12
-app [main] {
+app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
 }
 
+import pf.Stdout
+
 main! = \_args ->
-    Ok {}
+    Stdout.line! ""
 
 import ErrorHandling exposing [get_user, parse_user_id, get_page, error_message]
 

@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import difference_of_squares exposing [square_of_sum, sum_of_squares, difference_of_squares]
+import DifferenceOfSquares exposing [square_of_sum, sum_of_squares, difference_of_squares]
 
 {% for supercase in cases %}
 ##
@@ -12,7 +12,7 @@ import difference_of_squares exposing [square_of_sum, sum_of_squares, difference
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
 expect
-    result = {{ case["property"] | to_camel }} {{ case["input"]["number"] }}
+    result = {{ case["property"] | to_snake }} {{ case["input"]["number"] }}
     result == {{ case["expected"] }}
 
 {% endfor %}
