@@ -15,5 +15,5 @@ NodeProperties : Dict Str (List Str)
 GameTree : [Empty, GameNode { properties : NodeProperties, children : List GameTree }]
 
 parse : Str -> Result GameTree _
-parse = \sgf ->
-    crash "Please implement the 'parse' function"
+parse = |sgf|
+    crash("Please implement the 'parse' function")

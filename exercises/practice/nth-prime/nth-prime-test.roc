@@ -2,38 +2,38 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/nth-prime/canonical-data.json
 # File last updated on 2025-01-04
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/bi5zubJ-_Hva9vxxPq4kNx4WHX6oFs8OP6Ad0tCYlrY.tar.br",
 }
 
 import pf.Stdout
 
-main! = \_args ->
-    Stdout.line! ""
+main! = |_args|
+    Stdout.line!("")
 
 import NthPrime exposing [prime]
 
 # first prime
 expect
-    result = prime 1
-    result == Ok 2
+    result = prime(1)
+    result == Ok(2)
 
 # second prime
 expect
-    result = prime 2
-    result == Ok 3
+    result = prime(2)
+    result == Ok(3)
 
 # sixth prime
 expect
-    result = prime 6
-    result == Ok 13
+    result = prime(6)
+    result == Ok(13)
 
 # big prime
 expect
-    result = prime 10001
-    result == Ok 104743
+    result = prime(10001)
+    result == Ok(104743)
 
 # there is no zeroth prime
 expect
-    result = prime 0
-    result |> Result.isErr
+    result = prime(0)
+    result |> Result.is_err
 

@@ -9,5 +9,5 @@ personal_best : List Score -> Result Score [ListWasEmpty]
 personal_best = List.max
 
 personal_top_three : List Score -> List Score
-personal_top_three = \scores ->
-    scores |> List.sortDesc |> List.takeFirst 3
+personal_top_three = |scores|
+    scores |> List.sort_desc |> List.take_first(3)

@@ -4,5 +4,5 @@ AminoAcid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, T
 Protein : List AminoAcid
 
 to_protein : Str -> Result Protein _
-to_protein = \rna ->
-    crash "Please implement the 'to_protein' function"
+to_protein = |rna|
+    crash("Please implement the 'to_protein' function")

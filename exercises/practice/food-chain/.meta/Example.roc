@@ -1,38 +1,42 @@
 module [recite]
 
 recite : U64, U64 -> Str
-recite = \start_verse, end_verse ->
-    List.sublist verse_list { start: start_verse - 1, len: end_verse - (start_verse - 1) }
-    |> Str.joinWith "\n\n"
+recite = |start_verse, end_verse|
+    List.sublist(verse_list, { start: start_verse - 1, len: end_verse - (start_verse - 1) })
+    |> Str.join_with("\n\n")
 
 verse_list : List Str
 verse_list =
     initial_state = { verses: [], verse_body: "I don't know why she swallowed the fly. Perhaps she'll die.", previous_animal: "fly" }
     result =
-        List.walk animals initial_state \{ verses, verse_body, previous_animal }, animal ->
-            description = Dict.get animal_descriptions previous_animal |> Result.withDefault ""
-            new_verse_body =
-                """
-                She swallowed the $(animal.name) to catch the $(previous_animal)$(description).
-                $(verse_body)
-                """
-            verse =
-                """
-                I know an old lady who swallowed a $(animal.name).
-                $(animal.exclamation)
-                $(new_verse_body)
-                """
-            {
-                verses: List.append verses verse,
-                verse_body: new_verse_body,
-                previous_animal: animal.name,
-            }
-    List.join [[first_verse], result.verses, [last_verse]]
+        List.walk(
+            animals,
+            initial_state,
+            |{ verses, verse_body, previous_animal }, animal|
+                description = Dict.get(animal_descriptions, previous_animal) |> Result.with_default("")
+                new_verse_body =
+                    """
+                    She swallowed the ${animal.name} to catch the ${previous_animal}${description}.
+                    ${verse_body}
+                    """
+                verse =
+                    """
+                    I know an old lady who swallowed a ${animal.name}.
+                    ${animal.exclamation}
+                    ${new_verse_body}
+                    """
+                {
+                    verses: List.append(verses, verse),
+                    verse_body: new_verse_body,
+                    previous_animal: animal.name,
+                },
+        )
+    List.join([[first_verse], result.verses, [last_verse]])
 
 # I would prefer to use an if expression here, but I ran into a compiler bug doing that
 animal_descriptions : Dict Str Str
 animal_descriptions =
-    Dict.single "spider" " that wriggled and jiggled and tickled inside her"
+    Dict.single("spider", " that wriggled and jiggled and tickled inside her")
 
 animals : List { name : Str, exclamation : Str }
 animals = [

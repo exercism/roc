@@ -1,29 +1,29 @@
 module [response]
 
-isQuestion = \heyBob ->
-    Str.endsWith heyBob "?"
+is_question = |hey_bob|
+    Str.ends_with(hey_bob, "?")
 
-isYelling = \heyBob ->
-    isLower = \c ->
-        c >= 'a' && c <= 'z'
-    isUpper = \c ->
-        c >= 'A' && c <= 'Z'
-    chars = Str.toUtf8 heyBob
-    (chars |> List.any isUpper) && !(chars |> List.any isLower)
+is_yelling = |hey_bob|
+    is_lower = |c|
+        c >= 'a' and c <= 'z'
+    is_upper = |c|
+        c >= 'A' and c <= 'Z'
+    chars = Str.to_utf8(hey_bob)
+    (chars |> List.any(is_upper)) and !(chars |> List.any(is_lower))
 
 response : Str -> Str
-response = \heyBob ->
-    trimmed = Str.trim heyBob
+response = |hey_bob|
+    trimmed = Str.trim(hey_bob)
     if trimmed == "" then
         "Fine. Be that way!"
     else
-        isQ = isQuestion trimmed
-        isY = isYelling trimmed
-        if isQ && isY then
+        is_q = is_question(trimmed)
+        is_y = is_yelling(trimmed)
+        if is_q and is_y then
             "Calm down, I know what I'm doing!"
-        else if isQ then
+        else if is_q then
             "Sure."
-        else if isY then
+        else if is_y then
             "Whoa, chill out!"
         else
             "Whatever."

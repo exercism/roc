@@ -2,289 +2,289 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/circular-buffer/canonical-data.json
 # File last updated on 2025-01-04
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/bi5zubJ-_Hva9vxxPq4kNx4WHX6oFs8OP6Ad0tCYlrY.tar.br",
 }
 
 import pf.Stdout
 
-main! = \_args ->
-    Stdout.line! ""
+main! = |_args|
+    Stdout.line!("")
 
 import CircularBuffer exposing [create, read, write, overwrite, clear]
 
 # reading empty buffer should fail
-run_operations1 = \_ ->
+run_operations1 = |_|
     result =
-        create { capacity: 1 }
-        |> \buffer_before_read ->
+        create({ capacity: 1 })
+        |> |buffer_before_read|
             read_result = buffer_before_read |> read
-            expect read_result == Err BufferEmpty
+            expect read_result == Err(BufferEmpty)
             buffer_before_read
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations1 {}
-    result |> Result.isOk
+    result = run_operations1({})
+    result |> Result.is_ok
 
 # can read an item just written
-run_operations2 = \_ ->
+run_operations2 = |_|
     result =
-        create { capacity: 1 }
-        |> write? 1
+        create({ capacity: 1 })
+        |> write(1)?
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 1
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations2 {}
-    result |> Result.isOk
+    result = run_operations2({})
+    result |> Result.is_ok
 
 # each item may only be read once
-run_operations3 = \_ ->
+run_operations3 = |_|
     result =
-        create { capacity: 1 }
-        |> write? 1
+        create({ capacity: 1 })
+        |> write(1)?
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 1
             read_result.new_buffer
-        |> \buffer_before_read ->
+        |> |buffer_before_read|
             read_result = buffer_before_read |> read
-            expect read_result == Err BufferEmpty
+            expect read_result == Err(BufferEmpty)
             buffer_before_read
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations3 {}
-    result |> Result.isOk
+    result = run_operations3({})
+    result |> Result.is_ok
 
 # items are read in the order they are written
-run_operations4 = \_ ->
+run_operations4 = |_|
     result =
-        create { capacity: 2 }
-        |> write? 1
-        |> write? 2
+        create({ capacity: 2 })
+        |> write(1)?
+        |> write(2)?
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 1
             read_result.new_buffer
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 2
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations4 {}
-    result |> Result.isOk
+    result = run_operations4({})
+    result |> Result.is_ok
 
 # full buffer can't be written to
-run_operations5 = \_ ->
+run_operations5 = |_|
     result =
-        create { capacity: 1 }
-        |> write? 1
-        |> \buffer_before_write ->
-            write_result = buffer_before_write |> write 2
-            expect write_result == Err BufferFull
+        create({ capacity: 1 })
+        |> write(1)?
+        |> |buffer_before_write|
+            write_result = buffer_before_write |> write(2)
+            expect write_result == Err(BufferFull)
             buffer_before_write
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations5 {}
-    result |> Result.isOk
+    result = run_operations5({})
+    result |> Result.is_ok
 
 # a read frees up capacity for another write
-run_operations6 = \_ ->
+run_operations6 = |_|
     result =
-        create { capacity: 1 }
-        |> write? 1
+        create({ capacity: 1 })
+        |> write(1)?
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 1
             read_result.new_buffer
-        |> write? 2
+        |> write(2)?
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 2
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations6 {}
-    result |> Result.isOk
+    result = run_operations6({})
+    result |> Result.is_ok
 
 # read position is maintained even across multiple writes
-run_operations7 = \_ ->
+run_operations7 = |_|
     result =
-        create { capacity: 3 }
-        |> write? 1
-        |> write? 2
+        create({ capacity: 3 })
+        |> write(1)?
+        |> write(2)?
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 1
             read_result.new_buffer
-        |> write? 3
+        |> write(3)?
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 2
             read_result.new_buffer
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 3
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations7 {}
-    result |> Result.isOk
+    result = run_operations7({})
+    result |> Result.is_ok
 
 # items cleared out of buffer can't be read
-run_operations8 = \_ ->
+run_operations8 = |_|
     result =
-        create { capacity: 1 }
-        |> write? 1
+        create({ capacity: 1 })
+        |> write(1)?
         |> clear
-        |> \buffer_before_read ->
+        |> |buffer_before_read|
             read_result = buffer_before_read |> read
-            expect read_result == Err BufferEmpty
+            expect read_result == Err(BufferEmpty)
             buffer_before_read
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations8 {}
-    result |> Result.isOk
+    result = run_operations8({})
+    result |> Result.is_ok
 
 # clear frees up capacity for another write
-run_operations9 = \_ ->
+run_operations9 = |_|
     result =
-        create { capacity: 1 }
-        |> write? 1
+        create({ capacity: 1 })
+        |> write(1)?
         |> clear
-        |> write? 2
+        |> write(2)?
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 2
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations9 {}
-    result |> Result.isOk
+    result = run_operations9({})
+    result |> Result.is_ok
 
 # clear does nothing on empty buffer
-run_operations10 = \_ ->
+run_operations10 = |_|
     result =
-        create { capacity: 1 }
+        create({ capacity: 1 })
         |> clear
-        |> write? 1
+        |> write(1)?
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 1
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations10 {}
-    result |> Result.isOk
+    result = run_operations10({})
+    result |> Result.is_ok
 
 # overwrite acts like write on non-full buffer
-run_operations11 = \_ ->
+run_operations11 = |_|
     result =
-        create { capacity: 2 }
-        |> write? 1
-        |> overwrite 2
+        create({ capacity: 2 })
+        |> write(1)?
+        |> overwrite(2)
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 1
             read_result.new_buffer
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 2
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations11 {}
-    result |> Result.isOk
+    result = run_operations11({})
+    result |> Result.is_ok
 
 # overwrite replaces the oldest item on full buffer
-run_operations12 = \_ ->
+run_operations12 = |_|
     result =
-        create { capacity: 2 }
-        |> write? 1
-        |> write? 2
-        |> overwrite 3
+        create({ capacity: 2 })
+        |> write(1)?
+        |> write(2)?
+        |> overwrite(3)
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 2
             read_result.new_buffer
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 3
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations12 {}
-    result |> Result.isOk
+    result = run_operations12({})
+    result |> Result.is_ok
 
 # overwrite replaces the oldest item remaining in buffer following a read
-run_operations13 = \_ ->
+run_operations13 = |_|
     result =
-        create { capacity: 3 }
-        |> write? 1
-        |> write? 2
-        |> write? 3
+        create({ capacity: 3 })
+        |> write(1)?
+        |> write(2)?
+        |> write(3)?
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 1
             read_result.new_buffer
-        |> write? 4
-        |> overwrite 5
+        |> write(4)?
+        |> overwrite(5)
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 3
             read_result.new_buffer
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 4
             read_result.new_buffer
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 5
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations13 {}
-    result |> Result.isOk
+    result = run_operations13({})
+    result |> Result.is_ok
 
 # initial clear does not affect wrapping around
-run_operations14 = \_ ->
+run_operations14 = |_|
     result =
-        create { capacity: 2 }
+        create({ capacity: 2 })
         |> clear
-        |> write? 1
-        |> write? 2
-        |> overwrite 3
-        |> overwrite 4
+        |> write(1)?
+        |> write(2)?
+        |> overwrite(3)
+        |> overwrite(4)
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 3
             read_result.new_buffer
         |> read?
-        |> \read_result ->
+        |> |read_result|
             expect read_result.value == 4
             read_result.new_buffer
-        |> \buffer_before_read ->
+        |> |buffer_before_read|
             read_result = buffer_before_read |> read
-            expect read_result == Err BufferEmpty
+            expect read_result == Err(BufferEmpty)
             buffer_before_read
-    Ok result
+    Ok(result)
 
 expect
-    result = run_operations14 {}
-    result |> Result.isOk
+    result = run_operations14({})
+    result |> Result.is_ok
 

@@ -2,13 +2,13 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/connect/canonical-data.json
 # File last updated on 2025-01-04
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/bi5zubJ-_Hva9vxxPq4kNx4WHX6oFs8OP6Ad0tCYlrY.tar.br",
 }
 
 import pf.Stdout
 
-main! = \_args ->
-    Stdout.line! ""
+main! = |_args|
+    Stdout.line!("")
 
 import Connect exposing [winner]
 
@@ -23,19 +23,19 @@ expect
             . . . . .
         """
     result = board |> winner
-    result == Err NotFinished
+    result == Err(NotFinished)
 
 # X can win on a 1x1 board
 expect
     board = "X"
     result = board |> winner
-    result == Ok PlayerX
+    result == Ok(PlayerX)
 
 # O can win on a 1x1 board
 expect
     board = "O"
     result = board |> winner
-    result == Ok PlayerO
+    result == Ok(PlayerO)
 
 # only edges does not make a winner
 expect
@@ -47,7 +47,7 @@ expect
            X O O O
         """
     result = board |> winner
-    result == Err NotFinished
+    result == Err(NotFinished)
 
 # illegal diagonal does not make a winner
 expect
@@ -60,7 +60,7 @@ expect
             X X O O
         """
     result = board |> winner
-    result == Err NotFinished
+    result == Err(NotFinished)
 
 # nobody wins crossing adjacent angles
 expect
@@ -73,7 +73,7 @@ expect
             . . O .
         """
     result = board |> winner
-    result == Err NotFinished
+    result == Err(NotFinished)
 
 # X wins crossing from left to right
 expect
@@ -86,7 +86,7 @@ expect
             . O X .
         """
     result = board |> winner
-    result == Ok PlayerX
+    result == Ok(PlayerX)
 
 # O wins crossing from top to bottom
 expect
@@ -99,7 +99,7 @@ expect
             . O X .
         """
     result = board |> winner
-    result == Ok PlayerO
+    result == Ok(PlayerO)
 
 # X wins using a convoluted path
 expect
@@ -112,7 +112,7 @@ expect
             O O O O O
         """
     result = board |> winner
-    result == Ok PlayerX
+    result == Ok(PlayerX)
 
 # X wins using a spiral path
 expect
@@ -129,5 +129,5 @@ expect
                 X X X X X X X X O
         """
     result = board |> winner
-    result == Ok PlayerX
+    result == Ok(PlayerX)
 

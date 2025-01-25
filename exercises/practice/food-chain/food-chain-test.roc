@@ -2,19 +2,19 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/food-chain/canonical-data.json
 # File last updated on 2025-01-04
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/bi5zubJ-_Hva9vxxPq4kNx4WHX6oFs8OP6Ad0tCYlrY.tar.br",
 }
 
 import pf.Stdout
 
-main! = \_args ->
-    Stdout.line! ""
+main! = |_args|
+    Stdout.line!("")
 
 import FoodChain exposing [recite]
 
 # fly
 expect
-    result = recite 1 1
+    result = recite(1, 1)
     result
     ==
     """
@@ -24,7 +24,7 @@ expect
 
 # spider
 expect
-    result = recite 2 2
+    result = recite(2, 2)
     result
     ==
     """
@@ -36,7 +36,7 @@ expect
 
 # bird
 expect
-    result = recite 3 3
+    result = recite(3, 3)
     result
     ==
     """
@@ -49,7 +49,7 @@ expect
 
 # cat
 expect
-    result = recite 4 4
+    result = recite(4, 4)
     result
     ==
     """
@@ -63,7 +63,7 @@ expect
 
 # dog
 expect
-    result = recite 5 5
+    result = recite(5, 5)
     result
     ==
     """
@@ -78,7 +78,7 @@ expect
 
 # goat
 expect
-    result = recite 6 6
+    result = recite(6, 6)
     result
     ==
     """
@@ -94,7 +94,7 @@ expect
 
 # cow
 expect
-    result = recite 7 7
+    result = recite(7, 7)
     result
     ==
     """
@@ -111,7 +111,7 @@ expect
 
 # horse
 expect
-    result = recite 8 8
+    result = recite(8, 8)
     result
     ==
     """
@@ -121,7 +121,7 @@ expect
 
 # multiple verses
 expect
-    result = recite 1 3
+    result = recite(1, 3)
     result
     ==
     """
@@ -142,7 +142,7 @@ expect
 
 # full song
 expect
-    result = recite 1 8
+    result = recite(1, 8)
     result
     ==
     """

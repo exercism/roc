@@ -2,13 +2,13 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/resistor-color/canonical-data.json
 # File last updated on 2025-01-04
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/bi5zubJ-_Hva9vxxPq4kNx4WHX6oFs8OP6Ad0tCYlrY.tar.br",
 }
 
 import pf.Stdout
 
-main! = \_args ->
-    Stdout.line! ""
+main! = |_args|
+    Stdout.line!("")
 
 import ResistorColor exposing [color_code, colors]
 
@@ -18,18 +18,18 @@ import ResistorColor exposing [color_code, colors]
 
 # Black
 expect
-    result = color_code "black"
-    result == Ok 0
+    result = color_code("black")
+    result == Ok(0)
 
 # White
 expect
-    result = color_code "white"
-    result == Ok 9
+    result = color_code("white")
+    result == Ok(9)
 
 # Orange
 expect
-    result = color_code "orange"
-    result == Ok 3
+    result = color_code("orange")
+    result == Ok(3)
 
 ##
 ## Colors

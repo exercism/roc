@@ -15,16 +15,16 @@ segments = [
     "horse and the hound and the horn that belonged to",
 ]
 
-verse = \index ->
+verse = |index|
     blablabla =
         segments
-        |> List.takeFirst index
+        |> List.take_first(index)
         |> List.reverse
-        |> Str.joinWith " the "
-    "This is the $(blablabla)"
+        |> Str.join_with(" the ")
+    "This is the ${blablabla}"
 
 recite : U64, U64 -> Str
-recite = \start_verse, end_verse ->
-    List.range { start: At start_verse, end: At end_verse }
-    |> List.map verse
-    |> Str.joinWith "\n"
+recite = |start_verse, end_verse|
+    List.range({ start: At(start_verse), end: At(end_verse) })
+    |> List.map(verse)
+    |> Str.join_with("\n")

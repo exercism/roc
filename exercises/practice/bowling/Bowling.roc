@@ -8,14 +8,14 @@ Game := {
     # etc.
 }
 
-create : { previousRolls ? List U64 } -> Result Game _
-create = \{ previousRolls ? [] } ->
-    crash "Please implement the 'create' function"
+create : { previous_rolls ?? List U64 } -> Result Game _
+create = |{ previous_rolls ?? [] }|
+    crash("Please implement the 'create' function")
 
 roll : Game, U64 -> Result Game _
-roll = \game, pins ->
-    crash "Please implement the 'roll' function"
+roll = |game, pins|
+    crash("Please implement the 'roll' function")
 
 score : Game -> Result U64 _
-score = \finishedGame ->
-    crash "Please implement the 'score' function"
+score = |finished_game|
+    crash("Please implement the 'score' function")

@@ -4,5 +4,5 @@ Student : [Alice, Bob, Charlie, David, Eve, Fred, Ginny, Harriet, Ileana, Joseph
 Plant : [Grass, Clover, Radishes, Violets]
 
 plants : Str, Student -> Result (List Plant) _
-plants = \diagram, student ->
-    crash "Please implement the 'plants' function"
+plants = |diagram, student|
+    crash("Please implement the 'plants' function")

@@ -2,13 +2,13 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/kindergarten-garden/canonical-data.json
 # File last updated on 2025-01-04
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/bi5zubJ-_Hva9vxxPq4kNx4WHX6oFs8OP6Ad0tCYlrY.tar.br",
 }
 
 import pf.Stdout
 
-main! = \_args ->
-    Stdout.line! ""
+main! = |_args|
+    Stdout.line!("")
 
 import KindergartenGarden exposing [plants]
 
@@ -23,8 +23,8 @@ expect
         RC
         GG
         """
-    result = diagram |> plants Alice
-    result == Ok [Radishes, Clover, Grass, Grass]
+    result = diagram |> plants(Alice)
+    result == Ok([Radishes, Clover, Grass, Grass])
 
 # different garden with single student
 expect
@@ -33,8 +33,8 @@ expect
         VC
         RC
         """
-    result = diagram |> plants Alice
-    result == Ok [Violets, Clover, Radishes, Clover]
+    result = diagram |> plants(Alice)
+    result == Ok([Violets, Clover, Radishes, Clover])
 
 # garden with two students
 expect
@@ -43,8 +43,8 @@ expect
         VVCG
         VVRC
         """
-    result = diagram |> plants Bob
-    result == Ok [Clover, Grass, Radishes, Clover]
+    result = diagram |> plants(Bob)
+    result == Ok([Clover, Grass, Radishes, Clover])
 
 ## multiple students for the same garden with three students
 
@@ -55,8 +55,8 @@ expect
         VVCCGG
         VVCCGG
         """
-    result = diagram |> plants Bob
-    result == Ok [Clover, Clover, Clover, Clover]
+    result = diagram |> plants(Bob)
+    result == Ok([Clover, Clover, Clover, Clover])
 
 # third student's garden
 expect
@@ -65,8 +65,8 @@ expect
         VVCCGG
         VVCCGG
         """
-    result = diagram |> plants Charlie
-    result == Ok [Grass, Grass, Grass, Grass]
+    result = diagram |> plants(Charlie)
+    result == Ok([Grass, Grass, Grass, Grass])
 
 ###
 ### full garden
@@ -79,8 +79,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Alice
-    result == Ok [Violets, Radishes, Violets, Radishes]
+    result = diagram |> plants(Alice)
+    result == Ok([Violets, Radishes, Violets, Radishes])
 
 # for Bob, second student's garden
 expect
@@ -89,8 +89,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Bob
-    result == Ok [Clover, Grass, Clover, Clover]
+    result = diagram |> plants(Bob)
+    result == Ok([Clover, Grass, Clover, Clover])
 
 # for Charlie
 expect
@@ -99,8 +99,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Charlie
-    result == Ok [Violets, Violets, Clover, Grass]
+    result = diagram |> plants(Charlie)
+    result == Ok([Violets, Violets, Clover, Grass])
 
 # for David
 expect
@@ -109,8 +109,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants David
-    result == Ok [Radishes, Violets, Clover, Radishes]
+    result = diagram |> plants(David)
+    result == Ok([Radishes, Violets, Clover, Radishes])
 
 # for Eve
 expect
@@ -119,8 +119,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Eve
-    result == Ok [Clover, Grass, Radishes, Grass]
+    result = diagram |> plants(Eve)
+    result == Ok([Clover, Grass, Radishes, Grass])
 
 # for Fred
 expect
@@ -129,8 +129,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Fred
-    result == Ok [Grass, Clover, Violets, Clover]
+    result = diagram |> plants(Fred)
+    result == Ok([Grass, Clover, Violets, Clover])
 
 # for Ginny
 expect
@@ -139,8 +139,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Ginny
-    result == Ok [Clover, Grass, Grass, Clover]
+    result = diagram |> plants(Ginny)
+    result == Ok([Clover, Grass, Grass, Clover])
 
 # for Harriet
 expect
@@ -149,8 +149,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Harriet
-    result == Ok [Violets, Radishes, Radishes, Violets]
+    result = diagram |> plants(Harriet)
+    result == Ok([Violets, Radishes, Radishes, Violets])
 
 # for Ileana
 expect
@@ -159,8 +159,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Ileana
-    result == Ok [Grass, Clover, Violets, Clover]
+    result = diagram |> plants(Ileana)
+    result == Ok([Grass, Clover, Violets, Clover])
 
 # for Joseph
 expect
@@ -169,8 +169,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Joseph
-    result == Ok [Violets, Clover, Violets, Grass]
+    result = diagram |> plants(Joseph)
+    result == Ok([Violets, Clover, Violets, Grass])
 
 # for Kincaid, second to last student's garden
 expect
@@ -179,8 +179,8 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Kincaid
-    result == Ok [Grass, Clover, Clover, Grass]
+    result = diagram |> plants(Kincaid)
+    result == Ok([Grass, Clover, Clover, Grass])
 
 # for Larry, last student's garden
 expect
@@ -189,6 +189,6 @@ expect
         VRCGVVRVCGGCCGVRGCVCGCGV
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
-    result = diagram |> plants Larry
-    result == Ok [Grass, Violets, Clover, Violets]
+    result = diagram |> plants(Larry)
+    result == Ok([Grass, Violets, Clover, Violets])
 

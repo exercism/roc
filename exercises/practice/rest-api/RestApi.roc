@@ -11,10 +11,10 @@ User : {
 
 Database : { users : List User }
 
-get : Database, { url : Str, payload ? Str } -> Result Str _
-get = \database, { url, payload ? "" } ->
-    crash "Please implement the 'get' function"
+get : Database, { url : Str, payload ?? Str } -> Result Str _
+get = |database, { url, payload ?? "" }|
+    crash("Please implement the 'get' function")
 
-post : Database, { url : Str, payload ? Str } -> Result Str _
-post = \database, { url, payload ? "" } ->
-    crash "Please implement the 'post' function"
+post : Database, { url : Str, payload ?? Str } -> Result Str _
+post = |database, { url, payload ?? "" }|
+    crash("Please implement the 'post' function")

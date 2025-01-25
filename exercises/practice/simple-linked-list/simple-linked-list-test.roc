@@ -1,12 +1,12 @@
 # File last updated on 2025-1-4
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/bi5zubJ-_Hva9vxxPq4kNx4WHX6oFs8OP6Ad0tCYlrY.tar.br",
 }
 
 import pf.Stdout
 
-main! = \_args ->
-    Stdout.line! ""
+main! = |_args|
+    Stdout.line!("")
 
 import SimpleLinkedList exposing [from_list, to_list, push, pop, reverse, len]
 
@@ -30,28 +30,28 @@ expect
 
 # can push items to a linked list
 expect
-    result = [123] |> from_list |> push 456 |> push 789 |> to_list
+    result = [123] |> from_list |> push(456) |> push(789) |> to_list
     expected = [123, 456, 789]
     result == expected
 
 # can pop an item from a linked list
 expect
-    popResult = [123, 456, 789] |> from_list |> pop
-    result = popResult |> Result.try \popped -> Ok popped.value
-    expected = Ok 789
+    pop_result = [123, 456, 789] |> from_list |> pop
+    result = pop_result |> Result.try(|popped| Ok(popped.value))
+    expected = Ok(789)
     result == expected
 
 # the last element should be gone after pop
 expect
-    popResult = [123, 456, 789] |> from_list |> pop
-    result = popResult |> Result.try \popped -> Ok (popped.linked_list |> to_list)
-    expected = Ok [123, 456]
+    pop_result = [123, 456, 789] |> from_list |> pop
+    result = pop_result |> Result.try(|popped| Ok((popped.linked_list |> to_list)))
+    expected = Ok([123, 456])
     result == expected
 
 # cannot pop an empty linked list
 expect
     result = [] |> from_list |> pop
-    result |> Result.isErr
+    result |> Result.is_err
 
 # can reverse a linked list
 expect

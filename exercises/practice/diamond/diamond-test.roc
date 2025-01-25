@@ -2,37 +2,37 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/diamond/canonical-data.json
 # File last updated on 2025-01-04
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.18.0/0APbwVN1_p1mJ96tXjaoiUCr8NBGamr8G8Ac_DrXR-o.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/bi5zubJ-_Hva9vxxPq4kNx4WHX6oFs8OP6Ad0tCYlrY.tar.br",
 }
 
 import pf.Stdout
 
-main! = \_args ->
-    Stdout.line! ""
+main! = |_args|
+    Stdout.line!("")
 
 import Diamond exposing [diamond]
 
 # Degenerate case with a single 'A' row
 expect
-    result = diamond 'A'
-    expected = "A" |> Str.replaceEach "·" " "
+    result = diamond('A')
+    expected = "A" |> Str.replace_each("·", " ")
     result == expected
 
 # Degenerate case with no row containing 3 distinct groups of spaces
 expect
-    result = diamond 'B'
+    result = diamond('B')
     expected =
         """
         ·A·
         B·B
         ·A·
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # Smallest non-degenerate case with odd diamond side length
 expect
-    result = diamond 'C'
+    result = diamond('C')
     expected =
         """
         ··A··
@@ -41,12 +41,12 @@ expect
         ·B·B·
         ··A··
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # Smallest non-degenerate case with even diamond side length
 expect
-    result = diamond 'D'
+    result = diamond('D')
     expected =
         """
         ···A···
@@ -57,12 +57,12 @@ expect
         ··B·B··
         ···A···
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # Largest possible diamond
 expect
-    result = diamond 'Z'
+    result = diamond('Z')
     expected =
         """
         ·························A·························
@@ -117,6 +117,6 @@ expect
         ························B·B························
         ·························A·························
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
