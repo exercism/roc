@@ -9,7 +9,7 @@
 function download_nightly() {
     local install_dir="${1}"
     local install_file="${install_dir}/roc.tar.gz"
-    local release_url="https://github.com/roc-lang/roc/releases/download/nightly/roc_nightly-linux_x86_64-latest.tar.gz"
+    local release_url="https://github.com/roc-lang/roc/releases/download/nightly/roc_nightly-linux_x86_64-TESTING.tar.gz" # TODO change back to latest before merging
     mkdir -p "${install_dir}"
     wget -q -O ${install_file} ${release_url}
     tar -xzf "${install_file}" -C "${install_dir}" --strip-components 1
