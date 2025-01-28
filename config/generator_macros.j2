@@ -18,7 +18,7 @@
 {% macro header(imports=[], ignore=[]) -%}
 
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/bi5zubJ-_Hva9vxxPq4kNx4WHX6oFs8OP6Ad0tCYlrY.tar.br"
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br"
 {%- if imports -%}
 {%- for name in imports -%},
     {% if name == "unicode" -%}
@@ -36,7 +36,7 @@ app [main!] {
 
 import pf.Stdout
 
-main! = \_args ->
+main! = |_args|
     Stdout.line! ""
 
 {%- endmacro %}
