@@ -6,7 +6,7 @@
 function download_alpha_release() {
     local install_dir="${1}"
     local install_file="${install_dir}/roc.tar.gz"
-    local release_url="https://github.com/roc-lang/roc/releases/download/0.0.0-alpha2-rolling/roc_nightly-linux_x86_64-0-alpha2-rolling.tar.gz"
+    local release_url="https://github.com/roc-lang/roc/releases/download/0.0.0-alpha2-rolling/roc-linux_x86_64-0-alpha2-rolling.tar.gz"
     mkdir -p "${install_dir}"
     wget -q -O ${install_file} ${release_url}
     tar -xzf "${install_file}" -C "${install_dir}" --strip-components 1
