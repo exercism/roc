@@ -2,15 +2,15 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [{{ exercise | to_camel }}]
+import {{ exercise | to_pascal }} exposing [{{ exercise | to_snake }}]
 
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
 {%- if case["input"]["name"] == None %}
-    result = {{ case["property"] | to_camel }} Anonymous
+    result = {{ case["property"] | to_snake }} Anonymous
 {%- else %}
-    result = {{ case["property"] | to_camel }} (Name {{ case["input"]["name"] | to_roc }})
+    result = {{ case["property"] | to_snake }} (Name {{ case["input"]["name"] | to_roc }})
 {%- endif %}
     result == {{ case["expected"] | to_roc }}
 

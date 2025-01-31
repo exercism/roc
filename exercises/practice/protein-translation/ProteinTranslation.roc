@@ -1,8 +1,8 @@
-module [toProtein]
+module [to_protein]
 
 AminoAcid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, Tyrosine]
 Protein : List AminoAcid
 
-toProtein : Str -> Result Protein _
-toProtein = \rna ->
-    crash "Please implement the 'toProtein' function"
+to_protein : Str -> Result Protein _
+to_protein = |rna|
+    crash("Please implement the 'to_protein' function")

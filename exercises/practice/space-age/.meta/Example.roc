@@ -12,18 +12,18 @@ Planet : [
 ]
 
 age : Planet, Dec -> Dec
-age = \planet, seconds ->
-    periodInEarthYears = orbitalPeriodInEarthYears planet
-    periodInSeconds = periodInEarthYears * 365.25 * 24 * 60 * 60
-    planetYears = seconds / periodInSeconds
-    round planetYears
+age = |planet, seconds|
+    period_in_earth_years = orbital_period_in_earth_years(planet)
+    period_in_seconds = period_in_earth_years * 365.25 * 24 * 60 * 60
+    planet_years = seconds / period_in_seconds
+    round(planet_years)
 
 round : Dec -> Dec
-round = \value ->
-    pow = 10.0 |> Num.pow 2
-    value * pow |> Num.round |> Num.toFrac |> Num.div pow
+round = |value|
+    pow = 10.0 |> Num.pow(2)
+    value * pow |> Num.round |> Num.to_frac |> Num.div(pow)
 
-orbitalPeriodInEarthYears = \planet ->
+orbital_period_in_earth_years = |planet|
     when planet is
         Mercury -> 0.2408467
         Venus -> 0.61519726

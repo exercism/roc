@@ -3,8 +3,8 @@ module [plants]
 Student : [Alice, Bob, Charlie, David, Eve, Fred, Ginny, Harriet, Ileana, Joseph, Kincaid, Larry]
 Plant : [Grass, Clover, Radishes, Violets]
 
-studentIndex : Student -> U64
-studentIndex = \student ->
+student_index : Student -> U64
+student_index = |student|
     when student is
         Alice -> 0
         Bob -> 1
@@ -20,15 +20,17 @@ studentIndex = \student ->
         Larry -> 11
 
 plants : Str, Student -> Result (List Plant) _
-plants = \diagram, student ->
-    startIndex = 2 * studentIndex student
-    grid = diagram |> Str.toUtf8 |> List.splitOn '\n'
+plants = |diagram, student|
+    start_index = 2 * student_index(student)
+    grid = diagram |> Str.to_utf8 |> List.split_on('\n')
     [(0, 0), (0, 1), (1, 0), (1, 1)]
-        |> List.mapTry \(row, column) ->
-            plant = grid |> List.get? row |> List.get? (startIndex + column)
+    |> List.map_try(
+        |(row, column)|
+            plant = grid |> List.get(row)? |> List.get(start_index + column)?
             when plant is
-                'G' -> Ok Grass
-                'C' -> Ok Clover
-                'R' -> Ok Radishes
-                'V' -> Ok Violets
-                _ -> Err (UnknownPlant plant)
+                'G' -> Ok(Grass)
+                'C' -> Ok(Clover)
+                'R' -> Ok(Radishes)
+                'V' -> Ok(Violets)
+                _ -> Err(UnknownPlant(plant)),
+    )

@@ -1,42 +1,44 @@
 module [rebase]
 
-rebase : { inputBase : U64, outputBase : U64, digits : List U64 } -> Result (List U64) _
-rebase = \{ inputBase, outputBase, digits } ->
-    if inputBase <= 1 then
-        Err InputBaseMustBeGreaterThanOne
-    else if outputBase <= 1 then
-        Err OutputBaseMustBeGreaterThanOne
-    else if List.any digits \digit -> digit >= inputBase then
-        Err DigitsMustBeLessThanInputBase
+rebase : { input_base : U64, output_base : U64, digits : List U64 } -> Result (List U64) _
+rebase = |{ input_base, output_base, digits }|
+    if input_base <= 1 then
+        Err(InputBaseMustBeGreaterThanOne)
+    else if output_base <= 1 then
+        Err(OutputBaseMustBeGreaterThanOne)
+    else if List.any(digits, |digit| digit >= input_base) then
+        Err(DigitsMustBeLessThanInputBase)
     else
-        numberInBase10 =
-            List.reverse digits
-            |> List.mapWithIndex \digit, index ->
-                digit * (Num.powInt inputBase index)
+        number_in_base_10 =
+            List.reverse(digits)
+            |> List.map_with_index(
+                |digit, index|
+                    digit * (Num.pow_int(input_base, index)),
+            )
             |> List.sum
 
-        toDigits numberInBase10 outputBase |> Ok
+        to_digits(number_in_base_10, output_base) |> Ok
 
-toDigits : U64, U64 -> List U64
-toDigits = \number, base ->
-    help = \digits, remaining, exponent ->
+to_digits : U64, U64 -> List U64
+to_digits = |number, base|
+    help = |digits, remaining, exponent|
         if exponent == 0 then
-            digits |> List.append remaining
+            digits |> List.append(remaining)
         else
-            powerOfBase = Num.powInt base exponent
-            digit = remaining // powerOfBase
-            List.append digits digit
-            |> help (Num.rem remaining powerOfBase) (exponent - 1)
+            power_of_base = Num.pow_int(base, exponent)
+            digit = remaining // power_of_base
+            List.append(digits, digit)
+            |> help(Num.rem(remaining, power_of_base), (exponent - 1))
 
-    leadingExponent = intLog number base
-    help [] number leadingExponent
+    leading_exponent = int_log(number, base)
+    help([], number, leading_exponent)
 
 # Right now the builtins only have natural log so we have to implement this behaviour ourselves. https://github.com/roc-lang/roc/issues/5107
-intLog : U64, U64 -> U64
-intLog = \number, base ->
-    help = \remaining, exponent ->
+int_log : U64, U64 -> U64
+int_log = |number, base|
+    help = |remaining, exponent|
         if remaining < base then
             exponent
         else
-            help (remaining // base) (exponent + 1)
-    help number 0
+            help((remaining // base), (exponent + 1))
+    help(number, 0)

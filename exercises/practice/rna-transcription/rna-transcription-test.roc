@@ -1,42 +1,44 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rna-transcription/canonical-data.json
-# File last updated on 2024-08-27
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+# File last updated on 2025-01-04
+app [main!] {
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
 }
 
-main =
-    Task.ok {}
+import pf.Stdout
 
-import RnaTranscription exposing [toRna]
+main! = |_args|
+    Stdout.line!("")
+
+import RnaTranscription exposing [to_rna]
 
 # Empty RNA sequence
 expect
-    result = toRna ""
+    result = to_rna("")
     result == ""
 
 # RNA complement of cytosine is guanine
 expect
-    result = toRna "C"
+    result = to_rna("C")
     result == "G"
 
 # RNA complement of guanine is cytosine
 expect
-    result = toRna "G"
+    result = to_rna("G")
     result == "C"
 
 # RNA complement of thymine is adenine
 expect
-    result = toRna "T"
+    result = to_rna("T")
     result == "A"
 
 # RNA complement of adenine is uracil
 expect
-    result = toRna "A"
+    result = to_rna("A")
     result == "U"
 
 # RNA complement
 expect
-    result = toRna "ACGTGGTCTTAA"
+    result = to_rna("ACGTGGTCTTAA")
     result == "UGCACCAGAAUU"
 

@@ -14,5 +14,5 @@ Color : [
 ]
 
 value : Color, Color -> U8
-value = \first, second ->
-    crash "Please implement the 'value' function"
+value = |first, second|
+    crash("Please implement the 'value' function")

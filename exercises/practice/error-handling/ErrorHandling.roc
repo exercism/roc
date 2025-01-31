@@ -1,28 +1,30 @@
-module [getUser, parseUserId, getPage, errorMessage]
+module [get_user, parse_user_id, get_page, error_message]
 
 User : { name : Str }
 UserId : U64
 
 users : Dict UserId User
 users =
-    Dict.fromList [
-        (123, { name: "Alice" }),
-        (456, { name: "Bob" }),
-        (789, { name: "Charlie" }),
-    ]
+    Dict.from_list(
+        [
+            (123, { name: "Alice" }),
+            (456, { name: "Bob" }),
+            (789, { name: "Charlie" }),
+        ],
+    )
 
-getUser : UserId -> Result User [UserNotFound Str]
-getUser = \userId ->
-    crash "Please implement the 'getUser' function"
+get_user : UserId -> Result User [UserNotFound Str]
+get_user = |user_id|
+    crash("Please implement the 'get_user' function")
 
-parseUserId : Str -> Result UserId [InvalidUserId Str]
-parseUserId = \path ->
-    crash "Please implement the 'parseUserId' function"
+parse_user_id : Str -> Result UserId [InvalidUserId Str]
+parse_user_id = |path|
+    crash("Please implement the 'parse_user_id' function")
 
-getPage : Str -> Result Str _
-getPage = \url ->
-    crash "Please implement the 'getPage' function"
+get_page : Str -> Result Str _
+get_page = |url|
+    crash("Please implement the 'get_page' function")
 
-errorMessage : _, [English] -> Str
-errorMessage = \err, language ->
-    crash "Please implement the 'errorMessage' function"
+error_message : _, [English] -> Str
+error_message = |err, language|
+    crash("Please implement the 'error_message' function")

@@ -1,13 +1,13 @@
-module [latest, personalBest, personalTopThree]
+module [latest, personal_best, personal_top_three]
 
 Score : U64
 
 latest : List Score -> Result Score [ListWasEmpty]
 latest = List.last
 
-personalBest : List Score -> Result Score [ListWasEmpty]
-personalBest = List.max
+personal_best : List Score -> Result Score [ListWasEmpty]
+personal_best = List.max
 
-personalTopThree : List Score -> List Score
-personalTopThree = \scores ->
-    scores |> List.sortDesc |> List.takeFirst 3
+personal_top_three : List Score -> List Score
+personal_top_three = |scores|
+    scores |> List.sort_desc |> List.take_first(3)

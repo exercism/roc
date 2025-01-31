@@ -1,7 +1,7 @@
-module [twoFer]
+module [two_fer]
 
-twoFer : [Name Str, Anonymous] -> Str
-twoFer = \name ->
+two_fer : [Name Str, Anonymous] -> Str
+two_fer = |name|
     when name is
         Anonymous -> "One for you, one for me."
-        Name n -> "One for $(n), one for me."
+        Name(n) -> "One for ${n}, one for me."

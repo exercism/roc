@@ -1,39 +1,39 @@
 module [answer]
 
-evaluateExpression = \accumulator, operations ->
+evaluate_expression = |accumulator, operations|
     when operations is
-        [] -> Ok accumulator
-        ["plus", numberString, .. as rest] ->
-            evaluateExpression (accumulator + (Str.toI64? numberString)) rest
+        [] -> Ok(accumulator)
+        ["plus", number_string, .. as rest] ->
+            evaluate_expression((accumulator + Str.to_i64(number_string)?), rest)
 
-        ["minus", numberString, .. as rest] ->
-            evaluateExpression (accumulator - (Str.toI64? numberString)) rest
+        ["minus", number_string, .. as rest] ->
+            evaluate_expression(accumulator - Str.to_i64(number_string)?, rest)
 
-        ["multiplied", "by", numberString, .. as rest] ->
-            evaluateExpression (accumulator * (Str.toI64? numberString)) rest
+        ["multiplied", "by", number_string, .. as rest] ->
+            evaluate_expression(accumulator * Str.to_i64(number_string)?, rest)
 
-        ["divided", "by", numberString, .. as rest] ->
-            evaluateExpression (accumulator // (Str.toI64? numberString)) rest
+        ["divided", "by", number_string, .. as rest] ->
+            evaluate_expression(accumulator // Str.to_i64(number_string)?, rest)
 
-        ["cubed"] -> Err (OperationsArgHadAnInvalidOperation operations)
-        _ -> Err (OperationsArgHadASyntaxError operations)
+        ["cubed"] -> Err(OperationsArgHadAnInvalidOperation(operations))
+        _ -> Err(OperationsArgHadASyntaxError(operations))
 
 answer : Str -> Result I64 [QuestionArgHadAnUnknownOperation Str, QuestionArgHadASyntaxError Str]
-answer = \question ->
-    words = question |> Str.replaceEach "?" " ?" |> Str.splitOn " "
+answer = |question|
+    words = question |> Str.replace_each("?", " ?") |> Str.split_on(" ")
     when words is
-        ["What", "is", numberString, .. as operations, "?"] ->
-            maybeStartNumber = Str.toI64 numberString
-            when maybeStartNumber is
-                Ok startNumber ->
-                    when evaluateExpression startNumber operations is
-                        Err (OperationsArgHadAnInvalidOperation _) -> Err (QuestionArgHadAnUnknownOperation question)
-                        Err (OperationsArgHadASyntaxError _) -> Err (QuestionArgHadASyntaxError question)
-                        Err InvalidNumStr -> Err (QuestionArgHadASyntaxError question)
-                        Ok result -> Ok result
+        ["What", "is", number_string, .. as operations, "?"] ->
+            maybe_start_number = Str.to_i64(number_string)
+            when maybe_start_number is
+                Ok(start_number) ->
+                    when evaluate_expression(start_number, operations) is
+                        Err(OperationsArgHadAnInvalidOperation(_)) -> Err(QuestionArgHadAnUnknownOperation(question))
+                        Err(OperationsArgHadASyntaxError(_)) -> Err(QuestionArgHadASyntaxError(question))
+                        Err(InvalidNumStr) -> Err(QuestionArgHadASyntaxError(question))
+                        Ok(result) -> Ok(result)
 
-                Err InvalidNumStr -> Err (QuestionArgHadASyntaxError question)
+                Err(InvalidNumStr) -> Err(QuestionArgHadASyntaxError(question))
 
-        [_, "is", _, .., "?"] -> Err (QuestionArgHadAnUnknownOperation question)
-        [_, "are", .., "?"] -> Err (QuestionArgHadAnUnknownOperation question)
-        _ -> Err (QuestionArgHadASyntaxError question)
+        [_, "is", _, .., "?"] -> Err(QuestionArgHadAnUnknownOperation(question))
+        [_, "are", .., "?"] -> Err(QuestionArgHadAnUnknownOperation(question))
+        _ -> Err(QuestionArgHadASyntaxError(question))

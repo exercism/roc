@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [grainsOnSquare, totalGrains]
+import {{ exercise | to_pascal }} exposing [grains_on_square, total_grains]
 
 {% for case in cases %}
 ##
@@ -10,13 +10,13 @@ import {{ exercise | to_pascal }} exposing [grainsOnSquare, totalGrains]
 ##
 {% if case["property"] == "total" %}
 expect
-    result = totalGrains
+    result = total_grains
     result == {{ case["expected"] }}
 {% else %}
 {% for subcase in case["cases"] -%}
 # {{ subcase["description"] }}
 expect
-    result = grainsOnSquare {{ subcase["input"]["square"] }}
+    result = grains_on_square {{ subcase["input"]["square"] }}
 {%- if subcase["expected"]["error"] %}
     Result.isErr result
 {%- else %}

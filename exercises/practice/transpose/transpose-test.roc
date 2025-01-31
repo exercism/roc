@@ -1,26 +1,28 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/transpose/canonical-data.json
-# File last updated on 2024-09-11
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+# File last updated on 2025-01-04
+app [main!] {
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
 }
 
-main =
-    Task.ok {}
+import pf.Stdout
+
+main! = |_args|
+    Stdout.line!("")
 
 import Transpose exposing [transpose]
 
 # empty string
 expect
-    input = "" |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+    input = "" |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected = ""
     result == expected
 
 # two characters in a row
 expect
-    input = "A1" |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+    input = "A1" |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         A
@@ -35,8 +37,8 @@ expect
         A
         1
         """
-        |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected = "A1"
     result == expected
 
@@ -47,8 +49,8 @@ expect
         ABC
         123
         """
-        |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         A1
@@ -59,8 +61,8 @@ expect
 
 # single line
 expect
-    input = "Single□line." |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+    input = "Single□line." |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         S
@@ -85,8 +87,8 @@ expect
         The□fourth□line.
         The□fifth□line.
         """
-        |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         TT
@@ -115,8 +117,8 @@ expect
         The□first□line.
         The□second□line.
         """
-        |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         TT
@@ -147,8 +149,8 @@ expect
         A□longer□line.
         A□line.
         """
-        |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         TAAA
@@ -181,8 +183,8 @@ expect
         RESIN
         TREND
         """
-        |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         HEART
@@ -202,8 +204,8 @@ expect
         BLOOMING
         SEPTETTE
         """
-        |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         FOBS
@@ -228,8 +230,8 @@ expect
         EEEEE
         RRRRRR
         """
-        |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         TEASER
@@ -252,8 +254,8 @@ expect
         555555
         66666
         """
-        |> Str.replaceEach "□" " "
-    result = transpose input |> Str.replaceEach " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         123456

@@ -1,5 +1,5 @@
 module [response]
 
 response : Str -> Str
-response = \heyBob ->
-    crash "Please implement the `response` function"
+response = |hey_bob|
+    crash("Please implement the `response` function")

@@ -20,13 +20,13 @@ import {{ exercise | to_pascal }} exposing [territory, territories]
 ## comparing tags or records containing sets sometimes returns the wrong result
 ## depending on the internal order of the set data, so we have to unwrap the sets
 ## in order to compare them properly.
-compareTerritory = \maybeResult, maybeExpected ->
-    when (maybeResult, maybeExpected) is
+compareTerritory = \maybe_result, maybe_expected ->
+    when (maybe_result, maybe_expected) is
       (Ok result, Ok expected) -> result.owner == expected.owner && result.territory == expected.territory
       _ -> Bool.false
 
-compareTerritories = \maybeResult, maybeExpected ->
-    when (maybeResult, maybeExpected) is
+compareTerritories = \maybe_result, maybe_expected ->
+    when (maybe_result, maybe_expected) is
       (Ok result, Ok expected) -> result.black == expected.black && result.white == expected.white && result.none == expected.none
       _ -> Bool.false
 
@@ -34,7 +34,7 @@ compareTerritories = \maybeResult, maybeExpected ->
 # {{ case["description"] }}
 expect
     board = {{ case["input"]["board"] | to_roc_multiline_string | replace(" ", "·") | indent(8) }} |> Str.replaceEach "·" " "
-    result = board |> {{ case["property"] | to_camel }}
+    result = board |> {{ case["property"] | to_snake }}
     {%- if case["property"] == "territory" %} { x : {{ case["input"]["x"] }}, y : {{ case["input"]["y"] }} }{% endif %}
     {%- if case["expected"]["error"] %}
     result |> Result.isErr

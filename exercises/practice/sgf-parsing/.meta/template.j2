@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header(imports=["parser"]) }}
 
-import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }}]
 
 {%- macro to_node(node) %}
 GameNode {
@@ -22,7 +22,7 @@ GameNode {
 # {{ case["description"] }}
 expect
     sgf = {{ case["input"]["encoded"] | to_roc }}
-    result = {{ case["property"] | to_camel }} sgf
+    result = {{ case["property"] | to_snake }} sgf
     {%- if case["expected"]["error"] %}
     result |> Result.isErr
     {%- else %}

@@ -1,5 +1,5 @@
-module [bestHands]
+module [best_hands]
 
-bestHands : List Str -> Result (List Str) _
-bestHands = \hands ->
-    crash "Please implement the 'bestHands' function"
+best_hands : List Str -> Result (List Str) _
+best_hands = |hands|
+    crash("Please implement the 'best_hands' function")

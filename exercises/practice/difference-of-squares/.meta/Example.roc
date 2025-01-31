@@ -1,19 +1,19 @@
-module [squareOfSum, sumOfSquares, differenceOfSquares]
+module [square_of_sum, sum_of_squares, difference_of_squares]
 
 sum : U64 -> U64
-sum = \number ->
+sum = |number|
     number * (number + 1) // 2
 
-squareOfSum : U64 -> U64
-squareOfSum = \number ->
-    s = sum number
+square_of_sum : U64 -> U64
+square_of_sum = |number|
+    s = sum(number)
     s * s
 
-sumOfSquares : U64 -> U64
-sumOfSquares = \number ->
-    s = sum number
+sum_of_squares : U64 -> U64
+sum_of_squares = |number|
+    s = sum(number)
     s * (2 * number + 1) // 3
 
-differenceOfSquares : U64 -> U64
-differenceOfSquares = \number ->
-    (squareOfSum number) - (sumOfSquares number)
+difference_of_squares : U64 -> U64
+difference_of_squares = |number|
+    (square_of_sum(number)) - (sum_of_squares(number))

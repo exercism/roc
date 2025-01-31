@@ -1,5 +1,5 @@
 module [clean]
 
 clean : Str -> Result Str _
-clean = \phoneNumber ->
-    crash "Please implement the 'clean' function"
+clean = |phone_number|
+    crash("Please implement the 'clean' function")

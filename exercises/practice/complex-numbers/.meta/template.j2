@@ -4,7 +4,7 @@
 
 import {{ exercise | to_pascal }} exposing [real, imaginary, add, sub, mul, div, conjugate, abs, exp]
 
-isApproxEq = \z1, z2 ->
+is_approx_eq = \z1, z2 ->
     z1.re |> Num.isApproxEq z2.re {} && z1.im |> Num.isApproxEq z2.im {}
 
 {% for supercase in cases %}
@@ -28,7 +28,7 @@ expect
     result = {{ subcase["property"] }} z
     {%- if subcase["expected"] is iterable and subcase["expected"] is not string %}
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
     {%- else %}
     result |> Num.isApproxEq {{ subcase["expected"] | to_roc }} {}
     {%- endif %}
@@ -38,7 +38,7 @@ expect
     z2 = {{ plugins.to_complex_number(subcase["input"]["z2"]) }}
     result = z1 |> {{ subcase["property"] }} z2
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
-    result |> isApproxEq expected
+    result |> is_approx_eq expected
 {%- endif %}
 
 {% endfor %}

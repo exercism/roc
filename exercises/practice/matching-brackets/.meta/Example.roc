@@ -1,25 +1,25 @@
-module [isPaired]
+module [is_paired]
 
-isPaired : Str -> Bool
-isPaired = \string ->
-    isOpen = \c -> c == '[' || c == '(' || c == '{'
-    isClose = \c -> c == ']' || c == ')' || c == '}'
-    isMatch = \pair -> pair == ('[', ']') || pair == ('(', ')') || pair == ('{', '}')
-    help = \openBrackets, remainingChars ->
-        when remainingChars is
-            [] -> List.isEmpty openBrackets # ok or missing closing bracket
-            [nextChar, .. as restChars] ->
-                if isOpen nextChar then
-                    help (openBrackets |> List.append nextChar) restChars
-                else if isClose nextChar then
-                    when openBrackets is
+is_paired : Str -> Bool
+is_paired = |string|
+    is_open = |c| c == '[' or c == '(' or c == '{'
+    is_close = |c| c == ']' or c == ')' or c == '}'
+    is_match = |pair| pair == ('[', ']') or pair == ('(', ')') or pair == ('{', '}')
+    help = |open_brackets, remaining_chars|
+        when remaining_chars is
+            [] -> List.is_empty(open_brackets) # ok or missing closing bracket
+            [next_char, .. as rest_chars] ->
+                if is_open(next_char) then
+                    help((open_brackets |> List.append(next_char)), rest_chars)
+                else if is_close(next_char) then
+                    when open_brackets is
                         [] -> Bool.false # missing opening bracket
-                        [.. as previousOpens, lastOpen] ->
-                            if isMatch (lastOpen, nextChar) then
-                                help previousOpens restChars
+                        [.. as previous_opens, last_open] ->
+                            if is_match((last_open, next_char)) then
+                                help(previous_opens, rest_chars)
                             else
                                 Bool.false # mismatching brackets
                 else
-                    help openBrackets restChars
+                    help(open_brackets, rest_chars)
 
-    help [] (string |> Str.toUtf8)
+    help([], (string |> Str.to_utf8))

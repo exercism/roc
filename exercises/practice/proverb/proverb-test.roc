@@ -1,30 +1,32 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/proverb/canonical-data.json
-# File last updated on 2024-09-23
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.17.0/lZFLstMUCUvd5bjnnpYromZJXkQUrdhbva4xdBInicE.tar.br",
+# File last updated on 2025-01-04
+app [main!] {
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
 }
 
-main =
-    Task.ok {}
+import pf.Stdout
+
+main! = |_args|
+    Stdout.line!("")
 
 import Proverb exposing [recite]
 
 # zero pieces
 expect
-    result = recite []
+    result = recite([])
     expected = ""
     result == expected
 
 # one piece
 expect
-    result = recite ["nail"]
+    result = recite(["nail"])
     expected = "And all for the want of a nail."
     result == expected
 
 # two pieces
 expect
-    result = recite ["nail", "shoe"]
+    result = recite(["nail", "shoe"])
     expected =
         """
         For want of a nail the shoe was lost.
@@ -34,7 +36,7 @@ expect
 
 # three pieces
 expect
-    result = recite ["nail", "shoe", "horse"]
+    result = recite(["nail", "shoe", "horse"])
     expected =
         """
         For want of a nail the shoe was lost.
@@ -45,7 +47,7 @@ expect
 
 # full proverb
 expect
-    result = recite ["nail", "shoe", "horse", "rider", "message", "battle", "kingdom"]
+    result = recite(["nail", "shoe", "horse", "rider", "message", "battle", "kingdom"])
     expected =
         """
         For want of a nail the shoe was lost.
@@ -60,7 +62,7 @@ expect
 
 # four pieces modernized
 expect
-    result = recite ["pin", "gun", "soldier", "battle"]
+    result = recite(["pin", "gun", "soldier", "battle"])
     expected =
         """
         For want of a pin the gun was lost.

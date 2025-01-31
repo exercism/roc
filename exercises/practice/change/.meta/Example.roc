@@ -1,32 +1,30 @@
-module [findFewestCoins]
+module [find_fewest_coins]
 
-findFewestCoins : List U64, U64 -> Result (List U64) [NotFound]
-findFewestCoins = \coins, target ->
-    help = \sortedCoins, subTarget, maxLength ->
-        if subTarget == 0 then
-            Ok []
-        else if maxLength == 0 then
-            Err NotFound
-            else
+find_fewest_coins : List U64, U64 -> Result (List U64) [NotFound]
+find_fewest_coins = |coins, target|
+    help = |sorted_coins, sub_target, max_length|
+        if sub_target == 0 then
+            Ok([])
+        else if max_length == 0 then
+            Err(NotFound)
+        else
+            when sorted_coins is
+                [] -> Err(NotFound)
+                [largest_coin, .. as other_coins] ->
+                    if largest_coin == sub_target then
+                        Ok([largest_coin])
+                    else if largest_coin < sub_target then
+                        when help(sorted_coins, (sub_target - largest_coin), (max_length - 1)) is
+                            Ok(other_coins_with) ->
+                                coins_with = other_coins_with |> List.append(largest_coin)
+                                when help(other_coins, sub_target, (List.len(coins_with) - 1)) is
+                                    Ok(coins_without) -> Ok(coins_without)
+                                    Err(NotFound) -> Ok(coins_with)
 
-        when sortedCoins is
-            [] -> Err NotFound
-            [largestCoin, .. as otherCoins] ->
-                if largestCoin == subTarget then
-                    Ok [largestCoin]
-                else if largestCoin < subTarget then
-                    when help sortedCoins (subTarget - largestCoin) (maxLength - 1) is
-                        Ok otherCoinsWith ->
-                            coinsWith = otherCoinsWith |> List.append largestCoin
-                            when help otherCoins subTarget (List.len coinsWith - 1) is
-                                Ok coinsWithout -> Ok coinsWithout
-                                Err NotFound -> Ok coinsWith
+                            Err(NotFound) -> help(other_coins, sub_target, max_length)
+                    else
+                        help(other_coins, sub_target, max_length)
 
-                        Err NotFound -> help otherCoins subTarget maxLength
-                else
-                    help otherCoins subTarget maxLength
-
-    help? (coins |> List.sortDesc) target Num.maxU64
-        |> List.sortAsc
-        |> Ok
-
+    help((coins |> List.sort_desc), target, Num.max_u64)?
+    |> List.sort_asc
+    |> Ok

@@ -12,5 +12,5 @@ Planet : [
 ]
 
 age : Planet, Dec -> Dec
-age = \planet, seconds ->
-    crash "Please implement the 'age' function"
+age = |planet, seconds|
+    crash("Please implement the 'age' function")

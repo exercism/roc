@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [isEquilateral, isIsosceles, isScalene]
+import {{ exercise | to_pascal }} exposing [is_equilateral, is_isosceles, is_scalene]
 
 {% for supercase in cases %}
 ##
@@ -12,7 +12,7 @@ import {{ exercise | to_pascal }} exposing [isEquilateral, isIsosceles, isScalen
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
 expect
-    result = is{{ case["property"] | to_pascal }} {{ case["input"]["sides"] | to_roc_tuple }}
+    result = is_{{ case["property"] }} {{ case["input"]["sides"] | to_roc_tuple }}
     result == {{ case["expected"] | to_roc }}
 
 {% endfor %}

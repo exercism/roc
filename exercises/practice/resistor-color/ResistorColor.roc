@@ -1,9 +1,9 @@
-module [colorCode, colors]
+module [color_code, colors]
 
-colorCode : Str -> Result U64 _
-colorCode = \color ->
-    crash "Please implement the 'colorCode' function"
+color_code : Str -> Result U64 _
+color_code = |color|
+    crash("Please implement the 'color_code' function")
 
 colors : List Str
 colors =
-    crash "Please implement the 'colors' function"
+    crash("Please implement the 'colors' function")

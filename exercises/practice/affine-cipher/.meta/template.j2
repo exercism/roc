@@ -14,7 +14,7 @@ import {{ exercise | to_pascal }} exposing [encode, decode]
 expect
     phrase = {{ case["input"]["phrase"] | to_roc }}
     key = {a: {{ case["input"]["key"]["a"] }}, b: {{ case["input"]["key"]["b"] }}}
-    result = {{ case["property"] | to_camel }} phrase key
+    result = {{ case["property"] | to_snake }} phrase key
     {%- if case["expected"]["error"] %}
     result |> Result.isErr
     {%- else %}

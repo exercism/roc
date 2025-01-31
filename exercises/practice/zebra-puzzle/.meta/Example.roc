@@ -1,4 +1,4 @@
-module [ownsZebra, drinksWater]
+module [owns_zebra, drinks_water]
 
 Person : [Englishman, Spaniard, Ukrainian, Norwegian, Japanese]
 
@@ -10,67 +10,69 @@ House : {
     person : U8, # 0 = Undefined, 1 = Englishman, 2 = Spaniard, 3 = Ukrainian, 4 = Norwegian, 5 = Japanese
 }
 
-ownsZebra : Result Person [NotFound]
-ownsZebra =
-    ownerOf \house -> house.animal == 5
+owns_zebra : Result Person [NotFound]
+owns_zebra =
+    owner_of(|house| house.animal == 5)
 
-drinksWater : Result Person [NotFound]
-drinksWater =
-    ownerOf \house -> house.drink == 5
+drinks_water : Result Person [NotFound]
+drinks_water =
+    owner_of(|house| house.drink == 5)
 
-ownerOf : (House -> Bool) -> Result Person [NotFound]
-ownerOf = \condition ->
+owner_of : (House -> Bool) -> Result Person [NotFound]
+owner_of = |condition|
     when solution is
-        Ok houses ->
-            when houses |> List.findFirst? condition |> .person is
-                1 -> Ok Englishman
-                2 -> Ok Spaniard
-                3 -> Ok Ukrainian
-                4 -> Ok Norwegian
-                5 -> Ok Japanese
-                _ -> Err NotFound
+        Ok(houses) ->
+            when houses |> List.find_first(condition)? |> .person is
+                1 -> Ok(Englishman)
+                2 -> Ok(Spaniard)
+                3 -> Ok(Ukrainian)
+                4 -> Ok(Norwegian)
+                5 -> Ok(Japanese)
+                _ -> Err(NotFound)
 
-        Err NotFound -> Err NotFound
+        Err(NotFound) -> Err(NotFound)
 
 solution : Result (List House) [NotFound]
 solution =
-    numHouses = 5 # rule 1
-    findFirstSolution = \houses, house, fieldIndex ->
+    num_houses = 5 # rule 1
+    find_first_solution = |houses, house, field_index|
         [1, 2, 3, 4, 5]
-        |> List.walkUntil (Err NotFound) \state, value ->
-            updatedHouse = house |> setField fieldIndex value
-            updatedHouses = houses |> List.append updatedHouse
-            if updatedHouses |> isValid then
-                if List.len updatedHouses == numHouses && fieldIndex == 4 then
-                    Break (Ok updatedHouses)
+        |> List.walk_until(
+            Err(NotFound),
+            |state, value|
+                updated_house = house |> set_field(field_index, value)
+                updated_houses = houses |> List.append(updated_house)
+                if updated_houses |> is_valid then
+                    if List.len(updated_houses) == num_houses and field_index == 4 then
+                        Break(Ok(updated_houses))
                     else
+                        (next_houses, next_house, next_field_index) =
+                            if field_index == 4 then
+                                (updated_houses, init_house, 0)
+                            else
+                                (houses, updated_house, field_index + 1)
 
-                (nextHouses, nextHouse, nextFieldIndex) =
-                    if fieldIndex == 4 then
-                        (updatedHouses, initHouse, 0)
-                    else
-                        (houses, updatedHouse, fieldIndex + 1)
+                        when find_first_solution(next_houses, next_house, next_field_index) is
+                            Ok(found) -> Break(Ok(found))
+                            Err(NotFound) -> Continue(state)
+                else
+                    Continue(state),
+        )
+    init_house = { activity: 0, animal: 0, color: 0, drink: 0, person: 0 }
+    find_first_solution([], init_house, 0)
 
-                when findFirstSolution nextHouses nextHouse nextFieldIndex is
-                    Ok found -> Break (Ok found)
-                    Err NotFound -> Continue state
-            else
-                Continue state
-    initHouse = { activity: 0, animal: 0, color: 0, drink: 0, person: 0 }
-    findFirstSolution [] initHouse 0
-
-setField : House, U8, U8 -> House
-setField = \house, fieldIndex, value ->
-    when fieldIndex is
+set_field : House, U8, U8 -> House
+set_field = |house, field_index, value|
+    when field_index is
         0 -> { house & activity: value }
         1 -> { house & animal: value }
         2 -> { house & color: value }
         3 -> { house & drink: value }
         4 -> { house & person: value }
-        _ -> crash "fieldIndex should always be between 0 and 4"
+        _ -> crash("field_index should always be between 0 and 4")
 
-isValid : List House -> Bool
-isValid = \houses ->
+is_valid : List House -> Bool
+is_valid = |houses|
     [
         rule2,
         rule3,
@@ -88,114 +90,122 @@ isValid = \houses ->
         rule15,
         rule16,
     ]
-    |> List.all \rule -> rule houses
+    |> List.all(|rule| rule(houses))
 
-sameHouse : List House, (House -> U8, U8), (House -> U8, U8) -> Bool
-sameHouse = \houses, (field1, value1), (field2, value2) ->
+same_house : List House, (House -> U8, U8), (House -> U8, U8) -> Bool
+same_house = |houses, (field1, value1), (field2, value2)|
     houses
-    |> List.all \house ->
-        f1 = field1 house
-        f2 = field2 house
-        (f1 == 0 || f2 == 0) || (f1 == value1 && f2 == value2) || (f1 != value1 && f2 != value2)
+    |> List.all(
+        |house|
+            f1 = field1(house)
+            f2 = field2(house)
+            (f1 == 0 or f2 == 0) or (f1 == value1 and f2 == value2) or (f1 != value1 and f2 != value2),
+    )
 
 # The Englishman lives in the red house.
 rule2 : List House -> Bool
-rule2 = \houses ->
-    houses |> sameHouse (.person, 1) (.color, 1)
+rule2 = |houses|
+    houses |> same_house((.person, 1), (.color, 1))
 
 # The Spaniard owns the dog.
 rule3 : List House -> Bool
-rule3 = \houses ->
-    houses |> sameHouse (.person, 2) (.animal, 1)
+rule3 = |houses|
+    houses |> same_house((.person, 2), (.animal, 1))
 
 # The person in the green house drinks coffee.
 rule4 : List House -> Bool
-rule4 = \houses ->
-    houses |> sameHouse (.color, 2) (.drink, 1)
+rule4 = |houses|
+    houses |> same_house((.color, 2), (.drink, 1))
 
 # The Ukrainian drinks tea.
 rule5 : List House -> Bool
-rule5 = \houses ->
-    houses |> sameHouse (.person, 3) (.drink, 2)
+rule5 = |houses|
+    houses |> same_house((.person, 3), (.drink, 2))
 
 # The green house is immediately to the right of the ivory house.
 rule6 : List House -> Bool
-rule6 = \houses ->
-    greenHouse = houses |> List.findFirstIndex \house -> house.color == 2
-    ivoryHouse = houses |> List.findFirstIndex \house -> house.color == 3
-    when (greenHouse, ivoryHouse) is
-        (Ok greenIndex, Ok ivoryIndex) -> greenIndex == ivoryIndex + 1
+rule6 = |houses|
+    green_house = houses |> List.find_first_index(|house| house.color == 2)
+    ivory_house = houses |> List.find_first_index(|house| house.color == 3)
+    when (green_house, ivory_house) is
+        (Ok(green_index), Ok(ivory_index)) -> green_index == ivory_index + 1
         _ -> Bool.true
 
 # The snail owner likes to go dancing.
 rule7 : List House -> Bool
-rule7 = \houses ->
-    houses |> sameHouse (.animal, 2) (.activity, 1)
+rule7 = |houses|
+    houses |> same_house((.animal, 2), (.activity, 1))
 
 # The person in the yellow house is a painter.
 rule8 : List House -> Bool
-rule8 = \houses ->
-    houses |> sameHouse (.color, 4) (.activity, 2)
+rule8 = |houses|
+    houses |> same_house((.color, 4), (.activity, 2))
 
 # The person in the middle house drinks milk.
 rule9 : List House -> Bool
-rule9 = \houses ->
+rule9 = |houses|
     houses
-    |> List.mapWithIndex \house, index -> (house, index)
-    |> List.all \(house, index) ->
-        (house.drink == 0) || (index == 2 && house.drink == 3) || (index != 2 && house.drink != 3)
+    |> List.map_with_index(|house, index| (house, index))
+    |> List.all(
+        |(house, index)|
+            (house.drink == 0) or (index == 2 and house.drink == 3) or (index != 2 and house.drink != 3),
+    )
 
 # The Norwegian lives in the first house.
 rule10 : List House -> Bool
-rule10 = \houses ->
+rule10 = |houses|
     houses
-    |> List.mapWithIndex \house, index -> (house, index)
-    |> List.all \(house, index) ->
-        (house.person == 0) || (index == 0 && house.person == 4) || (index != 0 && house.person != 4)
+    |> List.map_with_index(|house, index| (house, index))
+    |> List.all(
+        |(house, index)|
+            (house.person == 0) or (index == 0 and house.person == 4) or (index != 0 and house.person != 4),
+    )
 
 # The person who enjoys reading lives in the house next to the person with the fox.
 rule11 : List House -> Bool
-rule11 = \houses ->
-    readerHouse = houses |> List.findFirstIndex \house -> house.activity == 3
-    foxHouse = houses |> List.findFirstIndex \house -> house.animal == 3
-    when (readerHouse, foxHouse) is
-        (Ok readerIndex, Ok foxIndex) -> (readerIndex == foxIndex + 1) || (foxIndex == readerIndex + 1)
+rule11 = |houses|
+    reader_house = houses |> List.find_first_index(|house| house.activity == 3)
+    fox_house = houses |> List.find_first_index(|house| house.animal == 3)
+    when (reader_house, fox_house) is
+        (Ok(reader_index), Ok(fox_index)) -> (reader_index == fox_index + 1) or (fox_index == reader_index + 1)
         _ -> Bool.true
 
 # The painter's house is next to the house with the horse.
 rule12 : List House -> Bool
-rule12 = \houses ->
-    painterHouse = houses |> List.findFirstIndex \house -> house.activity == 2
-    horseHouse = houses |> List.findFirstIndex \house -> house.animal == 4
-    when (painterHouse, horseHouse) is
-        (Ok painterIndex, Ok horseIndex) -> (painterIndex == horseIndex + 1) || (horseIndex == painterIndex + 1)
+rule12 = |houses|
+    painter_house = houses |> List.find_first_index(|house| house.activity == 2)
+    horse_house = houses |> List.find_first_index(|house| house.animal == 4)
+    when (painter_house, horse_house) is
+        (Ok(painter_index), Ok(horse_index)) -> (painter_index == horse_index + 1) or (horse_index == painter_index + 1)
         _ -> Bool.true
 
 # The List person -> Bool
 rule13 : List House -> Bool
-rule13 = \houses ->
-    houses |> sameHouse (.activity, 4) (.drink, 4)
+rule13 = |houses|
+    houses |> same_house((.activity, 4), (.drink, 4))
 
 # The List Japanese -> Bool
 rule14 : List House -> Bool
-rule14 = \houses ->
-    houses |> sameHouse (.person, 5) (.activity, 5)
+rule14 = |houses|
+    houses |> same_house((.person, 5), (.activity, 5))
 
 # The Norwegian lives next to the blue house.
 rule15 : List House -> Bool
-rule15 = \houses ->
-    norwegianHouse = houses |> List.findFirstIndex \house -> house.person == 4
-    blueHouse = houses |> List.findFirstIndex \house -> house.color == 5
-    when (norwegianHouse, blueHouse) is
-        (Ok norwegianIndex, Ok blueIndex) -> (norwegianIndex == blueIndex + 1) || (blueIndex == norwegianIndex + 1)
+rule15 = |houses|
+    norwegian_house = houses |> List.find_first_index(|house| house.person == 4)
+    blue_house = houses |> List.find_first_index(|house| house.color == 5)
+    when (norwegian_house, blue_house) is
+        (Ok(norwegian_index), Ok(blue_index)) -> (norwegian_index == blue_index + 1) or (blue_index == norwegian_index + 1)
         _ -> Bool.true
 
 rule16 : List House -> Bool
-rule16 = \houses ->
+rule16 = |houses|
     [.activity, .animal, .color, .drink, .person]
-    |> List.all \field ->
-        values =
-            houses
-            |> List.map field
-            |> List.keepIf \value -> value != 0
-        List.len values == Set.len (Set.fromList values)
+    |> List.all(
+        |field|
+            values =
+                houses
+                |> List.map(field)
+                |> List.keep_if(|value| value != 0)
+            List.len(values) == Set.len(Set.from_list(values)),
+    )

@@ -1,5 +1,5 @@
-module [sumOfMultiples]
+module [sum_of_multiples]
 
-sumOfMultiples : List U64, U64 -> U64
-sumOfMultiples = \factors, limit ->
-    crash "Please implement the 'sumOfMultiples' function"
+sum_of_multiples : List U64, U64 -> U64
+sum_of_multiples = |factors, limit|
+    crash("Please implement the 'sum_of_multiples' function")

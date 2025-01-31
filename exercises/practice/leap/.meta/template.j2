@@ -3,12 +3,12 @@
 
 {{ macros.header()}}
 
-import Leap exposing [isLeapYear]
+import Leap exposing [is_leap_year]
 
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    result = (isLeapYear {{ case["input"]["year"] }})
+    result = (is_leap_year {{ case["input"]["year"] }})
     result == {{ case ["expected"] | to_roc }}
 
 {% endfor %}

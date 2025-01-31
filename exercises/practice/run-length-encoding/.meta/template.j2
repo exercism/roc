@@ -17,7 +17,7 @@ expect
     result = string |> encode |> Result.try decode
     result == Ok string
 {%- else %}
-    result = string |> {{ case["property"] | to_camel }}
+    result = string |> {{ case["property"] | to_snake }}
     expected = {{ case["expected"] | to_roc }} 
     result == Ok expected
 {%- endif %}

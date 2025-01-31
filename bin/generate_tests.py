@@ -67,7 +67,6 @@ logging.basicConfig()
 logger = logging.getLogger("generator")
 logger.setLevel(logging.WARN)
 
-
 def replace_all(string: str, chars: Union[str, List[str]], rep: str) -> str:
     """
     Replace any char in chars with rep, reduce runs and strip terminal ends.
@@ -170,9 +169,9 @@ def to_roc_tuple(values: Any):
 def to_roc_record(obj: Dict[str, Any]):
     items = []
     for key, value in obj.items():
-        camel_key = to_camel(key)
+        snake_key = to_snake(key)
         roc_value = to_roc(value)
-        items.append(f"{camel_key}: {roc_value}")
+        items.append(f"{snake_key}: {roc_value}")
 
     return "{ " + ", ".join(items) + " }"
 

@@ -1,5 +1,5 @@
-module [isArmstrongNumber]
+module [is_armstrong_number]
 
-isArmstrongNumber : U64 -> Bool
-isArmstrongNumber = \number ->
-    crash "Please implement the 'isArmstrongNumber' function"
+is_armstrong_number : U64 -> Bool
+is_armstrong_number = |number|
+    crash("Please implement the 'is_armstrong_number' function")

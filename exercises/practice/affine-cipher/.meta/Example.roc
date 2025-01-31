@@ -1,72 +1,79 @@
 module [encode, decode]
 
-alphabetSize : U64
-alphabetSize = 26
+alphabet_size : U64
+alphabet_size = 26
 
-groupLength : U64
-groupLength = 5
+group_length : U64
+group_length = 5
 
-encode : Str, { a : U64, b : U64 } -> Result Str [InvalidKey, BadUtf8 _ _]
-encode = \phrase, key ->
-    alphabet = encodedAlphabet? key
+encode : Str, { a : U64, b : U64 } -> Result Str [InvalidKey, BadUtf8 _ ]
+encode = |phrase, key|
+    alphabet = encoded_alphabet(key)?
     phrase
-    |> Str.toUtf8
-    |> List.joinMap \char ->
-        if char >= '0' && char <= '9' then
-            [char]
+    |> Str.to_utf8
+    |> List.join_map(
+        |char|
+            if char >= '0' and char <= '9' then
+                [char]
             else
-
-        charLower = if char >= 'A' && char <= 'Z' then char - 'A' + 'a' else char
-        if charLower >= 'a' && charLower <= 'z' then
-            index = charLower - 'a' |> Num.toU64
-            when alphabet |> List.get index is
-                Ok encodedChar -> [encodedChar]
-                Err OutOfBounds -> crash "Unreachable: index cannot be out of bounds here"
-        else
-            []
-    |> List.chunksOf groupLength
-    |> List.intersperse [' ']
+                char_lower = if char >= 'A' and char <= 'Z' then char - 'A' + 'a' else char
+                if char_lower >= 'a' and char_lower <= 'z' then
+                    index = char_lower - 'a' |> Num.to_u64
+                    when alphabet |> List.get(index) is
+                        Ok(encoded_char) -> [encoded_char]
+                        Err(OutOfBounds) -> crash("Unreachable: index cannot be out of bounds here")
+                else
+                    [],
+    )
+    |> List.chunks_of(group_length)
+    |> List.intersperse([' '])
     |> List.join
-    |> Str.fromUtf8
+    |> Str.from_utf8
 
-encodedAlphabet : { a : U64, b : U64 } -> Result (List U8) [InvalidKey]
-encodedAlphabet = \{ a, b } ->
+encoded_alphabet : { a : U64, b : U64 } -> Result (List U8) [InvalidKey]
+encoded_alphabet = |{ a, b }|
     encoded =
-        List.range { start: At 'a', end: At 'z' }
-        |> List.map \char ->
-            num = (char - 'a') |> Num.toU64
-            index = (a * num + b) % alphabetSize
-            'a' + Num.toU8 index
-    if (encoded |> Set.fromList |> Set.len) < alphabetSize then
-        Err InvalidKey
+        List.range({ start: At('a'), end: At('z') })
+        |> List.map(
+            |char|
+                num = (char - 'a') |> Num.to_u64
+                index = (a * num + b) % alphabet_size
+                'a' + Num.to_u8(index),
+        )
+    if (encoded |> Set.from_list |> Set.len) < alphabet_size then
+        Err(InvalidKey)
     else
-        Ok encoded
+        Ok(encoded)
 
-decodedAlphabet : { a : U64, b : U64 } -> Result (List U8) [InvalidKey]
-decodedAlphabet = \key ->
-    encodedAlphabet? key
-        |> List.mapWithIndex \encoded, decodedIndex -> { encoded, decodedIndex }
-        |> List.sortWith \{ encoded: encoded1 }, { encoded: encoded2 } ->
-            Num.compare encoded1 encoded2
-        |> List.map \pair -> Num.toU8 pair.decodedIndex + 'a'
-        |> Ok
+decoded_alphabet : { a : U64, b : U64 } -> Result (List U8) [InvalidKey]
+decoded_alphabet = |key|
+    encoded_alphabet(key)?
+    |> List.map_with_index(|encoded, decoded_index| { encoded, decoded_index })
+    |> List.sort_with(
+        |{ encoded: encoded1 }, { encoded: encoded2 }|
+            Num.compare(encoded1, encoded2),
+    )
+    |> List.map(|pair| Num.to_u8(pair.decoded_index) + 'a')
+    |> Ok
 
-decode : Str, { a : U64, b : U64 } -> Result Str [InvalidKey, BadUtf8 _ _, InvalidCharacter]
-decode = \phrase, key ->
-    alphabet = decodedAlphabet? key
+decode : Str, { a : U64, b : U64 } -> Result Str [InvalidKey, BadUtf8 _, InvalidCharacter]
+decode = |phrase, key|
+    alphabet = decoded_alphabet(key)?
     phrase
-        |> Str.toUtf8
-        |> List.mapTry? \char ->
+    |> Str.to_utf8
+    |> List.map_try(
+        |char|
             if char == ' ' then
-                Ok []
-            else if char >= '0' && char <= '9' then
-                Ok [char]
-            else if char >= 'a' && char <= 'z' then
-                index = char - 'a' |> Num.toU64
-                when alphabet |> List.get index is
-                    Ok decodedChar -> Ok [decodedChar]
-                    Err OutOfBounds -> crash "Unreachable: index cannot be out of bounds here"
+                Ok([])
+            else if char >= '0' and char <= '9' then
+                Ok([char])
+            else if char >= 'a' and char <= 'z' then
+                index = char - 'a' |> Num.to_u64
+                when alphabet |> List.get(index) is
+                    Ok(decoded_char) -> Ok([decoded_char])
+                    Err(OutOfBounds) -> crash("Unreachable: index cannot be out of bounds here")
             else
-                Err InvalidCharacter
-        |> List.join
-        |> Str.fromUtf8
+                Err(InvalidCharacter),
+    )?
+    |> List.join
+    |> Str.from_utf8

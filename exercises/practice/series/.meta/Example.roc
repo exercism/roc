@@ -1,18 +1,20 @@
 module [slices]
 
 slices : Str, U64 -> List Str
-slices = \string, sliceLength ->
-    chars = string |> Str.toUtf8
+slices = |string, slice_length|
+    chars = string |> Str.to_utf8
     len = chars |> List.len
-    if len == 0 || sliceLength == 0 || sliceLength > len then
+    if len == 0 or slice_length == 0 or slice_length > len then
         []
     else
-        maybeList =
-            List.range { start: At 0, end: At (len - sliceLength) }
-            |> List.mapTry \startIndex ->
-                chars
-                |> List.sublist { start: startIndex, len: sliceLength }
-                |> Str.fromUtf8
-        when maybeList is
-            Ok list -> list
-            Err (BadUtf8 _ _) -> crash "Only ASCII strings are supported"
+        maybe_list =
+            List.range({ start: At(0), end: At((len - slice_length)) })
+            |> List.map_try(
+                |start_index|
+                    chars
+                    |> List.sublist({ start: start_index, len: slice_length })
+                    |> Str.from_utf8,
+            )
+        when maybe_list is
+            Ok(list) -> list
+            Err(BadUtf8(_)) -> crash("Only ASCII strings are supported")

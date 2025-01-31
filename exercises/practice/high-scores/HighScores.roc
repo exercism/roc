@@ -1,15 +1,15 @@
-module [latest, personalBest, personalTopThree]
+module [latest, personal_best, personal_top_three]
 
 Score : U64
 
 latest : List Score -> Result Score _
-latest = \scores ->
-    crash "Please implement the 'latest' function"
+latest = |scores|
+    crash("Please implement the 'latest' function")
 
-personalBest : List Score -> Result Score _
-personalBest = \scores ->
-    crash "Please implement the 'personalBest' function"
+personal_best : List Score -> Result Score _
+personal_best = |scores|
+    crash("Please implement the 'personal_best' function")
 
-personalTopThree : List Score -> List Score
-personalTopThree = \scores ->
-    crash "Please implement the 'personalTopThree' function"
+personal_top_three : List Score -> List Score
+personal_top_three = |scores|
+    crash("Please implement the 'personal_top_three' function")

@@ -12,9 +12,9 @@ GraphemeErrors : [
 ]
 
 truncate : Str -> Result Str GraphemeErrors
-truncate = \input ->
+truncate = |input|
     input
-        |> Grapheme.split?
-        |> List.takeFirst 5
-        |> Str.joinWith ""
-        |> Ok
+    |> Grapheme.split?
+    |> List.take_first(5)
+    |> Str.join_with("")
+    |> Ok

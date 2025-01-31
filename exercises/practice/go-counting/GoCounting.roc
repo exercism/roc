@@ -16,9 +16,9 @@ Territories : {
 }
 
 territory : Str, Intersection -> Result Territory _
-territory = \boardStr, { x, y } ->
-    crash "Please implement the 'territory' function"
+territory = |board_str, { x, y }|
+    crash("Please implement the 'territory' function")
 
 territories : Str -> Result Territories _
-territories = \boardStr ->
-    crash "Please implement the 'territories' function"
+territories = |board_str|
+    crash("Please implement the 'territories' function")
