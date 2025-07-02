@@ -14,16 +14,16 @@ import FlowerField exposing [annotate]
 
 # no rows
 expect
-    garden = "" |> Str.replaceEach "·" " "
+    garden = "" |> Str.replace_each "·" " "
     result = annotate garden
-    expected = "" |> Str.replaceEach "·" " "
+    expected = "" |> Str.replace_each "·" " "
     result == expected
 
 # no columns
 expect
-    garden = "" |> Str.replaceEach "·" " "
+    garden = "" |> Str.replace_each "·" " "
     result = annotate garden
-    expected = "" |> Str.replaceEach "·" " "
+    expected = "" |> Str.replace_each "·" " "
     result == expected
 
 # no flowers
@@ -34,7 +34,7 @@ expect
         ···
         ···
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result = annotate garden
     expected =
         """
@@ -42,7 +42,7 @@ expect
         ···
         ···
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result == expected
 
 # garden full of flowers
@@ -53,7 +53,7 @@ expect
         ***
         ***
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result = annotate garden
     expected =
         """
@@ -61,7 +61,7 @@ expect
         ***
         ***
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result == expected
 
 # flower surrounded by spaces
@@ -72,7 +72,7 @@ expect
         ·*·
         ···
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result = annotate garden
     expected =
         """
@@ -80,7 +80,7 @@ expect
         1*1
         111
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result == expected
 
 # space surrounded by flowers
@@ -91,7 +91,7 @@ expect
         *·*
         ***
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result = annotate garden
     expected =
         """
@@ -99,21 +99,21 @@ expect
         *8*
         ***
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result == expected
 
 # horizontal line
 expect
-    garden = "·*·*·" |> Str.replaceEach "·" " "
+    garden = "·*·*·" |> Str.replace_each "·" " "
     result = annotate garden
-    expected = "1*2*1" |> Str.replaceEach "·" " "
+    expected = "1*2*1" |> Str.replace_each "·" " "
     result == expected
 
 # horizontal line, flowers at edges
 expect
-    garden = "*···*" |> Str.replaceEach "·" " "
+    garden = "*···*" |> Str.replace_each "·" " "
     result = annotate garden
-    expected = "*1·1*" |> Str.replaceEach "·" " "
+    expected = "*1·1*" |> Str.replace_each "·" " "
     result == expected
 
 # vertical line
@@ -126,7 +126,7 @@ expect
         *
         ·
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result = annotate garden
     expected =
         """
@@ -136,7 +136,7 @@ expect
         *
         1
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result == expected
 
 # vertical line, flowers at edges
@@ -149,7 +149,7 @@ expect
         ·
         *
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result = annotate garden
     expected =
         """
@@ -159,7 +159,7 @@ expect
         1
         *
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result == expected
 
 # cross
@@ -172,7 +172,7 @@ expect
         ··*··
         ··*··
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result = annotate garden
     expected =
         """
@@ -182,7 +182,7 @@ expect
         25*52
         ·2*2·
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result == expected
 
 # large garden
@@ -196,7 +196,7 @@ expect
         ·*··*·
         ······
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result = annotate garden
     expected =
         """
@@ -207,6 +207,6 @@ expect
         1*22*2
         111111
         """
-        |> Str.replaceEach "·" " "
+        |> Str.replace_each "·" " "
     result == expected
 

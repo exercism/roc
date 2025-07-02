@@ -7,9 +7,9 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    garden = {{ case["input"]["garden"] | to_roc_multiline_string | replace(" ", "·") | indent(8) }} |> Str.replaceEach "·" " "
+    garden = {{ case["input"]["garden"] | to_roc_multiline_string | replace(" ", "·") | indent(8) }} |> Str.replace_each "·" " "
     result = {{ case["property"] | to_snake }} garden
-    expected = {{ case["expected"] | to_roc_multiline_string | replace(" ", "·") | indent(8) }}  |> Str.replaceEach "·" " "
+    expected = {{ case["expected"] | to_roc_multiline_string | replace(" ", "·") | indent(8) }}  |> Str.replace_each "·" " "
     result == expected
 
 {% endfor %}
