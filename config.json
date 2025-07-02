@@ -740,6 +740,14 @@
         "difficulty": 6
       },
       {
+        "slug": "flower-field",
+        "name": "Flower Field",
+        "uuid": "3d515ca6-aa26-4e4f-a92d-8381ef6d3809",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "go-counting",
         "name": "Go Counting",
         "uuid": "8c81bf5c-5188-4e1b-9814-1f0f0fcdeec2",
@@ -777,7 +785,8 @@
         "uuid": "8d5ea690-9d52-4d0a-a59e-aeec1a03cac7",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 6
+        "difficulty": 6,
+        "status": "deprecated"
       },
       {
         "slug": "palindrome-products",
