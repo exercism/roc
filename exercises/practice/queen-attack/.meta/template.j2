@@ -27,7 +27,7 @@ expect
     {%- else %}
 expect
     result = create "{{ plugins.to_square(case["input"]["queen"]) }}"
-    result |> Result.isErr
+    result |> Result.is_err
     {%- endif %}
 {%- elif case["property"] == "canAttack" %}
 expect

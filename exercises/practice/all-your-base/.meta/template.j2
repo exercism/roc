@@ -9,7 +9,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 expect
     result = {{ case["property"] | to_snake }} { input_base: {{ case["input"]["inputBase"] | to_roc }}, output_base: {{ case["input"]["outputBase"] | to_roc }}, digits: {{ case["input"]["digits"] | to_roc }} }
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     result == Ok {{ case["expected"] }}
     {%- endif %}

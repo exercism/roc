@@ -20,19 +20,19 @@ expect
 {% endfor %}
 
 reverse : Str -> Str
-reverse = \str ->
-    Str.toUtf8 str
+reverse = |str|
+    Str.to_utf8 str
     |> List.reverse
-    |> Str.fromUtf8
-    |> Result.withDefault ""
+    |> Str.from_utf8
+    |> Result.with_default ""
 
 to_upper : Str -> Str
-to_upper = \str ->
-    Str.toUtf8 str
-    |> List.map \byte ->
+to_upper = |str|
+    Str.to_utf8 str
+    |> List.map |byte|
         if 'a' <= byte && byte <= 'z' then
             byte - 'a' + 'A'
         else
             byte
-    |> Str.fromUtf8
-    |> Result.withDefault ""
+    |> Str.from_utf8
+    |> Result.with_default ""

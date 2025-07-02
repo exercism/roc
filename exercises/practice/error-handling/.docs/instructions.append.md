@@ -13,7 +13,7 @@ When things go wrong, it's important to give the end user a nice and helpful err
 Luckily, Roc allows you to carry payload (i.e., data) inside your `Err` tag. It's tempting to carry an error message directly (e.g., `Err "User #42 was not found"`), and this may be fine in some simple cases, but this has several limitations:
 
 - you might not have enough context inside the function that detects the error to produce a sufficiently helpful error message.
-  - For example, the `Str.toU64` function can be used to parse all sorts of integers: days, seconds, user IDs, and more. If the error message just says `Could not convert string "0.5" to a positive integer`, the user may not have enough context to solve the issue.
+  - For example, the `Str.to_u64` function can be used to parse all sorts of integers: days, seconds, user IDs, and more. If the error message just says `Could not convert string "0.5" to a positive integer`, the user may not have enough context to solve the issue.
 - in many cases your error handling code may need to handle some errors differently than others. However, if the errors only carry string payloads, your error handling code will have to parse that string to know what problem occurred: this is inefficient and it can easily break if the error message is ever tweaked.
 - if your website is multilingual, you will need to translate the error message to the user's language. It's going to be much easier to do that if the error payload is machine-friendly data rather than an English string.
 

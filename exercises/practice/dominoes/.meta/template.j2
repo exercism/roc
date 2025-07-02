@@ -16,24 +16,24 @@ Domino : (U8, U8)
 
 ## Rotate each domino if needed to ensure that the small side is on the left
 canonicalize : List Domino -> List Domino
-canonicalize = \dominoes ->
+canonicalize = |dominoes|
     dominoes
-    |> List.map \domino ->
+    |> List.map |domino|
         if domino.0 > domino.1 then (domino.1, domino.0) else domino
 
 ## Ensure that the given result is Ok and is a valid chain for the
 ## given list of dominoes
 is_valid_chain_for : Result (List Domino) _, List Domino -> Bool
-is_valid_chain_for = \maybeChain, dominoes ->
+is_valid_chain_for = |maybeChain, dominoes|
     when maybeChain is
         Err _ -> Bool.false
         Ok chain ->
-            if Set.fromList (canonicalize chain) == Set.fromList (canonicalize dominoes) then
+            if Set.from_list (canonicalize chain) == Set.from_list (canonicalize dominoes) then
                 when chain is
                     [] -> Bool.true
                     [.., last] ->
                         chain
-                        |> List.walkUntil (Ok last) \state, domino ->
+                        |> List.walk_until (Ok last) \state, domino ->
                             when state is
                                 Err InvalidChain -> crash "Unreachable"
                                 Ok previous ->
@@ -41,7 +41,7 @@ is_valid_chain_for = \maybeChain, dominoes ->
                                         Continue (Ok domino)
                                     else
                                         Break (Err InvalidChain)
-                        |> Result.isOk
+                        |> Result.is_ok
             else
                 Bool.false
 
@@ -52,7 +52,7 @@ expect
     {%- if case["expected"] %}
     result |> is_valid_chain_for {{ to_list_of_pairs(case["input"]["dominoes"]) }}
     {%- else %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- endif %}
 
 {% endfor %}

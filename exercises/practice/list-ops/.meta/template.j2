@@ -9,7 +9,7 @@ import {{ exercise | to_pascal }} exposing [append, concat, filter, length, map,
     "(acc, el) -> el / acc": "\\acc, el -> el / acc",
     "(acc, el) -> el + acc": "\\acc, el -> el + acc",
     "(x) -> x + 1": "\\x -> x + 1",
-    "(x) -> x modulo 2 == 1": "Num.isOdd",
+    "(x) -> x modulo 2 == 1": "Num.is_odd",
 } -%}
 
 {% for supercase in cases %}

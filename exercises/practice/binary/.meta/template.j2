@@ -11,7 +11,7 @@ expect
     {%- if case["expected"] is not none %}
     result == Ok {{ case["expected"] | to_roc }}
     {%- else %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- endif %}
 
 {% endfor %}

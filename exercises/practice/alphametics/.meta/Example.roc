@@ -6,7 +6,7 @@ solve = |problem|
 
     # We can represent the equation as a dictionary of the letters mapped to their coefficients
     # when we simplify the equation. For example, we can write AB + A + B == C as 11A + 2B + (-1)C == 0.
-    # That then becomes this dictionary: `Dict.fromList [('A', 11), ('B', 2), ('C', -1)]
+    # That then becomes this dictionary: `Dict.from_list [('A', 11), ('B', 2), ('C', -1)]
     equation =
         List.walk(
             addends,

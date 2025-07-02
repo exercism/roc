@@ -1,7 +1,8 @@
-app [main] { pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br" }
+app [main!] { pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br" }
+
 import pf.Stdout
 
-factorial = \number ->
+factorial = |number|
     when number is
         1 -> 1
         n -> n * factorial (n - 1)
@@ -9,5 +10,5 @@ factorial = \number ->
 expect factorial 5 == 1 * 2 * 3 * 4 * 5
 
 main! = |_args|
-    result = factorial 20 |> Num.toStr
+    result = factorial 20 |> Num.to_str
     Stdout.line! "factorial 20 = ${result}"

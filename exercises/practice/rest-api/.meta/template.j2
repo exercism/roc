@@ -4,14 +4,14 @@
 
 import {{ exercise | to_pascal }} exposing [get, post]
 
-standardizeResult = \result ->
-    result |> Result.try \string ->
+standardizeResult = |result|
+    result |> Result.try |string|
         string
-        |> Str.replaceEach ".0," ","
-        |> Str.replaceEach ".0}" "}"
-        |> Str.toUtf8
-        |> List.dropIf \c -> [' ', '\t', '\n'] |> List.contains c
-        |> Str.fromUtf8
+        |> Str.replace_each ".0," ","
+        |> Str.replace_each ".0}" "}"
+        |> Str.to_utf8
+        |> List.drop_if |c| [' ', '\t', '\n'] |> List.contains c
+        |> Str.from_utf8
 
 {% for supercase in cases %}
 ##
@@ -26,12 +26,12 @@ expect
             {%- for user in case["input"]["database"]["users"] %}
             {
                 name: {{ user["name"] | to_roc }},
-                owes: Dict.fromList [
+                owes: Dict.from_list [
                     {%- for (name, amount) in user["owes"].items() %}
                     ({{ name | to_roc }}, {{ amount }}),
                     {%- endfor -%}
                 ],
-                owed_by: Dict.fromList [
+                owed_by: Dict.from_list [
                     {%- for (name, amount) in user["owed_by"].items() %}
                     ({{ name | to_roc }}, {{ amount }}),
                     {%- endfor -%}

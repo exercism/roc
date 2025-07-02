@@ -6,7 +6,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 
 {%- macro to_node(node) %}
 GameNode {
-  properties: Dict.fromList [
+  properties: Dict.from_list [
       {%- for name, values in node["properties"].items() %}
       ({{ name | to_roc }}, {{ values | to_roc }}),
       {%- endfor %}],
@@ -24,7 +24,7 @@ expect
     sgf = {{ case["input"]["encoded"] | to_roc }}
     result = {{ case["property"] | to_snake }} sgf
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     expected = {{ to_node(case["expected"]) | indent(4) }}
     result == Ok expected
