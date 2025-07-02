@@ -63,7 +63,7 @@ expect
 # {{ case["description"] }}
 expect
     set = from_list {{ case["input"]["set"] | to_roc }}
-    result = set |> to_list |> List.sortAsc
+    result = set |> to_list |> List.sort_asc
     expected = {{ case["expected"] | to_roc }}
     result == expected
 

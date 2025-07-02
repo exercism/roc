@@ -14,7 +14,7 @@ expect
         start_bucket: {{ case["input"]["startBucket"] | to_pascal }},
     }
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     expected = Ok {
         moves: {{ case["expected"]["moves"] }},

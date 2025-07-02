@@ -22,7 +22,7 @@ expect
     bytes = {{ case["input"]["integers"] | to_roc }} 
     result = decode bytes
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     expected = Ok {{ case["expected"] | to_roc }} 
     result == expected

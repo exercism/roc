@@ -10,7 +10,7 @@ expect
     coins = {{ case["input"]["coins"] | to_roc }}
     result = coins |> {{ case["property"] | to_snake }} {{ case["input"]["target"] }}
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     result == Ok {{ case["expected"] | to_roc }}
     {%- endif %}

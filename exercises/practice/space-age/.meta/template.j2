@@ -8,6 +8,6 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 # {{ case["description"] }}
 expect
     result = {{ case["property"] | to_snake }} {{ case["input"]["planet"] | to_pascal }} {{ case["input"]["seconds"] }}
-    Num.isApproxEq result {{ case["expected"] }} { atol: 0.01 }
+    Num.is_approx_eq result {{ case["expected"] }} { atol: 0.01 }
 
 {% endfor %}

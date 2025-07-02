@@ -6,7 +6,7 @@
 {%- if territory == [] %}
 Set.empty {}
 {%- else %}
-Set.fromList [
+Set.from_list [
 {%- for intersection in territory %}
     { x : {{ intersection[0] }}, y : {{ intersection[1] }} },
 {%- endfor %}
@@ -20,12 +20,12 @@ import {{ exercise | to_pascal }} exposing [territory, territories]
 ## comparing tags or records containing sets sometimes returns the wrong result
 ## depending on the internal order of the set data, so we have to unwrap the sets
 ## in order to compare them properly.
-compareTerritory = \maybe_result, maybe_expected ->
+compareTerritory = |maybe_result, maybe_expected|
     when (maybe_result, maybe_expected) is
       (Ok result, Ok expected) -> result.owner == expected.owner && result.territory == expected.territory
       _ -> Bool.false
 
-compareTerritories = \maybe_result, maybe_expected ->
+compareTerritories = |maybe_result, maybe_expected|
     when (maybe_result, maybe_expected) is
       (Ok result, Ok expected) -> result.black == expected.black && result.white == expected.white && result.none == expected.none
       _ -> Bool.false
@@ -33,11 +33,11 @@ compareTerritories = \maybe_result, maybe_expected ->
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    board = {{ case["input"]["board"] | to_roc_multiline_string | replace(" ", "·") | indent(8) }} |> Str.replaceEach "·" " "
+    board = {{ case["input"]["board"] | to_roc_multiline_string | replace(" ", "·") | indent(8) }} |> Str.replace_each "·" " "
     result = board |> {{ case["property"] | to_snake }}
     {%- if case["property"] == "territory" %} { x : {{ case["input"]["x"] }}, y : {{ case["input"]["y"] }} }{% endif %}
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- elif case["expected"]["owner"] %}
     expected = Ok {
         owner: {{ case["expected"]["owner"] | to_pascal }},

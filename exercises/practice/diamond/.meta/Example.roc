@@ -11,7 +11,7 @@ unwrap_from_utf8 : List U8 -> Str
 unwrap_from_utf8 = |chars|
     when chars |> Str.from_utf8 is
         Ok(result) -> result
-        Err(_) -> crash("Str.fromUtf8 should never fail here")
+        Err(_) -> crash("Str.from_utf8 should never fail here")
 
 diamond : U8 -> Str
 diamond = |letter|

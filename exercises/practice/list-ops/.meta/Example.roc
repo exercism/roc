@@ -17,7 +17,7 @@ concat = |lists|
 
 filter : List a, (a -> Bool) -> List a
 filter = |list, function|
-    # Cheating: list |> List.keepIf function
+    # Cheating: list |> List.keep_if function
     loop = |l, acc|
         when l is
             [] -> acc
@@ -56,7 +56,7 @@ foldl = |list, initial, function|
 
 foldr : List a, b, (b, a -> b) -> b
 foldr = |list, initial, function|
-    # Cheating: list |> List.walkBackwards initial function
+    # Cheating: list |> List.walk_backwards initial function
     when list is
         [] -> initial
         [.. as rest, last] -> rest |> foldr(function(initial, last), function)

@@ -16,7 +16,7 @@ expect
     key = {a: {{ case["input"]["key"]["a"] }}, b: {{ case["input"]["key"]["b"] }}}
     result = {{ case["property"] | to_snake }} phrase key
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     expected = Ok {{ case["expected"] | to_roc }} 
     result == expected

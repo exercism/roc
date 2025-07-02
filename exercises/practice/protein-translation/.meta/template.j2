@@ -10,7 +10,7 @@ expect
     rna = {{ case["input"]["strand"] | to_roc }}
     result = rna |> to_protein
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     result == Ok [{%- for aminoAcid in case["expected"] -%}{{ aminoAcid | to_pascal }}, {%- endfor %}]
     {%- endif %}

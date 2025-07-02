@@ -90,7 +90,7 @@ END_TEST
 cat << END_STUB > "exercises/practice/${slug}/${slug_pascal}.roc"
 module [${slug_camel}]
 
-${slug_camel} = \myArg ->
+${slug_camel} = |my_arg|
     crash "Please implement the '${slug_camel}' function"
 END_STUB
 

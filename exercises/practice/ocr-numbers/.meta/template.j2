@@ -10,7 +10,7 @@ expect
     grid = {{ case["input"]["rows"] | to_roc_multiline_string | indent(8) }}
     result = {{ case["property"] | to_snake }} grid
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     expected = Ok {{ case["expected"] | to_roc }}
     result == expected

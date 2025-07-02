@@ -10,7 +10,7 @@ expect
     digits = {{ case["input"]["digits"] | to_roc }}
     result = digits |> {{ case["property"] | to_snake }} {{ case["input"]["span"] | to_roc }}
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     expected = Ok {{ case["expected"] | to_roc }}
     result == expected

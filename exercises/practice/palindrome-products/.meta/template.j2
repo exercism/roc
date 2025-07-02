@@ -4,7 +4,7 @@
 
 import {{ exercise | to_pascal }} exposing [smallest, largest]
 
-isEq = \result, expected ->
+isEq = |result, expected|
     when (result, expected) is
         (Ok {value, factors}, Ok {value: expectedValue, factors: expectedFactors}) ->
             value == expectedValue && factors == expectedFactors
@@ -15,11 +15,11 @@ isEq = \result, expected ->
 expect
     result = {{ case["property"] | to_snake }} {{ case["input"] | to_roc }}
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     expected = Ok {
         value: {% if case["expected"]["value"] is none %}0{% else %}{{ case["expected"]["value"] }}{% endif %},
-        factors: Set.fromList [
+        factors: Set.from_list [
             {%- for pair in case["expected"]["factors"] %}
             ({{ pair[0] }}, {{ pair[1] }}),{% endfor %}
         ]

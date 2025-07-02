@@ -5,10 +5,10 @@
 import {{ exercise | to_pascal }} exposing [Game, create, roll, score]
 
 replay_game : List U64 -> Result Game _
-replay_game = \rolls ->
+replay_game = |rolls|
     new_game = create? {}
     rolls
-    |> List.walkUntil (Ok new_game) \state, pins ->
+    |> List.walk_until (Ok new_game) \state, pins ->
         when state is
             Ok game ->
                 when game |> roll pins is
@@ -29,7 +29,7 @@ expect
         game |> {{ case["property"] | to_snake }} {{ case["input"]["roll"] }}
     {%- endif %}
     {%- if case["expected"]["error"] %}
-    result |> Result.isErr
+    result |> Result.is_err
     {%- else %}
     result == Ok {{ case["expected"] | to_roc }}
     {%- endif %}
@@ -39,7 +39,7 @@ expect
 expect
     rolls = {{ case["input"]["previousRolls"] | to_roc }}
     result = replay_game rolls
-    result |> Result.isOk
+    result |> Result.is_ok
 
     {%- endif %}
 
