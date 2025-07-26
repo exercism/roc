@@ -21,7 +21,7 @@ expect
         |_|
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("0")
     result == expected
 
@@ -34,7 +34,7 @@ expect
           |
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("1")
     result == expected
 
@@ -47,7 +47,7 @@ expect
           |
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("?")
     result == expected
 
@@ -59,7 +59,7 @@ expect
         | |
            
         """
-    result = convert grid
+    result = convert(grid)
     result |> Result.is_err
 
 # Input with a number of columns that is not a multiple of three raises an error
@@ -71,7 +71,7 @@ expect
            |
             
         """
-    result = convert grid
+    result = convert(grid)
     result |> Result.is_err
 
 # Recognizes 110101100
@@ -83,7 +83,7 @@ expect
           |  ||_|  ||_|  |  ||_||_|
                                    
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("110101100")
     result == expected
 
@@ -96,7 +96,7 @@ expect
           |  | _|  ||_|  |  ||_||_|
                                    
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("11?10?1?0")
     result == expected
 
@@ -109,7 +109,7 @@ expect
         |_ 
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("2")
     result == expected
 
@@ -122,7 +122,7 @@ expect
          _|
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("3")
     result == expected
 
@@ -135,7 +135,7 @@ expect
           |
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("4")
     result == expected
 
@@ -148,7 +148,7 @@ expect
          _|
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("5")
     result == expected
 
@@ -161,7 +161,7 @@ expect
         |_|
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("6")
     result == expected
 
@@ -174,7 +174,7 @@ expect
           |
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("7")
     result == expected
 
@@ -187,7 +187,7 @@ expect
         |_|
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("8")
     result == expected
 
@@ -200,7 +200,7 @@ expect
          _|
            
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("9")
     result == expected
 
@@ -213,7 +213,7 @@ expect
           ||_  _|  | _||_|  ||_| _||_|
                                       
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("1234567890")
     result == expected
 
@@ -234,7 +234,7 @@ expect
           ||_| _|
                  
         """
-    result = convert grid
+    result = convert(grid)
     expected = Ok("123,456,789")
     result == expected
 

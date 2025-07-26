@@ -16,12 +16,12 @@ import GoCounting exposing [territory, territories]
 ## comparing tags or records containing sets sometimes returns the wrong result
 ## depending on the internal order of the set data, so we have to unwrap the sets
 ## in order to compare them properly.
-compareTerritory = |maybe_result, maybe_expected|
+compare_territory = |maybe_result, maybe_expected|
     when (maybe_result, maybe_expected) is
         (Ok(result), Ok(expected)) -> result.owner == expected.owner and result.territory == expected.territory
         _ -> Bool.false
 
-compareTerritories = |maybe_result, maybe_expected|
+compare_territories = |maybe_result, maybe_expected|
     when (maybe_result, maybe_expected) is
         (Ok(result), Ok(expected)) -> result.black == expected.black and result.white == expected.white and result.none == expected.none
         _ -> Bool.false
@@ -36,7 +36,7 @@ expect
         ·W·W·
         ··W··
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result = board |> territory { x: 0, y: 1 }
     expected = Ok(
         {
@@ -50,7 +50,7 @@ expect
             ),
         },
     )
-    result |> compareTerritory expected
+    result |> compare_territory(expected)
 
 # White center territory on 5x5 board
 expect
@@ -62,7 +62,7 @@ expect
         ·W·W·
         ··W··
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result = board |> territory { x: 2, y: 3 }
     expected = Ok(
         {
@@ -74,7 +74,7 @@ expect
             ),
         },
     )
-    result |> compareTerritory expected
+    result |> compare_territory(expected)
 
 # Open corner territory on 5x5 board
 expect
@@ -86,7 +86,7 @@ expect
         ·W·W·
         ··W··
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result = board |> territory { x: 1, y: 4 }
     expected = Ok(
         {
@@ -100,7 +100,7 @@ expect
             ),
         },
     )
-    result |> compareTerritory expected
+    result |> compare_territory(expected)
 
 # A stone and not a territory on 5x5 board
 expect
@@ -112,7 +112,7 @@ expect
         ·W·W·
         ··W··
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result = board |> territory { x: 1, y: 1 }
     expected = Ok(
         {
@@ -120,7 +120,7 @@ expect
             territory: Set.empty {},
         },
     )
-    result |> compareTerritory expected
+    result |> compare_territory(expected)
 
 # Invalid because X is too high for 5x5 board
 expect
@@ -132,7 +132,7 @@ expect
         ·W·W·
         ··W··
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result = board |> territory { x: 5, y: 1 }
     result |> Result.is_err
 
@@ -146,13 +146,13 @@ expect
         ·W·W·
         ··W··
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result = board |> territory { x: 1, y: 5 }
     result |> Result.is_err
 
 # One territory is the whole board
 expect
-    board = "·" |> Str.replace_each "·" " "
+    board = "·" |> Str.replace_each("·", " ")
     result = board |> territories
     expected = Ok(
         {
@@ -167,7 +167,7 @@ expect
             ),
         },
     )
-    result |> compareTerritories expected
+    result |> compare_territories(expected)
 
 # Two territory rectangular board
 expect
@@ -176,7 +176,7 @@ expect
         ·BW·
         ·BW·
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result = board |> territories
     expected = Ok(
         {
@@ -197,11 +197,11 @@ expect
             none: Set.empty {},
         },
     )
-    result |> compareTerritories expected
+    result |> compare_territories(expected)
 
 # Two region rectangular board
 expect
-    board = "·B·" |> Str.replace_each "·" " "
+    board = "·B·" |> Str.replace_each("·", " ")
     result = board |> territories
     expected = Ok(
         {
@@ -217,5 +217,5 @@ expect
             none: Set.empty {},
         },
     )
-    result |> compareTerritories expected
+    result |> compare_territories(expected)
 

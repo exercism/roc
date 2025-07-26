@@ -14,13 +14,13 @@ import PascalsTriangle exposing [pascals_triangle]
 
 # zero rows
 expect
-    result = pascals_triangle 0
+    result = pascals_triangle(0)
     expected = []
     result == expected
 
 # single row
 expect
-    result = pascals_triangle 1
+    result = pascals_triangle(1)
     expected = [
         [1],
     ]
@@ -28,7 +28,7 @@ expect
 
 # two rows
 expect
-    result = pascals_triangle 2
+    result = pascals_triangle(2)
     expected = [
         [1],
         [1, 1],
@@ -37,7 +37,7 @@ expect
 
 # three rows
 expect
-    result = pascals_triangle 3
+    result = pascals_triangle(3)
     expected = [
         [1],
         [1, 1],
@@ -47,7 +47,7 @@ expect
 
 # four rows
 expect
-    result = pascals_triangle 4
+    result = pascals_triangle(4)
     expected = [
         [1],
         [1, 1],
@@ -58,7 +58,7 @@ expect
 
 # five rows
 expect
-    result = pascals_triangle 5
+    result = pascals_triangle(5)
     expected = [
         [1],
         [1, 1],
@@ -70,7 +70,7 @@ expect
 
 # six rows
 expect
-    result = pascals_triangle 6
+    result = pascals_triangle(6)
     expected = [
         [1],
         [1, 1],
@@ -83,7 +83,7 @@ expect
 
 # ten rows
 expect
-    result = pascals_triangle 10
+    result = pascals_triangle(10)
     expected = [
         [1],
         [1, 1],

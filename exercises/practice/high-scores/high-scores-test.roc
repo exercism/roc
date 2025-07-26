@@ -15,12 +15,12 @@ import HighScores exposing [latest, personal_best, personal_top_three]
 ## Latest score
 expect
     result = latest([100, 0, 90, 30])
-    result == Ok(30) 30
+    result == Ok(30)
 
 ## Personal best
 expect
     result = personal_best([40, 100, 70])
-    result == Ok(100) 100
+    result == Ok(100)
 
 ## Top 3 scores
 # Personal top three from a list of scores

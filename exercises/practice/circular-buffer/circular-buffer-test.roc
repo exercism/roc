@@ -15,7 +15,7 @@ import CircularBuffer exposing [create, read, write, overwrite, clear]
 # reading empty buffer should fail
 run_operations1 = |_|
     result =
-        create { capacity: 1 }
+        create({ capacity: 1 })
         |> |buffer_before_read|
             read_result = buffer_before_read |> read
             expect read_result == Err(BufferEmpty)
@@ -29,7 +29,7 @@ expect
 # can read an item just written
 run_operations2 = |_|
     result =
-        create { capacity: 1 }
+        create({ capacity: 1 })
         |> write(1)?
         |> read?
         |> |read_result|
@@ -44,7 +44,7 @@ expect
 # each item may only be read once
 run_operations3 = |_|
     result =
-        create { capacity: 1 }
+        create({ capacity: 1 })
         |> write(1)?
         |> read?
         |> |read_result|
@@ -63,7 +63,7 @@ expect
 # items are read in the order they are written
 run_operations4 = |_|
     result =
-        create { capacity: 2 }
+        create({ capacity: 2 })
         |> write(1)?
         |> write(2)?
         |> read?
@@ -83,7 +83,7 @@ expect
 # full buffer can't be written to
 run_operations5 = |_|
     result =
-        create { capacity: 1 }
+        create({ capacity: 1 })
         |> write(1)?
         |> |buffer_before_write|
             write_result = buffer_before_write |> write 2
@@ -98,7 +98,7 @@ expect
 # a read frees up capacity for another write
 run_operations6 = |_|
     result =
-        create { capacity: 1 }
+        create({ capacity: 1 })
         |> write(1)?
         |> read?
         |> |read_result|
@@ -118,7 +118,7 @@ expect
 # read position is maintained even across multiple writes
 run_operations7 = |_|
     result =
-        create { capacity: 3 }
+        create({ capacity: 3 })
         |> write(1)?
         |> write(2)?
         |> read?
@@ -143,7 +143,7 @@ expect
 # items cleared out of buffer can't be read
 run_operations8 = |_|
     result =
-        create { capacity: 1 }
+        create({ capacity: 1 })
         |> write(1)?
         |> clear
         |> |buffer_before_read|
@@ -159,7 +159,7 @@ expect
 # clear frees up capacity for another write
 run_operations9 = |_|
     result =
-        create { capacity: 1 }
+        create({ capacity: 1 })
         |> write(1)?
         |> clear
         |> write(2)?
@@ -176,7 +176,7 @@ expect
 # clear does nothing on empty buffer
 run_operations10 = |_|
     result =
-        create { capacity: 1 }
+        create({ capacity: 1 })
         |> clear
         |> write(1)?
         |> read?
@@ -192,7 +192,7 @@ expect
 # overwrite acts like write on non-full buffer
 run_operations11 = |_|
     result =
-        create { capacity: 2 }
+        create({ capacity: 2 })
         |> write(1)?
         |> overwrite 2
         |> read?
@@ -212,7 +212,7 @@ expect
 # overwrite replaces the oldest item on full buffer
 run_operations12 = |_|
     result =
-        create { capacity: 2 }
+        create({ capacity: 2 })
         |> write(1)?
         |> write(2)?
         |> overwrite 3
@@ -233,7 +233,7 @@ expect
 # overwrite replaces the oldest item remaining in buffer following a read
 run_operations13 = |_|
     result =
-        create { capacity: 3 }
+        create({ capacity: 3 })
         |> write(1)?
         |> write(2)?
         |> write(3)?
@@ -264,7 +264,7 @@ expect
 # initial clear does not affect wrapping around
 run_operations14 = |_|
     result =
-        create { capacity: 2 }
+        create({ capacity: 2 })
         |> clear
         |> write(1)?
         |> write(2)?

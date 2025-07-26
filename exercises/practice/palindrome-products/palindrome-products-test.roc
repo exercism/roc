@@ -12,10 +12,10 @@ main! = |_args|
 
 import PalindromeProducts exposing [smallest, largest]
 
-isEq = |result, expected|
+is_eq = |result, expected|
     when (result, expected) is
-        (Ok({ value, factors }), Ok({ value: expectedValue, factors: expectedFactors })) ->
-            value == expectedValue and factors == expectedFactors
+        (Ok({ value, factors }), Ok({ value: expected_value, factors: expected_factors })) ->
+            value == expected_value and factors == expected_factors
 
         _ -> Bool.false
 
@@ -32,7 +32,7 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 
 # find the largest palindrome from single digit factors
 expect
@@ -48,7 +48,7 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 
 # find the smallest palindrome from double digit factors
 expect
@@ -63,7 +63,7 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 
 # find the largest palindrome from double digit factors
 expect
@@ -78,7 +78,7 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 
 # find the smallest palindrome from triple digit factors
 expect
@@ -93,7 +93,7 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 
 # find the largest palindrome from triple digit factors
 expect
@@ -108,7 +108,7 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 
 # find the smallest palindrome from four digit factors
 expect
@@ -123,7 +123,7 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 
 # find the largest palindrome from four digit factors
 expect
@@ -138,7 +138,7 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 
 # empty result for smallest if no palindrome in the range
 expect
@@ -152,7 +152,7 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 
 # empty result for largest if no palindrome in the range
 expect
@@ -166,7 +166,7 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 
 # error result for smallest if min is more than max
 expect
@@ -191,5 +191,5 @@ expect
             ),
         },
     )
-    result |> isEq expected
+    result |> is_eq(expected)
 

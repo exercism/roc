@@ -26,7 +26,7 @@ expect
                 ('a', 1),
             ],
         )
-    transform legacy == expected
+    transform(legacy) == expected
 
 # single score with multiple letters
 expect
@@ -46,7 +46,7 @@ expect
                 ('u', 1),
             ],
         )
-    transform legacy == expected
+    transform(legacy) == expected
 
 # multiple scores with multiple letters
 expect
@@ -66,7 +66,7 @@ expect
                 ('g', 2),
             ],
         )
-    transform legacy == expected
+    transform(legacy) == expected
 
 # multiple scores with differing numbers of letters
 expect
@@ -113,5 +113,5 @@ expect
                 ('z', 10),
             ],
         )
-    transform legacy == expected
+    transform(legacy) == expected
 

@@ -8,7 +8,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
     "(x) => x * x": "|x|\n        x * x",
     "(x) => upcase(x)": "to_upper",
     "(x) => reverse(x)": "reverse",
-    "(x) => accumulate([\"1\", \"2\", \"3\"], (y) => x + y)": "|x|\n        accumulate [\"1\", \"2\", \"3\"] (\\y -> Str.concat(x, y))"
+    "(x) => accumulate([\"1\", \"2\", \"3\"], (y) => x + y)": "|x|\n        accumulate([\"1\", \"2\", \"3\"], |y| Str.concat(x, y))"
 } -%}
 
 {% for case in cases -%}

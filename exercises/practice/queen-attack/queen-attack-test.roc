@@ -18,29 +18,23 @@ import QueenAttack exposing [create, rank, file, queen_can_attack]
 
 # queen with a valid position
 expect
-    maybeSquare = create("C6")
-    result =
-        maybeSquare
-        |> Result.try |square|
-            Ok(rank square)
+    maybe_square = create("C6")
+    result = maybe_square |> Result.try(|square| Ok(rank square))
     result == Ok(6)
 
 expect
-    maybeSquare = create "C6"
-    result =
-        maybeSquare
-        |> Result.try |square|
-            Ok(file square)
+    maybe_square = create("C6")
+    result = maybe_square |> Result.try(|square| Ok(file square))
     result == Ok('C')
 
 # queen must have row on board
 expect
-    result = create "E0"
+    result = create("E0")
     result |> Result.is_err
 
 # queen must have column on board
 expect
-    result = create "I4"
+    result = create("I4")
     result |> Result.is_err
 
 ##
@@ -49,10 +43,10 @@ expect
 
 # cannot attack
 expect
-    maybeSquare1 = create("E6")
-    maybeSquare2 = create("G2")
+    maybe_square1 = create("E6")
+    maybe_square2 = create("G2")
     result =
-        when (maybeSquare1, maybeSquare2) is
+        when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack square2
 
@@ -61,10 +55,10 @@ expect
 
 # can attack on same row
 expect
-    maybeSquare1 = create("E6")
-    maybeSquare2 = create("G6")
+    maybe_square1 = create("E6")
+    maybe_square2 = create("G6")
     result =
-        when (maybeSquare1, maybeSquare2) is
+        when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack square2
 
@@ -73,10 +67,10 @@ expect
 
 # can attack on same column
 expect
-    maybeSquare1 = create("F4")
-    maybeSquare2 = create("F6")
+    maybe_square1 = create("F4")
+    maybe_square2 = create("F6")
     result =
-        when (maybeSquare1, maybeSquare2) is
+        when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack square2
 
@@ -85,10 +79,10 @@ expect
 
 # can attack on first diagonal
 expect
-    maybeSquare1 = create("C6")
-    maybeSquare2 = create("E8")
+    maybe_square1 = create("C6")
+    maybe_square2 = create("E8")
     result =
-        when (maybeSquare1, maybeSquare2) is
+        when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack square2
 
@@ -97,10 +91,10 @@ expect
 
 # can attack on second diagonal
 expect
-    maybeSquare1 = create("C6")
-    maybeSquare2 = create("B5")
+    maybe_square1 = create("C6")
+    maybe_square2 = create("B5")
     result =
-        when (maybeSquare1, maybeSquare2) is
+        when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack square2
 
@@ -109,10 +103,10 @@ expect
 
 # can attack on third diagonal
 expect
-    maybeSquare1 = create("C6")
-    maybeSquare2 = create("B7")
+    maybe_square1 = create("C6")
+    maybe_square2 = create("B7")
     result =
-        when (maybeSquare1, maybeSquare2) is
+        when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack square2
 
@@ -121,10 +115,10 @@ expect
 
 # can attack on fourth diagonal
 expect
-    maybeSquare1 = create("H7")
-    maybeSquare2 = create("G8")
+    maybe_square1 = create("H7")
+    maybe_square2 = create("G8")
     result =
-        when (maybeSquare1, maybeSquare2) is
+        when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack square2
 
@@ -133,10 +127,10 @@ expect
 
 # cannot attack if falling diagonals are only the same when reflected across the longest falling diagonal
 expect
-    maybeSquare1 = create("B4")
-    maybeSquare2 = create("F6")
+    maybe_square1 = create("B4")
+    maybe_square2 = create("F6")
     result =
-        when (maybeSquare1, maybeSquare2) is
+        when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack square2
 

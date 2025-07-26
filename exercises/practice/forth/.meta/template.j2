@@ -8,7 +8,7 @@ import Forth exposing [evaluate]
 {% for innerCase in case["cases"] %}
 # {{ case["description"] }}: {{ innerCase["description"] }}
 expect
-    result = evaluate {{ innerCase["input"]["instructions"] | join('\n') | to_roc_multiline_string | indent(8) }}
+    result = evaluate({{ innerCase["input"]["instructions"] | join('\n') | to_roc_multiline_string | indent(8) }})
     {%- if innerCase["expected"]["error"] %}
     Result.is_err(result)
     {%- else %}

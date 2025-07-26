@@ -19,6 +19,6 @@ expect
             ('{{letter}}', {{ score }}),
 {%- endfor %}
         ])
-    transform legacy == expected
+    transform(legacy) == expected
         
 {% endfor %}

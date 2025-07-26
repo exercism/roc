@@ -13,7 +13,7 @@ main! = |_args|
 import ComplexNumbers exposing [real, imaginary, add, sub, mul, div, conjugate, abs, exp]
 
 is_approx_eq = |z1, z2|
-    z1.re |> Num.is_approx_eq z2.re {} and z1.im |> Num.is_approx_eq z2.im {}
+    z1.re |> Num.is_approx_eq(z2.re, {}) and z1.im |> Num.is_approx_eq(z2.im, {})
 
 ###
 ### Real part
@@ -23,19 +23,19 @@ is_approx_eq = |z1, z2|
 expect
     z = { re: 1, im: 0 }
     result = real z
-    result |> Num.is_approx_eq 1 {}
+    result |> Num.is_approx_eq(1, {})
 
 # Real part of a purely imaginary number
 expect
     z = { re: 0, im: 1 }
     result = real z
-    result |> Num.is_approx_eq 0 {}
+    result |> Num.is_approx_eq(0, {})
 
 # Real part of a number with real and imaginary part
 expect
     z = { re: 1, im: 2 }
     result = real z
-    result |> Num.is_approx_eq 1 {}
+    result |> Num.is_approx_eq(1, {})
 
 ###
 ### Imaginary part
@@ -45,19 +45,19 @@ expect
 expect
     z = { re: 1, im: 0 }
     result = imaginary z
-    result |> Num.is_approx_eq 0 {}
+    result |> Num.is_approx_eq(0, {})
 
 # Imaginary part of a purely imaginary number
 expect
     z = { re: 0, im: 1 }
     result = imaginary z
-    result |> Num.is_approx_eq 1 {}
+    result |> Num.is_approx_eq(1, {})
 
 # Imaginary part of a number with real and imaginary part
 expect
     z = { re: 1, im: 2 }
     result = imaginary z
-    result |> Num.is_approx_eq 2 {}
+    result |> Num.is_approx_eq(2, {})
 
 ###
 ### Imaginary unit
@@ -179,31 +179,31 @@ expect
 expect
     z = { re: 5, im: 0 }
     result = abs z
-    result |> Num.is_approx_eq 5 {}
+    result |> Num.is_approx_eq(5, {})
 
 # Absolute value of a negative purely real number
 expect
     z = { re: -5, im: 0 }
     result = abs z
-    result |> Num.is_approx_eq 5 {}
+    result |> Num.is_approx_eq(5, {})
 
 # Absolute value of a purely imaginary number with positive imaginary part
 expect
     z = { re: 0, im: 5 }
     result = abs z
-    result |> Num.is_approx_eq 5 {}
+    result |> Num.is_approx_eq(5, {})
 
 # Absolute value of a purely imaginary number with negative imaginary part
 expect
     z = { re: 0, im: -5 }
     result = abs z
-    result |> Num.is_approx_eq 5 {}
+    result |> Num.is_approx_eq(5, {})
 
 # Absolute value of a number with real and imaginary part
 expect
     z = { re: 3, im: 4 }
     result = abs z
-    result |> Num.is_approx_eq 5 {}
+    result |> Num.is_approx_eq(5, {})
 
 ###
 ### Complex conjugate

@@ -38,7 +38,7 @@ expect
     {%- if "set" in case["input"] %}
     set = from_list({{ case["input"]["set"] | to_roc }})
     result = set |> {{ property | to_snake }}
-    {%- if "element" in case["input"] %} {{ case["input"]["element"] }}{%- endif %}
+    {%- if "element" in case["input"] %} {{(case["input"]["element"])}}{%- endif %}
     {%- else %}
     set1 = from_list({{ case["input"]["set1"] | to_roc }})
     set2 = from_list({{ case["input"]["set2"] | to_roc }})
@@ -46,7 +46,7 @@ expect
     {%- endif %}
     {%- if case["expected"] is iterable %}
     expected = {{ case["expected"] | to_roc }} |> from_list
-    result |> is_eq expected
+    result |> is_eq(expected)
     {%- else %}
     expected = {{ case["expected"] | to_roc }}
     result == expected

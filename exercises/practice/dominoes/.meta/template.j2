@@ -25,11 +25,11 @@ canonicalize = |dominoes|
 ## Ensure that the given result is Ok and is a valid chain for the
 ## given list of dominoes
 is_valid_chain_for : Result (List Domino) _, List Domino -> Bool
-is_valid_chain_for = |maybeChain, dominoes|
-    when maybeChain is
+is_valid_chain_for = |maybe_chain, dominoes|
+    when maybe_chain is
         Err(_) -> Bool.false
         Ok(chain) ->
-            if Set.from_list(canonicalize chain) == Set.from_list(canonicalize dominoes) then
+            if Set.from_list(canonicalize(chain)) == Set.from_list(canonicalize(dominoes)) then
                 when chain is
                     [] -> Bool.true
                     [.., last] ->

@@ -4,10 +4,10 @@
 
 import {{ exercise | to_pascal }} exposing [smallest, largest]
 
-isEq = |result, expected|
+is_eq = |result, expected|
     when (result, expected) is
-        (Ok({value, factors}), Ok({value: expectedValue, factors: expectedFactors})) ->
-            value == expectedValue && factors == expectedFactors
+        (Ok({value, factors}), Ok({value: expected_value, factors: expected_factors})) ->
+            value == expected_value && factors == expected_factors
         _ -> Bool.false
 
 {% for case in cases -%}
@@ -24,7 +24,7 @@ expect
             ({{ pair[0] }}, {{ pair[1] }}),{% endfor %}
         ])
     })
-    result |> isEq expected
+    result |> is_eq(expected)
     {%- endif %}
 
 {% endfor %}

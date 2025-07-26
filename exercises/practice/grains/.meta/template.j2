@@ -16,7 +16,7 @@ expect
 {% for subcase in case["cases"] -%}
 # {{ subcase["description"] }}
 expect
-    result = grains_on_square {{ subcase["input"]["square"] }}
+    result = grains_on_square({{ subcase["input"]["square"] }})
 {%- if subcase["expected"]["error"] %}
     Result.is_err(result)
 {%- else %}
