@@ -1,7 +1,7 @@
 float_map = {
     "e": "Num.e",
-    "ln(2)": "Num.log 2f64",
-    "ln(2)/2": "Num.log 2f64 / 2",
+    "ln(2)": "Num.log(2f64)",
+    "ln(2)/2": "Num.log(2f64) / 2",
     "pi": "Num.pi",
     "pi/4": "Num.pi / 4",
 }

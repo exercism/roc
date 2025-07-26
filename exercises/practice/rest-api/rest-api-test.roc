@@ -15,13 +15,15 @@ import RestApi exposing [get, post]
 
 standardize_result = |result|
     result
-    |> Result.try |string|
-        string
-        |> Str.replace_each(".0,", ",")
-        |> Str.replace_each(".0}", "}")
-        |> Str.to_utf8
-        |> List.drop_if |c| [' ', '\t', '\n'] |> List.contains c
-        |> Str.from_utf8
+    |> Result.try(
+        |string|
+            string
+            |> Str.replace_each(".0,", ",")
+            |> Str.replace_each(".0}", "}")
+            |> Str.to_utf8
+            |> List.drop_if |c| [' ', '\t', '\n'] |> List.contains(c)
+            |> Str.from_utf8,
+    )
 
 ##
 ## user management

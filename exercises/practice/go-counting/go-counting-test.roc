@@ -117,7 +117,7 @@ expect
     expected = Ok(
         {
             owner: None,
-            territory: Set.empty {},
+            territory: Set.empty({}),
         },
     )
     result |> compare_territory(expected)
@@ -156,9 +156,9 @@ expect
     result = board |> territories
     expected = Ok(
         {
-            black: Set.empty {},
+            black: Set.empty({}),
 
-            white: Set.empty {},
+            white: Set.empty({}),
 
             none: Set.from_list(
                 [
@@ -194,7 +194,7 @@ expect
                 ],
             ),
 
-            none: Set.empty {},
+            none: Set.empty({}),
         },
     )
     result |> compare_territories(expected)
@@ -212,9 +212,9 @@ expect
                 ],
             ),
 
-            white: Set.empty {},
+            white: Set.empty({}),
 
-            none: Set.empty {},
+            none: Set.empty({}),
         },
     )
     result |> compare_territories(expected)

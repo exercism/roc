@@ -4,7 +4,7 @@
 
 {% macro to_territory(territory) %}
 {%- if territory == [] %}
-Set.empty {}
+Set.empty({})
 {%- else %}
 Set.from_list([
 {%- for intersection in territory %}

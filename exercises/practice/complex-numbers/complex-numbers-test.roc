@@ -257,14 +257,14 @@ expect
 
 # Exponential of a number with real and imaginary part
 expect
-    z = { re: Num.log 2f64, im: Num.pi }
+    z = { re: Num.log(2f64), im: Num.pi }
     result = exp(z)
     expected = { re: -2, im: 0 }
     result |> is_approx_eq(expected)
 
 # Exponential resulting in a number with real and imaginary part
 expect
-    z = { re: Num.log 2f64 / 2, im: Num.pi / 4 }
+    z = { re: Num.log(2f64) / 2, im: Num.pi / 4 }
     result = exp(z)
     expected = { re: 1, im: 1 }
     result |> is_approx_eq(expected)
