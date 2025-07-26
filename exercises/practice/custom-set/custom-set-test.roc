@@ -52,7 +52,7 @@ expect
 
 expect
     set = from_list([])
-    result = set |> contains 1
+    result = set |> contains(1)
     expected = Bool.false
     result == expected
 
@@ -60,7 +60,7 @@ expect
 
 expect
     set = from_list([1, 2, 3])
-    result = set |> contains 1
+    result = set |> contains(1)
     expected = Bool.true
     result == expected
 
@@ -68,7 +68,7 @@ expect
 
 expect
     set = from_list([1, 2, 3])
-    result = set |> contains 4
+    result = set |> contains(4)
     expected = Bool.false
     result == expected
 
@@ -254,7 +254,7 @@ expect
 
 expect
     set = from_list([])
-    result = set |> insert 3
+    result = set |> insert(3)
     expected = [3] |> from_list
     result |> is_eq(expected)
 
@@ -262,7 +262,7 @@ expect
 
 expect
     set = from_list([1, 2, 4])
-    result = set |> insert 3
+    result = set |> insert(3)
     expected = [1, 2, 3, 4] |> from_list
     result |> is_eq(expected)
 
@@ -270,7 +270,7 @@ expect
 
 expect
     set = from_list([1, 2, 3])
-    result = set |> insert 3
+    result = set |> insert(3)
     expected = [1, 2, 3] |> from_list
     result |> is_eq(expected)
 

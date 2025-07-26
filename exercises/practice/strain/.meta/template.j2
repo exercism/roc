@@ -5,9 +5,9 @@
 import {{ exercise | to_pascal }} exposing [keep, discard]
 
 {% set function_map = {
-    "fn(x) -> contains(x, 5)": "\\x -> x |> List.contains 5",
+    "fn(x) -> contains(x, 5)": "|x| x |> List.contains(5)",
     "fn(x) -> false": "\\_ -> Bool.false",
-    "fn(x) -> starts_with(x, 'z')": "\\x -> x |> Str.starts_with \"z\"",
+    "fn(x) -> starts_with(x, 'z')": "|x| x |> Str.starts_with(\"z\")",
     "fn(x) -> true": "\\_ -> Bool.true",
     "fn(x) -> x % 2 == 0": "\\x -> x % 2 == 0",
     "fn(x) -> x % 2 == 1": "\\x -> x % 2 == 1",

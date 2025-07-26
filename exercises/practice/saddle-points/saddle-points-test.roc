@@ -14,12 +14,12 @@ import SaddlePoints exposing [saddle_points]
 
 # Can identify single saddle point
 expect
-    treeHeights = [
+    tree_heights = [
         [9, 8, 7],
         [5, 3, 2],
         [6, 6, 7],
     ]
-    result = treeHeights |> saddle_points
+    result = tree_heights |> saddle_points
     expected = Set.from_list(
         [
             { row: 2, column: 1 },
@@ -29,10 +29,10 @@ expect
 
 # Can identify that empty matrix has no saddle points
 expect
-    treeHeights = [
+    tree_heights = [
         [],
     ]
-    result = treeHeights |> saddle_points
+    result = tree_heights |> saddle_points
     expected = Set.from_list(
         [
         ],
@@ -41,12 +41,12 @@ expect
 
 # Can identify lack of saddle points when there are none
 expect
-    treeHeights = [
+    tree_heights = [
         [1, 2, 3],
         [3, 1, 2],
         [2, 3, 1],
     ]
-    result = treeHeights |> saddle_points
+    result = tree_heights |> saddle_points
     expected = Set.from_list(
         [
         ],
@@ -55,12 +55,12 @@ expect
 
 # Can identify multiple saddle points in a column
 expect
-    treeHeights = [
+    tree_heights = [
         [4, 5, 4],
         [3, 5, 5],
         [1, 5, 4],
     ]
-    result = treeHeights |> saddle_points
+    result = tree_heights |> saddle_points
     expected = Set.from_list(
         [
             { row: 1, column: 2 },
@@ -72,12 +72,12 @@ expect
 
 # Can identify multiple saddle points in a row
 expect
-    treeHeights = [
+    tree_heights = [
         [6, 7, 8],
         [5, 5, 5],
         [7, 5, 6],
     ]
-    result = treeHeights |> saddle_points
+    result = tree_heights |> saddle_points
     expected = Set.from_list(
         [
             { row: 2, column: 1 },
@@ -89,12 +89,12 @@ expect
 
 # Can identify saddle point in bottom right corner
 expect
-    treeHeights = [
+    tree_heights = [
         [8, 7, 9],
         [6, 7, 6],
         [3, 2, 5],
     ]
-    result = treeHeights |> saddle_points
+    result = tree_heights |> saddle_points
     expected = Set.from_list(
         [
             { row: 3, column: 3 },
@@ -104,11 +104,11 @@ expect
 
 # Can identify saddle points in a non square matrix
 expect
-    treeHeights = [
+    tree_heights = [
         [3, 1, 3],
         [3, 2, 4],
     ]
-    result = treeHeights |> saddle_points
+    result = tree_heights |> saddle_points
     expected = Set.from_list(
         [
             { row: 1, column: 3 },
@@ -119,13 +119,13 @@ expect
 
 # Can identify that saddle points in a single column matrix are those with the minimum value
 expect
-    treeHeights = [
+    tree_heights = [
         [2],
         [1],
         [4],
         [1],
     ]
-    result = treeHeights |> saddle_points
+    result = tree_heights |> saddle_points
     expected = Set.from_list(
         [
             { row: 2, column: 1 },
@@ -136,10 +136,10 @@ expect
 
 # Can identify that saddle points in a single row matrix are those with the maximum value
 expect
-    treeHeights = [
+    tree_heights = [
         [2, 5, 3, 5],
     ]
-    result = treeHeights |> saddle_points
+    result = tree_heights |> saddle_points
     expected = Set.from_list(
         [
             { row: 1, column: 2 },

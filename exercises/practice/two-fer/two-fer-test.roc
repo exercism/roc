@@ -14,16 +14,16 @@ import TwoFer exposing [two_fer]
 
 # no name given
 expect
-    result = two_fer Anonymous
+    result = two_fer(Anonymous)
     result == "One for you, one for me."
 
 # a name given
 expect
-    result = two_fer(Name "Alice")
+    result = two_fer(Name("Alice"))
     result == "One for Alice, one for me."
 
 # another name given
 expect
-    result = two_fer(Name "Bob")
+    result = two_fer(Name("Bob"))
     result == "One for Bob, one for me."
 

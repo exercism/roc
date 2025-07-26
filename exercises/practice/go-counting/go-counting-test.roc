@@ -37,7 +37,7 @@ expect
         ··W··
         """
         |> Str.replace_each("·", " ")
-    result = board |> territory { x: 0, y: 1 }
+    result = board |> territory({ x: 0, y: 1 })
     expected = Ok(
         {
             owner: Black,
@@ -63,7 +63,7 @@ expect
         ··W··
         """
         |> Str.replace_each("·", " ")
-    result = board |> territory { x: 2, y: 3 }
+    result = board |> territory({ x: 2, y: 3 })
     expected = Ok(
         {
             owner: White,
@@ -87,7 +87,7 @@ expect
         ··W··
         """
         |> Str.replace_each("·", " ")
-    result = board |> territory { x: 1, y: 4 }
+    result = board |> territory({ x: 1, y: 4 })
     expected = Ok(
         {
             owner: None,
@@ -113,7 +113,7 @@ expect
         ··W··
         """
         |> Str.replace_each("·", " ")
-    result = board |> territory { x: 1, y: 1 }
+    result = board |> territory({ x: 1, y: 1 })
     expected = Ok(
         {
             owner: None,
@@ -133,7 +133,7 @@ expect
         ··W··
         """
         |> Str.replace_each("·", " ")
-    result = board |> territory { x: 5, y: 1 }
+    result = board |> territory({ x: 5, y: 1 })
     result |> Result.is_err
 
 # Invalid because Y is too high for 5x5 board
@@ -147,7 +147,7 @@ expect
         ··W··
         """
         |> Str.replace_each("·", " ")
-    result = board |> territory { x: 1, y: 5 }
+    result = board |> territory({ x: 1, y: 5 })
     result |> Result.is_err
 
 # One territory is the whole board

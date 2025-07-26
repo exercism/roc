@@ -48,7 +48,7 @@ expect
     result =
         when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
-                square1 |> queen_can_attack square2
+                square1 |> queen_can_attack(square2)
 
             _ -> crash "Unreachable: E6 and G2 are both valid squares"
     result == Bool.false
@@ -60,7 +60,7 @@ expect
     result =
         when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
-                square1 |> queen_can_attack square2
+                square1 |> queen_can_attack(square2)
 
             _ -> crash "Unreachable: E6 and G6 are both valid squares"
     result == Bool.true
@@ -72,7 +72,7 @@ expect
     result =
         when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
-                square1 |> queen_can_attack square2
+                square1 |> queen_can_attack(square2)
 
             _ -> crash "Unreachable: F4 and F6 are both valid squares"
     result == Bool.true
@@ -84,7 +84,7 @@ expect
     result =
         when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
-                square1 |> queen_can_attack square2
+                square1 |> queen_can_attack(square2)
 
             _ -> crash "Unreachable: C6 and E8 are both valid squares"
     result == Bool.true
@@ -96,7 +96,7 @@ expect
     result =
         when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
-                square1 |> queen_can_attack square2
+                square1 |> queen_can_attack(square2)
 
             _ -> crash "Unreachable: C6 and B5 are both valid squares"
     result == Bool.true
@@ -108,7 +108,7 @@ expect
     result =
         when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
-                square1 |> queen_can_attack square2
+                square1 |> queen_can_attack(square2)
 
             _ -> crash "Unreachable: C6 and B7 are both valid squares"
     result == Bool.true
@@ -120,7 +120,7 @@ expect
     result =
         when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
-                square1 |> queen_can_attack square2
+                square1 |> queen_can_attack(square2)
 
             _ -> crash "Unreachable: H7 and G8 are both valid squares"
     result == Bool.true
@@ -132,7 +132,7 @@ expect
     result =
         when (maybe_square1, maybe_square2) is
             (Ok(square1), Ok(square2)) ->
-                square1 |> queen_can_attack square2
+                square1 |> queen_can_attack(square2)
 
             _ -> crash "Unreachable: B4 and F6 are both valid squares"
     result == Bool.false

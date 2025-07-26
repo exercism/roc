@@ -86,7 +86,7 @@ run_operations5 = |_|
         create({ capacity: 1 })
         |> write(1)?
         |> |buffer_before_write|
-            write_result = buffer_before_write |> write 2
+            write_result = buffer_before_write |> write(2)
             expect write_result == Err(BufferFull)
             buffer_before_write
     Ok(result)
@@ -194,7 +194,7 @@ run_operations11 = |_|
     result =
         create({ capacity: 2 })
         |> write(1)?
-        |> overwrite 2
+        |> overwrite(2)
         |> read?
         |> |read_result|
             expect read_result.value == 1
@@ -215,7 +215,7 @@ run_operations12 = |_|
         create({ capacity: 2 })
         |> write(1)?
         |> write(2)?
-        |> overwrite 3
+        |> overwrite(3)
         |> read?
         |> |read_result|
             expect read_result.value == 2
@@ -242,7 +242,7 @@ run_operations13 = |_|
             expect read_result.value == 1
             read_result.new_buffer
         |> write(4)?
-        |> overwrite 5
+        |> overwrite(5)
         |> read?
         |> |read_result|
             expect read_result.value == 3
@@ -268,8 +268,8 @@ run_operations14 = |_|
         |> clear
         |> write(1)?
         |> write(2)?
-        |> overwrite 3
-        |> overwrite 4
+        |> overwrite(3)
+        |> overwrite(4)
         |> read?
         |> |read_result|
             expect read_result.value == 3

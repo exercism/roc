@@ -7,12 +7,12 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    treeHeights = [
+    tree_heights = [
         {%- for row in case["input"]["matrix"] %}
         {{ row | to_roc }},
         {%- endfor %}
     ]
-    result = treeHeights |> {{ case["property"] | to_snake }}
+    result = tree_heights |> {{ case["property"] | to_snake }}
     expected = Set.from_list([
         {%- for tree in case["expected"] %}
         {{ tree | to_roc }},

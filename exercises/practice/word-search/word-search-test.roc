@@ -16,7 +16,7 @@ import WordSearch exposing [search]
 expect
     grid = "jefblpepre"
     words_to_search_for = ["clojure"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             # "clojure" is not in the grid
@@ -28,7 +28,7 @@ expect
 expect
     grid = "clojurermt"
     words_to_search_for = ["clojure"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 1 }, end: { column: 7, row: 1 } }),
@@ -40,7 +40,7 @@ expect
 expect
     grid = "mtclojurer"
     words_to_search_for = ["clojure"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 3, row: 1 }, end: { column: 9, row: 1 } }),
@@ -52,7 +52,7 @@ expect
 expect
     grid = "coffeelplx"
     words_to_search_for = ["coffee"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("coffee", { start: { column: 1, row: 1 }, end: { column: 6, row: 1 } }),
@@ -64,7 +64,7 @@ expect
 expect
     grid = "xcoffeezlp"
     words_to_search_for = ["coffee"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("coffee", { start: { column: 2, row: 1 }, end: { column: 7, row: 1 } }),
@@ -80,7 +80,7 @@ expect
         tclojurerm
         """
     words_to_search_for = ["clojure"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 2, row: 2 }, end: { column: 8, row: 2 } }),
@@ -97,7 +97,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["clojure"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 3 }, end: { column: 7, row: 3 } }),
@@ -121,7 +121,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["clojure"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
@@ -145,7 +145,7 @@ expect
         jalaycalmp
         """
     words_to_search_for = ["clojure"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 9 }, end: { column: 7, row: 9 } }),
@@ -169,7 +169,7 @@ expect
         jalaycalmp
         """
     words_to_search_for = ["fortran"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("fortran", { start: { column: 1, row: 7 }, end: { column: 7, row: 7 } }),
@@ -193,7 +193,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["fortran", "clojure"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
@@ -206,7 +206,7 @@ expect
 expect
     grid = "rixilelhrs"
     words_to_search_for = ["elixir"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("elixir", { start: { column: 6, row: 1 }, end: { column: 1, row: 1 } }),
@@ -230,7 +230,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["elixir", "clojure"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
@@ -255,7 +255,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["clojure", "elixir", "ecmascript"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
@@ -281,7 +281,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["clojure", "elixir", "ecmascript", "rust"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
@@ -308,7 +308,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
@@ -336,7 +336,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
@@ -365,7 +365,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua", "lisp"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
@@ -395,7 +395,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua", "lisp", "ruby"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
@@ -426,7 +426,7 @@ expect
         clojurermt
         """
     words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua", "lisp", "ruby", "haskell"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             ("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
@@ -450,7 +450,7 @@ expect
         def
         """
     words_to_search_for = ["aef", "ced", "abf", "cbd"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             # "aef" is not in the grid
@@ -469,7 +469,7 @@ expect
         xirdfg
         """
     words_to_search_for = ["elixir"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             # "elixir" is not in the grid
@@ -481,7 +481,7 @@ expect
 expect
     grid = "silabcdefp"
     words_to_search_for = ["lisp"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             # "lisp" is not in the grid
@@ -502,7 +502,7 @@ expect
         t
         """
     words_to_search_for = ["rust"]
-    result = grid |> search words_to_search_for
+    result = grid |> search(words_to_search_for)
     expected = Dict.from_list(
         [
             # "rust" is not in the grid

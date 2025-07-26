@@ -33,7 +33,7 @@ expect
     maybe_square2 = create("{{ plugins.to_square(case["input"]["black_queen"]) }}")
     result = when (maybe_square1, maybe_square2) is
         (Ok(square1), Ok(square2)) ->
-            square1 |> queen_can_attack square2
+            square1 |> queen_can_attack(square2)
         _ -> crash "Unreachable: {{ plugins.to_square(case["input"]["white_queen"]) }} and {{ plugins.to_square(case["input"]["black_queen"]) }} are both valid squares"
     result == {{ case["expected"] | to_roc }}
 {%- endif %}

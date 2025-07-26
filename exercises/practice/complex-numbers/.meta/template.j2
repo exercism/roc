@@ -25,10 +25,10 @@ is_approx_eq = |z1, z2|
 {%- if subcase["input"]["z"] %}
 expect
     z = {{ plugins.to_complex_number(subcase["input"]["z"]) }}
-    result = {{ subcase["property"] }} z
+    result = {{ subcase["property"] }}(z)
     {%- if subcase["expected"] is iterable and subcase["expected"] is not string %}
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
-    result |> is_approx_eq expected
+    result |> is_approx_eq(expected)
     {%- else %}
     result |> Num.is_approx_eq({{ subcase["expected"] | to_roc }}, {})
     {%- endif %}
@@ -36,9 +36,9 @@ expect
 expect
     z1 = {{ plugins.to_complex_number(subcase["input"]["z1"]) }}
     z2 = {{ plugins.to_complex_number(subcase["input"]["z2"]) }}
-    result = z1 |> {{ subcase["property"] }} z2
+    result = z1 |> {{ subcase["property"] }}(z2)
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
-    result |> is_approx_eq expected
+    result |> is_approx_eq(expected)
 {%- endif %}
 
 {% endfor %}

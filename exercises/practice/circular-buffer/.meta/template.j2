@@ -13,13 +13,13 @@ run_operations{{ loop.index }} = |_|
         {%- if op["operation"] == "clear" %}
         |> clear
         {%- elif op["operation"] == "overwrite" %}
-        |> overwrite {{ op["item"] }}
+        |> overwrite({{ op["item"] }})
         {%- elif op["operation"] == "write" %}
         {%- if op["should_succeed"] %}
         |> write({{ op["item"] }})?
         {%- else %}
         |> |buffer_before_write|
-            write_result = buffer_before_write |> write {{ op["item"] }}
+            write_result = buffer_before_write |> write({{ op["item"] }})
             expect write_result == Err(BufferFull)
             buffer_before_write
         {%- endif %}

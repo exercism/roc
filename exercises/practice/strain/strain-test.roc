@@ -50,14 +50,14 @@ expect
 # keeps strings
 expect
     list = ["apple", "zebra", "banana", "zombies", "cherimoya", "zealot"]
-    result = list |> keep(|x| x |> Str.starts_with "z")
+    result = list |> keep(|x| x |> Str.starts_with("z"))
     expected = ["zebra", "zombies", "zealot"]
     result == expected
 
 # keeps lists
 expect
     list = [[1, 2, 3], [5, 5, 5], [5, 1, 2], [2, 1, 2], [1, 5, 2], [2, 2, 1], [1, 2, 5]]
-    result = list |> keep(|x| x |> List.contains 5)
+    result = list |> keep(|x| x |> List.contains(5))
     expected = [[5, 5, 5], [5, 1, 2], [1, 5, 2], [1, 2, 5]]
     result == expected
 
@@ -99,14 +99,14 @@ expect
 # discards strings
 expect
     list = ["apple", "zebra", "banana", "zombies", "cherimoya", "zealot"]
-    result = list |> discard(|x| x |> Str.starts_with "z")
+    result = list |> discard(|x| x |> Str.starts_with("z"))
     expected = ["apple", "banana", "cherimoya"]
     result == expected
 
 # discards lists
 expect
     list = [[1, 2, 3], [5, 5, 5], [5, 1, 2], [2, 1, 2], [1, 5, 2], [2, 2, 1], [1, 2, 5]]
-    result = list |> discard(|x| x |> List.contains 5)
+    result = list |> discard(|x| x |> List.contains(5))
     expected = [[1, 2, 3], [2, 1, 2], [2, 2, 1]]
     result == expected
 

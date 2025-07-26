@@ -4,7 +4,7 @@
 
 import {{ exercise | to_pascal }} exposing [get, post]
 
-standardizeResult = |result|
+standardize_result = |result|
     result |> Result.try |string|
         string
         |> Str.replace_each(".0,", ",")
@@ -46,7 +46,7 @@ expect
     {%- if case["input"].get("payload", {}) != {} %}
         payload: {{ case["input"]["payload"] | tojson | to_roc }}
     {%- endif %}
-    }) |> standardizeResult
+    }) |> standardize_result
     expected = Ok({{ case["expected"] | tojson | replace(".0,", ",") | replace(".0}", "}") | replace(" ", "") | to_roc }})
     result == expected
 
