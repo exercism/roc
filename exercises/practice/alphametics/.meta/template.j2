@@ -9,13 +9,13 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 expect
     result = {{ case["property"] | to_snake }}({{ case["input"]["puzzle"] | to_roc }})
     {%- if case["expected"] %}
-    Result.with_default result [] |> Set.from_list == Set.from_list [
+    Result.with_default(result, []) |> Set.from_list == Set.from_list([
     {%- for letter, value in case["expected"].items() %}
         ('{{ letter }}', {{ value }}),
     {%- endfor %}
-        ]
+        ])
     {%- else %}
-    Result.is_err result
+    Result.is_err(result)
     {%- endif %}
 
 {% endfor %}

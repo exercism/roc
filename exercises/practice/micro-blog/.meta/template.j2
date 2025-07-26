@@ -8,6 +8,6 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 # {{ case["description"] }}
 expect
     result = {{ case["property"] | to_snake }}({{ case["input"]["phrase"] | to_roc }})
-    result == Ok {{ case["expected"] | to_roc }}
+    result == Ok({{ case["expected"] | to_roc }})
 
 {% endfor %}

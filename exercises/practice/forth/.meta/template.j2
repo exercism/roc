@@ -12,7 +12,7 @@ expect
     {%- if innerCase["expected"]["error"] %}
     Result.is_err result
     {%- else %}
-    result == Ok {{ innerCase["expected"] }}
+    result == Ok({{ innerCase["expected"] }})
     {%- endif %}
 {% endfor %}
 {% endfor %}

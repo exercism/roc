@@ -27,7 +27,7 @@ expect
     result |> Result.is_err
     {%- else %}
     expected = {{ to_node(case["expected"]) | indent(4) }}
-    result == Ok expected
+    result == Ok(expected)
     {%- endif %}
     
 

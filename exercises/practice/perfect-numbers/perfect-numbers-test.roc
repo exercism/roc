@@ -19,17 +19,17 @@ import PerfectNumbers exposing [classify]
 # Smallest perfect number is classified correctly
 expect
     result = classify(6)
-    result == Ok Perfect
+    result == Ok(Perfect)
 
 # Medium perfect number is classified correctly
 expect
     result = classify(28)
-    result == Ok Perfect
+    result == Ok(Perfect)
 
 # Large perfect number is classified correctly
 expect
     result = classify(33550336)
-    result == Ok Perfect
+    result == Ok(Perfect)
 
 ##
 ## Abundant numbers
@@ -38,17 +38,17 @@ expect
 # Smallest abundant number is classified correctly
 expect
     result = classify(12)
-    result == Ok Abundant
+    result == Ok(Abundant)
 
 # Medium abundant number is classified correctly
 expect
     result = classify(30)
-    result == Ok Abundant
+    result == Ok(Abundant)
 
 # Large abundant number is classified correctly
 expect
     result = classify(33550335)
-    result == Ok Abundant
+    result == Ok(Abundant)
 
 ##
 ## Deficient numbers
@@ -57,27 +57,27 @@ expect
 # Smallest prime deficient number is classified correctly
 expect
     result = classify(2)
-    result == Ok Deficient
+    result == Ok(Deficient)
 
 # Smallest non-prime deficient number is classified correctly
 expect
     result = classify(4)
-    result == Ok Deficient
+    result == Ok(Deficient)
 
 # Medium deficient number is classified correctly
 expect
     result = classify(32)
-    result == Ok Deficient
+    result == Ok(Deficient)
 
 # Large deficient number is classified correctly
 expect
     result = classify(33550337)
-    result == Ok Deficient
+    result == Ok(Deficient)
 
 # Edge case (no factors other than itself) is classified correctly
 expect
     result = classify(1)
-    result == Ok Deficient
+    result == Ok(Deficient)
 
 ##
 ## Invalid inputs

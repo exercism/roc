@@ -21,7 +21,7 @@ expect
 # {{ subcase["description"] }}
 expect
     result = {{ subcase["property"] | to_snake }}({{ subcase["input"]["color"] | to_roc }})
-    result == Ok {{ subcase["expected"] }}
+    result == Ok({{ subcase["expected"] }})
 
 {% endfor %}
 {%- endif -%}

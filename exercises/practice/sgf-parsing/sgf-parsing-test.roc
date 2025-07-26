@@ -40,7 +40,7 @@ expect
             properties: Dict.from_list [],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # single node tree
 expect
@@ -53,7 +53,7 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # multiple properties
 expect
@@ -67,7 +67,7 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # properties without delimiter
 expect
@@ -105,7 +105,7 @@ expect
                 },
             ],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # two child trees
 expect
@@ -131,7 +131,7 @@ expect
                 },
             ],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # multiple property values
 expect
@@ -144,7 +144,7 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # within property values, whitespace characters such as tab are converted to spaces
 expect
@@ -157,7 +157,7 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # within property values, newlines remain as newlines
 expect
@@ -170,7 +170,7 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # escaped closing bracket within property value becomes just a closing bracket
 expect
@@ -183,7 +183,7 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # escaped backslash in property value becomes just a backslash
 expect
@@ -196,7 +196,7 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # opening bracket within property value doesn't need to be escaped
 expect
@@ -217,7 +217,7 @@ expect
                 },
             ],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # semicolon in property value doesn't need to be escaped
 expect
@@ -238,7 +238,7 @@ expect
                 },
             ],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # parentheses in property value don't need to be escaped
 expect
@@ -259,7 +259,7 @@ expect
                 },
             ],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # escaped tab in property value is converted to space
 expect
@@ -272,7 +272,7 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # escaped newline in property value is converted to nothing at all
 expect
@@ -285,7 +285,7 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # escaped t and n in property value are just letters, not whitespace
 expect
@@ -298,7 +298,7 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 
 # mixing various kinds of whitespace and escaped characters in property value
 expect
@@ -311,5 +311,5 @@ expect
             ],
             children: [],
         }
-    result == Ok expected
+    result == Ok(expected)
 

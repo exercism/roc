@@ -15,17 +15,17 @@ import Forth exposing [evaluate]
 # parsing and numbers: numbers just get pushed onto the stack
 expect
     result = evaluate "1 2 3 4 5"
-    result == Ok [1, 2, 3, 4, 5]
+    result == Ok([1, 2, 3, 4, 5])
 
 # parsing and numbers: pushes negative numbers onto the stack
 expect
     result = evaluate "-1 -2 -3 -4 -5"
-    result == Ok [-1, -2, -3, -4, -5]
+    result == Ok([-1, -2, -3, -4, -5])
 
 # addition: can add two numbers
 expect
     result = evaluate "1 2 +"
-    result == Ok [3]
+    result == Ok([3])
 
 # addition: errors if there is nothing on the stack
 expect
@@ -40,12 +40,12 @@ expect
 # addition: more than two values on the stack
 expect
     result = evaluate "1 2 3 +"
-    result == Ok [1, 5]
+    result == Ok([1, 5])
 
 # subtraction: can subtract two numbers
 expect
     result = evaluate "3 4 -"
-    result == Ok [-1]
+    result == Ok([-1])
 
 # subtraction: errors if there is nothing on the stack
 expect
@@ -60,12 +60,12 @@ expect
 # subtraction: more than two values on the stack
 expect
     result = evaluate "1 12 3 -"
-    result == Ok [1, 9]
+    result == Ok([1, 9])
 
 # multiplication: can multiply two numbers
 expect
     result = evaluate "2 4 *"
-    result == Ok [8]
+    result == Ok([8])
 
 # multiplication: errors if there is nothing on the stack
 expect
@@ -80,17 +80,17 @@ expect
 # multiplication: more than two values on the stack
 expect
     result = evaluate "1 2 3 *"
-    result == Ok [1, 6]
+    result == Ok([1, 6])
 
 # division: can divide two numbers
 expect
     result = evaluate "12 3 /"
-    result == Ok [4]
+    result == Ok([4])
 
 # division: performs integer division
 expect
     result = evaluate "8 3 /"
-    result == Ok [2]
+    result == Ok([2])
 
 # division: errors if dividing by zero
 expect
@@ -110,37 +110,37 @@ expect
 # division: more than two values on the stack
 expect
     result = evaluate "1 12 3 /"
-    result == Ok [1, 4]
+    result == Ok([1, 4])
 
 # combined arithmetic: addition and subtraction
 expect
     result = evaluate "1 2 + 4 -"
-    result == Ok [-1]
+    result == Ok([-1])
 
 # combined arithmetic: multiplication and division
 expect
     result = evaluate "2 4 * 3 /"
-    result == Ok [2]
+    result == Ok([2])
 
 # combined arithmetic: multiplication and addition
 expect
     result = evaluate "1 3 4 * +"
-    result == Ok [13]
+    result == Ok([13])
 
 # combined arithmetic: addition and multiplication
 expect
     result = evaluate "1 3 4 + *"
-    result == Ok [7]
+    result == Ok([7])
 
 # dup: copies a value on the stack
 expect
     result = evaluate "1 dup"
-    result == Ok [1, 1]
+    result == Ok([1, 1])
 
 # dup: copies the top value on the stack
 expect
     result = evaluate "1 2 dup"
-    result == Ok [1, 2, 2]
+    result == Ok([1, 2, 2])
 
 # dup: errors if there is nothing on the stack
 expect
@@ -150,12 +150,12 @@ expect
 # drop: removes the top value on the stack if it is the only one
 expect
     result = evaluate "1 drop"
-    result == Ok []
+    result == Ok([])
 
 # drop: removes the top value on the stack if it is not the only one
 expect
     result = evaluate "1 2 drop"
-    result == Ok [1]
+    result == Ok([1])
 
 # drop: errors if there is nothing on the stack
 expect
@@ -165,12 +165,12 @@ expect
 # swap: swaps the top two values on the stack if they are the only ones
 expect
     result = evaluate "1 2 swap"
-    result == Ok [2, 1]
+    result == Ok([2, 1])
 
 # swap: swaps the top two values on the stack if they are not the only ones
 expect
     result = evaluate "1 2 3 swap"
-    result == Ok [1, 3, 2]
+    result == Ok([1, 3, 2])
 
 # swap: errors if there is nothing on the stack
 expect
@@ -185,12 +185,12 @@ expect
 # over: copies the second element if there are only two
 expect
     result = evaluate "1 2 over"
-    result == Ok [1, 2, 1]
+    result == Ok([1, 2, 1])
 
 # over: copies the second element if there are more than two
 expect
     result = evaluate "1 2 3 over"
-    result == Ok [1, 2, 3, 2]
+    result == Ok([1, 2, 3, 2])
 
 # over: errors if there is nothing on the stack
 expect
@@ -209,7 +209,7 @@ expect
         : dup-twice dup dup ;
         1 dup-twice
         """
-    result == Ok [1, 1, 1]
+    result == Ok([1, 1, 1])
 
 # user-defined words: execute in the right order
 expect
@@ -218,7 +218,7 @@ expect
         : countup 1 2 3 ;
         countup
         """
-    result == Ok [1, 2, 3]
+    result == Ok([1, 2, 3])
 
 # user-defined words: can override other user-defined words
 expect
@@ -228,7 +228,7 @@ expect
         : foo dup dup ;
         1 foo
         """
-    result == Ok [1, 1, 1]
+    result == Ok([1, 1, 1])
 
 # user-defined words: can override built-in words
 expect
@@ -237,7 +237,7 @@ expect
         : swap dup ;
         1 swap
         """
-    result == Ok [1, 1]
+    result == Ok([1, 1])
 
 # user-defined words: can override built-in operators
 expect
@@ -246,7 +246,7 @@ expect
         : + * ;
         3 4 +
         """
-    result == Ok [12]
+    result == Ok([12])
 
 # user-defined words: can use different words with the same name
 expect
@@ -257,7 +257,7 @@ expect
         : foo 6 ;
         bar foo
         """
-    result == Ok [5, 6]
+    result == Ok([5, 6])
 
 # user-defined words: can define word that uses word with the same name
 expect
@@ -267,7 +267,7 @@ expect
         : foo foo 1 + ;
         foo
         """
-    result == Ok [11]
+    result == Ok([11])
 
 # user-defined words: errors if executing a non-existent word
 expect
@@ -277,22 +277,22 @@ expect
 # case-insensitivity: DUP is case-insensitive
 expect
     result = evaluate "1 DUP Dup dup"
-    result == Ok [1, 1, 1, 1]
+    result == Ok([1, 1, 1, 1])
 
 # case-insensitivity: DROP is case-insensitive
 expect
     result = evaluate "1 2 3 4 DROP Drop drop"
-    result == Ok [1]
+    result == Ok([1])
 
 # case-insensitivity: SWAP is case-insensitive
 expect
     result = evaluate "1 2 SWAP 3 Swap 4 swap"
-    result == Ok [2, 3, 4, 1]
+    result == Ok([2, 3, 4, 1])
 
 # case-insensitivity: OVER is case-insensitive
 expect
     result = evaluate "1 2 OVER Over over"
-    result == Ok [1, 2, 1, 2, 1]
+    result == Ok([1, 2, 1, 2, 1])
 
 # case-insensitivity: user-defined words are case-insensitive
 expect
@@ -301,7 +301,7 @@ expect
         : foo dup ;
         1 FOO Foo foo
         """
-    result == Ok [1, 1, 1, 1]
+    result == Ok([1, 1, 1, 1])
 
 # case-insensitivity: definitions are case-insensitive
 expect
@@ -310,5 +310,5 @@ expect
         : SWAP DUP Dup dup ;
         1 swap
         """
-    result == Ok [1, 1, 1, 1]
+    result == Ok([1, 1, 1, 1])
 

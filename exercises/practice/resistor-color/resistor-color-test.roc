@@ -19,17 +19,17 @@ import ResistorColor exposing [color_code, colors]
 # Black
 expect
     result = color_code("black")
-    result == Ok 0
+    result == Ok(0)
 
 # White
 expect
     result = color_code("white")
-    result == Ok 9
+    result == Ok(9)
 
 # Orange
 expect
     result = color_code("orange")
-    result == Ok 3
+    result == Ok(3)
 
 ##
 ## Colors

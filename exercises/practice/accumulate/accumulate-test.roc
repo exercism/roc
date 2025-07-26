@@ -51,7 +51,7 @@ expect
 
 reverse : Str -> Str
 reverse = |str|
-    Str.to_utf8 str
+    Str.to_utf8(str)
     |> List.reverse
     |> Str.from_utf8
     |> Result.with_default("")
@@ -59,10 +59,12 @@ reverse = |str|
 to_upper : Str -> Str
 to_upper = |str|
     Str.to_utf8 str
-    |> List.map |byte|
-        if 'a' <= byte and byte <= 'z' then
-            byte - 'a' + 'A'
-        else
-            byte
+    |> List.map(
+        |byte|
+            if 'a' <= byte and byte <= 'z' then
+                byte - 'a' + 'A'
+            else
+                byte,
+    )
     |> Str.from_utf8
     |> Result.with_default("")

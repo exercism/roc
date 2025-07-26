@@ -185,35 +185,35 @@ expect
 expect
     bytes = [127]
     result = decode bytes
-    expected = Ok [127]
+    expected = Ok([127])
     result == expected
 
 # two bytes
 expect
     bytes = [192, 0]
     result = decode bytes
-    expected = Ok [8192]
+    expected = Ok([8192])
     result == expected
 
 # three bytes
 expect
     bytes = [255, 255, 127]
     result = decode bytes
-    expected = Ok [2097151]
+    expected = Ok([2097151])
     result == expected
 
 # four bytes
 expect
     bytes = [129, 128, 128, 0]
     result = decode bytes
-    expected = Ok [2097152]
+    expected = Ok([2097152])
     result == expected
 
 # maximum 32-bit integer
 expect
     bytes = [143, 255, 255, 255, 127]
     result = decode bytes
-    expected = Ok [4294967295]
+    expected = Ok([4294967295])
     result == expected
 
 # incomplete sequence causes error
@@ -232,6 +232,6 @@ expect
 expect
     bytes = [192, 0, 200, 232, 86, 255, 255, 255, 127, 0, 255, 127, 129, 128, 0]
     result = decode bytes
-    expected = Ok [8192, 1193046, 268435455, 0, 16383, 16384]
+    expected = Ok([8192, 1193046, 268435455, 0, 16383, 16384])
     result == expected
 

@@ -20,7 +20,7 @@ run_operations1 = |_|
             read_result = buffer_before_read |> read
             expect read_result == Err BufferEmpty
             buffer_before_read
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations1 {}
@@ -35,7 +35,7 @@ run_operations2 = |_|
         |> |read_result|
             expect read_result.value == 1
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations2 {}
@@ -54,7 +54,7 @@ run_operations3 = |_|
             read_result = buffer_before_read |> read
             expect read_result == Err BufferEmpty
             buffer_before_read
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations3 {}
@@ -74,7 +74,7 @@ run_operations4 = |_|
         |> |read_result|
             expect read_result.value == 2
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations4 {}
@@ -89,7 +89,7 @@ run_operations5 = |_|
             write_result = buffer_before_write |> write 2
             expect write_result == Err BufferFull
             buffer_before_write
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations5 {}
@@ -109,7 +109,7 @@ run_operations6 = |_|
         |> |read_result|
             expect read_result.value == 2
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations6 {}
@@ -134,7 +134,7 @@ run_operations7 = |_|
         |> |read_result|
             expect read_result.value == 3
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations7 {}
@@ -150,7 +150,7 @@ run_operations8 = |_|
             read_result = buffer_before_read |> read
             expect read_result == Err BufferEmpty
             buffer_before_read
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations8 {}
@@ -167,7 +167,7 @@ run_operations9 = |_|
         |> |read_result|
             expect read_result.value == 2
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations9 {}
@@ -183,7 +183,7 @@ run_operations10 = |_|
         |> |read_result|
             expect read_result.value == 1
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations10 {}
@@ -203,7 +203,7 @@ run_operations11 = |_|
         |> |read_result|
             expect read_result.value == 2
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations11 {}
@@ -224,7 +224,7 @@ run_operations12 = |_|
         |> |read_result|
             expect read_result.value == 3
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations12 {}
@@ -255,7 +255,7 @@ run_operations13 = |_|
         |> |read_result|
             expect read_result.value == 5
             read_result.new_buffer
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations13 {}
@@ -282,7 +282,7 @@ run_operations14 = |_|
             read_result = buffer_before_read |> read
             expect read_result == Err BufferEmpty
             buffer_before_read
-    Ok result
+    Ok(result)
 
 expect
     result = run_operations14 {}

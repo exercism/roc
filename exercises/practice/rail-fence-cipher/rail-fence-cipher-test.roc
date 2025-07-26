@@ -20,21 +20,21 @@ import RailFenceCipher exposing [encode, decode]
 expect
     message = "XOXOXOXOXOXOXOXOXO"
     result = message |> encode(2)
-    expected = Ok "XXXXXXXXXOOOOOOOOO"
+    expected = Ok("XXXXXXXXXOOOOOOOOO")
     result == expected
 
 # encode with three rails
 expect
     message = "WEAREDISCOVEREDFLEEATONCE"
     result = message |> encode(3)
-    expected = Ok "WECRLTEERDSOEEFEAOCAIVDEN"
+    expected = Ok("WECRLTEERDSOEEFEAOCAIVDEN")
     result == expected
 
 # encode with ending in the middle
 expect
     message = "EXERCISES"
     result = message |> encode(4)
-    expected = Ok "ESXIEECSR"
+    expected = Ok("ESXIEECSR")
     result == expected
 
 ##
@@ -45,20 +45,20 @@ expect
 expect
     message = "TEITELHDVLSNHDTISEIIEA"
     result = message |> decode(3)
-    expected = Ok "THEDEVILISINTHEDETAILS"
+    expected = Ok("THEDEVILISINTHEDETAILS")
     result == expected
 
 # decode with five rails
 expect
     message = "EIEXMSMESAORIWSCE"
     result = message |> decode(5)
-    expected = Ok "EXERCISMISAWESOME"
+    expected = Ok("EXERCISMISAWESOME")
     result == expected
 
 # decode with six rails
 expect
     message = "133714114238148966225439541018335470986172518171757571896261"
     result = message |> decode(6)
-    expected = Ok "112358132134558914423337761098715972584418167651094617711286"
+    expected = Ok("112358132134558914423337761098715972584418167651094617711286")
     result == expected
 

@@ -15,10 +15,10 @@ import ZebraPuzzle exposing [owns_zebra, drinks_water]
 # resident who drinks water
 expect
     result = drinks_water
-    result == Ok Norwegian
+    result == Ok(Norwegian)
 
 # resident who owns zebra
 expect
     result = owns_zebra
-    result == Ok Japanese
+    result == Ok(Japanese)
 

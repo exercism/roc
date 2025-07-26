@@ -9,9 +9,9 @@ import {{ exercise | to_pascal }} exposing [answer]
 expect
     result = {{ case["property"] | to_snake }}({{ case["input"]["question"] | to_roc }})
 {%- if case["expected"]["error"] %}
-    Result.is_err result
+    Result.is_err(result)
 {%- else %}
-    result == Ok {{ case["expected"] }}
+    result == Ok({{ case["expected"] }})
 {%- endif %}
 
 {% endfor %}

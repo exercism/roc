@@ -18,12 +18,12 @@ import GoCounting exposing [territory, territories]
 ## in order to compare them properly.
 compareTerritory = |maybe_result, maybe_expected|
     when (maybe_result, maybe_expected) is
-        (Ok result, Ok expected) -> result.owner == expected.owner and result.territory == expected.territory
+        (Ok(result), Ok(expected)) -> result.owner == expected.owner and result.territory == expected.territory
         _ -> Bool.false
 
 compareTerritories = |maybe_result, maybe_expected|
     when (maybe_result, maybe_expected) is
-        (Ok result, Ok expected) -> result.black == expected.black and result.white == expected.white and result.none == expected.none
+        (Ok(result), Ok(expected)) -> result.black == expected.black and result.white == expected.white and result.none == expected.none
         _ -> Bool.false
 
 # Black corner territory on 5x5 board
@@ -38,14 +38,16 @@ expect
         """
         |> Str.replace_each "·" " "
     result = board |> territory { x: 0, y: 1 }
-    expected = Ok {
-        owner: Black,
-        territory: Set.from_list [
-            { x: 0, y: 0 },
-            { x: 0, y: 1 },
-            { x: 1, y: 0 },
-        ],
-    }
+    expected = Ok(
+        {
+            owner: Black,
+            territory: Set.from_list [
+                { x: 0, y: 0 },
+                { x: 0, y: 1 },
+                { x: 1, y: 0 },
+            ],
+        },
+    )
     result |> compareTerritory expected
 
 # White center territory on 5x5 board
@@ -60,12 +62,14 @@ expect
         """
         |> Str.replace_each "·" " "
     result = board |> territory { x: 2, y: 3 }
-    expected = Ok {
-        owner: White,
-        territory: Set.from_list [
-            { x: 2, y: 3 },
-        ],
-    }
+    expected = Ok(
+        {
+            owner: White,
+            territory: Set.from_list [
+                { x: 2, y: 3 },
+            ],
+        },
+    )
     result |> compareTerritory expected
 
 # Open corner territory on 5x5 board
@@ -80,14 +84,16 @@ expect
         """
         |> Str.replace_each "·" " "
     result = board |> territory { x: 1, y: 4 }
-    expected = Ok {
-        owner: None,
-        territory: Set.from_list [
-            { x: 0, y: 3 },
-            { x: 0, y: 4 },
-            { x: 1, y: 4 },
-        ],
-    }
+    expected = Ok(
+        {
+            owner: None,
+            territory: Set.from_list [
+                { x: 0, y: 3 },
+                { x: 0, y: 4 },
+                { x: 1, y: 4 },
+            ],
+        },
+    )
     result |> compareTerritory expected
 
 # A stone and not a territory on 5x5 board
@@ -102,10 +108,12 @@ expect
         """
         |> Str.replace_each "·" " "
     result = board |> territory { x: 1, y: 1 }
-    expected = Ok {
-        owner: None,
-        territory: Set.empty {},
-    }
+    expected = Ok(
+        {
+            owner: None,
+            territory: Set.empty {},
+        },
+    )
     result |> compareTerritory expected
 
 # Invalid because X is too high for 5x5 board
@@ -140,15 +148,17 @@ expect
 expect
     board = "·" |> Str.replace_each "·" " "
     result = board |> territories
-    expected = Ok {
-        black: Set.empty {},
+    expected = Ok(
+        {
+            black: Set.empty {},
 
-        white: Set.empty {},
+            white: Set.empty {},
 
-        none: Set.from_list [
-            { x: 0, y: 0 },
-        ],
-    }
+            none: Set.from_list [
+                { x: 0, y: 0 },
+            ],
+        },
+    )
     result |> compareTerritories expected
 
 # Two territory rectangular board
@@ -160,34 +170,38 @@ expect
         """
         |> Str.replace_each "·" " "
     result = board |> territories
-    expected = Ok {
-        black: Set.from_list [
-            { x: 0, y: 0 },
-            { x: 0, y: 1 },
-        ],
+    expected = Ok(
+        {
+            black: Set.from_list [
+                { x: 0, y: 0 },
+                { x: 0, y: 1 },
+            ],
 
-        white: Set.from_list [
-            { x: 3, y: 0 },
-            { x: 3, y: 1 },
-        ],
+            white: Set.from_list [
+                { x: 3, y: 0 },
+                { x: 3, y: 1 },
+            ],
 
-        none: Set.empty {},
-    }
+            none: Set.empty {},
+        },
+    )
     result |> compareTerritories expected
 
 # Two region rectangular board
 expect
     board = "·B·" |> Str.replace_each "·" " "
     result = board |> territories
-    expected = Ok {
-        black: Set.from_list [
-            { x: 0, y: 0 },
-            { x: 2, y: 0 },
-        ],
+    expected = Ok(
+        {
+            black: Set.from_list [
+                { x: 0, y: 0 },
+                { x: 2, y: 0 },
+            ],
 
-        white: Set.empty {},
+            white: Set.empty {},
 
-        none: Set.empty {},
-    }
+            none: Set.empty {},
+        },
+    )
     result |> compareTerritories expected
 

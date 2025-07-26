@@ -15,19 +15,19 @@ import PhoneNumber exposing [clean]
 # cleans the number
 expect
     result = clean("(223) 456-7890")
-    expected = Ok "2234567890"
+    expected = Ok("2234567890")
     result == expected
 
 # cleans numbers with dots
 expect
     result = clean("223.456.7890")
-    expected = Ok "2234567890"
+    expected = Ok("2234567890")
     result == expected
 
 # cleans numbers with multiple spaces
 expect
     result = clean("223 456   7890   ")
-    expected = Ok "2234567890"
+    expected = Ok("2234567890")
     result == expected
 
 # invalid when 9 digits
@@ -43,13 +43,13 @@ expect
 # valid when 11 digits and starting with 1
 expect
     result = clean("12234567890")
-    expected = Ok "2234567890"
+    expected = Ok("2234567890")
     result == expected
 
 # valid when 11 digits and starting with 1 even with punctuation
 expect
     result = clean("+1 (223) 456-7890")
-    expected = Ok "2234567890"
+    expected = Ok("2234567890")
     result == expected
 
 # invalid when more than 11 digits

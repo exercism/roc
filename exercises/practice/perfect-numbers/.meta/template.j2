@@ -16,7 +16,7 @@ expect
 {%- if case["expected"]["error"] %}
     Result.is_err result
 {%- else %}
-    result == Ok {{ case["expected"] | to_pascal }}
+    result == Ok({{ case["expected"] | to_pascal }})
 {%- endif %}
 
 {% endfor %}

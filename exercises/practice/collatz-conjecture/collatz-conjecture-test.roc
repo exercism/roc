@@ -15,22 +15,22 @@ import CollatzConjecture exposing [steps]
 # zero steps for one
 expect
     result = steps(1)
-    result == Ok 0
+    result == Ok(0)
 
 # divide if even
 expect
     result = steps(16)
-    result == Ok 4
+    result == Ok(4)
 
 # even and odd steps
 expect
     result = steps(12)
-    result == Ok 9
+    result == Ok(9)
 
 # large number of even and odd steps
 expect
     result = steps(1000000)
-    result == Ok 152
+    result == Ok(152)
 
 # zero is an error
 expect

@@ -20,7 +20,7 @@ expect
 {%- if subcase["expected"]["error"] %}
     Result.is_err result
 {%- else %}
-    result == Ok {{ subcase["expected"] }}
+    result == Ok({{ subcase["expected"] }})
 {%- endif %}
 
 {% endfor %}

@@ -9,6 +9,6 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 expect
     board = {{ case["input"]["board"] | to_roc_multiline_string | indent(8) }}
     result = board |> {{ case["property"] | to_snake }}
-    result == {% if case["expected"] == "" %}Err NotFinished{% else %}Ok Player{{ case["expected"] }}{% endif %}
+    result == {% if case["expected"] == "" %}Err NotFinished{% else %}Ok(Player{{ case["expected"] }}){% endif %}
 
 {% endfor %}

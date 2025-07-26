@@ -22,7 +22,7 @@ import {{ exercise | to_pascal }} exposing [plants]
 expect
     diagram = {{ subcase["input"]["diagram"] | to_roc_multiline_string | indent(8) }}
     result = diagram |> {{ subcase["property"] | to_snake }}({{ subcase["input"]["student"] | to_pascal }})
-    result == Ok [{% for plant in subcase["expected"] %}{{ plant | to_pascal }}, {% endfor %}]
+    result == Ok([{% for plant in subcase["expected"] %}{{ plant | to_pascal }}, {% endfor %}])
 
 {% endfor %}
 

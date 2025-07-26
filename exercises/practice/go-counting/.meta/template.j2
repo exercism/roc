@@ -22,12 +22,12 @@ import {{ exercise | to_pascal }} exposing [territory, territories]
 ## in order to compare them properly.
 compareTerritory = |maybe_result, maybe_expected|
     when (maybe_result, maybe_expected) is
-      (Ok result, Ok expected) -> result.owner == expected.owner && result.territory == expected.territory
+      (Ok(result), Ok(expected)) -> result.owner == expected.owner && result.territory == expected.territory
       _ -> Bool.false
 
 compareTerritories = |maybe_result, maybe_expected|
     when (maybe_result, maybe_expected) is
-      (Ok result, Ok expected) -> result.black == expected.black && result.white == expected.white && result.none == expected.none
+      (Ok(result), Ok(expected)) -> result.black == expected.black && result.white == expected.white && result.none == expected.none
       _ -> Bool.false
 
 {% for case in cases -%}
@@ -39,17 +39,17 @@ expect
     {%- if case["expected"]["error"] %}
     result |> Result.is_err
     {%- elif case["expected"]["owner"] %}
-    expected = Ok {
+    expected = Ok({
         owner: {{ case["expected"]["owner"] | to_pascal }},
         territory: {{ to_territory(case["expected"]["territory"]) }},
-    }
+    })
     result |> compareTerritory expected
     {%- else %}
-    expected = Ok {
+    expected = Ok({
         black: {{ to_territory(case["expected"]["territoryBlack"]) }},
         white: {{ to_territory(case["expected"]["territoryWhite"]) }},
         none: {{ to_territory(case["expected"]["territoryNone"]) }},
-    }
+    })
     result |> compareTerritories expected
     {%- endif %}
 

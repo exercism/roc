@@ -24,7 +24,7 @@ expect
         GG
         """
     result = diagram |> plants(Alice)
-    result == Ok [Radishes, Clover, Grass, Grass]
+    result == Ok([Radishes, Clover, Grass, Grass])
 
 # different garden with single student
 expect
@@ -34,7 +34,7 @@ expect
         RC
         """
     result = diagram |> plants(Alice)
-    result == Ok [Violets, Clover, Radishes, Clover]
+    result == Ok([Violets, Clover, Radishes, Clover])
 
 # garden with two students
 expect
@@ -44,7 +44,7 @@ expect
         VVRC
         """
     result = diagram |> plants(Bob)
-    result == Ok [Clover, Grass, Radishes, Clover]
+    result == Ok([Clover, Grass, Radishes, Clover])
 
 ## multiple students for the same garden with three students
 
@@ -56,7 +56,7 @@ expect
         VVCCGG
         """
     result = diagram |> plants(Bob)
-    result == Ok [Clover, Clover, Clover, Clover]
+    result == Ok([Clover, Clover, Clover, Clover])
 
 # third student's garden
 expect
@@ -66,7 +66,7 @@ expect
         VVCCGG
         """
     result = diagram |> plants(Charlie)
-    result == Ok [Grass, Grass, Grass, Grass]
+    result == Ok([Grass, Grass, Grass, Grass])
 
 ###
 ### full garden
@@ -80,7 +80,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Alice)
-    result == Ok [Violets, Radishes, Violets, Radishes]
+    result == Ok([Violets, Radishes, Violets, Radishes])
 
 # for Bob, second student's garden
 expect
@@ -90,7 +90,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Bob)
-    result == Ok [Clover, Grass, Clover, Clover]
+    result == Ok([Clover, Grass, Clover, Clover])
 
 # for Charlie
 expect
@@ -100,7 +100,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Charlie)
-    result == Ok [Violets, Violets, Clover, Grass]
+    result == Ok([Violets, Violets, Clover, Grass])
 
 # for David
 expect
@@ -110,7 +110,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(David)
-    result == Ok [Radishes, Violets, Clover, Radishes]
+    result == Ok([Radishes, Violets, Clover, Radishes])
 
 # for Eve
 expect
@@ -120,7 +120,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Eve)
-    result == Ok [Clover, Grass, Radishes, Grass]
+    result == Ok([Clover, Grass, Radishes, Grass])
 
 # for Fred
 expect
@@ -130,7 +130,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Fred)
-    result == Ok [Grass, Clover, Violets, Clover]
+    result == Ok([Grass, Clover, Violets, Clover])
 
 # for Ginny
 expect
@@ -140,7 +140,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Ginny)
-    result == Ok [Clover, Grass, Grass, Clover]
+    result == Ok([Clover, Grass, Grass, Clover])
 
 # for Harriet
 expect
@@ -150,7 +150,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Harriet)
-    result == Ok [Violets, Radishes, Radishes, Violets]
+    result == Ok([Violets, Radishes, Radishes, Violets])
 
 # for Ileana
 expect
@@ -160,7 +160,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Ileana)
-    result == Ok [Grass, Clover, Violets, Clover]
+    result == Ok([Grass, Clover, Violets, Clover])
 
 # for Joseph
 expect
@@ -170,7 +170,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Joseph)
-    result == Ok [Violets, Clover, Violets, Grass]
+    result == Ok([Violets, Clover, Violets, Grass])
 
 # for Kincaid, second to last student's garden
 expect
@@ -180,7 +180,7 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Kincaid)
-    result == Ok [Grass, Clover, Clover, Grass]
+    result == Ok([Grass, Clover, Clover, Grass])
 
 # for Larry, last student's garden
 expect
@@ -190,5 +190,5 @@ expect
         VRCCCGCRRGVCGCRVVCVGCGCV
         """
     result = diagram |> plants(Larry)
-    result == Ok [Grass, Violets, Clover, Violets]
+    result == Ok([Grass, Violets, Clover, Violets])
 

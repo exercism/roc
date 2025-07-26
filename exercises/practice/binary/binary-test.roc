@@ -15,47 +15,47 @@ import Binary exposing [decimal]
 # binary 0 is decimal 0
 expect
     result = decimal("0")
-    result == Ok 0
+    result == Ok(0)
 
 # binary 1 is decimal 1
 expect
     result = decimal("1")
-    result == Ok 1
+    result == Ok(1)
 
 # binary 10 is decimal 2
 expect
     result = decimal("10")
-    result == Ok 2
+    result == Ok(2)
 
 # binary 11 is decimal 3
 expect
     result = decimal("11")
-    result == Ok 3
+    result == Ok(3)
 
 # binary 100 is decimal 4
 expect
     result = decimal("100")
-    result == Ok 4
+    result == Ok(4)
 
 # binary 1001 is decimal 9
 expect
     result = decimal("1001")
-    result == Ok 9
+    result == Ok(9)
 
 # binary 11010 is decimal 26
 expect
     result = decimal("11010")
-    result == Ok 26
+    result == Ok(26)
 
 # binary 10001101000 is decimal 1128
 expect
     result = decimal("10001101000")
-    result == Ok 1128
+    result == Ok(1128)
 
 # binary ignores leading zeros
 expect
     result = decimal("000011111")
-    result == Ok 31
+    result == Ok(31)
 
 # 2 is not a valid binary digit
 expect

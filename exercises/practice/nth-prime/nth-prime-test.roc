@@ -15,22 +15,22 @@ import NthPrime exposing [prime]
 # first prime
 expect
     result = prime(1)
-    result == Ok 2
+    result == Ok(2)
 
 # second prime
 expect
     result = prime(2)
-    result == Ok 3
+    result == Ok(3)
 
 # sixth prime
 expect
     result = prime(6)
-    result == Ok 13
+    result == Ok(13)
 
 # big prime
 expect
     result = prime(10001)
-    result == Ok 104743
+    result == Ok(104743)
 
 # there is no zeroth prime
 expect

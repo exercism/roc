@@ -9,11 +9,11 @@ import {{ exercise | to_pascal }} exposing [from_list, to_list]
 {%- endmacro %}
 
 {% macro to_tree(tree) -%}
-{% if tree is none %}Nil{% else %}Node {
+{% if tree is none %}Nil{% else %}Node({
     value: {{ tree["data"] }},
     left: {{ to_tree(tree["left"]) }},
     right: {{ to_tree(tree["right"]) }},
-}{% endif %}
+}){% endif %}
 {%- endmacro %}
 
 {% for supercase in cases %}
@@ -33,12 +33,12 @@ import {{ exercise | to_pascal }} exposing [from_list, to_list]
 expect
     data = {{ to_int_list(subcase["input"]["treeData"]) }}
 {%- if subcase["property"] == "data" %}
-    result = data |> from_list
+    result = from_list(data)
     expected = {{ to_tree(subcase["expected"]) }}
     result == expected
 {%- else %}
-    tree = data |> from_list
-    result = tree |> to_list
+    tree = from_list(data)
+    result = to_list(tree)
     expected = {{ to_int_list(subcase["expected"]) }}
     result == expected
 {%- endif %}

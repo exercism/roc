@@ -16,60 +16,60 @@ import MicroBlog exposing [truncate]
 # English language short
 expect
     result = truncate("Hi")
-    result == Ok "Hi"
+    result == Ok("Hi")
 
 # English language long
 expect
     result = truncate("Hello there")
-    result == Ok "Hello"
+    result == Ok("Hello")
 
 # German language short (broth)
 expect
     result = truncate("brühe")
-    result == Ok "brühe"
+    result == Ok("brühe")
 
 # German language long (bear carpet → beards)
 expect
     result = truncate("Bärteppich")
-    result == Ok "Bärte"
+    result == Ok("Bärte")
 
 # Bulgarian language short (good)
 expect
     result = truncate("Добър")
-    result == Ok "Добър"
+    result == Ok("Добър")
 
 # Greek language short (health)
 expect
     result = truncate("υγειά")
-    result == Ok "υγειά"
+    result == Ok("υγειά")
 
 # Maths short
 expect
     result = truncate("a=πr²")
-    result == Ok "a=πr²"
+    result == Ok("a=πr²")
 
 # Maths long
 expect
     result = truncate("∅⊊ℕ⊊ℤ⊊ℚ⊊ℝ⊊ℂ")
-    result == Ok "∅⊊ℕ⊊ℤ"
+    result == Ok("∅⊊ℕ⊊ℤ")
 
 # English and emoji short
 expect
     result = truncate("Fly 🛫")
-    result == Ok "Fly 🛫"
+    result == Ok("Fly 🛫")
 
 # Emoji short
 expect
     result = truncate("💇")
-    result == Ok "💇"
+    result == Ok("💇")
 
 # Emoji long
 expect
     result = truncate("❄🌡🤧🤒🏥🕰😀")
-    result == Ok "❄🌡🤧🤒🏥"
+    result == Ok("❄🌡🤧🤒🏥")
 
 # Royal Flush?
 expect
     result = truncate("🃎🂸🃅🃋🃍🃁🃊")
-    result == Ok "🃎🂸🃅🃋🃍"
+    result == Ok("🃎🂸🃅🃋🃍")
 

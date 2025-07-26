@@ -15,7 +15,7 @@ expect
     phrase = {{ case["input"]["phrase"] | to_roc }} 
     result = phrase |> {{ case["property"] | to_snake }}
     expected = {{ case["expected"] | to_roc }} 
-    result == Ok expected
+    result == Ok(expected)
 
 {% endfor %}
 {% endfor %}

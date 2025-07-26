@@ -17,7 +17,7 @@ import {{ exercise | to_pascal }} exposing [latest, personal_best, personal_top_
 {%- endif %}
 expect
     result = {{ case["property"] | to_snake }}({{ case["input"]["scores"] }})
-    result == {% if case["property"] != "personalTopThree" %}Ok {% endif %}{{ case["expected"] | to_roc }}
+    result == {% if case["property"] != "personalTopThree" %}Ok({{ case["expected"] | to_roc }}){% endif %}{{ case["expected"] | to_roc }}
 
 {% endfor -%}
 {%- endfor %}

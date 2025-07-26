@@ -26,21 +26,24 @@ canonicalize = |dominoes|
 is_valid_chain_for : Result (List Domino) _, List Domino -> Bool
 is_valid_chain_for = |maybeChain, dominoes|
     when maybeChain is
-        Err _ -> Bool.false
-        Ok chain ->
-            if Set.from_list (canonicalize chain) == Set.from_list (canonicalize dominoes) then
+        Err(_) -> Bool.false
+        Ok(chain) ->
+            if Set.from_list(canonicalize chain) == Set.from_list(canonicalize dominoes) then
                 when chain is
                     [] -> Bool.true
                     [.., last] ->
                         chain
-                        |> List.walk_until (Ok last) \state, domino ->
-                            when state is
-                                Err InvalidChain -> crash "Unreachable"
-                                Ok previous ->
-                                    if previous.1 == domino.0 then
-                                        Continue (Ok domino)
-                                    else
-                                        Break (Err InvalidChain)
+                        |> List.walk_until(
+                            Ok(last),
+                            |state, domino|
+                                when state is
+                                    Err(InvalidChain) -> crash "Unreachable"
+                                    Ok(previous) ->
+                                        if previous.1 == domino.0 then
+                                            Continue(Ok(domino))
+                                        else
+                                            Break(Err(InvalidChain))
+                        )
                         |> Result.is_ok
             else
                 Bool.false
@@ -48,9 +51,9 @@ is_valid_chain_for = |maybeChain, dominoes|
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    result = find_chain {{ to_list_of_pairs(case["input"]["dominoes"]) }}
+    result = find_chain({{ to_list_of_pairs(case["input"]["dominoes"]) }})
     {%- if case["expected"] %}
-    result |> is_valid_chain_for {{ to_list_of_pairs(case["input"]["dominoes"]) }}
+    result |> is_valid_chain_for({{ to_list_of_pairs(case["input"]["dominoes"]) }})
     {%- else %}
     result |> Result.is_err
     {%- endif %}

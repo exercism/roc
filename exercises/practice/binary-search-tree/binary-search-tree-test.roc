@@ -18,12 +18,14 @@ import BinarySearchTree exposing [from_list, to_list]
 
 expect
     data = [4]
-    result = data |> from_list
-    expected = Node {
-        value: 4,
-        left: Nil,
-        right: Nil,
-    }
+    result = from_list(data)
+    expected = Node(
+        {
+            value: 4,
+            left: Nil,
+            right: Nil,
+        },
+    )
     result == expected
 
 ##
@@ -33,46 +35,58 @@ expect
 # smaller number at left node
 expect
     data = [4, 2]
-    result = data |> from_list
-    expected = Node {
-        value: 4,
-        left: Node {
-            value: 2,
-            left: Nil,
+    result = from_list(data)
+    expected = Node(
+        {
+            value: 4,
+            left: Node(
+                {
+                    value: 2,
+                    left: Nil,
+                    right: Nil,
+                },
+            ),
             right: Nil,
         },
-        right: Nil,
-    }
+    )
     result == expected
 
 # same number at left node
 expect
     data = [4, 4]
-    result = data |> from_list
-    expected = Node {
-        value: 4,
-        left: Node {
+    result = from_list(data)
+    expected = Node(
+        {
             value: 4,
-            left: Nil,
+            left: Node(
+                {
+                    value: 4,
+                    left: Nil,
+                    right: Nil,
+                },
+            ),
             right: Nil,
         },
-        right: Nil,
-    }
+    )
     result == expected
 
 # greater number at right node
 expect
     data = [4, 5]
-    result = data |> from_list
-    expected = Node {
-        value: 4,
-        left: Nil,
-        right: Node {
-            value: 5,
+    result = from_list(data)
+    expected = Node(
+        {
+            value: 4,
             left: Nil,
-            right: Nil,
+            right: Node(
+                {
+                    value: 5,
+                    left: Nil,
+                    right: Nil,
+                },
+            ),
         },
-    }
+    )
     result == expected
 
 ##
@@ -81,36 +95,50 @@ expect
 
 expect
     data = [4, 2, 6, 1, 3, 5, 7]
-    result = data |> from_list
-    expected = Node {
-        value: 4,
-        left: Node {
-            value: 2,
-            left: Node {
-                value: 1,
-                left: Nil,
-                right: Nil,
-            },
-            right: Node {
-                value: 3,
-                left: Nil,
-                right: Nil,
-            },
+    result = from_list(data)
+    expected = Node(
+        {
+            value: 4,
+            left: Node(
+                {
+                    value: 2,
+                    left: Node(
+                        {
+                            value: 1,
+                            left: Nil,
+                            right: Nil,
+                        },
+                    ),
+                    right: Node(
+                        {
+                            value: 3,
+                            left: Nil,
+                            right: Nil,
+                        },
+                    ),
+                },
+            ),
+            right: Node(
+                {
+                    value: 6,
+                    left: Node(
+                        {
+                            value: 5,
+                            left: Nil,
+                            right: Nil,
+                        },
+                    ),
+                    right: Node(
+                        {
+                            value: 7,
+                            left: Nil,
+                            right: Nil,
+                        },
+                    ),
+                },
+            ),
         },
-        right: Node {
-            value: 6,
-            left: Node {
-                value: 5,
-                left: Nil,
-                right: Nil,
-            },
-            right: Node {
-                value: 7,
-                left: Nil,
-                right: Nil,
-            },
-        },
-    }
+    )
     result == expected
 
 ##
@@ -120,40 +148,40 @@ expect
 # can sort single number
 expect
     data = [2]
-    tree = data |> from_list
-    result = tree |> to_list
+    tree = from_list(data)
+    result = to_list(tree)
     expected = [2]
     result == expected
 
 # can sort if second number is smaller than first
 expect
     data = [2, 1]
-    tree = data |> from_list
-    result = tree |> to_list
+    tree = from_list(data)
+    result = to_list(tree)
     expected = [1, 2]
     result == expected
 
 # can sort if second number is same as first
 expect
     data = [2, 2]
-    tree = data |> from_list
-    result = tree |> to_list
+    tree = from_list(data)
+    result = to_list(tree)
     expected = [2, 2]
     result == expected
 
 # can sort if second number is greater than first
 expect
     data = [2, 3]
-    tree = data |> from_list
-    result = tree |> to_list
+    tree = from_list(data)
+    result = to_list(tree)
     expected = [2, 3]
     result == expected
 
 # can sort complex tree
 expect
     data = [2, 1, 3, 6, 7, 5]
-    tree = data |> from_list
-    result = tree |> to_list
+    tree = from_list(data)
+    result = to_list(tree)
     expected = [1, 2, 3, 5, 6, 7]
     result == expected
 

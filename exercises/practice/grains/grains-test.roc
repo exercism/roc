@@ -19,37 +19,37 @@ import Grains exposing [grains_on_square, total_grains]
 # grains on square 1
 expect
     result = grains_on_square 1
-    result == Ok 1
+    result == Ok(1)
 
 # grains on square 2
 expect
     result = grains_on_square 2
-    result == Ok 2
+    result == Ok(2)
 
 # grains on square 3
 expect
     result = grains_on_square 3
-    result == Ok 4
+    result == Ok(4)
 
 # grains on square 4
 expect
     result = grains_on_square 4
-    result == Ok 8
+    result == Ok(8)
 
 # grains on square 16
 expect
     result = grains_on_square 16
-    result == Ok 32768
+    result == Ok(32768)
 
 # grains on square 32
 expect
     result = grains_on_square 32
-    result == Ok 2147483648
+    result == Ok(2147483648)
 
 # grains on square 64
 expect
     result = grains_on_square 64
-    result == Ok 9223372036854775808
+    result == Ok(9223372036854775808)
 
 # square 0 is invalid
 expect

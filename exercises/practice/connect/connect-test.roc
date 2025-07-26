@@ -29,13 +29,13 @@ expect
 expect
     board = "X"
     result = board |> winner
-    result == Ok PlayerX
+    result == Ok(PlayerX)
 
 # O can win on a 1x1 board
 expect
     board = "O"
     result = board |> winner
-    result == Ok PlayerO
+    result == Ok(PlayerO)
 
 # only edges does not make a winner
 expect
@@ -86,7 +86,7 @@ expect
             . O X .
         """
     result = board |> winner
-    result == Ok PlayerX
+    result == Ok(PlayerX)
 
 # O wins crossing from top to bottom
 expect
@@ -99,7 +99,7 @@ expect
             . O X .
         """
     result = board |> winner
-    result == Ok PlayerO
+    result == Ok(PlayerO)
 
 # X wins using a convoluted path
 expect
@@ -112,7 +112,7 @@ expect
             O O O O O
         """
     result = board |> winner
-    result == Ok PlayerX
+    result == Ok(PlayerX)
 
 # X wins using a spiral path
 expect
@@ -129,5 +129,5 @@ expect
                 X X X X X X X X O
         """
     result = board |> winner
-    result == Ok PlayerX
+    result == Ok(PlayerX)
 
