@@ -18,8 +18,10 @@ Domino : (U8, U8)
 canonicalize : List Domino -> List Domino
 canonicalize = |dominoes|
     dominoes
-    |> List.map |domino|
-        if domino.0 > domino.1 then (domino.1, domino.0) else domino
+    |> List.map(
+        |domino|
+            if domino.0 > domino.1 then (domino.1, domino.0) else domino,
+    )
 
 ## Ensure that the given result is Ok and is a valid chain for the
 ## given list of dominoes

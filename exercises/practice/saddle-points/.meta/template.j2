@@ -13,11 +13,11 @@ expect
         {%- endfor %}
     ]
     result = treeHeights |> {{ case["property"] | to_snake }}
-    expected = Set.from_list [
+    expected = Set.from_list([
         {%- for tree in case["expected"] %}
         {{ tree | to_roc }},
         {%- endfor %}
-    ]
+    ])
     result == expected
 
 {% endfor %}

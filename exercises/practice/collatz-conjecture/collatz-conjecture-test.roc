@@ -35,5 +35,5 @@ expect
 # zero is an error
 expect
     result = steps(0)
-    Result.is_err result
+    Result.is_err(result)
 

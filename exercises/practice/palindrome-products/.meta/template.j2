@@ -19,10 +19,10 @@ expect
     {%- else %}
     expected = Ok({
         value: {% if case["expected"]["value"] is none %}0{% else %}{{ case["expected"]["value"] }}{% endif %},
-        factors: Set.from_list [
+        factors: Set.from_list([
             {%- for pair in case["expected"]["factors"] %}
             ({{ pair[0] }}, {{ pair[1] }}),{% endfor %}
-        ]
+        ])
     })
     result |> isEq expected
     {%- endif %}

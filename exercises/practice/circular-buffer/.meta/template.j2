@@ -16,11 +16,11 @@ run_operations{{ loop.index }} = |_|
         |> overwrite {{ op["item"] }}
         {%- elif op["operation"] == "write" %}
         {%- if op["should_succeed"] %}
-        |> write? {{ op["item"] }}
+        |> write({{ op["item"] }})?
         {%- else %}
-        |> \buffer_before_write ->
+        |> |buffer_before_write|
             write_result = buffer_before_write |> write {{ op["item"] }}
-            expect write_result == Err BufferFull
+            expect write_result == Err(BufferFull)
             buffer_before_write
         {%- endif %}
         {%- elif op["operation"] == "read" %}
@@ -31,7 +31,7 @@ run_operations{{ loop.index }} = |_|
         {%- else %}
         |> |buffer_before_read|
             read_result = buffer_before_read |> read
-            expect read_result == Err BufferEmpty
+            expect read_result == Err(BufferEmpty)
             buffer_before_read
         {%- endif %}
         {%- endif %}
@@ -40,7 +40,7 @@ run_operations{{ loop.index }} = |_|
 
 expect
     
-    result = run_operations{{ loop.index }} {}
+    result = run_operations{{ loop.index }}({})
     result |> Result.is_ok
 
 {% endfor %}

@@ -24,7 +24,7 @@ replay_game = |rolls|
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    maybe_game = create { previous_rolls : {{ case["input"]["previousRolls"] | to_roc }} }
+    maybe_game = create({ previous_rolls : {{ case["input"]["previousRolls"] | to_roc }} })
     {%- if case["property"] == "score" %}
     result = maybe_game |> Result.try(|game| score(game))
     {%- else %}
@@ -41,7 +41,7 @@ expect
 # should be able to replay this finished game from the start
 expect
     rolls = {{ case["input"]["previousRolls"] | to_roc }}
-    result = replay_game rolls
+    result = replay_game(rolls)
     result |> Result.is_ok
 
     {%- endif %}

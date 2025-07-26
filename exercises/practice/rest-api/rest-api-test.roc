@@ -68,14 +68,14 @@ expect
         users: [
             {
                 name: "Adam",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list([]),
                 balance: 0.0,
             },
             {
                 name: "Bob",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list([]),
                 balance: 0.0,
             },
         ],
@@ -102,14 +102,14 @@ expect
         users: [
             {
                 name: "Adam",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list([]),
                 balance: 0.0,
             },
             {
                 name: "Bob",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list([]),
                 balance: 0.0,
             },
         ],
@@ -132,24 +132,28 @@ expect
         users: [
             {
                 name: "Adam",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list([]),
                 balance: 0.0,
             },
             {
                 name: "Bob",
-                owes: Dict.from_list [
-                    ("Chuck", 3.0),
-                ],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list(
+                    [
+                        ("Chuck", 3.0),
+                    ],
+                ),
+                owed_by: Dict.from_list([]),
                 balance: -3.0,
             },
             {
                 name: "Chuck",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [
-                    ("Bob", 3.0),
-                ],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list(
+                    [
+                        ("Bob", 3.0),
+                    ],
+                ),
                 balance: 3.0,
             },
         ],
@@ -172,24 +176,28 @@ expect
         users: [
             {
                 name: "Adam",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list([]),
                 balance: 0.0,
             },
             {
                 name: "Bob",
-                owes: Dict.from_list [
-                    ("Chuck", 3.0),
-                ],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list(
+                    [
+                        ("Chuck", 3.0),
+                    ],
+                ),
+                owed_by: Dict.from_list([]),
                 balance: -3.0,
             },
             {
                 name: "Chuck",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [
-                    ("Bob", 3.0),
-                ],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list(
+                    [
+                        ("Bob", 3.0),
+                    ],
+                ),
                 balance: 3.0,
             },
         ],
@@ -212,18 +220,22 @@ expect
         users: [
             {
                 name: "Adam",
-                owes: Dict.from_list [
-                    ("Bob", 3.0),
-                ],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list(
+                    [
+                        ("Bob", 3.0),
+                    ],
+                ),
+                owed_by: Dict.from_list([]),
                 balance: -3.0,
             },
             {
                 name: "Bob",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [
-                    ("Adam", 3.0),
-                ],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list(
+                    [
+                        ("Adam", 3.0),
+                    ],
+                ),
                 balance: 3.0,
             },
         ],
@@ -246,18 +258,22 @@ expect
         users: [
             {
                 name: "Adam",
-                owes: Dict.from_list [
-                    ("Bob", 3.0),
-                ],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list(
+                    [
+                        ("Bob", 3.0),
+                    ],
+                ),
+                owed_by: Dict.from_list([]),
                 balance: -3.0,
             },
             {
                 name: "Bob",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [
-                    ("Adam", 3.0),
-                ],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list(
+                    [
+                        ("Adam", 3.0),
+                    ],
+                ),
                 balance: 3.0,
             },
         ],
@@ -280,18 +296,22 @@ expect
         users: [
             {
                 name: "Adam",
-                owes: Dict.from_list [
-                    ("Bob", 3.0),
-                ],
-                owed_by: Dict.from_list [],
+                owes: Dict.from_list(
+                    [
+                        ("Bob", 3.0),
+                    ],
+                ),
+                owed_by: Dict.from_list([]),
                 balance: -3.0,
             },
             {
                 name: "Bob",
-                owes: Dict.from_list [],
-                owed_by: Dict.from_list [
-                    ("Adam", 3.0),
-                ],
+                owes: Dict.from_list([]),
+                owed_by: Dict.from_list(
+                    [
+                        ("Adam", 3.0),
+                    ],
+                ),
                 balance: 3.0,
             },
         ],

@@ -25,9 +25,11 @@ expect
     expected = Ok(
         {
             value: 1,
-            factors: Set.from_list [
-                (1, 1),
-            ],
+            factors: Set.from_list(
+                [
+                    (1, 1),
+                ],
+            ),
         },
     )
     result |> isEq expected
@@ -38,10 +40,12 @@ expect
     expected = Ok(
         {
             value: 9,
-            factors: Set.from_list [
-                (1, 9),
-                (3, 3),
-            ],
+            factors: Set.from_list(
+                [
+                    (1, 9),
+                    (3, 3),
+                ],
+            ),
         },
     )
     result |> isEq expected
@@ -52,9 +56,11 @@ expect
     expected = Ok(
         {
             value: 121,
-            factors: Set.from_list [
-                (11, 11),
-            ],
+            factors: Set.from_list(
+                [
+                    (11, 11),
+                ],
+            ),
         },
     )
     result |> isEq expected
@@ -65,9 +71,11 @@ expect
     expected = Ok(
         {
             value: 9009,
-            factors: Set.from_list [
-                (91, 99),
-            ],
+            factors: Set.from_list(
+                [
+                    (91, 99),
+                ],
+            ),
         },
     )
     result |> isEq expected
@@ -78,9 +86,11 @@ expect
     expected = Ok(
         {
             value: 10201,
-            factors: Set.from_list [
-                (101, 101),
-            ],
+            factors: Set.from_list(
+                [
+                    (101, 101),
+                ],
+            ),
         },
     )
     result |> isEq expected
@@ -91,9 +101,11 @@ expect
     expected = Ok(
         {
             value: 906609,
-            factors: Set.from_list [
-                (913, 993),
-            ],
+            factors: Set.from_list(
+                [
+                    (913, 993),
+                ],
+            ),
         },
     )
     result |> isEq expected
@@ -104,9 +116,11 @@ expect
     expected = Ok(
         {
             value: 1002001,
-            factors: Set.from_list [
-                (1001, 1001),
-            ],
+            factors: Set.from_list(
+                [
+                    (1001, 1001),
+                ],
+            ),
         },
     )
     result |> isEq expected
@@ -117,9 +131,11 @@ expect
     expected = Ok(
         {
             value: 99000099,
-            factors: Set.from_list [
-                (9901, 9999),
-            ],
+            factors: Set.from_list(
+                [
+                    (9901, 9999),
+                ],
+            ),
         },
     )
     result |> isEq expected
@@ -130,8 +146,10 @@ expect
     expected = Ok(
         {
             value: 0,
-            factors: Set.from_list [
-            ],
+            factors: Set.from_list(
+                [
+                ],
+            ),
         },
     )
     result |> isEq expected
@@ -142,8 +160,10 @@ expect
     expected = Ok(
         {
             value: 0,
-            factors: Set.from_list [
-            ],
+            factors: Set.from_list(
+                [
+                ],
+            ),
         },
     )
     result |> isEq expected
@@ -164,9 +184,11 @@ expect
     expected = Ok(
         {
             value: 10988901,
-            factors: Set.from_list [
-                (3297, 3333),
-            ],
+            factors: Set.from_list(
+                [
+                    (3297, 3333),
+                ],
+            ),
         },
     )
     result |> isEq expected

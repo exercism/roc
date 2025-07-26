@@ -54,12 +54,12 @@ expect
 # square 0 is invalid
 expect
     result = grains_on_square 0
-    Result.is_err result
+    Result.is_err(result)
 
 # square greater than 64 is invalid
 expect
     result = grains_on_square 65
-    Result.is_err result
+    Result.is_err(result)
 
 ##
 ## returns the total number of grains on the board

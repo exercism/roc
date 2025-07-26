@@ -10,7 +10,7 @@ expect
     grid = {{ case["input"]["grid"] | to_roc_multiline_string | indent(8) }}
     words_to_search_for = {{ case["input"]["wordsToSearchFor"] | to_roc }}
     result = grid |> {{ case["property"] | to_snake }} words_to_search_for
-    expected = Dict.from_list [
+    expected = Dict.from_list([
     {%- for word, result in case["expected"].items() %}
         {%- if result is none %}
         # {{ word | to_roc }} is not in the grid
@@ -18,7 +18,7 @@ expect
         ({{ word | to_roc }}, {{ result | to_roc }}),
         {%- endif %}
     {%- endfor %}
-    ]
+    ])
     result == expected
 
 {% endfor %}

@@ -214,51 +214,51 @@ expect
 
 # list when: no allergies
 expect
-    result = set 0
+    result = set(0)
     result == Set.from_list([])
 
 # list when: just eggs
 expect
-    result = set 1
+    result = set(1)
     result == Set.from_list([Eggs])
 
 # list when: just peanuts
 expect
-    result = set 2
+    result = set(2)
     result == Set.from_list([Peanuts])
 
 # list when: just strawberries
 expect
-    result = set 8
+    result = set(8)
     result == Set.from_list([Strawberries])
 
 # list when: eggs and peanuts
 expect
-    result = set 3
+    result = set(3)
     result == Set.from_list([Eggs, Peanuts])
 
 # list when: more than eggs but not peanuts
 expect
-    result = set 5
+    result = set(5)
     result == Set.from_list([Eggs, Shellfish])
 
 # list when: lots of stuff
 expect
-    result = set 248
+    result = set(248)
     result == Set.from_list([Strawberries, Tomatoes, Chocolate, Pollen, Cats])
 
 # list when: everything
 expect
-    result = set 255
+    result = set(255)
     result == Set.from_list([Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats])
 
 # list when: no allergen score parts
 expect
-    result = set 509
+    result = set(509)
     result == Set.from_list([Eggs, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats])
 
 # list when: no allergen score parts without highest valid score
 expect
-    result = set 257
+    result = set(257)
     result == Set.from_list([Eggs])
 

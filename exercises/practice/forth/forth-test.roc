@@ -30,12 +30,12 @@ expect
 # addition: errors if there is nothing on the stack
 expect
     result = evaluate "+"
-    Result.is_err result
+    Result.is_err(result)
 
 # addition: errors if there is only one value on the stack
 expect
     result = evaluate "1 +"
-    Result.is_err result
+    Result.is_err(result)
 
 # addition: more than two values on the stack
 expect
@@ -50,12 +50,12 @@ expect
 # subtraction: errors if there is nothing on the stack
 expect
     result = evaluate "-"
-    Result.is_err result
+    Result.is_err(result)
 
 # subtraction: errors if there is only one value on the stack
 expect
     result = evaluate "1 -"
-    Result.is_err result
+    Result.is_err(result)
 
 # subtraction: more than two values on the stack
 expect
@@ -70,12 +70,12 @@ expect
 # multiplication: errors if there is nothing on the stack
 expect
     result = evaluate "*"
-    Result.is_err result
+    Result.is_err(result)
 
 # multiplication: errors if there is only one value on the stack
 expect
     result = evaluate "1 *"
-    Result.is_err result
+    Result.is_err(result)
 
 # multiplication: more than two values on the stack
 expect
@@ -95,17 +95,17 @@ expect
 # division: errors if dividing by zero
 expect
     result = evaluate "4 0 /"
-    Result.is_err result
+    Result.is_err(result)
 
 # division: errors if there is nothing on the stack
 expect
     result = evaluate "/"
-    Result.is_err result
+    Result.is_err(result)
 
 # division: errors if there is only one value on the stack
 expect
     result = evaluate "1 /"
-    Result.is_err result
+    Result.is_err(result)
 
 # division: more than two values on the stack
 expect
@@ -145,7 +145,7 @@ expect
 # dup: errors if there is nothing on the stack
 expect
     result = evaluate "dup"
-    Result.is_err result
+    Result.is_err(result)
 
 # drop: removes the top value on the stack if it is the only one
 expect
@@ -160,7 +160,7 @@ expect
 # drop: errors if there is nothing on the stack
 expect
     result = evaluate "drop"
-    Result.is_err result
+    Result.is_err(result)
 
 # swap: swaps the top two values on the stack if they are the only ones
 expect
@@ -175,12 +175,12 @@ expect
 # swap: errors if there is nothing on the stack
 expect
     result = evaluate "swap"
-    Result.is_err result
+    Result.is_err(result)
 
 # swap: errors if there is only one value on the stack
 expect
     result = evaluate "1 swap"
-    Result.is_err result
+    Result.is_err(result)
 
 # over: copies the second element if there are only two
 expect
@@ -195,12 +195,12 @@ expect
 # over: errors if there is nothing on the stack
 expect
     result = evaluate "over"
-    Result.is_err result
+    Result.is_err(result)
 
 # over: errors if there is only one value on the stack
 expect
     result = evaluate "1 over"
-    Result.is_err result
+    Result.is_err(result)
 
 # user-defined words: can consist of built-in words
 expect
@@ -272,7 +272,7 @@ expect
 # user-defined words: errors if executing a non-existent word
 expect
     result = evaluate "foo"
-    Result.is_err result
+    Result.is_err(result)
 
 # case-insensitivity: DUP is case-insensitive
 expect

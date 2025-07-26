@@ -6,11 +6,11 @@
 {%- if territory == [] %}
 Set.empty {}
 {%- else %}
-Set.from_list [
+Set.from_list([
 {%- for intersection in territory %}
     { x : {{ intersection[0] }}, y : {{ intersection[1] }} },
 {%- endfor %}
-]
+])
 {%- endif %}
 {% endmacro %}
 

@@ -37,7 +37,7 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [],
+            properties: Dict.from_list([]),
             children: [],
         }
     result == Ok(expected)
@@ -48,9 +48,11 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["B"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["B"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)
@@ -61,10 +63,12 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["b"]),
-                ("C", ["d"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["b"]),
+                    ("C", ["d"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)
@@ -93,14 +97,18 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["B"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["B"]),
+                ],
+            ),
             children: [
                 GameNode {
-                    properties: Dict.from_list [
-                        ("B", ["C"]),
-                    ],
+                    properties: Dict.from_list(
+                        [
+                            ("B", ["C"]),
+                        ],
+                    ),
                     children: [],
                 },
             ],
@@ -113,20 +121,26 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["B"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["B"]),
+                ],
+            ),
             children: [
                 GameNode {
-                    properties: Dict.from_list [
-                        ("B", ["C"]),
-                    ],
+                    properties: Dict.from_list(
+                        [
+                            ("B", ["C"]),
+                        ],
+                    ),
                     children: [],
                 },
                 GameNode {
-                    properties: Dict.from_list [
-                        ("C", ["D"]),
-                    ],
+                    properties: Dict.from_list(
+                        [
+                            ("C", ["D"]),
+                        ],
+                    ),
                     children: [],
                 },
             ],
@@ -139,9 +153,11 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["b", "c", "d"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["b", "c", "d"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)
@@ -152,9 +168,11 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["hello  world"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["hello  world"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)
@@ -165,9 +183,11 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["hello\n\nworld"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["hello\n\nworld"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)
@@ -178,9 +198,11 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["]"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["]"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)
@@ -191,9 +213,11 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["\\"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["\\"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)
@@ -204,15 +228,19 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["x[y]z", "foo"]),
-                ("B", ["bar"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["x[y]z", "foo"]),
+                    ("B", ["bar"]),
+                ],
+            ),
             children: [
                 GameNode {
-                    properties: Dict.from_list [
-                        ("C", ["baz"]),
-                    ],
+                    properties: Dict.from_list(
+                        [
+                            ("C", ["baz"]),
+                        ],
+                    ),
                     children: [],
                 },
             ],
@@ -225,15 +253,19 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["a;b", "foo"]),
-                ("B", ["bar"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["a;b", "foo"]),
+                    ("B", ["bar"]),
+                ],
+            ),
             children: [
                 GameNode {
-                    properties: Dict.from_list [
-                        ("C", ["baz"]),
-                    ],
+                    properties: Dict.from_list(
+                        [
+                            ("C", ["baz"]),
+                        ],
+                    ),
                     children: [],
                 },
             ],
@@ -246,15 +278,19 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["x(y)z", "foo"]),
-                ("B", ["bar"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["x(y)z", "foo"]),
+                    ("B", ["bar"]),
+                ],
+            ),
             children: [
                 GameNode {
-                    properties: Dict.from_list [
-                        ("C", ["baz"]),
-                    ],
+                    properties: Dict.from_list(
+                        [
+                            ("C", ["baz"]),
+                        ],
+                    ),
                     children: [],
                 },
             ],
@@ -267,9 +303,11 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["hello world"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["hello world"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)
@@ -280,9 +318,11 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["helloworld"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["helloworld"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)
@@ -293,9 +333,11 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["t = t and n = n"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["t = t and n = n"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)
@@ -306,9 +348,11 @@ expect
     result = parse sgf
     expected =
         GameNode {
-            properties: Dict.from_list [
-                ("A", ["]b\ncd  e\\ ]"]),
-            ],
+            properties: Dict.from_list(
+                [
+                    ("A", ["]b\ncd  e\\ ]"]),
+                ],
+            ),
             children: [],
         }
     result == Ok(expected)

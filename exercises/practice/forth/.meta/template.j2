@@ -10,7 +10,7 @@ import Forth exposing [evaluate]
 expect
     result = evaluate {{ innerCase["input"]["instructions"] | join('\n') | to_roc_multiline_string | indent(8) }}
     {%- if innerCase["expected"]["error"] %}
-    Result.is_err result
+    Result.is_err(result)
     {%- else %}
     result == Ok({{ innerCase["expected"] }})
     {%- endif %}

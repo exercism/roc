@@ -86,5 +86,5 @@ expect
 # Zero is rejected (as it is not a positive integer)
 expect
     result = classify(0)
-    Result.is_err result
+    Result.is_err(result)
 

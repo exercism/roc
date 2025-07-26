@@ -14,7 +14,7 @@ import {{ exercise | to_pascal }} exposing [classify]
 expect
     result = {{ case["property"] | to_snake }}({{ case["input"]["number"] }})
 {%- if case["expected"]["error"] %}
-    Result.is_err result
+    Result.is_err(result)
 {%- else %}
     result == Ok({{ case["expected"] | to_pascal }})
 {%- endif %}

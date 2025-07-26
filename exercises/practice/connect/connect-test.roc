@@ -23,7 +23,7 @@ expect
             . . . . .
         """
     result = board |> winner
-    result == Err NotFinished
+    result == Err(NotFinished)
 
 # X can win on a 1x1 board
 expect
@@ -47,7 +47,7 @@ expect
            X O O O
         """
     result = board |> winner
-    result == Err NotFinished
+    result == Err(NotFinished)
 
 # illegal diagonal does not make a winner
 expect
@@ -60,7 +60,7 @@ expect
             X X O O
         """
     result = board |> winner
-    result == Err NotFinished
+    result == Err(NotFinished)
 
 # nobody wins crossing adjacent angles
 expect
@@ -73,7 +73,7 @@ expect
             . . O .
         """
     result = board |> winner
-    result == Err NotFinished
+    result == Err(NotFinished)
 
 # X wins crossing from left to right
 expect

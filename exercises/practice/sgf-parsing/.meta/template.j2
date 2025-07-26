@@ -6,10 +6,10 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 
 {%- macro to_node(node) %}
 GameNode {
-  properties: Dict.from_list [
+  properties: Dict.from_list([
       {%- for name, values in node["properties"].items() %}
       ({{ name | to_roc }}, {{ values | to_roc }}),
-      {%- endfor %}],
+      {%- endfor %}]),
   children: [
       {%- for child_node in node["children"] %}
       {{ to_node(child_node) }},

@@ -12,7 +12,7 @@ expect
     result = allergic_to({{ case["input"]["item"] | to_pascal }}, {{ case["input"]["score"] | to_roc }})
     result == {{ case["expected"] | to_roc }}
     {%- else %}
-    result = set {{ case["input"]["score"] }}
+    result = set({{ case["input"]["score"] }})
     result == Set.from_list([{{ case["expected"] | map('to_pascal') | join(", ") }}])
     {%- endif %}
 

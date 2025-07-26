@@ -26,16 +26,16 @@ expect
             {%- for user in case["input"]["database"]["users"] %}
             {
                 name: {{ user["name"] | to_roc }},
-                owes: Dict.from_list [
+                owes: Dict.from_list([
                     {%- for (name, amount) in user["owes"].items() %}
                     ({{ name | to_roc }}, {{ amount }}),
                     {%- endfor -%}
-                ],
-                owed_by: Dict.from_list [
+                ]),
+                owed_by: Dict.from_list([
                     {%- for (name, amount) in user["owed_by"].items() %}
                     ({{ name | to_roc }}, {{ amount }}),
                     {%- endfor -%}
-                ],
+                ]),
                 balance: {{ user["balance"] }},
             },
             {%- endfor %}

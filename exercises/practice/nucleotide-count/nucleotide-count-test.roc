@@ -35,5 +35,5 @@ expect
 # strand with invalid nucleotides
 expect
     result = nucleotide_counts("AGXXACT")
-    Result.is_err result
+    Result.is_err(result)
 
