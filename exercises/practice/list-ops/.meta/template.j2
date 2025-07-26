@@ -21,25 +21,25 @@ import {{ exercise | to_pascal }} exposing [append, concat, filter, length, map,
 # {{ case["description"] }}
 expect
 {%- if case["property"] == "append" %}
-    result = {{ case["property"] | to_snake }} {{ case["input"]["list1"] | to_roc }} {{ case["input"]["list2"] | to_roc }}
+    result = {{ case["property"] | to_snake }}({{ case["input"]["list1"] | to_roc }}, {{ case["input"]["list2"] | to_roc }})
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "concat" %}
-    result = {{ case["property"] | to_snake }} {{ case["input"]["lists"] | to_roc }}
+    result = {{ case["property"] | to_snake }}({{ case["input"]["lists"] | to_roc }})
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "filter" %}
-    result = {{ case["property"] | to_snake }} {{ case["input"]["list"] | to_roc }} ({{ function_map[case["input"]["function"]] }})
+    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }}, {{ function_map[case["input"]["function"]] }})
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "length" %}
-    result = {{ case["property"] | to_snake }} {{ case["input"]["list"] | to_roc }}
+    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }})
     result == {{ case["expected"] }}
 {%- elif case["property"] == "map" %}
-    result = {{ case["property"] | to_snake }} {{ case["input"]["list"] | to_roc }} ({{ function_map[case["input"]["function"]] }})
+    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }}, {{ function_map[case["input"]["function"]] }})
     result == {{ case["expected"] }}
 {%- elif case["property"] in ("foldl", "foldr") %}
-    result = {{ case["property"] | to_snake }} {{ case["input"]["list"] | to_roc }} {{ case["input"]["initial"] }} ({{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %}|> Num.round{% endif %}
+    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }}, {{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %}|> Num.round{% endif %}
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "reverse" %}
-    result = {{ case["property"] | to_snake }} {{ case["input"]["list"] | to_roc }}
+    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }})
     result == {{ case["expected"] | to_roc }}
 {%- else %}
     Bool.true # This test case is not yet implemented

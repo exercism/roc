@@ -8,126 +8,135 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import Rectangles exposing [rectangles]
 
 # no rows
 expect
-    result = rectangles ""
+    result = rectangles("")
     result == 0
 
 # no columns
 expect
-    result = rectangles ""
+    result = rectangles("")
     result == 0
 
 # no rectangles
 expect
-    result = rectangles " "
+    result = rectangles(" ")
     result == 0
 
 # one rectangle
 expect
-    result = rectangles
+    result = rectangles(
         """
         +-+
         | |
         +-+
-        """
+        """,
+    )
     result == 1
 
 # two rectangles without shared parts
 expect
-    result = rectangles
+    result = rectangles(
         """
           +-+
           | |
         +-+-+
         | |  
         +-+  
-        """
+        """,
+    )
     result == 2
 
 # five rectangles with shared parts
 expect
-    result = rectangles
+    result = rectangles(
         """
           +-+
           | |
         +-+-+
         | | |
         +-+-+
-        """
+        """,
+    )
     result == 5
 
 # rectangle of height 1 is counted
 expect
-    result = rectangles
+    result = rectangles(
         """
         +--+
         +--+
-        """
+        """,
+    )
     result == 1
 
 # rectangle of width 1 is counted
 expect
-    result = rectangles
+    result = rectangles(
         """
         ++
         ||
         ++
-        """
+        """,
+    )
     result == 1
 
 # 1x1 square is counted
 expect
-    result = rectangles
+    result = rectangles(
         """
         ++
         ++
-        """
+        """,
+    )
     result == 1
 
 # only complete rectangles are counted
 expect
-    result = rectangles
+    result = rectangles(
         """
           +-+
             |
         +-+-+
         | | -
         +-+-+
-        """
+        """,
+    )
     result == 1
 
 # rectangles can be of different sizes
 expect
-    result = rectangles
+    result = rectangles(
         """
         +------+----+
         |      |    |
         +---+--+    |
         |   |       |
         +---+-------+
-        """
+        """,
+    )
     result == 3
 
 # corner is required for a rectangle to be complete
 expect
-    result = rectangles
+    result = rectangles(
         """
         +------+----+
         |      |    |
         +------+    |
         |   |       |
         +---+-------+
-        """
+        """,
+    )
     result == 2
 
 # large input with many rectangles
 expect
-    result = rectangles
+    result = rectangles(
         """
         +---+--+----+
         |   +--+----+
@@ -137,12 +146,13 @@ expect
         +---+--+--+-+
         +------+  | |
                   +-+
-        """
+        """,
+    )
     result == 60
 
 # rectangles must have four sides
 expect
-    result = rectangles
+    result = rectangles(
         """
         +-+ +-+
         | | | |
@@ -151,6 +161,7 @@ expect
         +-+-+-+
         | | | |
         +-+ +-+
-        """
+        """,
+    )
     result == 5
 

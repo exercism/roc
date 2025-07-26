@@ -8,7 +8,7 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import DifferenceOfSquares exposing [square_of_sum, sum_of_squares, difference_of_squares]
 
@@ -18,17 +18,17 @@ import DifferenceOfSquares exposing [square_of_sum, sum_of_squares, difference_o
 
 # square of sum 1
 expect
-    result = square_of_sum 1
+    result = square_of_sum(1)
     result == 1
 
 # square of sum 5
 expect
-    result = square_of_sum 5
+    result = square_of_sum(5)
     result == 225
 
 # square of sum 100
 expect
-    result = square_of_sum 100
+    result = square_of_sum(100)
     result == 25502500
 
 ##
@@ -37,17 +37,17 @@ expect
 
 # sum of squares 1
 expect
-    result = sum_of_squares 1
+    result = sum_of_squares(1)
     result == 1
 
 # sum of squares 5
 expect
-    result = sum_of_squares 5
+    result = sum_of_squares(5)
     result == 55
 
 # sum of squares 100
 expect
-    result = sum_of_squares 100
+    result = sum_of_squares(100)
     result == 338350
 
 ##
@@ -56,16 +56,16 @@ expect
 
 # difference of squares 1
 expect
-    result = difference_of_squares 1
+    result = difference_of_squares(1)
     result == 0
 
 # difference of squares 5
 expect
-    result = difference_of_squares 5
+    result = difference_of_squares(5)
     result == 170
 
 # difference of squares 100
 expect
-    result = difference_of_squares 100
+    result = difference_of_squares(100)
     result == 25164150
 

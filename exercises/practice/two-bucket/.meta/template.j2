@@ -7,20 +7,20 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    result = {{ case["property"] | to_snake }} {
+    result = {{ case["property"] | to_snake }}({
         bucket_one: {{ case["input"]["bucketOne"] }},
         bucket_two: {{ case["input"]["bucketTwo"] }},
         goal: {{ case["input"]["goal"] }},
         start_bucket: {{ case["input"]["startBucket"] | to_pascal }},
-    }
+    })
     {%- if case["expected"]["error"] %}
     result |> Result.is_err
     {%- else %}
-    expected = Ok {
+    expected = Ok({
         moves: {{ case["expected"]["moves"] }},
         goal_bucket: {{ case["expected"]["goalBucket"] | to_pascal }},
         other_bucket: {{ case["expected"]["otherBucket"] }},
-    }
+    })
     result == expected
     {%- endif %}
 

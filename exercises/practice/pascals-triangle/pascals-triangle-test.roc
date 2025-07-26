@@ -8,7 +8,7 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import PascalsTriangle exposing [pascals_triangle]
 

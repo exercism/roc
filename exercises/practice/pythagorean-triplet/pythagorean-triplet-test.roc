@@ -8,13 +8,13 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import PythagoreanTriplet exposing [triplets_with_sum]
 
 # triplets whose sum is 12
 expect
-    result = triplets_with_sum 12
+    result = triplets_with_sum(12)
     expected = Set.from_list [
         (3, 4, 5),
     ]
@@ -22,7 +22,7 @@ expect
 
 # triplets whose sum is 108
 expect
-    result = triplets_with_sum 108
+    result = triplets_with_sum(108)
     expected = Set.from_list [
         (27, 36, 45),
     ]
@@ -30,7 +30,7 @@ expect
 
 # triplets whose sum is 1000
 expect
-    result = triplets_with_sum 1000
+    result = triplets_with_sum(1000)
     expected = Set.from_list [
         (200, 375, 425),
     ]
@@ -38,13 +38,13 @@ expect
 
 # no matching triplets for 1001
 expect
-    result = triplets_with_sum 1001
+    result = triplets_with_sum(1001)
     expected = Set.from_list []
     result == expected
 
 # returns all matching triplets
 expect
-    result = triplets_with_sum 90
+    result = triplets_with_sum(90)
     expected = Set.from_list [
         (9, 40, 41),
         (15, 36, 39),
@@ -53,7 +53,7 @@ expect
 
 # several matching triplets
 expect
-    result = triplets_with_sum 840
+    result = triplets_with_sum(840)
     expected = Set.from_list [
         (40, 399, 401),
         (56, 390, 394),
@@ -68,7 +68,7 @@ expect
 
 # triplets for large number
 expect
-    result = triplets_with_sum 30000
+    result = triplets_with_sum(30000)
     expected = Set.from_list [
         (1200, 14375, 14425),
         (1875, 14000, 14125),

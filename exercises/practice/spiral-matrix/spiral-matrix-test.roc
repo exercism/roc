@@ -8,18 +8,18 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import SpiralMatrix exposing [spiral_matrix]
 
 # empty spiral
 expect
-    result = spiral_matrix 0
+    result = spiral_matrix(0)
     result == []
 
 # trivial spiral
 expect
-    result = spiral_matrix 1
+    result = spiral_matrix(1)
     expected = [
         [1],
     ]
@@ -27,7 +27,7 @@ expect
 
 # spiral of size 2
 expect
-    result = spiral_matrix 2
+    result = spiral_matrix(2)
     expected = [
         [1, 2],
         [4, 3],
@@ -36,7 +36,7 @@ expect
 
 # spiral of size 3
 expect
-    result = spiral_matrix 3
+    result = spiral_matrix(3)
     expected = [
         [1, 2, 3],
         [8, 9, 4],
@@ -46,7 +46,7 @@ expect
 
 # spiral of size 4
 expect
-    result = spiral_matrix 4
+    result = spiral_matrix(4)
     expected = [
         [1, 2, 3, 4],
         [12, 13, 14, 5],
@@ -57,7 +57,7 @@ expect
 
 # spiral of size 5
 expect
-    result = spiral_matrix 5
+    result = spiral_matrix(5)
     expected = [
         [1, 2, 3, 4, 5],
         [16, 17, 18, 19, 6],

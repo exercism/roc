@@ -12,7 +12,7 @@ import {{ exercise | to_pascal }} exposing [classify]
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
 expect
-    result = {{ case["property"] | to_snake }} {{ case["input"]["number"] }}
+    result = {{ case["property"] | to_snake }}({{ case["input"]["number"] }})
 {%- if case["expected"]["error"] %}
     Result.is_err result
 {%- else %}

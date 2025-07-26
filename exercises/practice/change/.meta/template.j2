@@ -8,7 +8,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 # {{ case["description"] }}
 expect
     coins = {{ case["input"]["coins"] | to_roc }}
-    result = coins |> {{ case["property"] | to_snake }} {{ case["input"]["target"] }}
+    result = coins |> {{ case["property"] | to_snake }}({{ case["input"]["target"] }})
     {%- if case["expected"]["error"] %}
     result |> Result.is_err
     {%- else %}

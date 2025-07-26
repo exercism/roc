@@ -8,7 +8,7 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import CircularBuffer exposing [create, read, write, overwrite, clear]
 

@@ -8,7 +8,7 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import ResistorColor exposing [color_code, colors]
 
@@ -18,17 +18,17 @@ import ResistorColor exposing [color_code, colors]
 
 # Black
 expect
-    result = color_code "black"
+    result = color_code("black")
     result == Ok 0
 
 # White
 expect
-    result = color_code "white"
+    result = color_code("white")
     result == Ok 9
 
 # Orange
 expect
-    result = color_code "orange"
+    result = color_code("orange")
     result == Ok 3
 
 ##

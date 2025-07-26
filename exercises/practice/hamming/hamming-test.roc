@@ -8,52 +8,52 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import Hamming exposing [distance]
 
 # empty strands
 expect
-    result = distance "" ""
-    result == Ok 0
+    result = distance("", "")
+    result == Ok(0)
 
 # single letter identical strands
 expect
-    result = distance "A" "A"
-    result == Ok 0
+    result = distance("A", "A")
+    result == Ok(0)
 
 # single letter different strands
 expect
-    result = distance "G" "T"
-    result == Ok 1
+    result = distance("G", "T")
+    result == Ok(1)
 
 # long identical strands
 expect
-    result = distance "GGACTGAAATCTG" "GGACTGAAATCTG"
-    result == Ok 0
+    result = distance("GGACTGAAATCTG", "GGACTGAAATCTG")
+    result == Ok(0)
 
 # long different strands
 expect
-    result = distance "GGACGGATTCTG" "AGGACGGATTCT"
-    result == Ok 9
+    result = distance("GGACGGATTCTG", "AGGACGGATTCT")
+    result == Ok(9)
 
 # disallow first strand longer
 expect
-    result = distance "AATG" "AAA"
-    Result.is_err result
+    result = distance("AATG", "AAA")
+    Result.is_err(result)
 
 # disallow second strand longer
 expect
-    result = distance "ATA" "AGTG"
-    Result.is_err result
+    result = distance("ATA", "AGTG")
+    Result.is_err(result)
 
 # disallow empty first strand
 expect
-    result = distance "" "G"
-    Result.is_err result
+    result = distance("", "G")
+    Result.is_err(result)
 
 # disallow empty second strand
 expect
-    result = distance "G" ""
-    Result.is_err result
+    result = distance("G", "")
+    Result.is_err(result)
 

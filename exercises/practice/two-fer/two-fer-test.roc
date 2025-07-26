@@ -8,7 +8,7 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import TwoFer exposing [two_fer]
 
@@ -19,11 +19,11 @@ expect
 
 # a name given
 expect
-    result = two_fer (Name "Alice")
+    result = two_fer(Name "Alice")
     result == "One for Alice, one for me."
 
 # another name given
 expect
-    result = two_fer (Name "Bob")
+    result = two_fer(Name "Bob")
     result == "One for Bob, one for me."
 

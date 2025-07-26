@@ -8,7 +8,7 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import ComplexNumbers exposing [real, imaginary, add, sub, mul, div, conjugate, abs, exp]
 

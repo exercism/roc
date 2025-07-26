@@ -9,92 +9,92 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import Anagram exposing [find_anagrams]
 
 # no matches
 expect
-    result = find_anagrams "diaper" ["hello", "world", "zombies", "pants"]
+    result = find_anagrams("diaper", ["hello", "world", "zombies", "pants"])
     result == []
 
 # detects two anagrams
 expect
-    result = find_anagrams "solemn" ["lemons", "cherry", "melons"]
+    result = find_anagrams("solemn", ["lemons", "cherry", "melons"])
     result == ["lemons", "melons"]
 
 # does not detect anagram subsets
 expect
-    result = find_anagrams "good" ["dog", "goody"]
+    result = find_anagrams("good", ["dog", "goody"])
     result == []
 
 # detects anagram
 expect
-    result = find_anagrams "listen" ["enlists", "google", "inlets", "banana"]
+    result = find_anagrams("listen", ["enlists", "google", "inlets", "banana"])
     result == ["inlets"]
 
 # detects three anagrams
 expect
-    result = find_anagrams "allergy" ["gallery", "ballerina", "regally", "clergy", "largely", "leading"]
+    result = find_anagrams("allergy", ["gallery", "ballerina", "regally", "clergy", "largely", "leading"])
     result == ["gallery", "regally", "largely"]
 
 # detects multiple anagrams with different case
 expect
-    result = find_anagrams "nose" ["Eons", "ONES"]
+    result = find_anagrams("nose", ["Eons", "ONES"])
     result == ["Eons", "ONES"]
 
 # does not detect non-anagrams with identical checksum
 expect
-    result = find_anagrams "mass" ["last"]
+    result = find_anagrams("mass", ["last"])
     result == []
 
 # detects anagrams case-insensitively
 expect
-    result = find_anagrams "Orchestra" ["cashregister", "Carthorse", "radishes"]
+    result = find_anagrams("Orchestra", ["cashregister", "Carthorse", "radishes"])
     result == ["Carthorse"]
 
 # detects anagrams using case-insensitive subject
 expect
-    result = find_anagrams "Orchestra" ["cashregister", "carthorse", "radishes"]
+    result = find_anagrams("Orchestra", ["cashregister", "carthorse", "radishes"])
     result == ["carthorse"]
 
 # detects anagrams using case-insensitive possible matches
 expect
-    result = find_anagrams "orchestra" ["cashregister", "Carthorse", "radishes"]
+    result = find_anagrams("orchestra", ["cashregister", "Carthorse", "radishes"])
     result == ["Carthorse"]
 
 # does not detect an anagram if the original word is repeated
 expect
-    result = find_anagrams "go" ["goGoGO"]
+    result = find_anagrams("go", ["goGoGO"])
     result == []
 
 # anagrams must use all letters exactly once
 expect
-    result = find_anagrams "tapper" ["patter"]
+    result = find_anagrams("tapper", ["patter"])
     result == []
 
 # words are not anagrams of themselves
 expect
-    result = find_anagrams "BANANA" ["BANANA"]
+    result = find_anagrams("BANANA", ["BANANA"])
     result == []
 
 # words are not anagrams of themselves even if letter case is partially different
 expect
-    result = find_anagrams "BANANA" ["Banana"]
+    result = find_anagrams("BANANA", ["Banana"])
     result == []
 
 # words are not anagrams of themselves even if letter case is completely different
 expect
-    result = find_anagrams "BANANA" ["banana"]
+    result = find_anagrams("BANANA", ["banana"])
     result == []
 
 # words other than themselves can be anagrams
 expect
-    result = find_anagrams "LISTEN" ["LISTEN", "Silent"]
+    result = find_anagrams("LISTEN", ["LISTEN", "Silent"])
     result == ["Silent"]
 
 # different characters may have the same bytes
 expect
-    result = find_anagrams "a⬂" ["€a"]
+    result = find_anagrams("a⬂", ["€a"])
     result == []
 

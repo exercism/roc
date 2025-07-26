@@ -8,14 +8,14 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import Knapsack exposing [maximum_value]
 
 # no items
 expect
     items = []
-    result = maximum_value { items, maximum_weight: 100 }
+    result = maximum_value({ items, maximum_weight: 100 })
     result == 0
 
 # one item, too heavy
@@ -23,7 +23,7 @@ expect
     items = [
         { weight: 100, value: 1 },
     ]
-    result = maximum_value { items, maximum_weight: 10 }
+    result = maximum_value({ items, maximum_weight: 10 })
     result == 0
 
 # five items (cannot be greedy by weight)
@@ -35,7 +35,7 @@ expect
         { weight: 2, value: 5 },
         { weight: 10, value: 21 },
     ]
-    result = maximum_value { items, maximum_weight: 10 }
+    result = maximum_value({ items, maximum_weight: 10 })
     result == 21
 
 # five items (cannot be greedy by value)
@@ -47,7 +47,7 @@ expect
         { weight: 2, value: 20 },
         { weight: 10, value: 50 },
     ]
-    result = maximum_value { items, maximum_weight: 10 }
+    result = maximum_value({ items, maximum_weight: 10 })
     result == 80
 
 # example knapsack
@@ -58,7 +58,7 @@ expect
         { weight: 6, value: 30 },
         { weight: 4, value: 50 },
     ]
-    result = maximum_value { items, maximum_weight: 10 }
+    result = maximum_value({ items, maximum_weight: 10 })
     result == 90
 
 # 8 items
@@ -73,7 +73,7 @@ expect
         { weight: 2, value: 5 },
         { weight: 2, value: 5 },
     ]
-    result = maximum_value { items, maximum_weight: 104 }
+    result = maximum_value({ items, maximum_weight: 104 })
     result == 900
 
 # 15 items
@@ -95,6 +95,6 @@ expect
         { weight: 118, value: 229 },
         { weight: 120, value: 240 },
     ]
-    result = maximum_value { items, maximum_weight: 750 }
+    result = maximum_value({ items, maximum_weight: 750 })
     result == 1458
 

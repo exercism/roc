@@ -8,37 +8,37 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import ResistorColorDuo exposing [value]
 
 # Brown and black
 expect
-    result = value Brown Black
+    result = value(Brown, Black)
     result == 10
 
 # Blue and grey
 expect
-    result = value Blue Grey
+    result = value(Blue, Grey)
     result == 68
 
 # Yellow and violet
 expect
-    result = value Yellow Violet
+    result = value(Yellow, Violet)
     result == 47
 
 # White and red
 expect
-    result = value White Red
+    result = value(White, Red)
     result == 92
 
 # Orange and orange
 expect
-    result = value Orange Orange
+    result = value(Orange, Orange)
     result == 33
 
 # Black and brown, one-digit
 expect
-    result = value Black Brown
+    result = value(Black, Brown)
     result == 1
 

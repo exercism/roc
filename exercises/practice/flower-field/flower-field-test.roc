@@ -8,22 +8,22 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import FlowerField exposing [annotate]
 
 # no rows
 expect
-    garden = "" |> Str.replace_each "·" " "
-    result = annotate garden
-    expected = "" |> Str.replace_each "·" " "
+    garden = "" |> Str.replace_each("·", " ")
+    result = annotate(garden)
+    expected = "" |> Str.replace_each("·", " ")
     result == expected
 
 # no columns
 expect
-    garden = "" |> Str.replace_each "·" " "
-    result = annotate garden
-    expected = "" |> Str.replace_each "·" " "
+    garden = "" |> Str.replace_each("·", " ")
+    result = annotate(garden)
+    expected = "" |> Str.replace_each("·", " ")
     result == expected
 
 # no flowers
@@ -34,15 +34,15 @@ expect
         ···
         ···
         """
-        |> Str.replace_each "·" " "
-    result = annotate garden
+        |> Str.replace_each("·", " ")
+    result = annotate(garden)
     expected =
         """
         ···
         ···
         ···
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # garden full of flowers
@@ -53,15 +53,15 @@ expect
         ***
         ***
         """
-        |> Str.replace_each "·" " "
-    result = annotate garden
+        |> Str.replace_each("·", " ")
+    result = annotate(garden)
     expected =
         """
         ***
         ***
         ***
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # flower surrounded by spaces
@@ -72,15 +72,15 @@ expect
         ·*·
         ···
         """
-        |> Str.replace_each "·" " "
-    result = annotate garden
+        |> Str.replace_each("·", " ")
+    result = annotate(garden)
     expected =
         """
         111
         1*1
         111
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # space surrounded by flowers
@@ -91,29 +91,29 @@ expect
         *·*
         ***
         """
-        |> Str.replace_each "·" " "
-    result = annotate garden
+        |> Str.replace_each("·", " ")
+    result = annotate(garden)
     expected =
         """
         ***
         *8*
         ***
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # horizontal line
 expect
-    garden = "·*·*·" |> Str.replace_each "·" " "
-    result = annotate garden
-    expected = "1*2*1" |> Str.replace_each "·" " "
+    garden = "·*·*·" |> Str.replace_each("·", " ")
+    result = annotate(garden)
+    expected = "1*2*1" |> Str.replace_each("·", " ")
     result == expected
 
 # horizontal line, flowers at edges
 expect
-    garden = "*···*" |> Str.replace_each "·" " "
-    result = annotate garden
-    expected = "*1·1*" |> Str.replace_each "·" " "
+    garden = "*···*" |> Str.replace_each("·", " ")
+    result = annotate(garden)
+    expected = "*1·1*" |> Str.replace_each("·", " ")
     result == expected
 
 # vertical line
@@ -126,8 +126,8 @@ expect
         *
         ·
         """
-        |> Str.replace_each "·" " "
-    result = annotate garden
+        |> Str.replace_each("·", " ")
+    result = annotate(garden)
     expected =
         """
         1
@@ -136,7 +136,7 @@ expect
         *
         1
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # vertical line, flowers at edges
@@ -149,8 +149,8 @@ expect
         ·
         *
         """
-        |> Str.replace_each "·" " "
-    result = annotate garden
+        |> Str.replace_each("·", " ")
+    result = annotate(garden)
     expected =
         """
         *
@@ -159,7 +159,7 @@ expect
         1
         *
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # cross
@@ -172,8 +172,8 @@ expect
         ··*··
         ··*··
         """
-        |> Str.replace_each "·" " "
-    result = annotate garden
+        |> Str.replace_each("·", " ")
+    result = annotate(garden)
     expected =
         """
         ·2*2·
@@ -182,7 +182,7 @@ expect
         25*52
         ·2*2·
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # large garden
@@ -196,8 +196,8 @@ expect
         ·*··*·
         ······
         """
-        |> Str.replace_each "·" " "
-    result = annotate garden
+        |> Str.replace_each("·", " ")
+    result = annotate(garden)
     expected =
         """
         1*22*1
@@ -207,6 +207,6 @@ expect
         1*22*2
         111111
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 

@@ -8,32 +8,32 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import NthPrime exposing [prime]
 
 # first prime
 expect
-    result = prime 1
+    result = prime(1)
     result == Ok 2
 
 # second prime
 expect
-    result = prime 2
+    result = prime(2)
     result == Ok 3
 
 # sixth prime
 expect
-    result = prime 6
+    result = prime(6)
     result == Ok 13
 
 # big prime
 expect
-    result = prime 10001
+    result = prime(10001)
     result == Ok 104743
 
 # there is no zeroth prime
 expect
-    result = prime 0
+    result = prime(0)
     result |> Result.is_err
 

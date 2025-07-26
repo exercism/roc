@@ -8,14 +8,14 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import Matrix exposing [row, column]
 
 # extract row from one number matrix
 expect
     matrix_str = "1"
-    result = matrix_str |> row 1
+    result = matrix_str |> row(1)
     result == Ok [1]
 
 # can extract row
@@ -25,7 +25,7 @@ expect
         1 2
         3 4
         """
-    result = matrix_str |> row 2
+    result = matrix_str |> row(2)
     result == Ok [3, 4]
 
 # extract row where numbers have different widths
@@ -35,7 +35,7 @@ expect
         1 2
         10 20
         """
-    result = matrix_str |> row 2
+    result = matrix_str |> row(2)
     result == Ok [10, 20]
 
 # can extract row from non-square matrix with no corresponding column
@@ -47,13 +47,13 @@ expect
         7 8 9
         8 7 6
         """
-    result = matrix_str |> row 4
+    result = matrix_str |> row(4)
     result == Ok [8, 7, 6]
 
 # extract column from one number matrix
 expect
     matrix_str = "1"
-    result = matrix_str |> column 1
+    result = matrix_str |> column(1)
     result == Ok [1]
 
 # can extract column
@@ -64,7 +64,7 @@ expect
         4 5 6
         7 8 9
         """
-    result = matrix_str |> column 3
+    result = matrix_str |> column(3)
     result == Ok [3, 6, 9]
 
 # can extract column from non-square matrix with no corresponding row
@@ -75,7 +75,7 @@ expect
         5 6 7 8
         9 8 7 6
         """
-    result = matrix_str |> column 4
+    result = matrix_str |> column(4)
     result == Ok [4, 8, 6]
 
 # extract column where numbers have different widths
@@ -86,6 +86,6 @@ expect
         18 3 1
         9 4 800
         """
-    result = matrix_str |> column 2
+    result = matrix_str |> column(2)
     result == Ok [1903, 3, 4]
 

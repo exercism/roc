@@ -8,13 +8,13 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import WordCount exposing [count_words]
 
 # count one word
 expect
-    result = count_words "word"
+    result = count_words("word")
     expected = Dict.from_list [
         ("word", 1),
     ]
@@ -22,7 +22,7 @@ expect
 
 # count one of each word
 expect
-    result = count_words "one of each"
+    result = count_words("one of each")
     expected = Dict.from_list [
         ("one", 1),
         ("of", 1),
@@ -32,7 +32,7 @@ expect
 
 # multiple occurrences of a word
 expect
-    result = count_words "one fish two fish red fish blue fish"
+    result = count_words("one fish two fish red fish blue fish")
     expected = Dict.from_list [
         ("one", 1),
         ("fish", 4),
@@ -44,7 +44,7 @@ expect
 
 # handles cramped lists
 expect
-    result = count_words "one,two,three"
+    result = count_words("one,two,three")
     expected = Dict.from_list [
         ("one", 1),
         ("two", 1),
@@ -54,7 +54,7 @@ expect
 
 # handles expanded lists
 expect
-    result = count_words "one,\ntwo,\nthree"
+    result = count_words("one,\ntwo,\nthree")
     expected = Dict.from_list [
         ("one", 1),
         ("two", 1),
@@ -64,7 +64,7 @@ expect
 
 # ignore punctuation
 expect
-    result = count_words "car: carpet as java: javascript!!&@$%^&"
+    result = count_words("car: carpet as java: javascript!!&@$%^&")
     expected = Dict.from_list [
         ("car", 1),
         ("carpet", 1),
@@ -76,7 +76,7 @@ expect
 
 # include numbers
 expect
-    result = count_words "testing, 1, 2 testing"
+    result = count_words("testing, 1, 2 testing")
     expected = Dict.from_list [
         ("testing", 2),
         ("1", 1),
@@ -86,7 +86,7 @@ expect
 
 # normalize case
 expect
-    result = count_words "go Go GO Stop stop"
+    result = count_words("go Go GO Stop stop")
     expected = Dict.from_list [
         ("go", 3),
         ("stop", 2),
@@ -95,7 +95,7 @@ expect
 
 # with apostrophes
 expect
-    result = count_words "'First: don't laugh. Then: don't cry. You're getting it.'"
+    result = count_words("'First: don't laugh. Then: don't cry. You're getting it.'")
     expected = Dict.from_list [
         ("first", 1),
         ("don't", 2),
@@ -110,7 +110,7 @@ expect
 
 # with quotations
 expect
-    result = count_words "Joe can't tell between 'large' and large."
+    result = count_words("Joe can't tell between 'large' and large.")
     expected = Dict.from_list [
         ("joe", 1),
         ("can't", 1),
@@ -123,7 +123,7 @@ expect
 
 # substrings from the beginning
 expect
-    result = count_words "Joe can't tell between app, apple and a."
+    result = count_words("Joe can't tell between app, apple and a.")
     expected = Dict.from_list [
         ("joe", 1),
         ("can't", 1),
@@ -138,7 +138,7 @@ expect
 
 # multiple spaces not detected as a word
 expect
-    result = count_words " multiple   whitespaces"
+    result = count_words(" multiple   whitespaces")
     expected = Dict.from_list [
         ("multiple", 1),
         ("whitespaces", 1),
@@ -147,7 +147,7 @@ expect
 
 # alternating word separators not detected as a word
 expect
-    result = count_words ",\n,one,\n ,two \n 'three'"
+    result = count_words(",\n,one,\n ,two \n 'three'")
     expected = Dict.from_list [
         ("one", 1),
         ("two", 1),
@@ -157,7 +157,7 @@ expect
 
 # quotation for word with apostrophe
 expect
-    result = count_words "can, can't, 'can't'"
+    result = count_words("can, can't, 'can't'")
     expected = Dict.from_list [
         ("can", 1),
         ("can't", 2),

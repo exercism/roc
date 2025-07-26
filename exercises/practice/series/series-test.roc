@@ -8,57 +8,57 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import Series exposing [slices]
 
 # slices of one from one
 expect
-    result = "1" |> slices 1
+    result = "1" |> slices(1)
     result == ["1"]
 
 # slices of one from two
 expect
-    result = "12" |> slices 1
+    result = "12" |> slices(1)
     result == ["1", "2"]
 
 # slices of two
 expect
-    result = "35" |> slices 2
+    result = "35" |> slices(2)
     result == ["35"]
 
 # slices of two overlap
 expect
-    result = "9142" |> slices 2
+    result = "9142" |> slices(2)
     result == ["91", "14", "42"]
 
 # slices can include duplicates
 expect
-    result = "777777" |> slices 3
+    result = "777777" |> slices(3)
     result == ["777", "777", "777", "777"]
 
 # slices of a long series
 expect
-    result = "918493904243" |> slices 5
+    result = "918493904243" |> slices(5)
     result == ["91849", "18493", "84939", "49390", "93904", "39042", "90424", "04243"]
 
 # slice length is too large – just return an empty list
 expect
-    result = "12345" |> slices 6
+    result = "12345" |> slices(6)
     result == []
 
 # slice length is way too large – just return an empty list
 expect
-    result = "12345" |> slices 42
+    result = "12345" |> slices(42)
     result == []
 
 # slice length cannot be zero – just return an empty list
 expect
-    result = "12345" |> slices 0
+    result = "12345" |> slices(0)
     result == []
 
 # empty series is invalid – just return an empty list
 expect
-    result = "" |> slices 1
+    result = "" |> slices(1)
     result == []
 

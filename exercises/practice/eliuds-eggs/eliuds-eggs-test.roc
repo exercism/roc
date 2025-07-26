@@ -8,27 +8,27 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import EliudsEggs exposing [egg_count]
 
 # 0 eggs
 expect
-    result = egg_count 0
+    result = egg_count(0)
     result == 0
 
 # 1 egg
 expect
-    result = egg_count 16
+    result = egg_count(16)
     result == 1
 
 # 4 eggs
 expect
-    result = egg_count 89
+    result = egg_count(89)
     result == 4
 
 # 13 eggs
 expect
-    result = egg_count 2000000000
+    result = egg_count(2000000000)
     result == 13
 

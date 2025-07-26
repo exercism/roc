@@ -8,21 +8,21 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import Transpose exposing [transpose]
 
 # empty string
 expect
-    input = "" |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+    input = "" |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected = ""
     result == expected
 
 # two characters in a row
 expect
-    input = "A1" |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+    input = "A1" |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         A
@@ -37,8 +37,8 @@ expect
         A
         1
         """
-        |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected = "A1"
     result == expected
 
@@ -49,8 +49,8 @@ expect
         ABC
         123
         """
-        |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         A1
@@ -61,8 +61,8 @@ expect
 
 # single line
 expect
-    input = "Single□line." |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+    input = "Single□line." |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         S
@@ -87,8 +87,8 @@ expect
         The□fourth□line.
         The□fifth□line.
         """
-        |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         TT
@@ -117,8 +117,8 @@ expect
         The□first□line.
         The□second□line.
         """
-        |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         TT
@@ -149,8 +149,8 @@ expect
         A□longer□line.
         A□line.
         """
-        |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         TAAA
@@ -183,8 +183,8 @@ expect
         RESIN
         TREND
         """
-        |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         HEART
@@ -204,8 +204,8 @@ expect
         BLOOMING
         SEPTETTE
         """
-        |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         FOBS
@@ -230,8 +230,8 @@ expect
         EEEEE
         RRRRRR
         """
-        |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         TEASER
@@ -254,8 +254,8 @@ expect
         555555
         66666
         """
-        |> Str.replace_each "□" " "
-    result = transpose input |> Str.replace_each " " "□"
+        |> Str.replace_each("□", " ")
+    result = transpose(input) |> Str.replace_each(" ", "□")
     expected =
         """
         123456

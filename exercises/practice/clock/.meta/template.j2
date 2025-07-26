@@ -16,7 +16,7 @@ expect
 {%- elif case["property"] in ["add", "subtract"] %}
 expect
     clock = create {{ plugins.to_hours_minutes_record(case["input"]) }}
-    result = clock |> {{ case["property"] | to_snake }} { minutes: {{ case["input"]["value"] }} } |> to_str
+    result = clock |> {{ case["property"] | to_snake }}({ minutes: {{ case["input"]["value"] }} }) |> to_str
     expected = {{ case["expected"] | to_roc }} 
     result == expected
 {%- elif case["property"] == "equal" %}

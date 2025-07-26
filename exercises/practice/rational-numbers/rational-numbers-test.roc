@@ -8,7 +8,7 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import RationalNumbers exposing [add, sub, mul, div, abs, exp, exp_real, reduce]
 
@@ -18,92 +18,92 @@ import RationalNumbers exposing [add, sub, mul, div, abs, exp, exp_real, reduce]
 
 # Add two positive rational numbers
 expect
-    result = Rational 1 2 |> add (Rational 2 3)
+    result = Rational 1 2 |> add(Rational 2 3)
     result == Rational 7 6
 
 # Add a positive rational number and a negative rational number
 expect
-    result = Rational 1 2 |> add (Rational -2 3)
+    result = Rational 1 2 |> add(Rational -2 3)
     result == Rational -1 6
 
 # Add two negative rational numbers
 expect
-    result = Rational -1 2 |> add (Rational -2 3)
+    result = Rational -1 2 |> add(Rational -2 3)
     result == Rational -7 6
 
 # Add a rational number to its additive inverse
 expect
-    result = Rational 1 2 |> add (Rational -1 2)
+    result = Rational 1 2 |> add(Rational -1 2)
     result == Rational 0 1
 
 # Subtract two positive rational numbers
 expect
-    result = Rational 1 2 |> sub (Rational 2 3)
+    result = Rational 1 2 |> sub(Rational 2 3)
     result == Rational -1 6
 
 # Subtract a positive rational number and a negative rational number
 expect
-    result = Rational 1 2 |> sub (Rational -2 3)
+    result = Rational 1 2 |> sub(Rational -2 3)
     result == Rational 7 6
 
 # Subtract two negative rational numbers
 expect
-    result = Rational -1 2 |> sub (Rational -2 3)
+    result = Rational -1 2 |> sub(Rational -2 3)
     result == Rational 1 6
 
 # Subtract a rational number from itself
 expect
-    result = Rational 1 2 |> sub (Rational 1 2)
+    result = Rational 1 2 |> sub(Rational 1 2)
     result == Rational 0 1
 
 # Multiply two positive rational numbers
 expect
-    result = Rational 1 2 |> mul (Rational 2 3)
+    result = Rational 1 2 |> mul(Rational 2 3)
     result == Rational 1 3
 
 # Multiply a negative rational number by a positive rational number
 expect
-    result = Rational -1 2 |> mul (Rational 2 3)
+    result = Rational -1 2 |> mul(Rational 2 3)
     result == Rational -1 3
 
 # Multiply two negative rational numbers
 expect
-    result = Rational -1 2 |> mul (Rational -2 3)
+    result = Rational -1 2 |> mul(Rational -2 3)
     result == Rational 1 3
 
 # Multiply a rational number by its reciprocal
 expect
-    result = Rational 1 2 |> mul (Rational 2 1)
+    result = Rational 1 2 |> mul(Rational 2 1)
     result == Rational 1 1
 
 # Multiply a rational number by 1
 expect
-    result = Rational 1 2 |> mul (Rational 1 1)
+    result = Rational 1 2 |> mul(Rational 1 1)
     result == Rational 1 2
 
 # Multiply a rational number by 0
 expect
-    result = Rational 1 2 |> mul (Rational 0 1)
+    result = Rational 1 2 |> mul(Rational 0 1)
     result == Rational 0 1
 
 # Divide two positive rational numbers
 expect
-    result = Rational 1 2 |> div (Rational 2 3)
+    result = Rational 1 2 |> div(Rational 2 3)
     result == Rational 3 4
 
 # Divide a positive rational number by a negative rational number
 expect
-    result = Rational 1 2 |> div (Rational -2 3)
+    result = Rational 1 2 |> div(Rational -2 3)
     result == Rational -3 4
 
 # Divide two negative rational numbers
 expect
-    result = Rational -1 2 |> div (Rational -2 3)
+    result = Rational -1 2 |> div(Rational -2 3)
     result == Rational 3 4
 
 # Divide a rational number by 1
 expect
-    result = Rational 1 2 |> div (Rational 1 1)
+    result = Rational 1 2 |> div(Rational 1 1)
     result == Rational 1 2
 
 ##
@@ -146,47 +146,47 @@ expect
 
 # Raise a positive rational number to a positive integer power
 expect
-    result = Rational 1 2 |> exp 3
+    result = Rational 1 2 |> exp(3)
     result == Rational 1 8
 
 # Raise a negative rational number to a positive integer power
 expect
-    result = Rational -1 2 |> exp 3
+    result = Rational -1 2 |> exp(3)
     result == Rational -1 8
 
 # Raise a positive rational number to a negative integer power
 expect
-    result = Rational 3 5 |> exp -2
+    result = Rational 3 5 |> exp(-2)
     result == Rational 25 9
 
 # Raise a negative rational number to an even negative integer power
 expect
-    result = Rational -3 5 |> exp -2
+    result = Rational -3 5 |> exp(-2)
     result == Rational 25 9
 
 # Raise a negative rational number to an odd negative integer power
 expect
-    result = Rational -3 5 |> exp -3
+    result = Rational -3 5 |> exp(-3)
     result == Rational -125 27
 
 # Raise zero to an integer power
 expect
-    result = Rational 0 1 |> exp 5
+    result = Rational 0 1 |> exp(5)
     result == Rational 0 1
 
 # Raise one to an integer power
 expect
-    result = Rational 1 1 |> exp 4
+    result = Rational 1 1 |> exp(4)
     result == Rational 1 1
 
 # Raise a positive rational number to the power of zero
 expect
-    result = Rational 1 2 |> exp 0
+    result = Rational 1 2 |> exp(0)
     result == Rational 1 1
 
 # Raise a negative rational number to the power of zero
 expect
-    result = Rational -1 2 |> exp 0
+    result = Rational -1 2 |> exp(0)
     result == Rational 1 1
 
 ##
@@ -195,17 +195,17 @@ expect
 
 # Raise a real number to a positive rational number
 expect
-    result = 8 |> exp_real (Rational 4 3)
+    result = 8 |> exp_real(Rational 4 3)
     result |> Num.is_approx_eq 16.0f64 {}
 
 # Raise a real number to a negative rational number
 expect
-    result = 9 |> exp_real (Rational -1 2)
+    result = 9 |> exp_real(Rational -1 2)
     result |> Num.is_approx_eq 0.3333333333333333f64 {}
 
 # Raise a real number to a zero rational number
 expect
-    result = 2 |> exp_real (Rational 0 1)
+    result = 2 |> exp_real(Rational 0 1)
     result |> Num.is_approx_eq 1.0f64 {}
 
 ##

@@ -8,144 +8,166 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import PalindromeProducts exposing [smallest, largest]
 
 isEq = |result, expected|
     when (result, expected) is
-        (Ok { value, factors }, Ok { value: expectedValue, factors: expectedFactors }) ->
+        (Ok({ value, factors }), Ok({ value: expectedValue, factors: expectedFactors })) ->
             value == expectedValue and factors == expectedFactors
 
         _ -> Bool.false
 
 # find the smallest palindrome from single digit factors
 expect
-    result = smallest { min: 1, max: 9 }
-    expected = Ok {
-        value: 1,
-        factors: Set.from_list [
-            (1, 1),
-        ],
-    }
+    result = smallest({ min: 1, max: 9 })
+    expected = Ok(
+        {
+            value: 1,
+            factors: Set.from_list [
+                (1, 1),
+            ],
+        },
+    )
     result |> isEq expected
 
 # find the largest palindrome from single digit factors
 expect
-    result = largest { min: 1, max: 9 }
-    expected = Ok {
-        value: 9,
-        factors: Set.from_list [
-            (1, 9),
-            (3, 3),
-        ],
-    }
+    result = largest({ min: 1, max: 9 })
+    expected = Ok(
+        {
+            value: 9,
+            factors: Set.from_list [
+                (1, 9),
+                (3, 3),
+            ],
+        },
+    )
     result |> isEq expected
 
 # find the smallest palindrome from double digit factors
 expect
-    result = smallest { min: 10, max: 99 }
-    expected = Ok {
-        value: 121,
-        factors: Set.from_list [
-            (11, 11),
-        ],
-    }
+    result = smallest({ min: 10, max: 99 })
+    expected = Ok(
+        {
+            value: 121,
+            factors: Set.from_list [
+                (11, 11),
+            ],
+        },
+    )
     result |> isEq expected
 
 # find the largest palindrome from double digit factors
 expect
-    result = largest { min: 10, max: 99 }
-    expected = Ok {
-        value: 9009,
-        factors: Set.from_list [
-            (91, 99),
-        ],
-    }
+    result = largest({ min: 10, max: 99 })
+    expected = Ok(
+        {
+            value: 9009,
+            factors: Set.from_list [
+                (91, 99),
+            ],
+        },
+    )
     result |> isEq expected
 
 # find the smallest palindrome from triple digit factors
 expect
-    result = smallest { min: 100, max: 999 }
-    expected = Ok {
-        value: 10201,
-        factors: Set.from_list [
-            (101, 101),
-        ],
-    }
+    result = smallest({ min: 100, max: 999 })
+    expected = Ok(
+        {
+            value: 10201,
+            factors: Set.from_list [
+                (101, 101),
+            ],
+        },
+    )
     result |> isEq expected
 
 # find the largest palindrome from triple digit factors
 expect
-    result = largest { min: 100, max: 999 }
-    expected = Ok {
-        value: 906609,
-        factors: Set.from_list [
-            (913, 993),
-        ],
-    }
+    result = largest({ min: 100, max: 999 })
+    expected = Ok(
+        {
+            value: 906609,
+            factors: Set.from_list [
+                (913, 993),
+            ],
+        },
+    )
     result |> isEq expected
 
 # find the smallest palindrome from four digit factors
 expect
-    result = smallest { min: 1000, max: 9999 }
-    expected = Ok {
-        value: 1002001,
-        factors: Set.from_list [
-            (1001, 1001),
-        ],
-    }
+    result = smallest({ min: 1000, max: 9999 })
+    expected = Ok(
+        {
+            value: 1002001,
+            factors: Set.from_list [
+                (1001, 1001),
+            ],
+        },
+    )
     result |> isEq expected
 
 # find the largest palindrome from four digit factors
 expect
-    result = largest { min: 1000, max: 9999 }
-    expected = Ok {
-        value: 99000099,
-        factors: Set.from_list [
-            (9901, 9999),
-        ],
-    }
+    result = largest({ min: 1000, max: 9999 })
+    expected = Ok(
+        {
+            value: 99000099,
+            factors: Set.from_list [
+                (9901, 9999),
+            ],
+        },
+    )
     result |> isEq expected
 
 # empty result for smallest if no palindrome in the range
 expect
-    result = smallest { min: 1002, max: 1003 }
-    expected = Ok {
-        value: 0,
-        factors: Set.from_list [
-        ],
-    }
+    result = smallest({ min: 1002, max: 1003 })
+    expected = Ok(
+        {
+            value: 0,
+            factors: Set.from_list [
+            ],
+        },
+    )
     result |> isEq expected
 
 # empty result for largest if no palindrome in the range
 expect
-    result = largest { min: 15, max: 15 }
-    expected = Ok {
-        value: 0,
-        factors: Set.from_list [
-        ],
-    }
+    result = largest({ min: 15, max: 15 })
+    expected = Ok(
+        {
+            value: 0,
+            factors: Set.from_list [
+            ],
+        },
+    )
     result |> isEq expected
 
 # error result for smallest if min is more than max
 expect
-    result = smallest { min: 10000, max: 1 }
+    result = smallest({ min: 10000, max: 1 })
     result |> Result.is_err
 
 # error result for largest if min is more than max
 expect
-    result = largest { min: 2, max: 1 }
+    result = largest({ min: 2, max: 1 })
     result |> Result.is_err
 
 # smallest product does not use the smallest factor
 expect
-    result = smallest { min: 3215, max: 4000 }
-    expected = Ok {
-        value: 10988901,
-        factors: Set.from_list [
-            (3297, 3333),
-        ],
-    }
+    result = smallest({ min: 3215, max: 4000 })
+    expected = Ok(
+        {
+            value: 10988901,
+            factors: Set.from_list [
+                (3297, 3333),
+            ],
+        },
+    )
     result |> isEq expected
 

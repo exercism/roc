@@ -8,36 +8,45 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import Accumulate exposing [accumulate]
 
 # accumulate empty
 expect
-    result = accumulate [] |x|
-        x * x
+    result = accumulate(
+        [],
+        |x|
+            x * x,
+    )
     result == []
 
 # accumulate squares
 expect
-    result = accumulate [1, 2, 3] |x|
-        x * x
+    result = accumulate(
+        [1, 2, 3],
+        |x|
+            x * x,
+    )
     result == [1, 4, 9]
 
 # accumulate upcases
 expect
-    result = accumulate ["Hello", "world"] to_upper
+    result = accumulate(["Hello", "world"], to_upper)
     result == ["HELLO", "WORLD"]
 
 # accumulate reversed strings
 expect
-    result = accumulate ["the", "quick", "brown", "fox", "etc"] reverse
+    result = accumulate(["the", "quick", "brown", "fox", "etc"], reverse)
     result == ["eht", "kciuq", "nworb", "xof", "cte"]
 
 # accumulate recursively
 expect
-    result = accumulate ["a", "b", "c"] |x|
-        accumulate ["1", "2", "3"] (|y| Str.concat x y)
+    result = accumulate(
+        ["a", "b", "c"],
+        |x|
+            accumulate ["1", "2", "3"] (|y| Str.concat x y),
+    )
     result == [["a1", "a2", "a3"], ["b1", "b2", "b3"], ["c1", "c2", "c3"]]
 
 reverse : Str -> Str
@@ -45,7 +54,7 @@ reverse = |str|
     Str.to_utf8 str
     |> List.reverse
     |> Str.from_utf8
-    |> Result.with_default ""
+    |> Result.with_default("")
 
 to_upper : Str -> Str
 to_upper = |str|
@@ -56,4 +65,4 @@ to_upper = |str|
         else
             byte
     |> Str.from_utf8
-    |> Result.with_default ""
+    |> Result.with_default("")

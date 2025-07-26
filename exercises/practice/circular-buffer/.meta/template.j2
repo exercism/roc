@@ -25,11 +25,11 @@ run_operations{{ loop.index }} = |_|
         {%- endif %}
         {%- elif op["operation"] == "read" %}
         {%- if op["should_succeed"] %}
-        |> read? |> \read_result ->
+        |> read? |> |read_result|
             expect read_result.value == {{ op["expected"] }}
             read_result.new_buffer
         {%- else %}
-        |> \buffer_before_read ->
+        |> |buffer_before_read|
             read_result = buffer_before_read |> read
             expect read_result == Err BufferEmpty
             buffer_before_read

@@ -8,31 +8,31 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import Diamond exposing [diamond]
 
 # Degenerate case with a single 'A' row
 expect
-    result = diamond 'A'
-    expected = "A" |> Str.replace_each "·" " "
+    result = diamond('A')
+    expected = "A" |> Str.replace_each("·", " ")
     result == expected
 
 # Degenerate case with no row containing 3 distinct groups of spaces
 expect
-    result = diamond 'B'
+    result = diamond('B')
     expected =
         """
         ·A·
         B·B
         ·A·
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # Smallest non-degenerate case with odd diamond side length
 expect
-    result = diamond 'C'
+    result = diamond('C')
     expected =
         """
         ··A··
@@ -41,12 +41,12 @@ expect
         ·B·B·
         ··A··
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # Smallest non-degenerate case with even diamond side length
 expect
-    result = diamond 'D'
+    result = diamond('D')
     expected =
         """
         ···A···
@@ -57,12 +57,12 @@ expect
         ··B·B··
         ···A···
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 
 # Largest possible diamond
 expect
-    result = diamond 'Z'
+    result = diamond('Z')
     expected =
         """
         ·························A·························
@@ -117,6 +117,6 @@ expect
         ························B·B························
         ·························A·························
         """
-        |> Str.replace_each "·" " "
+        |> Str.replace_each("·", " ")
     result == expected
 

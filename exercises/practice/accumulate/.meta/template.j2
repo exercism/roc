@@ -5,16 +5,16 @@
 import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }}]
 
 {% set accumulators = {
-    "(x) => x * x": "\\x ->\n        x * x",
+    "(x) => x * x": "|x|\n        x * x",
     "(x) => upcase(x)": "to_upper",
     "(x) => reverse(x)": "reverse",
-    "(x) => accumulate([\"1\", \"2\", \"3\"], (y) => x + y)": "\\x ->\n        accumulate [\"1\", \"2\", \"3\"] (\\y -> Str.concat x y)"
+    "(x) => accumulate([\"1\", \"2\", \"3\"], (y) => x + y)": "|x|\n        accumulate [\"1\", \"2\", \"3\"] (\\y -> Str.concat x y)"
 } -%}
 
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    result = {{ case["property"] | to_snake }} {{ case["input"]["list"] | to_roc }} {{ accumulators[case["input"]["accumulator"]] }}
+    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }}, {{ accumulators[case["input"]["accumulator"]] }})
     result == {{ case["expected"] | to_roc }}
 
 {% endfor %}
@@ -24,7 +24,7 @@ reverse = |str|
     Str.to_utf8 str
     |> List.reverse
     |> Str.from_utf8
-    |> Result.with_default ""
+    |> Result.with_default("")
 
 to_upper : Str -> Str
 to_upper = |str|
@@ -35,4 +35,4 @@ to_upper = |str|
         else
             byte
     |> Str.from_utf8
-    |> Result.with_default ""
+    |> Result.with_default("")

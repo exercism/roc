@@ -9,7 +9,7 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import SgfParsing exposing [parse]
 

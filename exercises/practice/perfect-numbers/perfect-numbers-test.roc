@@ -8,7 +8,7 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import PerfectNumbers exposing [classify]
 
@@ -18,17 +18,17 @@ import PerfectNumbers exposing [classify]
 
 # Smallest perfect number is classified correctly
 expect
-    result = classify 6
+    result = classify(6)
     result == Ok Perfect
 
 # Medium perfect number is classified correctly
 expect
-    result = classify 28
+    result = classify(28)
     result == Ok Perfect
 
 # Large perfect number is classified correctly
 expect
-    result = classify 33550336
+    result = classify(33550336)
     result == Ok Perfect
 
 ##
@@ -37,17 +37,17 @@ expect
 
 # Smallest abundant number is classified correctly
 expect
-    result = classify 12
+    result = classify(12)
     result == Ok Abundant
 
 # Medium abundant number is classified correctly
 expect
-    result = classify 30
+    result = classify(30)
     result == Ok Abundant
 
 # Large abundant number is classified correctly
 expect
-    result = classify 33550335
+    result = classify(33550335)
     result == Ok Abundant
 
 ##
@@ -56,27 +56,27 @@ expect
 
 # Smallest prime deficient number is classified correctly
 expect
-    result = classify 2
+    result = classify(2)
     result == Ok Deficient
 
 # Smallest non-prime deficient number is classified correctly
 expect
-    result = classify 4
+    result = classify(4)
     result == Ok Deficient
 
 # Medium deficient number is classified correctly
 expect
-    result = classify 32
+    result = classify(32)
     result == Ok Deficient
 
 # Large deficient number is classified correctly
 expect
-    result = classify 33550337
+    result = classify(33550337)
     result == Ok Deficient
 
 # Edge case (no factors other than itself) is classified correctly
 expect
-    result = classify 1
+    result = classify(1)
     result == Ok Deficient
 
 ##
@@ -85,6 +85,6 @@ expect
 
 # Zero is rejected (as it is not a positive integer)
 expect
-    result = classify 0
+    result = classify(0)
     Result.is_err result
 

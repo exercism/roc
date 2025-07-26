@@ -8,7 +8,7 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import Clock exposing [create, add, subtract, to_str]
 
@@ -163,56 +163,56 @@ expect
 # add minutes
 expect
     clock = create { hours: 10 }
-    result = clock |> add { minutes: 3 } |> to_str
+    result = clock |> add({ minutes: 3 }) |> to_str
     expected = "10:03"
     result == expected
 
 # add no minutes
 expect
     clock = create { hours: 6, minutes: 41 }
-    result = clock |> add { minutes: 0 } |> to_str
+    result = clock |> add({ minutes: 0 }) |> to_str
     expected = "06:41"
     result == expected
 
 # add to next hour
 expect
     clock = create { minutes: 45 }
-    result = clock |> add { minutes: 40 } |> to_str
+    result = clock |> add({ minutes: 40 }) |> to_str
     expected = "01:25"
     result == expected
 
 # add more than one hour
 expect
     clock = create { hours: 10 }
-    result = clock |> add { minutes: 61 } |> to_str
+    result = clock |> add({ minutes: 61 }) |> to_str
     expected = "11:01"
     result == expected
 
 # add more than two hours with carry
 expect
     clock = create { minutes: 45 }
-    result = clock |> add { minutes: 160 } |> to_str
+    result = clock |> add({ minutes: 160 }) |> to_str
     expected = "03:25"
     result == expected
 
 # add across midnight
 expect
     clock = create { hours: 23, minutes: 59 }
-    result = clock |> add { minutes: 2 } |> to_str
+    result = clock |> add({ minutes: 2 }) |> to_str
     expected = "00:01"
     result == expected
 
 # add more than one day (1500 min = 25 hrs)
 expect
     clock = create { hours: 5, minutes: 32 }
-    result = clock |> add { minutes: 1500 } |> to_str
+    result = clock |> add({ minutes: 1500 }) |> to_str
     expected = "06:32"
     result == expected
 
 # add more than two days
 expect
     clock = create { hours: 1, minutes: 1 }
-    result = clock |> add { minutes: 3500 } |> to_str
+    result = clock |> add({ minutes: 3500 }) |> to_str
     expected = "11:21"
     result == expected
 
@@ -223,56 +223,56 @@ expect
 # subtract minutes
 expect
     clock = create { hours: 10, minutes: 3 }
-    result = clock |> subtract { minutes: 3 } |> to_str
+    result = clock |> subtract({ minutes: 3 }) |> to_str
     expected = "10:00"
     result == expected
 
 # subtract to previous hour
 expect
     clock = create { hours: 10, minutes: 3 }
-    result = clock |> subtract { minutes: 30 } |> to_str
+    result = clock |> subtract({ minutes: 30 }) |> to_str
     expected = "09:33"
     result == expected
 
 # subtract more than an hour
 expect
     clock = create { hours: 10, minutes: 3 }
-    result = clock |> subtract { minutes: 70 } |> to_str
+    result = clock |> subtract({ minutes: 70 }) |> to_str
     expected = "08:53"
     result == expected
 
 # subtract across midnight
 expect
     clock = create { minutes: 3 }
-    result = clock |> subtract { minutes: 4 } |> to_str
+    result = clock |> subtract({ minutes: 4 }) |> to_str
     expected = "23:59"
     result == expected
 
 # subtract more than two hours
 expect
     clock = create {}
-    result = clock |> subtract { minutes: 160 } |> to_str
+    result = clock |> subtract({ minutes: 160 }) |> to_str
     expected = "21:20"
     result == expected
 
 # subtract more than two hours with borrow
 expect
     clock = create { hours: 6, minutes: 15 }
-    result = clock |> subtract { minutes: 160 } |> to_str
+    result = clock |> subtract({ minutes: 160 }) |> to_str
     expected = "03:35"
     result == expected
 
 # subtract more than one day (1500 min = 25 hrs)
 expect
     clock = create { hours: 5, minutes: 32 }
-    result = clock |> subtract { minutes: 1500 } |> to_str
+    result = clock |> subtract({ minutes: 1500 }) |> to_str
     expected = "04:32"
     result == expected
 
 # subtract more than two days
 expect
     clock = create { hours: 2, minutes: 20 }
-    result = clock |> subtract { minutes: 3000 } |> to_str
+    result = clock |> subtract({ minutes: 3000 }) |> to_str
     expected = "00:20"
     result == expected
 
@@ -397,28 +397,28 @@ expect
 # Can add max I64 values to a clock
 expect
     clock = create { hours: 23, minutes: 59 }
-    result = clock |> add { minutes: 9223372036854775807 } |> to_str
+    result = clock |> add({ minutes: 9223372036854775807 }) |> to_str
     expected = "18:06"
     result == expected
 
 # Can add min I64 values to a clock
 expect
     clock = create { hours: 23, minutes: 59 }
-    result = clock |> add { minutes: -9223372036854775808 } |> to_str
+    result = clock |> add({ minutes: -9223372036854775808 }) |> to_str
     expected = "05:51"
     result == expected
 
 # Can subtract max I64 values from a clock
 expect
     clock = create { hours: 23, minutes: 59 }
-    result = clock |> subtract { minutes: 9223372036854775807 } |> to_str
+    result = clock |> subtract({ minutes: 9223372036854775807 }) |> to_str
     expected = "05:52"
     result == expected
 
 # Can subtract min I64 values from a clock
 expect
     clock = create { hours: 23, minutes: 59 }
-    result = clock |> subtract { minutes: -9223372036854775808 } |> to_str
+    result = clock |> subtract({ minutes: -9223372036854775808 }) |> to_str
     expected = "18:07"
     result == expected
 

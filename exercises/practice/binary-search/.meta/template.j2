@@ -7,7 +7,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    result = {{ case["input"]["array"] | to_roc }} |> {{ case["property"] | to_snake }} {{ case["input"]["value"] }}
+    result = {{ case["input"]["array"] | to_roc }} |> {{ case["property"] | to_snake }}({{ case["input"]["value"] }})
 {%- if case["expected"]["error"] %}
     Result.is_err result
 {%- else %}

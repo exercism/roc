@@ -7,8 +7,8 @@ import {{ exercise | to_pascal }} exposing [get, post]
 standardizeResult = |result|
     result |> Result.try |string|
         string
-        |> Str.replace_each ".0," ","
-        |> Str.replace_each ".0}" "}"
+        |> Str.replace_each(".0,", ",")
+        |> Str.replace_each(".0}", "}")
         |> Str.to_utf8
         |> List.drop_if |c| [' ', '\t', '\n'] |> List.contains c
         |> Str.from_utf8
@@ -41,13 +41,13 @@ expect
             {%- endfor %}
         ]
     }
-    result = database |> {{ case["property"] | to_snake }} {
+    result = database |> {{ case["property"] | to_snake }}({
         url: {{ case["input"]["url"] | to_roc }},
     {%- if case["input"].get("payload", {}) != {} %}
         payload: {{ case["input"]["payload"] | tojson | to_roc }}
     {%- endif %}
-    } |> standardizeResult
-    expected = Ok {{ case["expected"] | tojson | replace(".0,", ",") | replace(".0}", "}") | replace(" ", "") | to_roc }}
+    }) |> standardizeResult
+    expected = Ok({{ case["expected"] | tojson | replace(".0,", ",") | replace(".0}", "}") | replace(" ", "") | to_roc }})
     result == expected
 
 {% endfor %}

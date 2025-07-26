@@ -8,52 +8,52 @@ app [main!] {
 import pf.Stdout
 
 main! = |_args|
-    Stdout.line! ""
+    Stdout.line!("")
 
 import ArmstrongNumbers exposing [is_armstrong_number]
 
 # Zero is an Armstrong number
 expect
-    result = is_armstrong_number 0
+    result = is_armstrong_number(0)
     result == Bool.true
 
 # Single-digit numbers are Armstrong numbers
 expect
-    result = is_armstrong_number 5
+    result = is_armstrong_number(5)
     result == Bool.true
 
 # There are no two-digit Armstrong numbers
 expect
-    result = is_armstrong_number 10
+    result = is_armstrong_number(10)
     result == Bool.false
 
 # Three-digit number that is an Armstrong number
 expect
-    result = is_armstrong_number 153
+    result = is_armstrong_number(153)
     result == Bool.true
 
 # Three-digit number that is not an Armstrong number
 expect
-    result = is_armstrong_number 100
+    result = is_armstrong_number(100)
     result == Bool.false
 
 # Four-digit number that is an Armstrong number
 expect
-    result = is_armstrong_number 9474
+    result = is_armstrong_number(9474)
     result == Bool.true
 
 # Four-digit number that is not an Armstrong number
 expect
-    result = is_armstrong_number 9475
+    result = is_armstrong_number(9475)
     result == Bool.false
 
 # Seven-digit number that is an Armstrong number
 expect
-    result = is_armstrong_number 9926315
+    result = is_armstrong_number(9926315)
     result == Bool.true
 
 # Seven-digit number that is not an Armstrong number
 expect
-    result = is_armstrong_number 9926314
+    result = is_armstrong_number(9926314)
     result == Bool.false
 

@@ -10,7 +10,7 @@ expect
 {%- if case["input"]["name"] == None %}
     result = {{ case["property"] | to_snake }} Anonymous
 {%- else %}
-    result = {{ case["property"] | to_snake }} (Name {{ case["input"]["name"] | to_roc }})
+    result = {{ case["property"] | to_snake }}((Name {{ case["input"]["name"] | to_roc }}))
 {%- endif %}
     result == {{ case["expected"] | to_roc }}
 
