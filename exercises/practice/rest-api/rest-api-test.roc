@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rest-api/canonical-data.json
-# File last updated on 2025-01-04
+# File last updated on 2025-07-26
 app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
     json: "https://github.com/lukewilliamboswell/roc-json/releases/download/0.12.0/1trwx8sltQ-e9Y2rOB4LWUWLS_sFVyETK8Twl0i9qpw.tar.gz",
@@ -21,7 +21,7 @@ standardize_result = |result|
             |> Str.replace_each(".0,", ",")
             |> Str.replace_each(".0}", "}")
             |> Str.to_utf8
-            |> List.drop_if(|c| [' ', '\t', '\n'] |> List.contains(c))
+            |> List.drop_if |c| [' ', '\t', '\n'] |> List.contains(c)
             |> Str.from_utf8,
     )
 

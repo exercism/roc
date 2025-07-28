@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/queen-attack/canonical-data.json
-# File last updated on 2025-01-04
+# File last updated on 2025-07-26
 app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
 }
@@ -19,22 +19,12 @@ import QueenAttack exposing [create, rank, file, queen_can_attack]
 # queen with a valid position
 expect
     maybe_square = create("C6")
-    result =
-        maybe_square
-        |> Result.try(
-            |square|
-                Ok(rank(square)),
-        )
+    result = maybe_square |> Result.try(|square| Ok(rank square))
     result == Ok(6)
 
 expect
     maybe_square = create("C6")
-    result =
-        maybe_square
-        |> Result.try(
-            |square|
-                Ok(file(square)),
-        )
+    result = maybe_square |> Result.try(|square| Ok(file square))
     result == Ok('C')
 
 # queen must have row on board
@@ -60,7 +50,7 @@ expect
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack(square2)
 
-            _ -> crash("Unreachable: E6 and G2 are both valid squares")
+            _ -> crash "Unreachable: E6 and G2 are both valid squares"
     result == Bool.false
 
 # can attack on same row
@@ -72,7 +62,7 @@ expect
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack(square2)
 
-            _ -> crash("Unreachable: E6 and G6 are both valid squares")
+            _ -> crash "Unreachable: E6 and G6 are both valid squares"
     result == Bool.true
 
 # can attack on same column
@@ -84,7 +74,7 @@ expect
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack(square2)
 
-            _ -> crash("Unreachable: F4 and F6 are both valid squares")
+            _ -> crash "Unreachable: F4 and F6 are both valid squares"
     result == Bool.true
 
 # can attack on first diagonal
@@ -96,7 +86,7 @@ expect
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack(square2)
 
-            _ -> crash("Unreachable: C6 and E8 are both valid squares")
+            _ -> crash "Unreachable: C6 and E8 are both valid squares"
     result == Bool.true
 
 # can attack on second diagonal
@@ -108,7 +98,7 @@ expect
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack(square2)
 
-            _ -> crash("Unreachable: C6 and B5 are both valid squares")
+            _ -> crash "Unreachable: C6 and B5 are both valid squares"
     result == Bool.true
 
 # can attack on third diagonal
@@ -120,7 +110,7 @@ expect
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack(square2)
 
-            _ -> crash("Unreachable: C6 and B7 are both valid squares")
+            _ -> crash "Unreachable: C6 and B7 are both valid squares"
     result == Bool.true
 
 # can attack on fourth diagonal
@@ -132,7 +122,7 @@ expect
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack(square2)
 
-            _ -> crash("Unreachable: H7 and G8 are both valid squares")
+            _ -> crash "Unreachable: H7 and G8 are both valid squares"
     result == Bool.true
 
 # cannot attack if falling diagonals are only the same when reflected across the longest falling diagonal
@@ -144,6 +134,6 @@ expect
             (Ok(square1), Ok(square2)) ->
                 square1 |> queen_can_attack(square2)
 
-            _ -> crash("Unreachable: B4 and F6 are both valid squares")
+            _ -> crash "Unreachable: B4 and F6 are both valid squares"
     result == Bool.false
 

@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/bob/canonical-data.json
-# File last updated on 2025-01-04
+# File last updated on 2025-07-26
 app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
 }
@@ -112,11 +112,6 @@ expect
     result = response("\t\t\t\t\t\t\t\t\t\t")
     result == "Fine. Be that way!"
 
-# multiple line question
-expect
-    result = response("\nDoes this cryogenic chamber make me look fat?\nNo.")
-    result == "Whatever."
-
 # starting with whitespace
 expect
     result = response("         hmmmmmmm...")
@@ -136,4 +131,9 @@ expect
 expect
     result = response("This is a statement ending with whitespace      ")
     result == "Whatever."
+
+# multiple line question
+expect
+    result = response("\nDoes this cryogenic chamber make\n me look fat?")
+    result == "Sure."
 

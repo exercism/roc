@@ -7,13 +7,13 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    result = {{ case["property"] | to_snake }} {
+    result = {{ case["property"] | to_snake }}({
         year: {{ case["input"]["year"] | to_roc }},
         month: {{ case["input"]["month"] | to_roc }},
         week: {{ case["input"]["week"] | to_pascal }},
         day_of_week: {{ case["input"]["dayofweek"] | to_pascal }},
-    }
-    expected = Ok {{ case["expected"] | to_roc }}
+    })
+    expected = Ok({{ case["expected"] | to_roc }})
     result == expected
 
 {% endfor %}

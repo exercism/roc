@@ -14,7 +14,7 @@ import {{ exercise | to_pascal }} exposing [encode, decode]
 {%- if case["property"] == "encode" %}
 expect
     integers = {{ case["input"]["integers"] | to_roc }} 
-    result = encode integers
+    result = encode(integers)
     expected = {{ case["expected"] | to_roc }} 
     result == expected
 {%- else %}
@@ -24,7 +24,7 @@ expect
     {%- if case["expected"]["error"] %}
     result |> Result.is_err
     {%- else %}
-    expected = Ok {{ case["expected"] | to_roc }} 
+    expected = Ok({{ case["expected"] | to_roc }})
     result == expected
     {%- endif %}
 {%- endif %}

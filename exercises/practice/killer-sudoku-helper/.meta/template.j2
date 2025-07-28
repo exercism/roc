@@ -23,7 +23,7 @@ import {{ exercise | to_pascal }} exposing [combinations]
 # {{ case["description"] }}
 {%- endif %}
 expect
-    result = {{ case["property"] }} {{ to_cage(case["input"]["cage"]) }}
+    result = {{ case["property"] }}({{ to_cage(case["input"]["cage"]) }})
     result == {{ case["expected"] | to_roc }}
 
 {% endfor -%}

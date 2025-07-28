@@ -8,17 +8,17 @@ import {{ exercise | to_pascal }} exposing [transform]
 # {{ case["description"] }}
 expect
     legacy =
-        Dict.from_list [
+        Dict.from_list([
 {%- for score, letters in case["input"]["legacy"].items() %}
             ({{score}}, {{ letters | to_roc | replace("\"", "'") }}),
 {%- endfor %}
-        ]
+        ])
     expected =
-        Dict.from_list [
+        Dict.from_list([
 {%- for letter, score in case["expected"].items() %}
             ('{{letter}}', {{ score }}),
 {%- endfor %}
-        ]
-    transform legacy == expected
+        ])
+    transform(legacy) == expected
         
 {% endfor %}

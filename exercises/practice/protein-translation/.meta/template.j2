@@ -12,7 +12,7 @@ expect
     {%- if case["expected"]["error"] %}
     result |> Result.is_err
     {%- else %}
-    result == Ok [{%- for aminoAcid in case["expected"] -%}{{ aminoAcid | to_pascal }}, {%- endfor %}]
+    result == Ok([{%- for aminoAcid in case["expected"] -%}{{ aminoAcid | to_pascal }}, {%- endfor %}])
     {%- endif %}
 
 {% endfor %}

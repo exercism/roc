@@ -8,11 +8,11 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 # {{ case["description"] }}
 expect
     grid = {{ case["input"]["rows"] | to_roc_multiline_string | indent(8) }}
-    result = {{ case["property"] | to_snake }} grid
+    result = {{ case["property"] | to_snake }}(grid)
     {%- if case["expected"]["error"] %}
     result |> Result.is_err
     {%- else %}
-    expected = Ok {{ case["expected"] | to_roc }}
+    expected = Ok({{ case["expected"] | to_roc }})
     result == expected
     {%- endif %}
 

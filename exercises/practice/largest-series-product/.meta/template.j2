@@ -8,11 +8,11 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 # {{ case["description"] }}
 expect
     digits = {{ case["input"]["digits"] | to_roc }}
-    result = digits |> {{ case["property"] | to_snake }} {{ case["input"]["span"] | to_roc }}
+    result = digits |> {{ case["property"] | to_snake }}({{ case["input"]["span"] | to_roc }})
     {%- if case["expected"]["error"] %}
     result |> Result.is_err
     {%- else %}
-    expected = Ok {{ case["expected"] | to_roc }}
+    expected = Ok({{ case["expected"] | to_roc }})
     result == expected
     {%- endif %}
 

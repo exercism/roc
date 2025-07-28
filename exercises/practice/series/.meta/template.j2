@@ -8,7 +8,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 # {{ case["description"] }}
 {%- if case["expected"]["error"] %} – just return an empty list{%- endif %}
 expect
-    result = {{ case["input"]["series"] | to_roc }} |> {{ case["property"] | to_snake }} {{ case["input"]["sliceLength"] | to_roc }}
+    result = {{ case["input"]["series"] | to_roc }} |> {{ case["property"] | to_snake }}({{ case["input"]["sliceLength"] | to_roc }})
     {%- if case["expected"]["error"] %}
     result == []
     {%- else %}

@@ -20,12 +20,12 @@ import {{ exercise | to_pascal }} exposing [add, sub, mul, div, abs, exp, exp_re
 # {{ case["description"] }}
 expect
 {%- if "r1" in case["input"] %}
-    result = {{ plugins.to_roc_rational(case["input"]["r1"]) }} |> {{ property_map[case["property"]] | to_snake }} ({{ plugins.to_roc_rational(case["input"]["r2"]) }})
+    result = {{ plugins.to_roc_rational(case["input"]["r1"]) }} |> {{ property_map[case["property"]] | to_snake }}(({{ plugins.to_roc_rational(case["input"]["r2"]) }}))
 {%- elif "r" in case["input"] %}
     {%- if "x" in case["input"] %}
-    result = {{ case["input"]["x"] | to_roc }} |> {{ property_map[case["property"]] | to_snake }} ({{ plugins.to_roc_rational(case["input"]["r"]) }})
+    result = {{ case["input"]["x"] | to_roc }} |> {{ property_map[case["property"]] | to_snake }}(({{ plugins.to_roc_rational(case["input"]["r"]) }}))
     {%- elif "n" in case["input"] %}
-    result = {{ plugins.to_roc_rational(case["input"]["r"]) }} |> {{ property_map[case["property"]] | to_snake }} {{ case["input"]["n"] | to_roc }}
+    result = {{ plugins.to_roc_rational(case["input"]["r"]) }} |> {{ property_map[case["property"]] | to_snake }}({{ case["input"]["n"] | to_roc }})
     {%- else %}
     result = {{ plugins.to_roc_rational(case["input"]["r"]) }} |> {{ property_map[case["property"]] | to_snake }}
     {%- endif %}
@@ -35,7 +35,7 @@ expect
 {%- if case["expected"] is iterable %}
     result == {{ plugins.to_roc_rational(case["expected"]) }}
 {%- else %}
-    result |> Num.is_approx_eq {{ case["expected"] | to_roc }} {}
+    result |> Num.is_approx_eq({{ case["expected"] | to_roc }}, {})
 {%- endif %}
 
 {% endmacro %}

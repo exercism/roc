@@ -16,7 +16,7 @@ expect
         {%- endfor %}
     ]
     {%- endif %}
-    result = {{ case["property"] | to_snake }} { items, maximum_weight: {{ case["input"]["maximumWeight"] }} }
+    result = {{ case["property"] | to_snake }}({ items, maximum_weight: {{ case["input"]["maximumWeight"] }} })
     result == {{ case["expected"] | to_roc }}
 
 {% endfor %}

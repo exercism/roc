@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/forth/canonical-data.json
-# File last updated on 2025-01-04
+# File last updated on 2025-07-26
 app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
 }
@@ -37,6 +37,11 @@ expect
     result = evaluate("1 +")
     Result.is_err(result)
 
+# addition: more than two values on the stack
+expect
+    result = evaluate("1 2 3 +")
+    result == Ok([1, 5])
+
 # subtraction: can subtract two numbers
 expect
     result = evaluate("3 4 -")
@@ -52,6 +57,11 @@ expect
     result = evaluate("1 -")
     Result.is_err(result)
 
+# subtraction: more than two values on the stack
+expect
+    result = evaluate("1 12 3 -")
+    result == Ok([1, 9])
+
 # multiplication: can multiply two numbers
 expect
     result = evaluate("2 4 *")
@@ -66,6 +76,11 @@ expect
 expect
     result = evaluate("1 *")
     Result.is_err(result)
+
+# multiplication: more than two values on the stack
+expect
+    result = evaluate("1 2 3 *")
+    result == Ok([1, 6])
 
 # division: can divide two numbers
 expect
@@ -92,6 +107,11 @@ expect
     result = evaluate("1 /")
     Result.is_err(result)
 
+# division: more than two values on the stack
+expect
+    result = evaluate("1 12 3 /")
+    result == Ok([1, 4])
+
 # combined arithmetic: addition and subtraction
 expect
     result = evaluate("1 2 + 4 -")
@@ -101,6 +121,16 @@ expect
 expect
     result = evaluate("2 4 * 3 /")
     result == Ok([2])
+
+# combined arithmetic: multiplication and addition
+expect
+    result = evaluate("1 3 4 * +")
+    result == Ok([13])
+
+# combined arithmetic: addition and multiplication
+expect
+    result = evaluate("1 3 4 + *")
+    result == Ok([7])
 
 # dup: copies a value on the stack
 expect

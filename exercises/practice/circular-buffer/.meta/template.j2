@@ -8,39 +8,39 @@ import {{ exercise | to_pascal }} exposing [create, read, write, overwrite, clea
 # {{ case["description"] }}
 run_operations{{ loop.index }} = |_|
     result =
-        create { capacity: {{ case["input"]["capacity"] }} }
+        create({ capacity: {{ case["input"]["capacity"] }} })
         {%- for op in case["input"]["operations"] -%}
         {%- if op["operation"] == "clear" %}
         |> clear
         {%- elif op["operation"] == "overwrite" %}
-        |> overwrite {{ op["item"] }}
+        |> overwrite({{ op["item"] }})
         {%- elif op["operation"] == "write" %}
         {%- if op["should_succeed"] %}
-        |> write? {{ op["item"] }}
+        |> write({{ op["item"] }})?
         {%- else %}
-        |> \buffer_before_write ->
-            write_result = buffer_before_write |> write {{ op["item"] }}
-            expect write_result == Err BufferFull
+        |> |buffer_before_write|
+            write_result = buffer_before_write |> write({{ op["item"] }})
+            expect write_result == Err(BufferFull)
             buffer_before_write
         {%- endif %}
         {%- elif op["operation"] == "read" %}
         {%- if op["should_succeed"] %}
-        |> read? |> \read_result ->
+        |> read? |> |read_result|
             expect read_result.value == {{ op["expected"] }}
             read_result.new_buffer
         {%- else %}
-        |> \buffer_before_read ->
+        |> |buffer_before_read|
             read_result = buffer_before_read |> read
-            expect read_result == Err BufferEmpty
+            expect read_result == Err(BufferEmpty)
             buffer_before_read
         {%- endif %}
         {%- endif %}
         {%- endfor %}
-    Ok result
+    Ok(result)
 
 expect
     
-    result = run_operations{{ loop.index }} {}
+    result = run_operations{{ loop.index }}({})
     result |> Result.is_ok
 
 {% endfor %}

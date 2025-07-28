@@ -13,8 +13,8 @@ import {{ exercise | to_pascal }} exposing [encode, decode]
 # {{ case["description"] }}
 expect
     message = {{ case["input"]["msg"] | to_roc }}
-    result = message |> {{ case["property"] | to_snake }} {{ case["input"]["rails"] | to_roc }}
-    expected = Ok {{ case["expected"] | to_roc }} 
+    result = message |> {{ case["property"] | to_snake }}({{ case["input"]["rails"] | to_roc }})
+    expected = Ok({{ case["expected"] | to_roc }})
     result == expected
 
 {% endfor %}

@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/wordy/canonical-data.json
-# File last updated on 2025-01-04
+# File last updated on 2025-07-26
 app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
 }
@@ -17,10 +17,30 @@ expect
     result = answer("What is 5?")
     result == Ok(5)
 
+# just a zero
+expect
+    result = answer("What is 0?")
+    result == Ok(0)
+
+# just a negative number
+expect
+    result = answer("What is -123?")
+    result == Ok(-123)
+
 # addition
 expect
     result = answer("What is 1 plus 1?")
     result == Ok(2)
+
+# addition with a left hand zero
+expect
+    result = answer("What is 0 plus 2?")
+    result == Ok(2)
+
+# addition with a right hand zero
+expect
+    result = answer("What is 3 plus 0?")
+    result == Ok(3)
 
 # more addition
 expect
