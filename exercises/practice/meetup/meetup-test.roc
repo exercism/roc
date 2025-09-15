@@ -1,9 +1,9 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/meetup/canonical-data.json
-# File last updated on 2025-07-26
+# File last updated on 2025-09-15
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
-    isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.6.0/79DATSmwkFXMsS0dF7w1RTHeQCGwFNzh9zylic4Fw9w.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.20.0/X73hGh05nNTkDHU06FHC0YfFaQB1pimX7gncRcao5mU.tar.br",
+    isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.6.2/73w_H-aSJNcWqtXvMG4JQw_HoaApMBLnE92XD4OcVGU.tar.br",
 }
 
 import pf.Stdout
