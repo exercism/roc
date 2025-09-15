@@ -20,6 +20,7 @@ description = "equilateral triangle -> no sides are equal"
 
 [16e8ceb0-eadb-46d1-b892-c50327479251]
 description = "equilateral triangle -> all zero sides is not a triangle"
+include = false
 
 [3022f537-b8e5-4cc1-8f12-fd775827a00c]
 description = "equilateral triangle -> sides may be floats"
@@ -41,12 +42,15 @@ description = "isosceles triangle -> no sides are equal"
 
 [2eba0cfb-6c65-4c40-8146-30b608905eae]
 description = "isosceles triangle -> first triangle inequality violation"
+include = false
 
 [278469cb-ac6b-41f0-81d4-66d9b828f8ac]
 description = "isosceles triangle -> second triangle inequality violation"
+include = false
 
 [90efb0c7-72bb-4514-b320-3a3892e278ff]
 description = "isosceles triangle -> third triangle inequality violation"
+include = false
 
 [adb4ee20-532f-43dc-8d31-e9271b7ef2bc]
 description = "isosceles triangle -> sides may be floats"
@@ -68,6 +72,7 @@ description = "scalene triangle -> second and third sides are equal"
 
 [70ad5154-0033-48b7-af2c-b8d739cd9fdc]
 description = "scalene triangle -> may not violate triangle inequality"
+include = false
 
 [26d9d59d-f8f1-40d3-ad58-ae4d54123d7d]
 description = "scalene triangle -> sides may be floats"

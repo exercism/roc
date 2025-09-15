@@ -1,8 +1,8 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/two-bucket/canonical-data.json
-# File last updated on 2025-07-26
+# File last updated on 2025-09-15
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.20.0/X73hGh05nNTkDHU06FHC0YfFaQB1pimX7gncRcao5mU.tar.br",
 }
 
 import pf.Stdout
@@ -122,6 +122,44 @@ expect
             moves: 2,
             goal_bucket: Two,
             other_bucket: 2,
+        },
+    )
+    result == expected
+
+# Measure using bucket one much bigger than bucket two
+expect
+    result = measure(
+        {
+            bucket_one: 5,
+            bucket_two: 1,
+            goal: 2,
+            start_bucket: One,
+        },
+    )
+    expected = Ok(
+        {
+            moves: 6,
+            goal_bucket: One,
+            other_bucket: 1,
+        },
+    )
+    result == expected
+
+# Measure using bucket one much smaller than bucket two
+expect
+    result = measure(
+        {
+            bucket_one: 3,
+            bucket_two: 15,
+            goal: 9,
+            start_bucket: One,
+        },
+    )
+    expected = Ok(
+        {
+            moves: 6,
+            goal_bucket: Two,
+            other_bucket: 0,
         },
     )
     result == expected
