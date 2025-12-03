@@ -6,7 +6,13 @@ app [main] {
 main =
     Task.ok {}
 
-import DotDsl exposing [buildGraph, node, edge]
+import DotDsl exposing [
+    buildGraph,
+    dslForRedBgColor,
+    dslForYellowBgColorAndColoredNodesABC,
+    dslForGreenTriangleBCD,
+    dslForDottedRedEdgeBC,
+]
 
 ## The following function is a temporary workaround for Roc issue #7144:
 ## comparing records containing dicts may return the wrong result depending on
@@ -17,33 +23,9 @@ isEq = \graph1, graph2 ->
     && (graph1.nodes == graph2.nodes)
     && (graph1.edges == graph2.edges)
 
-# Can create an AddNode command
-expect
-    result = node "a" { color: Red }
-    expected = AddNode "a" { color: Red }
-    result == expected
-
-# Can create an AddNode command with the default color
-expect
-    result = node "b" {}
-    expected = AddNode "b" { color: Black }
-    result == expected
-
-# Can create an AddEdge command
-expect
-    result = edge "a" "b" { color: Red, style: Dotted }
-    expected = AddEdge "a" "b" { color: Red, style: Dotted }
-    result == expected
-
-# Can create an AddEdge command with the default color and style
-expect
-    result = edge "c" "d" {}
-    expected = AddEdge "c" "d" { color: Black, style: Solid }
-    result == expected
-
 # Can create an empty graph
 expect
-    result = buildGraph {} []
+    result = buildGraph []
     expected = {
         bgColor: Black,
         nodes: Dict.empty {},
@@ -53,7 +35,7 @@ expect
 
 # can set the background color
 expect
-    result = buildGraph { bgColor: Red } []
+    result = buildGraph dslForRedBgColor
     expected = {
         bgColor: Red,
         nodes: Dict.empty {},
@@ -61,111 +43,89 @@ expect
     }
     result |> isEq expected
 
-# can create a graph with a few nodes of various colors
+# can create a graph with yellow background and three separate nodes of various colors
 expect
-    result = buildGraph {} [
-        node "a" {},
-        node "b" { color: Green },
-        node "c" { color: Blue },
-    ]
+    result = buildGraph dslForYellowBgColorAndColoredNodesABC
     expected = {
-        bgColor: Black,
-        nodes: Dict.fromList [("a", { color: Black }), ("b", { color: Green }), ("c", { color: Blue })],
+        bgColor: Yellow,
+        nodes: Dict.fromList [
+            ("a", { color: Red }),
+            ("b", { color: Green }),
+            ("c", { color: Blue }),
+        ],
         edges: Dict.empty {},
     }
     result |> isEq expected
 
-# can create a graph with a two nodes connected by one edge
+# can create a graph of a triangle BCD with green nodes and edges (and with the default black background)
 expect
-    result = buildGraph {} [
-        node "a" {},
-        node "b" {},
-        edge "a" "b" { color: Yellow, style: Dotted },
-    ]
+    result = buildGraph dslForGreenTriangleBCD
     expected = {
         bgColor: Black,
-        nodes: Dict.fromList [("a", { color: Black }), ("b", { color: Black })],
-        edges: Dict.fromList [(("a", "b"), { color: Yellow, style: Dotted })],
+        nodes: Dict.fromList [("b", { color: Green }), ("c", { color: Green }), ("d", { color: Green })],
+        edges: Dict.fromList [
+            (("b", "c"), { color: Green, style: Solid }),
+            (("b", "d"), { color: Green, style: Solid }),
+            (("c", "d"), { color: Green, style: Solid }),
+        ],
     }
     result |> isEq expected
 
-# creating an edge automatically creates the nodes if they don't exist yet
+# creating an edge automatically creates the connected nodes if needed, black by default
 expect
-    result = buildGraph {} [
-        edge "a" "b" {},
-    ]
+    result = buildGraph dslForDottedRedEdgeBC
     expected = {
         bgColor: Black,
-        nodes: Dict.fromList [("a", { color: Black }), ("b", { color: Black })],
-        edges: Dict.fromList [(("a", "b"), { color: Black, style: Solid })],
+        # default to black background
+        nodes: Dict.fromList [("b", { color: Black }), ("c", { color: Black })],
+        edges: Dict.fromList [(("b", "c"), { color: Red, style: Dotted })],
     }
     result |> isEq expected
 
-# creating a node after an edge it's connected to is possible
+# DSL commands can be chained, and existing nodes and edges get updated in the given order
 expect
-    result = buildGraph {} [
-        edge "a" "b" { color: Red },
-        node "a" { color: Blue },
-    ]
+    allCommands =
+        dslForYellowBgColorAndColoredNodesABC
+        |> List.concat dslForGreenTriangleBCD
+        |> List.concat dslForDottedRedEdgeBC
+        |> List.concat dslForRedBgColor
+    result = buildGraph allCommands
     expected = {
-        bgColor: Black,
-        nodes: Dict.fromList [("a", { color: Blue }), ("b", { color: Black })],
-        edges: Dict.fromList [(("a", "b"), { color: Red, style: Solid })],
+        bgColor: Red,
+        nodes: Dict.fromList [
+            ("a", { color: Red }),
+            ("b", { color: Green }),
+            ("c", { color: Green }),
+            ("d", { color: Green }),
+        ],
+        edges: Dict.fromList [
+            (("b", "c"), { color: Red, style: Dotted }),
+            (("b", "d"), { color: Green, style: Solid }),
+            (("c", "d"), { color: Green, style: Solid }),
+        ],
     }
     result |> isEq expected
 
-# can create a multicolor triangle
+# Running the same DSL commands in a different order changes the result
 expect
-    result = buildGraph { bgColor: Yellow } [
-        node "a" { color: Red },
-        node "b" { color: Green },
-        node "c" { color: Blue },
-        edge "a" "b" { color: Red, style: Dotted },
-        edge "b" "c" { color: Blue },
-        edge "a" "c" { color: Green },
-    ]
+    allCommands =
+        dslForDottedRedEdgeBC
+        |> List.concat dslForRedBgColor
+        |> List.concat dslForGreenTriangleBCD
+        |> List.concat dslForYellowBgColorAndColoredNodesABC
+    result = buildGraph allCommands
     expected = {
         bgColor: Yellow,
-        nodes: Dict.fromList [("a", { color: Red }), ("b", { color: Green }), ("c", { color: Blue })],
-        edges: Dict.fromList [
-            (("a", "b"), { color: Red, style: Dotted }),
-            (("b", "c"), { color: Blue, style: Solid }),
-            (("a", "c"), { color: Green, style: Solid }),
+        nodes: Dict.fromList [
+            ("a", { color: Red }),
+            ("b", { color: Green }),
+            ("c", { color: Blue }),
+            ("d", { color: Green }),
         ],
-    }
-    result |> isEq expected
-
-# edge ids are sorted alphabetically
-expect
-    result = buildGraph {} [
-        edge "b" "a" {},
-        edge "c" "b" {},
-        edge "c" "a" {},
-    ]
-    expected = {
-        bgColor: Black,
-        nodes: Dict.fromList [("a", { color: Black }), ("b", { color: Black }), ("c", { color: Black })],
         edges: Dict.fromList [
-            (("a", "b"), { color: Black, style: Solid }),
-            (("b", "c"), { color: Black, style: Solid }),
-            (("a", "c"), { color: Black, style: Solid }),
-        ],
-    }
-    result |> isEq expected
-
-# adding the same node or edge multiple times only keeps the last occurrence
-expect
-    result = buildGraph {} [
-        node "a" { color: Blue },
-        node "a" { color: Red },
-        node "a" { color: Green },
-        edge "a" "b" { color: Yellow },
-    ]
-    expected = {
-        bgColor: Black,
-        nodes: Dict.fromList [("a", { color: Green }), ("b", { color: Black })],
-        edges: Dict.fromList [
-            (("a", "b"), { color: Yellow, style: Solid }),
+            (("b", "c"), { color: Green, style: Solid }),
+            (("b", "d"), { color: Green, style: Solid }),
+            (("c", "d"), { color: Green, style: Solid }),
         ],
     }
     result |> isEq expected

@@ -1,4 +1,10 @@
-module [buildGraph, node, edge]
+module [
+    buildGraph,
+    dslForRedBgColor,
+    dslForYellowBgColorAndColoredNodesABC,
+    dslForGreenTriangleBCD,
+    dslForDottedRedEdgeBC,
+]
 
 Color : [Black, Red, Green, Blue, Yellow]
 Style : [Solid, Dotted]
@@ -9,21 +15,16 @@ Graph : {
     edges : Dict (Str, Str) { color : Color, style : Style },
 }
 
-DslCommand : [AddNode Str { color : Color }, AddEdge Str Str { color : Color, style : Style }]
+DslCommand : [SetBgColor Color, AddNode Str { color : Color }, AddEdge Str Str { color : Color, style : Style }]
 
-node : Str, { color ? Color } -> [AddNode Str { color : Color }]
-node = \id, { color ? Black } ->
-    AddNode id { color }
-
-edge : Str, Str, { color ? Color, style ? Style } -> [AddEdge Str Str { color : Color, style : Style }]
-edge = \id1, id2, { color ? Black, style ? Solid } ->
-    AddEdge id1 id2 { color, style }
-
-buildGraph : { bgColor ? Color }, List DslCommand -> Graph
-buildGraph = \{ bgColor ? Black }, dslCommands ->
+buildGraph : List DslCommand -> Graph
+buildGraph = \dslCommands ->
     dslCommands
-    |> List.walk { bgColor, nodes: Dict.empty {}, edges: Dict.empty {} } \state, command ->
+    |> List.walk { bgColor: Black, nodes: Dict.empty {}, edges: Dict.empty {} } \state, command ->
         when command is
+            SetBgColor newBgColor ->
+                { state & bgColor: newBgColor }
+
             AddNode id attributes ->
                 nodes = state.nodes |> Dict.insert id attributes
                 { state & nodes }
@@ -44,6 +45,35 @@ buildGraph = \{ bgColor ? Black }, dslCommands ->
                     state.edges
                     |> Dict.insert edgeId attributes
                 { state & nodes, edges }
+
+dslForRedBgColor : List DslCommand
+dslForRedBgColor = [
+    SetBgColor Red,
+]
+
+dslForYellowBgColorAndColoredNodesABC : List DslCommand
+dslForYellowBgColorAndColoredNodesABC = [
+    SetBgColor Yellow,
+    AddNode "a" { color: Red },
+    AddNode "b" { color: Green },
+    AddNode "c" { color: Blue },
+]
+
+dslForGreenTriangleBCD : List DslCommand
+dslForGreenTriangleBCD = [
+    SetBgColor Yellow,
+    AddNode "a" { color: Green },
+    AddNode "b" { color: Green },
+    AddNode "c" { color: Green },
+    AddEdge "a" "b" { color: Green, style: Solid },
+    AddEdge "b" "c" { color: Green, style: Solid },
+    AddEdge "a" "c" { color: Green, style: Solid },
+]
+
+dslForDottedRedEdgeBC : List DslCommand
+dslForDottedRedEdgeBC = [
+    AddEdge "b" "c" { color: Red, style: Dotted },
+]
 
 ## Compare two strings, first by their UTF8 representations, then by length:
 ## "" < "ABC" < "abc" < "abcdef"

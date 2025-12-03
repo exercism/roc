@@ -1,4 +1,10 @@
-module [buildGraph, node, edge]
+module [
+    buildGraph,
+    dslForRedBgColor,
+    dslForYellowBgColorAndColoredNodesABC,
+    dslForGreenTriangleBCD,
+    dslForDottedRedEdgeBC,
+]
 
 Color : [Black, Red, Green, Blue, Yellow]
 Style : [Solid, Dotted]
@@ -9,16 +15,29 @@ Graph : {
     edges : Dict (Str, Str) { color : Color, style : Style },
 }
 
-DslCommand : [AddNode Str { color : Color }, AddEdge Str Str { color : Color, style : Style }]
+# TODO: change this DslCommand type however you need
+DslCommand : [DslCommandTodo1, DslCommandTodo2, DslCommandTodo3]
 
-node : Str, { color ? Color } -> [AddNode Str { color : Color }]
-node = \id, { color ? Black } ->
-    crash "Please implement the 'node' function"
-
-edge : Str, Str, { color ? Color, style ? Style } -> [AddEdge Str Str { color : Color, style : Style }]
-edge = \id1, id2, { color ? Black, style ? Solid } ->
-    crash "Please implement the 'edge' function"
-
-buildGraph : { bgColor ? Color }, List DslCommand -> Graph
-buildGraph = \{ bgColor ? Black }, dslCommands ->
+buildGraph : List DslCommand -> Graph
+buildGraph = \dslCommands ->
     crash "Please implement the 'buildGraph' function"
+
+dslForRedBgColor : List DslCommand
+dslForRedBgColor = [
+    # TODO: define this list of DSL commands to get the desired effect
+]
+
+dslForYellowBgColorAndColoredNodesABC : List DslCommand
+dslForYellowBgColorAndColoredNodesABC = [
+    # TODO: define this list of DSL commands to get the desired effect
+]
+
+dslForGreenTriangleBCD : List DslCommand
+dslForGreenTriangleBCD = [
+    # TODO: define this list of DSL commands to get the desired effect
+]
+
+dslForDottedRedEdgeBC : List DslCommand
+dslForDottedRedEdgeBC = [
+    # TODO: define this list of DSL commands to get the desired effect
+]
