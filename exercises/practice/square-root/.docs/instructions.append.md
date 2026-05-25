@@ -1,5 +1,7 @@
 # Instructions append
 
+## Implementation
+
 This problem can be solved easily using Roc's built-in `Num` module, including the [`Num.sqrt`][sqrt] function.
 
 However, we'd like you to consider the challenge of solving this exercise without using built-ins or modules.

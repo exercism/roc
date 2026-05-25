@@ -1,5 +1,7 @@
 # Instructions append
 
+## Implementation
+
 You are building a tiny web server that queries an even tinier user database. Sounds easy, but in the real world many things can (and often do) go wrong:
 
 - the connection may be insecure: the URL must start with `"https://"`
