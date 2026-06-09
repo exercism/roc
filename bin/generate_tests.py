@@ -158,8 +158,8 @@ def to_roc_multiline_string(lines: Union[str, List[str]]) -> str:
         return to_roc_string(lines[0])
     else:
         return "\n".join(
-            ["", '"""'] + [escape_roc_string_content(line) for line in lines] + ['"""']
-        ).replace("$(", "\\$(")
+            [r'\\' + escape_roc_string_content(line) for line in lines]
+        ).replace("${", r"\${")
 
 
 def to_roc_tuple(values: Any):
@@ -177,7 +177,7 @@ def to_roc_record(obj: Dict[str, Any]):
 
 
 def to_roc_bool(value: bool):
-    return "Bool.true" if value else "Bool.false"
+    return "Bool.True" if value else "Bool.False"
 
 
 def to_roc_list(values: Any):
@@ -187,7 +187,7 @@ def to_roc_list(values: Any):
 
 def to_roc_float(value: Union[int, float]):
     value = float(value)
-    return f"{value!r}f64".replace("+", "")
+    return f"{value!r}.F64".replace("+", "")
 
 
 def to_roc(value: Any) -> str:
@@ -379,7 +379,9 @@ def format_file(path: Path) -> NoReturn:
     """
     Runs roc format on file at path
     """
-    subprocess.check_call(["roc", "format", path])
+    # TODO: re-enable formatting once it's re-implemented in Roc
+    #subprocess.check_call(["roc", "format", path])
+    pass
 
 
 def drop_timestamp(lines):

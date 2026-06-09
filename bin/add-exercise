@@ -88,10 +88,11 @@ cat << END_TEST > "exercises/practice/${slug}/${slug}-test.roc"
 END_TEST
 
 cat << END_STUB > "exercises/practice/${slug}/${slug_pascal}.roc"
-module [${slug_camel}]
-
-${slug_camel} = |my_arg|
-    crash "Please implement the '${slug_camel}' function"
+${slug_pascal} :: {}.{
+    ${slug_camel} = |my_arg| {
+        crash "Please implement the '${slug_camel}' function"
+    }
+}
 END_STUB
 
 cp "exercises/practice/${slug}/${slug_pascal}.roc" "exercises/practice/${slug}/.meta/Example.roc"

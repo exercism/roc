@@ -1,14 +1,14 @@
-app [main!] { pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.20.0/X73hGh05nNTkDHU06FHC0YfFaQB1pimX7gncRcao5mU.tar.br" }
+factorial = |number| {
+    match number {
+        1 => 1
+        n => n * factorial(n - 1)
+    }
+}
 
-import pf.Stdout
+expect factorial(5) == 1 * 2 * 3 * 4 * 5
 
-factorial = |number|
-    when number is
-        1 -> 1
-        n -> n * factorial (n - 1)
-
-expect factorial 5 == 1 * 2 * 3 * 4 * 5
-
-main! = |_args|
-    result = factorial 20 |> Num.to_str
-    Stdout.line! "factorial 20 = ${result}"
+main! = |_args| {
+    result = factorial(20)
+    echo!("factorial 20 = ${result.to_str()}")
+    Ok({})
+}
