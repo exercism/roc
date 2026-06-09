@@ -377,10 +377,9 @@ def load_additional_tests(exercise: Path) -> List[TypeJSON]:
 
 def format_file(path: Path) -> NoReturn:
     """
-    Runs roc format on file at path
+    Runs roc fmt on file at path
     """
-    # TODO: re-enable formatting once it's re-implemented in Roc
-    #subprocess.check_call(["roc", "format", path])
+    subprocess.check_call(["roc", "fmt", path])
     pass
 
 
