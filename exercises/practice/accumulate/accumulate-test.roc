@@ -1,70 +1,77 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/accumulate/canonical-data.json
-# File last updated on 2025-09-15
+# File last updated on 2026-06-09
 app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.20.0/X73hGh05nNTkDHU06FHC0YfFaQB1pimX7gncRcao5mU.tar.br",
+    pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.7/DuRUyJh31Gt41YArMcVcvybLa2bCWboccWQ7Zq1KZPZ6.tar.zst",
 }
 
 import pf.Stdout
 
-main! = |_args|
-    Stdout.line!("")
+main! = |_args| {
+    Ok({})
+}
 
-import Accumulate exposing [accumulate]
+import Accumulate
 
 # accumulate empty
-expect
-    result = accumulate(
-        [],
-        |x|
-            x * x,
-    )
+expect {
+    result = Accumulate.accumulate([], |x| { x * x })
     result == []
+}
 
 # accumulate squares
-expect
-    result = accumulate(
-        [1, 2, 3],
-        |x|
-            x * x,
-    )
+expect {
+    result = Accumulate.accumulate([1, 2, 3], |x| { x * x })
     result == [1, 4, 9]
+}
 
 # accumulate upcases
-expect
-    result = accumulate(["Hello", "world"], to_upper)
+expect {
+    result = Accumulate.accumulate(["Hello", "world"], to_upper)
     result == ["HELLO", "WORLD"]
+}
 
 # accumulate reversed strings
-expect
-    result = accumulate(["the", "quick", "brown", "fox", "etc"], reverse)
+expect {
+    result = Accumulate.accumulate(["the", "quick", "brown", "fox", "etc"], reverse)
     result == ["eht", "kciuq", "nworb", "xof", "cte"]
+}
 
 # accumulate recursively
-expect
-    result = accumulate(
-        ["a", "b", "c"],
-        |x|
-            accumulate(["1", "2", "3"], |y| Str.concat(x, y)),
-    )
+expect {
+    result = Accumulate.accumulate(["a", "b", "c"], |x| {
+        Accumulate.accumulate(["1", "2", "3"], |y| { Str.concat(x, y) })
+    })
     result == [["a1", "a2", "a3"], ["b1", "b2", "b3"], ["c1", "c2", "c3"]]
+}
+
+reverse_list : List(a) -> List(a)
+reverse_list = |list| {
+    match list {
+        [] => []
+        [first, .. as rest] => reverse_list(rest).append(first)
+    }
+}
 
 reverse : Str -> Str
-reverse = |str|
-    Str.to_utf8(str)
-    |> List.reverse
-    |> Str.from_utf8
-    |> Result.with_default("")
+reverse = |str| {
+    str
+    .to_utf8()
+    ->reverse_list
+    ->Str.from_utf8
+    ?? ""
+}
+
+to_upper_char : U8 -> U8
+to_upper_char = |byte| {
+    if 'a' <= byte and byte <= 'z' {
+        byte - 'a' + 'A'
+    } else {
+        byte
+    }
+}
 
 to_upper : Str -> Str
-to_upper = |str|
-    Str.to_utf8(str)
-    |> List.map(
-        |byte|
-            if 'a' <= byte and byte <= 'z' then
-                byte - 'a' + 'A'
-            else
-                byte,
-    )
-    |> Str.from_utf8
-    |> Result.with_default("")
+to_upper = |str| {
+    str.to_utf8().map(to_upper_char)->Str.from_utf8 ?? ""
+}
