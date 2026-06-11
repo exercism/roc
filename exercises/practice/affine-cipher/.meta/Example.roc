@@ -7,7 +7,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 
 	new : { a : U64, b : U64 } -> Try(AffineCipher, [InvalidKey])
 	new = |{ a, b }| {
-        encode_map : List(U8)
+		encode_map : List(U8)
 		encode_map = 
 			0.to(alphabet_size - 1)
 				.map(
@@ -21,7 +21,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 		if Set.from_list(encode_map).len() < encode_map.len() {
 			Err(InvalidKey)
 		} else {
-            decode_map : List(U8)
+			decode_map : List(U8)
 			decode_map = 
 				encode_map
 					.map_with_index(
@@ -36,12 +36,12 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 							} else {
 								EQ
 							}
-						}
+						},
 					)
 					.map(
 						|pair| {
 							pair.decoded_index.to_u8_wrap() + 'a'
-						}
+						},
 					)
 
 			Ok({ a, b, encode_map, decode_map })
@@ -74,16 +74,18 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 							[]
 						}
 					}
-				}
+				},
 			)
 			->chunks_of(group_length)
 			->intersperse([' '])
 			->join()
 			->Str.from_utf8()
-        match maybe_result {
-            Ok(result) => result
-            Err(_) => { crash "Unreachable: ASCII characters are always valid UTF-8" }
-        }
+		match maybe_result {
+			Ok(result) => result
+			Err(_) => {
+				crash "Unreachable: ASCII characters are always valid UTF-8"
+			}
+		}
 	}
 
 	decode : AffineCipher, Str -> Try(Str, [BadUtf8(_), InvalidCharacter])
@@ -116,19 +118,19 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 
 # The following functions should soon be available in Roc's builtins
 chunks_of = |iter, size| {
-    var $state = []
-    var $chunk = []
-    for item in iter {
-        $chunk = $chunk.append(item)
-        if $chunk.len() == size {
-            $state = $state.append($chunk)
-            $chunk = []
-        }
-    }
-    if $chunk.len() > 0 {
-        $state = $state.append($chunk)
-    }
-    $state
+	var $state = []
+	var $chunk = []
+	for item in iter {
+		$chunk = $chunk.append(item)
+		if $chunk.len() == size {
+			$state = $state.append($chunk)
+			$chunk = []
+		}
+	}
+	if $chunk.len() > 0 {
+		$state = $state.append($chunk)
+	}
+	$state
 }
 
 collect = |iter| {
@@ -140,37 +142,37 @@ collect = |iter| {
 }
 
 intersperse = |list, sep| {
-    match list {
-        [] => []
-        [_] => list
-        [first, .. as rest] => [first, sep].concat(intersperse(rest, sep))
-    }
+	match list {
+		[] => []
+		[_] => list
+		[first, .. as rest] => [first, sep].concat(intersperse(rest, sep))
+	}
 }
 
 join = |iter| {
-    var $state = []
-    for sublist in iter {
-        for item in sublist {
-            $state = $state.append(item)
-        }
-    }
-    $state
+	var $state = []
+	for sublist in iter {
+		for item in sublist {
+			$state = $state.append(item)
+		}
+	}
+	$state
 }
 
 join_map = |iter, func| {
-    var $state = []
-    for item in iter {
-        for subitem in func(item) {
-            $state = $state.append(subitem)
-        }
-    }
-    $state
+	var $state = []
+	for item in iter {
+		for subitem in func(item) {
+			$state = $state.append(subitem)
+		}
+	}
+	$state
 }
 
 map_try = |iter, func| {
-    var $state = []
-    for item in iter {
-        $state = $state.append(func(item)?)
-    }
-    Ok($state)
+	var $state = []
+	for item in iter {
+		$state = $state.append(func(item)?)
+	}
+	Ok($state)
 }
