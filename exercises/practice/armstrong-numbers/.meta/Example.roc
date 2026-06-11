@@ -1,17 +1,36 @@
-module [is_armstrong_number]
+ArmstrongNumbers :: {}.{
+	is_armstrong_number : U64 -> Bool
+	is_armstrong_number = |number| {
+		digits = list_digits(number)
+		len = digits.len()
+		candidate = 
+			digits
+				.map(
+					|digit| {
+						digit->pow_int(len)
+					},
+				)
+				.sum()
+		candidate == number
+	}
+}
 
-list_digits = |number|
-    if number < 10 then
-        [number]
-    else
-        (list_digits((number // 10))) |> List.append((number % 10))
+list_digits : U64 -> List(U64)
+list_digits = |number| {
+	if number < 10 {
+		[number]
+	} else {
+		list_digits((number // 10)).append((number % 10))
+	}
+}
 
-is_armstrong_number : U64 -> Bool
-is_armstrong_number = |number|
-    digits = list_digits(number)
-    len = List.len(digits)
-    candidate =
-        digits
-        |> List.map(|digit| digit |> Num.pow_int(len))
-        |> List.sum
-    candidate == number
+# This function should soon be available in Roc's builtins
+pow_int : U64, U64 -> U64
+pow_int = |number, pow| {
+	1.to(pow).fold(
+		1,
+		|acc, _| {
+			acc * number
+		},
+	)
+}
