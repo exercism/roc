@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [encode, decode]
+import {{ exercise | to_pascal }}
 
 {% for supercase in cases %}
 ##
@@ -11,16 +11,23 @@ import {{ exercise | to_pascal }} exposing [encode, decode]
 
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
-expect
-    phrase = {{ case["input"]["phrase"] | to_roc }}
-    key = {a: {{ case["input"]["key"]["a"] }}, b: {{ case["input"]["key"]["b"] }}}
-    result = {{ case["property"] | to_snake }}(phrase, key)
+expect {
     {%- if case["expected"]["error"] %}
-    result |> Result.is_err
+    affine_cipher = AffineCipher.new({a: {{ case["input"]["key"]["a"] }}, b: {{ case["input"]["key"]["b"] }}})
+    affine_cipher.is_err()
+    # AffineCipher could not be created, so cannot encode or decode
     {%- else %}
+    phrase = {{ case["input"]["phrase"] | to_roc }}
+    affine_cipher = AffineCipher.new({a: {{ case["input"]["key"]["a"] }}, b: {{ case["input"]["key"]["b"] }}})?
+    result = affine_cipher.{{ case["property"] | to_snake }}(phrase)
+    {%- if case["property"] == "encode" %}
+    expected = {{ case["expected"] | to_roc }}
+    {%- else -%}
     expected = Ok({{ case["expected"] | to_roc }})
+    {%- endif -%}
     result == expected
     {%- endif %}
+}
 
 {% endfor %}
 {% endfor %}
