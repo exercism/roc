@@ -38,7 +38,7 @@ expect {
 
 # accumulate reversed strings
 expect {
-	result = accumulate(["the", "quick", "brown", "fox", "etc"], reverse)
+	result = accumulate(["the", "quick", "brown", "fox", "etc"], str_reverse)
 	result == ["eht", "kciuq", "nworb", "xof", "cte"]
 }
 
@@ -58,23 +58,6 @@ expect {
 	result == [["a1", "a2", "a3"], ["b1", "b2", "b3"], ["c1", "c2", "c3"]]
 }
 
-reverse_list : List(a) -> List(a)
-reverse_list = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => reverse_list(rest).append(first)
-	}
-}
-
-reverse : Str -> Str
-reverse = |str| {
-	str
-		.to_utf8()
-		->reverse_list()
-		->Str.from_utf8()
-		?? ""
-}
-
 to_upper_char : U8 -> U8
 to_upper_char = |byte| {
 	if 'a' <= byte and byte <= 'z' {
@@ -87,4 +70,22 @@ to_upper_char = |byte| {
 to_upper : Str -> Str
 to_upper = |str| {
 	str.to_utf8().map(to_upper_char)->Str.from_utf8() ?? ""
+}
+
+str_reverse : Str -> Str
+str_reverse = |str| {
+	str
+		.to_utf8()
+		->reverse()
+		->Str.from_utf8()
+		?? ""
+}
+
+# List.reverse should soon be available in Roc's builtins
+reverse : List(a) -> List(a)
+reverse = |list| {
+	match list {
+		[] => []
+		[first, .. as rest] => reverse(rest).append(first)
+	}
 }

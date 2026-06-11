@@ -143,8 +143,7 @@ collect = |iter| {
 
 intersperse = |list, sep| {
 	match list {
-		[] => []
-		[_] => list
+		[] | [_] => list
 		[first, .. as rest] => [first, sep].concat(intersperse(rest, sep))
 	}
 }
