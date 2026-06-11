@@ -1,11 +1,13 @@
-module [allergic_to, set]
+Allergies :: {}.{
+	Allergen : [Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]
 
-Allergen : [Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]
+	allergic_to : Allergen, U64 -> Bool
+	allergic_to = |allergen, score| {
+		crash "Please implement 'allergic_to'"
+	}
 
-allergic_to : Allergen, U64 -> Bool
-allergic_to = |allergen, score|
-    crash("Please implement 'allergic_to'")
-
-set : U64 -> Set Allergen
-set = |score|
-    crash("Please implement 'set'")
+	set : U64 -> Set(Allergen)
+	set = |score| {
+		crash "Please implement 'set'"
+	}
+}
