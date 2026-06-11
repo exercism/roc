@@ -1,21 +1,16 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/accumulate/canonical-data.json
-# File last updated on 2026-06-09
-app [main!] {
-	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.7/DuRUyJh31Gt41YArMcVcvybLa2bCWboccWQ7Zq1KZPZ6.tar.zst",
-}
-
-import pf.Stdout
+# File last updated on 2026-06-11
 
 main! = |_args| {
 	Ok({})
 }
 
-import Accumulate
+import Accumulate exposing [accumulate]
 
 # accumulate empty
 expect {
-	result = Accumulate.accumulate(
+	result = accumulate(
 		[],
 		|x| {
 			x * x
@@ -26,7 +21,7 @@ expect {
 
 # accumulate squares
 expect {
-	result = Accumulate.accumulate(
+	result = accumulate(
 		[1, 2, 3],
 		|x| {
 			x * x
@@ -37,22 +32,22 @@ expect {
 
 # accumulate upcases
 expect {
-	result = Accumulate.accumulate(["Hello", "world"], to_upper)
+	result = accumulate(["Hello", "world"], to_upper)
 	result == ["HELLO", "WORLD"]
 }
 
 # accumulate reversed strings
 expect {
-	result = Accumulate.accumulate(["the", "quick", "brown", "fox", "etc"], reverse)
+	result = accumulate(["the", "quick", "brown", "fox", "etc"], reverse)
 	result == ["eht", "kciuq", "nworb", "xof", "cte"]
 }
 
 # accumulate recursively
 expect {
-	result = Accumulate.accumulate(
+	result = accumulate(
 		["a", "b", "c"],
 		|x| {
-			Accumulate.accumulate(
+			accumulate(
 				["1", "2", "3"],
 				|y| {
 					Str.concat(x, y)

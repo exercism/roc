@@ -25,20 +25,20 @@ Acronym :: {}.{
 			Ok(str) => str
 		}
 	}
+}
 
-	is_letter : U8 -> Bool
-	is_letter = |byte| {
-		('a' <= byte and byte <= 'z')
-			or
-			('A' <= byte and byte <= 'Z')
-	}
+is_letter : U8 -> Bool
+is_letter = |byte| {
+	('a' <= byte and byte <= 'z')
+		or
+		('A' <= byte and byte <= 'Z')
+}
 
-	capitalize : U8 -> U8
-	capitalize = |byte| {
-		if 'a' <= byte and byte <= 'z' {
-			byte - 'a' + 'A'
-		} else {
-			byte
-		}
+capitalize : U8 -> U8
+capitalize = |byte| {
+	if 'a' <= byte and byte <= 'z' {
+		byte - 'a' + 'A'
+	} else {
+		byte
 	}
 }
