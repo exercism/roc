@@ -3,11 +3,11 @@ Allergies :: {}.{
 
 	allergic_to : Allergen, U64 -> Bool
 	allergic_to = |allergen, score| {
-		crash "Please implement 'allergic_to'"
+		crash "Please implement the 'allergic_to' function"
 	}
 
 	set : U64 -> Set(Allergen)
 	set = |score| {
-		crash "Please implement 'set'"
+		crash "Please implement the 'set' function"
 	}
 }

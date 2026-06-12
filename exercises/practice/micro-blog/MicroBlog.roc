@@ -4,4 +4,4 @@ import unicode.Grapheme
 
 truncate : Str -> Result Str _
 truncate = |input|
-    crash("Please implement 'truncate'")
+    crash("Please implement the 'truncate' function")
