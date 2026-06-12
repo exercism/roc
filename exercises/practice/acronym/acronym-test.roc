@@ -1,10 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/acronym/canonical-data.json
-# File last updated on 2026-06-11
-
-main! = |_args| {
-	Ok({})
-}
+# File last updated on 2026-06-12
 
 import Acronym exposing [abbreviate]
 
@@ -60,4 +56,9 @@ expect {
 expect {
 	result = abbreviate("The Road _Not_ Taken")
 	result == "TRNT"
+}
+
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
 }

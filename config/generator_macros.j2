@@ -19,7 +19,7 @@
 
 {%- if imports -%}
 app [main!] {
-    pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.7/DuRUyJh31Gt41YArMcVcvybLa2bCWboccWQ7Zq1KZPZ6.tar.zst",
+    pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.7/DuRUyJh31Gt41YArMcVcvybLa2bCWboccWQ7Zq1KZPZ6.tar.zst"
 {%- for name in imports -%},
     {% if name == "unicode" -%}
     unicode: "https://github.com/roc-lang/unicode/releases/download/0.3.0/9KKFsA4CdOz0JIOL7iBSI_2jGIXQ6TsFBXgd086idpY.tar.br"
@@ -30,15 +30,16 @@ app [main!] {
     {%- elif name == "parser" -%}
     parser: "https://github.com/lukewilliamboswell/roc-parser/releases/download/0.10.0/6eZYaXkrakq9fJ4oUc0VfdxU1Fap2iTuAN18q9OgQss.tar.br"
     {%- endif -%}
-{%- endfor -%}
+{%- endfor %}
 }
 
 import pf.Stdout
 {%- endif %}
+{%- endmacro %}
 
+{% macro footer() -%}
 
-main! = |_args| {
-    Ok({})
-}
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| { Ok({}) }
 
 {%- endmacro %}
