@@ -1,41 +1,60 @@
-module [create, read, write, overwrite, clear]
+CircularBuffer :: { data : List(I64), start : U64, length : U64 }.{
+	create : { capacity : U64 } -> CircularBuffer
+	create = |{ capacity }| {
+		{ data: List.repeat(0, capacity), start: 0, length: 0 }
+	}
 
-CircularBuffer : { data : List I64, start : U64, length : U64 }
+	read : CircularBuffer -> Try({ updated_buffer : CircularBuffer, value : I64 }, [BufferEmpty])
+	read = |{ data, start, length }| {
+		if length == 0 {
+			Err(BufferEmpty)
+		} else {
+			increment_start = (start + 1) % data.len()
+			updated_buffer = { data, start: increment_start, length: length - 1 }
+			match data.get(start) {
+				Ok(value) => Ok({ updated_buffer, value })
+				Err(OutOfBounds) => {
+					crash "Unreachable: start should never be out of bounds"
+				}
+			}
+		}
+	}
 
-create : { capacity : U64 } -> CircularBuffer
-create = |{ capacity }|
-    { data: List.repeat(0, capacity), start: 0, length: 0 }
+	write : CircularBuffer, I64 -> Try(CircularBuffer, [BufferFull])
+	write = |{ data, start, length }, value| {
+		if length == data.len() {
+			Err(BufferFull)
+		} else {
+			index = (start + length) % data.len()
+			new_data = match data.replace(index, value) {
+				Ok(d) => d
+				Err(_) => {
+					crash "Unreachable: the index is guaranteed to be within bounds."
+				}
+			}.list
+			Ok({ data: new_data, start, length: length + 1 })
+		}
+	}
 
-read : CircularBuffer -> Result { new_buffer : CircularBuffer, value : I64 } [BufferEmpty]
-read = |{ data, start, length }|
-    if length == 0 then
-        Err(BufferEmpty)
-    else
-        increment_start = (start + 1) % List.len(data)
-        new_buffer = { data, start: increment_start, length: length - 1 }
-        when data |> List.get(start) is
-            Ok(value) -> Ok({ new_buffer, value })
-            Err(OutOfBounds) -> crash("Unreachable: start should never be out of bounds")
+	overwrite : CircularBuffer, I64 -> CircularBuffer
+	overwrite = |{ data, start, length }, value| {
+		index = (start + length) % data.len()
+		new_data = match data.replace(index, value) {
+			Ok(d) => d
+			Err(_) => {
+				crash "Unreachable: the index is guaranteed to be within bounds."
+			}
+		}.list
+		if length == data.len() {
+			inc_start = (start + 1) % data.len()
+			{ data: new_data, start: inc_start, length: length }
+		} else {
+			{ data: new_data, start, length: length + 1 }
+		}
+	}
 
-write : CircularBuffer, I64 -> Result CircularBuffer [BufferFull]
-write = |{ data, start, length }, value|
-    if length == List.len(data) then
-        Err(BufferFull)
-    else
-        index = (start + length) % List.len(data)
-        new_data = data |> List.replace(index, value) |> .list
-        Ok({ data: new_data, start, length: length + 1 })
-
-overwrite : CircularBuffer, I64 -> CircularBuffer
-overwrite = |{ data, start, length }, value|
-    index = (start + length) % List.len(data)
-    new_data = data |> List.replace(index, value) |> .list
-    if length == List.len(data) then
-        inc_start = (start + 1) % List.len(data)
-        { data: new_data, start: inc_start, length: length }
-    else
-        { data: new_data, start, length: length + 1 }
-
-clear : CircularBuffer -> CircularBuffer
-clear = |circular_buffer|
-    { data: circular_buffer.data, start: 0, length: 0 }
+	clear : CircularBuffer -> CircularBuffer
+	clear = |circular_buffer| {
+		{ data: circular_buffer.data, start: 0, length: 0 }
+	}
+}
