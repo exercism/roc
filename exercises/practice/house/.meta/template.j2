@@ -11,3 +11,5 @@ expect
     result == {{ "\n".join(case["expected"]) | to_roc }}
 
 {% endfor %}
+
+{{ macros.footer() }}

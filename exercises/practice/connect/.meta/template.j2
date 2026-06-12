@@ -12,3 +12,5 @@ expect
     result == {% if case["expected"] == "" %}Err(NotFinished){% else %}Ok(Player{{ case["expected"] }}){% endif %}
 
 {% endfor %}
+
+{{ macros.footer() }}

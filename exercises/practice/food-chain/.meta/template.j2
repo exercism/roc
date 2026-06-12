@@ -11,3 +11,5 @@ expect
     result == {{ case["expected"] | join('\n') | to_roc_multiline_string | indent(8) }}
 
 {% endfor %}
+
+{{ macros.footer() }}
