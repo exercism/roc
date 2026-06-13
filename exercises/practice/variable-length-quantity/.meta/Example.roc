@@ -1,8 +1,28 @@
-module [encode, decode]
+VariableLengthQuantity :: {}.{
+    encode : List U32 -> List U8
+    encode = |integers|
+        integers |> List.join_map(encode_integer)
 
-encode : List U32 -> List U8
-encode = |integers|
-    integers |> List.join_map(encode_integer)
+    decode : List U8 -> Result (List U32) [IncompleteSequence]
+    decode = |bytes|
+        when bytes is
+            [] -> Err(IncompleteSequence)
+            [.., last] if last >= 128 -> Err(IncompleteSequence)
+            _ ->
+                bytes
+                |> List.walk(
+                    { integers: [], integer: 0 },
+                    |state, byte|
+                        last_7_bits = byte % 128
+                        integer = state.integer * 128 + Num.to_u32(last_7_bits)
+                        if byte >= 128 then
+                            { state & integer }
+                        else
+                            { integers: state.integers |> List.append(integer), integer: 0 },
+                )
+                |> .integers
+                |> Ok
+}
 
 encode_integer : U32 -> List U8
 encode_integer = |integer|
@@ -20,23 +40,3 @@ encode_integer = |integer|
             help((bytes |> List.append(byte)), next_n)
 
     if integer == 0 then [0] else help([], integer) |> List.reverse
-
-decode : List U8 -> Result (List U32) [IncompleteSequence]
-decode = |bytes|
-    when bytes is
-        [] -> Err(IncompleteSequence)
-        [.., last] if last >= 128 -> Err(IncompleteSequence)
-        _ ->
-            bytes
-            |> List.walk(
-                { integers: [], integer: 0 },
-                |state, byte|
-                    last_7_bits = byte % 128
-                    integer = state.integer * 128 + Num.to_u32(last_7_bits)
-                    if byte >= 128 then
-                        { state & integer }
-                    else
-                        { integers: state.integers |> List.append(integer), integer: 0 },
-            )
-            |> .integers
-            |> Ok

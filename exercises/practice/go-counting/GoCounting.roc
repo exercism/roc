@@ -1,4 +1,13 @@
-module [territory, territories]
+GoCounting :: {}.{
+    territory : Str, Intersection -> Result Territory _
+    territory = |board_str, { x, y }|
+        crash("Please implement the 'territory' function")
+
+    territories : Str -> Result Territories _
+    territories = |board_str|
+        crash("Please implement the 'territories' function")
+}
+
 
 Intersection : { x : U64, y : U64 }
 
@@ -14,11 +23,3 @@ Territories : {
     white : Set Intersection,
     none : Set Intersection,
 }
-
-territory : Str, Intersection -> Result Territory _
-territory = |board_str, { x, y }|
-    crash("Please implement the 'territory' function")
-
-territories : Str -> Result Territories _
-territories = |board_str|
-    crash("Please implement the 'territories' function")

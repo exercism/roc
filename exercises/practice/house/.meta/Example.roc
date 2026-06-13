@@ -1,4 +1,11 @@
-module [recite]
+House :: {}.{
+    recite : U64, U64 -> Str
+    recite = |start_verse, end_verse|
+        List.range({ start: At(start_verse), end: At(end_verse) })
+        |> List.map(verse)
+        |> Str.join_with("\n")
+}
+
 
 segments = [
     "house that Jack built.",
@@ -22,9 +29,3 @@ verse = |index|
         |> List.reverse
         |> Str.join_with(" the ")
     "This is the ${blablabla}"
-
-recite : U64, U64 -> Str
-recite = |start_verse, end_verse|
-    List.range({ start: At(start_verse), end: At(end_verse) })
-    |> List.map(verse)
-    |> Str.join_with("\n")

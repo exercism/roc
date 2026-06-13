@@ -1,4 +1,78 @@
-module [Game, create, roll, score]
+Bowling :: {}.{
+    create : { previous_rolls ?? List U64 } -> Result Game [MoreThan10Pins, GameOver]
+    create = |{ previous_rolls ?? [] }|
+        List.walk_try(
+            previous_rolls,
+            @Game({ frames: [] }),
+            |game, pins|
+                roll(game, pins),
+        )
+
+    roll : Game, U64 -> Result Game [MoreThan10Pins, GameOver]
+    roll = |@Game({ frames }), pins|
+        if @Game({ frames }) |> is_over then
+            Err(GameOver)
+        else
+            last_frame = frames |> List.last |> Result.with_default(Ball2(0, 0))
+            check_max_10_pins(last_frame, pins)?
+            updated_frames =
+                when last_frame is
+                    Ball1(pins1) ->
+                        frames
+                        |> List.drop_last(1)
+                        |> List.append(
+                            (
+                                if pins1 + pins == 10 then
+                                    Spare(pins1, pins)
+                                else
+                                    Ball2(pins1, pins)
+                            ),
+                        )
+
+                    StrikeFill1(pins1) ->
+                        frames |> List.drop_last(1) |> List.append(StrikeFill2(pins1, pins))
+
+                    Ball2(_, _) | Spare(_, _) | Strike if List.len(frames) < 10 ->
+                        if pins == 10 then
+                            frames |> List.append(Strike)
+                        else
+                            frames |> List.append(Ball1(pins))
+
+                    Spare(_, _) ->
+                        frames |> List.append(SpareFill(pins))
+
+                    Strike ->
+                        frames |> List.append(StrikeFill1(pins))
+
+                    Ball2(_, _) | SpareFill(_) | StrikeFill2(_, _) ->
+                        crash("Impossible, an unfinished game cannot have these in the last frame after the 10th frame")
+            @Game({ frames: updated_frames }) |> Ok
+
+    score : Game -> Result U64 [GameIsNotOver]
+    score = |@Game({ frames })|
+        if @Game({ frames }) |> is_over then
+            frames
+            |> map_triplets(
+                |frame1, frame2, frame3|
+                    when frame1 is
+                        Ball2(pins1, pins2) -> pins1 + pins2
+                        Spare(pins1, pins2) -> pins1 + pins2 + first_pins(frame2)
+                        Strike ->
+                            when frame2 is
+                                Strike -> 10 + 10 + first_pins(frame3)
+                                _ -> 10 + total_pins(frame2)
+
+                        SpareFill(_) -> 0 # already counted in the Spare
+                        StrikeFill2(_, _) -> 0 # already counter in the Strike
+                        Ball1(_) | StrikeFill1(_) ->
+                            crash("Impossible, unfinished frames should not exist in a finished game"),
+            )
+            |> List.sum
+            |> Ok
+        else
+            Err(GameIsNotOver)
+}
+
 
 Frame : [
     Ball1 U64, # unfinished frame
@@ -11,15 +85,6 @@ Frame : [
 ]
 
 Game := { frames : List Frame }
-
-create : { previous_rolls ?? List U64 } -> Result Game [MoreThan10Pins, GameOver]
-create = |{ previous_rolls ?? [] }|
-    List.walk_try(
-        previous_rolls,
-        @Game({ frames: [] }),
-        |game, pins|
-            roll(game, pins),
-    )
 
 check_max_10_pins : Frame, U64 -> Result {} [MoreThan10Pins, GameOver]
 check_max_10_pins = |last_frame, pins|
@@ -38,46 +103,6 @@ is_over = |@Game({ frames })|
         [.., Ball1(_)] | [.., Spare(_, _)] | [.., Strike] | [.., StrikeFill1(_)] -> Bool.False
         [.., Ball2(_, _)] | [.., SpareFill(_)] | [.., StrikeFill2(_, _)] -> Bool.True
         _ -> Bool.False
-
-roll : Game, U64 -> Result Game [MoreThan10Pins, GameOver]
-roll = |@Game({ frames }), pins|
-    if @Game({ frames }) |> is_over then
-        Err(GameOver)
-    else
-        last_frame = frames |> List.last |> Result.with_default(Ball2(0, 0))
-        check_max_10_pins(last_frame, pins)?
-        updated_frames =
-            when last_frame is
-                Ball1(pins1) ->
-                    frames
-                    |> List.drop_last(1)
-                    |> List.append(
-                        (
-                            if pins1 + pins == 10 then
-                                Spare(pins1, pins)
-                            else
-                                Ball2(pins1, pins)
-                        ),
-                    )
-
-                StrikeFill1(pins1) ->
-                    frames |> List.drop_last(1) |> List.append(StrikeFill2(pins1, pins))
-
-                Ball2(_, _) | Spare(_, _) | Strike if List.len(frames) < 10 ->
-                    if pins == 10 then
-                        frames |> List.append(Strike)
-                    else
-                        frames |> List.append(Ball1(pins))
-
-                Spare(_, _) ->
-                    frames |> List.append(SpareFill(pins))
-
-                Strike ->
-                    frames |> List.append(StrikeFill1(pins))
-
-                Ball2(_, _) | SpareFill(_) | StrikeFill2(_, _) ->
-                    crash("Impossible, an unfinished game cannot have these in the last frame after the 10th frame")
-        @Game({ frames: updated_frames }) |> Ok
 
 map_triplets : List Frame, (Frame, Frame, Frame -> U64) -> List U64
 map_triplets = |list, score_func|
@@ -100,27 +125,3 @@ total_pins = |frame|
         Ball2(pins1, pins2) | Spare(pins1, pins2) | StrikeFill2(pins1, pins2) -> pins1 + pins2
         Ball1(pins) | SpareFill(pins) | StrikeFill1(pins) -> pins
         Strike -> 10
-
-score : Game -> Result U64 [GameIsNotOver]
-score = |@Game({ frames })|
-    if @Game({ frames }) |> is_over then
-        frames
-        |> map_triplets(
-            |frame1, frame2, frame3|
-                when frame1 is
-                    Ball2(pins1, pins2) -> pins1 + pins2
-                    Spare(pins1, pins2) -> pins1 + pins2 + first_pins(frame2)
-                    Strike ->
-                        when frame2 is
-                            Strike -> 10 + 10 + first_pins(frame3)
-                            _ -> 10 + total_pins(frame2)
-
-                    SpareFill(_) -> 0 # already counted in the Spare
-                    StrikeFill2(_, _) -> 0 # already counter in the Strike
-                    Ball1(_) | StrikeFill1(_) ->
-                        crash("Impossible, unfinished frames should not exist in a finished game"),
-        )
-        |> List.sum
-        |> Ok
-    else
-        Err(GameIsNotOver)

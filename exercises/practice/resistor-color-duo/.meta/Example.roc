@@ -1,4 +1,9 @@
-module [value]
+ResistorColorDuo :: {}.{
+    value : Color, Color -> U8
+    value = |first, second|
+        10 * get_code(first) + get_code(second)
+}
+
 
 Color : [
     Black,
@@ -12,10 +17,6 @@ Color : [
     Grey,
     White,
 ]
-
-value : Color, Color -> U8
-value = |first, second|
-    10 * get_code(first) + get_code(second)
 
 get_code : Color -> U8
 get_code = |color|

@@ -1,4 +1,44 @@
-module [territory, territories]
+GoCounting :: {}.{
+    territory : Str, Intersection -> Result Territory [OutOfBounds, BoardWasEmpty, BoardWasNotRectangular, InvalidChar U8]
+    territory = |board_str, intersection|
+        board = parse(board_str)?
+        if intersection.x >= board.width or intersection.y >= board.height then
+            Err(OutOfBounds)
+        else
+            Ok(search_territory(board, intersection))
+
+    territories : Str -> Result Territories [BoardWasEmpty, BoardWasNotRectangular, InvalidChar U8]
+    territories = |board_str|
+        board = parse(board_str)?
+        board.rows
+        |> List.map_with_index(
+            |row, y|
+                row
+                |> List.map_with_index(
+                    |stone, x|
+                        if stone == None then
+                            [{ x, y }]
+                        else
+                            [],
+                )
+                |> List.join,
+        )
+        |> List.join
+        |> List.walk(
+            { black: Set.empty({}), white: Set.empty({}), none: Set.empty({}) },
+            |state, intersection|
+                if state.black |> Set.contains(intersection) or state.white |> Set.contains(intersection) or state.none |> Set.contains(intersection) then
+                    state
+                else
+                    new_territory = search_territory(board, intersection)
+                    when new_territory.owner is
+                        Black -> { black: state.black |> Set.union(new_territory.territory), white: state.white, none: state.none }
+                        White -> { black: state.black, white: state.white |> Set.union(new_territory.territory), none: state.none }
+                        None -> { black: state.black, white: state.white, none: state.none |> Set.union(new_territory.territory) },
+        )
+        |> Ok
+}
+
 
 Intersection : { x : U64, y : U64 }
 
@@ -54,14 +94,6 @@ get_stone : Board, Intersection -> Stone
 get_stone = |board, { x, y }|
     board.rows |> List.get(y) |> Result.with_default([]) |> List.get(x) |> Result.with_default(None)
 
-territory : Str, Intersection -> Result Territory [OutOfBounds, BoardWasEmpty, BoardWasNotRectangular, InvalidChar U8]
-territory = |board_str, intersection|
-    board = parse(board_str)?
-    if intersection.x >= board.width or intersection.y >= board.height then
-        Err(OutOfBounds)
-    else
-        Ok(search_territory(board, intersection))
-
 search_territory : Board, Intersection -> Territory
 search_territory = |board, intersection|
     help = |to_visit, visited, surrounding_stones|
@@ -104,34 +136,3 @@ search_territory = |board, intersection|
             else
                 None
         { owner, territory: search_result.visited }
-
-territories : Str -> Result Territories [BoardWasEmpty, BoardWasNotRectangular, InvalidChar U8]
-territories = |board_str|
-    board = parse(board_str)?
-    board.rows
-    |> List.map_with_index(
-        |row, y|
-            row
-            |> List.map_with_index(
-                |stone, x|
-                    if stone == None then
-                        [{ x, y }]
-                    else
-                        [],
-            )
-            |> List.join,
-    )
-    |> List.join
-    |> List.walk(
-        { black: Set.empty({}), white: Set.empty({}), none: Set.empty({}) },
-        |state, intersection|
-            if state.black |> Set.contains(intersection) or state.white |> Set.contains(intersection) or state.none |> Set.contains(intersection) then
-                state
-            else
-                new_territory = search_territory(board, intersection)
-                when new_territory.owner is
-                    Black -> { black: state.black |> Set.union(new_territory.territory), white: state.white, none: state.none }
-                    White -> { black: state.black, white: state.white |> Set.union(new_territory.territory), none: state.none }
-                    None -> { black: state.black, white: state.white, none: state.none |> Set.union(new_territory.territory) },
-    )
-    |> Ok

@@ -1,4 +1,9 @@
-module [age]
+SpaceAge :: {}.{
+    age : Planet, Dec -> Dec
+    age = |planet, seconds|
+        crash("Please implement the 'age' function")
+}
+
 
 Planet : [
     Mercury,
@@ -10,7 +15,3 @@ Planet : [
     Uranus,
     Neptune,
 ]
-
-age : Planet, Dec -> Dec
-age = |planet, seconds|
-    crash("Please implement the 'age' function")

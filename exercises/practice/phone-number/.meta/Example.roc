@@ -1,21 +1,21 @@
-module [clean]
+PhoneNumber :: {}.{
+    clean : Str -> Result Str [InvalidNumber]
+    clean = |phone_number|
+        digits =
+            phone_number
+            |> Str.to_utf8
+            |> List.keep_if(|c| c >= '0' and c <= '9')
 
-clean : Str -> Result Str [InvalidNumber]
-clean = |phone_number|
-    digits =
-        phone_number
-        |> Str.to_utf8
-        |> List.keep_if(|c| c >= '0' and c <= '9')
-
-    num_digits = List.len(digits)
-    if num_digits == 10 then
-        digits |> check_number
-    else if num_digits == 11 then
-        when digits is
-            ['1', .. as rest] -> rest |> check_number
-            _ -> Err(InvalidNumber) # only country code 1 is supported
-    else
-        Err(InvalidNumber)
+        num_digits = List.len(digits)
+        if num_digits == 10 then
+            digits |> check_number
+        else if num_digits == 11 then
+            when digits is
+                ['1', .. as rest] -> rest |> check_number
+                _ -> Err(InvalidNumber) # only country code 1 is supported
+        else
+            Err(InvalidNumber)
+}
 
 check_number : List U8 -> Result Str [InvalidNumber]
 check_number = |digits|

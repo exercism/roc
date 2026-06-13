@@ -1,39 +1,40 @@
-module [grep]
+
 
 import "iliad.txt" as iliad : Str
 import "midsummer-night.txt" as midsummer_night : Str
 import "paradise-lost.txt" as paradise_lost : Str
-
-grep : Str, List Str, List Str -> Result Str _
-grep = |pattern, flags, file_names|
-    config = parse_flags(flags)?
-    files = collect_files(file_names)?
-    display_file_names = List.len(files) > 1
-    List.join_map(
-        files,
-        |file|
-            when find_matches(config, pattern, file.text) is
-                [] -> []
-                _ if config.display_file_names -> [file.name]
-                matches ->
-                    List.map(
-                        matches,
-                        |{ line, index }|
-                            line_number =
-                                if config.display_line_numbers then
-                                    "${index + 1 |> Num.to_str}:"
-                                else
-                                    ""
-                            file_name =
-                                if display_file_names then
-                                    "${file.name}:"
-                                else
-                                    ""
-                            "${file_name}${line_number}${line}",
-                    ),
-    )
-    |> Str.join_with("\n")
-    |> Ok
+Grep :: {}.{
+    grep : Str, List Str, List Str -> Result Str _
+    grep = |pattern, flags, file_names|
+        config = parse_flags(flags)?
+        files = collect_files(file_names)?
+        display_file_names = List.len(files) > 1
+        List.join_map(
+            files,
+            |file|
+                when find_matches(config, pattern, file.text) is
+                    [] -> []
+                    _ if config.display_file_names -> [file.name]
+                    matches ->
+                        List.map(
+                            matches,
+                            |{ line, index }|
+                                line_number =
+                                    if config.display_line_numbers then
+                                        "${index + 1 |> Num.to_str}:"
+                                    else
+                                        ""
+                                file_name =
+                                    if display_file_names then
+                                        "${file.name}:"
+                                    else
+                                        ""
+                                "${file_name}${line_number}${line}",
+                        ),
+        )
+        |> Str.join_with("\n")
+        |> Ok
+}
 
 find_matches : Config, Str, Str -> List { line : Str, index : U64 }
 find_matches = |config, pattern, text|

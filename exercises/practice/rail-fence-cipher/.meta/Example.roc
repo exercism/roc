@@ -1,4 +1,13 @@
-module [encode, decode]
+RailFenceCipher :: {}.{
+    encode : Str, U64 -> Result Str [ZeroRails, BadUtf8 _]
+    encode = |message, rails|
+        message |> reorder_with(encoded_indices, rails)
+
+    decode : Str, U64 -> Result Str [ZeroRails, BadUtf8 _]
+    decode = |encrypted, rails|
+        encrypted |> reorder_with(decoded_indices, rails)
+}
+
 
 encoded_indices : U64, U64 -> List U64
 encoded_indices = |len, rails|
@@ -29,14 +38,6 @@ decoded_indices = |len, rails|
             Num.compare(encoded1, encoded2),
     )
     |> List.map(.decoded)
-
-encode : Str, U64 -> Result Str [ZeroRails, BadUtf8 _]
-encode = |message, rails|
-    message |> reorder_with(encoded_indices, rails)
-
-decode : Str, U64 -> Result Str [ZeroRails, BadUtf8 _]
-decode = |encrypted, rails|
-    encrypted |> reorder_with(decoded_indices, rails)
 
 reorder_with : Str, (U64, U64 -> List U64), U64 -> Result Str [ZeroRails, BadUtf8 _]
 reorder_with = |message, get_indices, rails|

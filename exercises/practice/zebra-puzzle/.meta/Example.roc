@@ -1,4 +1,13 @@
-module [owns_zebra, drinks_water]
+ZebraPuzzle :: {}.{
+    owns_zebra : Result Person [NotFound]
+    owns_zebra =
+        owner_of(|house| house.animal == 5)
+
+    drinks_water : Result Person [NotFound]
+    drinks_water =
+        owner_of(|house| house.drink == 5)
+}
+
 
 Person : [Englishman, Spaniard, Ukrainian, Norwegian, Japanese]
 
@@ -9,14 +18,6 @@ House : {
     drink : U8, # 0 = Undefined, 1 = Coffee, 2 = Tea, 3 = Milk, 4 = OrangeJuice, 5 = Water
     person : U8, # 0 = Undefined, 1 = Englishman, 2 = Spaniard, 3 = Ukrainian, 4 = Norwegian, 5 = Japanese
 }
-
-owns_zebra : Result Person [NotFound]
-owns_zebra =
-    owner_of(|house| house.animal == 5)
-
-drinks_water : Result Person [NotFound]
-drinks_water =
-    owner_of(|house| house.drink == 5)
 
 owner_of : (House -> Bool) -> Result Person [NotFound]
 owner_of = |condition|

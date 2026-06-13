@@ -1,24 +1,25 @@
-module [convert]
+OcrNumbers :: {}.{
+    convert : Str -> Result Str BadGridSize
+    convert = |grid|
+        if grid == "" then
+            Ok("")
+        else
+            grid_chars = grid |> Str.to_utf8 |> List.split_on('\n')
+            size = check_size(grid_chars)?
+            grid_chars
+            |> List.chunks_of(4) # split vertically into groups of 4 rows
+            |> List.map(
+                |row_group|
+                    get_digit_grids(row_group, size.width)
+                    |> List.map(identify_digit)
+                    |> Str.join_with(""),
+            )
+            |> Str.join_with(",")
+            |> Ok
+}
+
 
 BadGridSize : [HeightWasNotAMultipleOf4, WidthWasNotAMultipleOf3, GridShapeWasNotRectangular]
-
-convert : Str -> Result Str BadGridSize
-convert = |grid|
-    if grid == "" then
-        Ok("")
-    else
-        grid_chars = grid |> Str.to_utf8 |> List.split_on('\n')
-        size = check_size(grid_chars)?
-        grid_chars
-        |> List.chunks_of(4) # split vertically into groups of 4 rows
-        |> List.map(
-            |row_group|
-                get_digit_grids(row_group, size.width)
-                |> List.map(identify_digit)
-                |> Str.join_with(""),
-        )
-        |> Str.join_with(",")
-        |> Ok
 
 check_size : List (List U8) -> Result { height : U64, width : U64 } BadGridSize
 check_size = |grid_chars|

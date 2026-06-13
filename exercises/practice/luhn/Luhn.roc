@@ -1,5 +1,5 @@
-module [valid]
-
-valid : Str -> Bool
-valid = |digits|
-    crash("Please implement the 'valid' function")
+Luhn :: {}.{
+    valid : Str -> Bool
+    valid = |digits|
+        crash("Please implement the 'valid' function")
+}

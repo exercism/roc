@@ -1,4 +1,20 @@
-module [is_valid]
+IsbnVerifier :: {}.{
+    is_valid : Str -> Bool
+    is_valid = |isbn|
+        chars =
+            isbn
+            |> Str.to_utf8
+            |> List.drop_if(|char| char == '-')
+        if List.len(chars) != 10 then
+            Bool.False
+        else
+            values =
+                chars
+                |> List.map_with_index(char_value)
+                |> List.keep_oks(|v| v)
+            List.len(values) == 10 and (List.sum(values)) % 11 == 0
+}
+
 
 char_value = |char, index|
     if char == 'X' then
@@ -10,18 +26,3 @@ char_value = |char, index|
         (10 - index) * (Num.int_cast((char - '0'))) |> Ok
     else
         Err(InvalidIsbnBadChar)
-
-is_valid : Str -> Bool
-is_valid = |isbn|
-    chars =
-        isbn
-        |> Str.to_utf8
-        |> List.drop_if(|char| char == '-')
-    if List.len(chars) != 10 then
-        Bool.False
-    else
-        values =
-            chars
-            |> List.map_with_index(char_value)
-            |> List.keep_oks(|v| v)
-        List.len(values) == 10 and (List.sum(values)) % 11 == 0

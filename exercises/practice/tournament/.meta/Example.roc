@@ -1,33 +1,34 @@
-module [tally]
+Tournament :: {}.{
+    tally : Str -> Result Str [InvalidRow Str, InvalidResult Str]
+    tally = |table|
+        if table == "" then
+            Ok(header)
+        else
+            table
+            |> Str.split_on("\n")
+            |> List.map_try(
+                |row|
+                    when row |> Str.split_on(";") is
+                        [team1, team2, result_str] ->
+                            result = result_str |> parse_result?
+                            Ok((team1, team2, result))
+
+                        _ -> Err(InvalidRow(row)),
+            )?
+            |> List.walk(
+                Dict.empty({}),
+                |tally_dict, (team1, team2, result)|
+                    tally_dict
+                    |> update_tally_dict(team1, result)
+                    |> update_tally_dict(team2, opposite_result(result)),
+            )
+            |> tally_dict_to_table
+            |> Ok
+}
+
 
 MatchResult : [Win, Loss, Draw]
 TeamTally : { mp : U64, w : U64, d : U64, l : U64, p : U64 }
-
-tally : Str -> Result Str [InvalidRow Str, InvalidResult Str]
-tally = |table|
-    if table == "" then
-        Ok(header)
-    else
-        table
-        |> Str.split_on("\n")
-        |> List.map_try(
-            |row|
-                when row |> Str.split_on(";") is
-                    [team1, team2, result_str] ->
-                        result = result_str |> parse_result?
-                        Ok((team1, team2, result))
-
-                    _ -> Err(InvalidRow(row)),
-        )?
-        |> List.walk(
-            Dict.empty({}),
-            |tally_dict, (team1, team2, result)|
-                tally_dict
-                |> update_tally_dict(team1, result)
-                |> update_tally_dict(team2, opposite_result(result)),
-        )
-        |> tally_dict_to_table
-        |> Ok
 
 parse_result : Str -> Result MatchResult [InvalidResult Str]
 parse_result = |result_str|

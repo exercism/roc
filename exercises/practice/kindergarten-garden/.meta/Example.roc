@@ -1,4 +1,21 @@
-module [plants]
+KindergartenGarden :: {}.{
+    plants : Str, Student -> Result (List Plant) _
+    plants = |diagram, student|
+        start_index = 2 * student_index(student)
+        grid = diagram |> Str.to_utf8 |> List.split_on('\n')
+        [(0, 0), (0, 1), (1, 0), (1, 1)]
+        |> List.map_try(
+            |(row, column)|
+                plant = grid |> List.get(row)? |> List.get(start_index + column)?
+                when plant is
+                    'G' -> Ok(Grass)
+                    'C' -> Ok(Clover)
+                    'R' -> Ok(Radishes)
+                    'V' -> Ok(Violets)
+                    _ -> Err(UnknownPlant(plant)),
+        )
+}
+
 
 Student : [Alice, Bob, Charlie, David, Eve, Fred, Ginny, Harriet, Ileana, Joseph, Kincaid, Larry]
 Plant : [Grass, Clover, Radishes, Violets]
@@ -18,19 +35,3 @@ student_index = |student|
         Joseph -> 9
         Kincaid -> 10
         Larry -> 11
-
-plants : Str, Student -> Result (List Plant) _
-plants = |diagram, student|
-    start_index = 2 * student_index(student)
-    grid = diagram |> Str.to_utf8 |> List.split_on('\n')
-    [(0, 0), (0, 1), (1, 0), (1, 1)]
-    |> List.map_try(
-        |(row, column)|
-            plant = grid |> List.get(row)? |> List.get(start_index + column)?
-            when plant is
-                'G' -> Ok(Grass)
-                'C' -> Ok(Clover)
-                'R' -> Ok(Radishes)
-                'V' -> Ok(Violets)
-                _ -> Err(UnknownPlant(plant)),
-    )

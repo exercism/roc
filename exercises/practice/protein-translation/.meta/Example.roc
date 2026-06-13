@@ -1,4 +1,17 @@
-module [to_protein]
+ProteinTranslation :: {}.{
+    to_protein : Str -> Result Protein [InvalidCodon Codon]
+    to_protein = |rna|
+        help = |protein, codons|
+            when codons is
+                [] -> Ok(protein)
+                [codon, .. as rest] ->
+                    when codon |> to_instruction is
+                        Ok(Append(amino_acid)) -> protein |> List.append(amino_acid) |> help(rest)
+                        Ok(Stop) -> Ok(protein)
+                        Err(err) -> Err(err)
+        help([], (rna |> Str.to_utf8 |> List.chunks_of(3)))
+}
+
 
 Codon : List U8
 AminoAcid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, Tyrosine]
@@ -25,15 +38,3 @@ to_instruction = |codon|
         ['U', 'A', 'G'] -> Ok(Stop)
         ['U', 'G', 'A'] -> Ok(Stop)
         _ -> Err(InvalidCodon(codon))
-
-to_protein : Str -> Result Protein [InvalidCodon Codon]
-to_protein = |rna|
-    help = |protein, codons|
-        when codons is
-            [] -> Ok(protein)
-            [codon, .. as rest] ->
-                when codon |> to_instruction is
-                    Ok(Append(amino_acid)) -> protein |> List.append(amino_acid) |> help(rest)
-                    Ok(Stop) -> Ok(protein)
-                    Err(err) -> Err(err)
-    help([], (rna |> Str.to_utf8 |> List.chunks_of(3)))

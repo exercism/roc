@@ -1,22 +1,23 @@
-module [best_hands]
+Poker :: {}.{
+    best_hands : List Str -> Result (List Str) HandParsingError
+    best_hands = |hands|
+        parsed_hands = hands |> List.map_try(parse_hand)?
+        ranks = parsed_hands |> List.map(get_rank)
+        top_rank = ranks |> List.max |> Result.with_default(0)
+        List.map2(hands, ranks, |hand, rank| { hand, rank })
+        |> List.join_map(
+            |{ hand, rank }|
+                if rank == top_rank then [hand] else [],
+        )
+        |> Ok
+}
+
 
 Value : U8
 Suit : [Spades, Hearts, Diamonds, Clubs]
 Card : { value : Value, suit : Suit }
 Hand : List Card
 HandParsingError : [InvalidNumberOfCards U64, CardWasEmpty, InvalidCardValue (List U8), InvalidCardSuit U8]
-
-best_hands : List Str -> Result (List Str) HandParsingError
-best_hands = |hands|
-    parsed_hands = hands |> List.map_try(parse_hand)?
-    ranks = parsed_hands |> List.map(get_rank)
-    top_rank = ranks |> List.max |> Result.with_default(0)
-    List.map2(hands, ranks, |hand, rank| { hand, rank })
-    |> List.join_map(
-        |{ hand, rank }|
-            if rank == top_rank then [hand] else [],
-    )
-    |> Ok
 
 parse_hand : Str -> Result Hand HandParsingError
 parse_hand = |hand_str|
@@ -67,7 +68,7 @@ get_rank = |hand|
     is_flush = (hand |> List.map(.suit) |> Set.from_list |> Set.len) == 1
 
     value_groups =
-        # Example: [4, 4, 4, 7, 7] -> [{size: 3, value: 4}, {size: 2, value: 7}]
+        # Poker: [4, 4, 4, 7, 7] -> [{size: 3, value: 4}, {size: 2, value: 7}]
         card_values
         |> List.walk(
             List.repeat(0, 13),

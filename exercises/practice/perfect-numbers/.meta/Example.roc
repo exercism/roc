@@ -1,4 +1,15 @@
-module [classify]
+PerfectNumbers :: {}.{
+    classify : U64 -> Result [Abundant, Deficient, Perfect] [NumberArgIsZero]
+    classify = |number|
+        sum = aliquot_sum(number)?
+        if sum == number then
+            Ok(Perfect)
+        else if sum > number then
+            Ok(Abundant)
+        else
+            Ok(Deficient)
+}
+
 
 aliquot_sum : U64 -> Result U64 [NumberArgIsZero]
 aliquot_sum = |number|
@@ -15,13 +26,3 @@ aliquot_sum = |number|
                 |> List.sum
             ),
         )
-
-classify : U64 -> Result [Abundant, Deficient, Perfect] [NumberArgIsZero]
-classify = |number|
-    sum = aliquot_sum(number)?
-    if sum == number then
-        Ok(Perfect)
-    else if sum > number then
-        Ok(Abundant)
-    else
-        Ok(Deficient)

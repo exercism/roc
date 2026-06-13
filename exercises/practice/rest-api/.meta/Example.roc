@@ -1,6 +1,28 @@
-module [get, post]
+
 
 import json.Json
+RestApi :: {}.{
+    get : Database, { url : Str, payload ?? Str } -> Result Str [Http404 Str, Http422 Str]
+    get = |database, { url, payload ?? "" }|
+        when url is
+            "/users" ->
+                database
+                |> get_users(payload)
+                |> Result.map_err(|InvalidJson| Http422(payload))
+
+            bad_url -> Err(Http404(bad_url))
+
+    post : Database, { url : Str, payload ?? Str } -> Result Str [Http404 Str, Http422 Str]
+    post = |database, { url, payload ?? "" }|
+        handle_error = |err|
+            when err is
+                InvalidJson -> Http422(payload)
+                NotFound -> Http404(payload)
+        when url is
+            "/add" -> database |> add_user(payload) |> Result.map_err(handle_error)
+            "/iou" -> database |> add_loan(payload) |> Result.map_err(handle_error)
+            bad_url -> Err(Http404(bad_url))
+}
 
 User : {
     name : Str,
@@ -12,16 +34,6 @@ User : {
 Database : { users : List User }
 
 Loan : { lender : Str, borrower : Str, amount : F64 }
-
-get : Database, { url : Str, payload ?? Str } -> Result Str [Http404 Str, Http422 Str]
-get = |database, { url, payload ?? "" }|
-    when url is
-        "/users" ->
-            database
-            |> get_users(payload)
-            |> Result.map_err(|InvalidJson| Http422(payload))
-
-        bad_url -> Err(Http404(bad_url))
 
 compare_strings : Str, Str -> [LT, EQ, GT]
 compare_strings = |string1, string2|
@@ -118,17 +130,6 @@ parse_json_loan = |payload|
     bytes = payload |> Str.to_utf8
     maybe_loan = Decode.from_bytes_partial(bytes, Json.utf8)
     maybe_loan.result |> Result.map_err(|_| InvalidJson)
-
-post : Database, { url : Str, payload ?? Str } -> Result Str [Http404 Str, Http422 Str]
-post = |database, { url, payload ?? "" }|
-    handle_error = |err|
-        when err is
-            InvalidJson -> Http422(payload)
-            NotFound -> Http404(payload)
-    when url is
-        "/add" -> database |> add_user(payload) |> Result.map_err(handle_error)
-        "/iou" -> database |> add_loan(payload) |> Result.map_err(handle_error)
-        bad_url -> Err(Http404(bad_url))
 
 add_user : Database, Str -> Result Str [InvalidJson]
 add_user = |_database, payload|

@@ -1,4 +1,15 @@
-module [evaluate]
+Forth :: {}.{
+    # Evaluation
+    evaluate : Str -> Result Stack Str
+    evaluate = |program|
+        result = |_|
+            lower = to_lower(program)
+            operations = parse(lower)?
+            interpret(operations)
+
+        Result.map_err(result({}), handle_error)
+}
+
 
 # Types
 Defs : Dict Str (List Str)
@@ -14,16 +25,6 @@ Op : [
     Divide,
     Number I16,
 ]
-
-# Evaluation
-evaluate : Str -> Result Stack Str
-evaluate = |program|
-    result = |_|
-        lower = to_lower(program)
-        operations = parse(lower)?
-        interpret(operations)
-
-    Result.map_err(result({}), handle_error)
 
 interpret : List Op -> Result Stack _
 interpret = |program|

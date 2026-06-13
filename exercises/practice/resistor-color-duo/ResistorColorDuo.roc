@@ -1,4 +1,9 @@
-module [value]
+ResistorColorDuo :: {}.{
+    value : Color, Color -> U8
+    value = |first, second|
+        crash("Please implement the 'value' function")
+}
+
 
 Color : [
     Black,
@@ -12,7 +17,3 @@ Color : [
     Grey,
     White,
 ]
-
-value : Color, Color -> U8
-value = |first, second|
-    crash("Please implement the 'value' function")

@@ -1,11 +1,11 @@
-module [score]
-
-score : Str -> U64
-score = |word|
-    word
-    |> Str.to_utf8
-    |> List.map(letter_value)
-    |> List.sum
+ScrabbleScore :: {}.{
+    score : Str -> U64
+    score = |word|
+        word
+        |> Str.to_utf8
+        |> List.map(letter_value)
+        |> List.sum
+}
 
 to_upper : U8 -> U8
 to_upper = |letter|

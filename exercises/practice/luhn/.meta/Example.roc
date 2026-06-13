@@ -1,19 +1,19 @@
-module [valid]
+Luhn :: {}.{
+    valid : Str -> Bool
+    valid = |number|
+        when to_digits(number) is
+            Ok(digits) if List.len(digits) > 1 ->
+                map_every_other_backwards(
+                    digits,
+                    |digit|
+                        product = digit * 2
+                        if product < 10 then product else product - 9,
+                )
+                |> List.sum
+                |> Num.is_multiple_of(10)
 
-valid : Str -> Bool
-valid = |number|
-    when to_digits(number) is
-        Ok(digits) if List.len(digits) > 1 ->
-            map_every_other_backwards(
-                digits,
-                |digit|
-                    product = digit * 2
-                    if product < 10 then product else product - 9,
-            )
-            |> List.sum
-            |> Num.is_multiple_of(10)
-
-        _ -> Bool.False
+            _ -> Bool.False
+}
 
 to_digits : Str -> Result (List U16) [IllegalCharacter]
 to_digits = |number|

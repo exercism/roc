@@ -1,4 +1,12 @@
-module [translate]
+PigLatin :: {}.{
+    translate : Str -> Str
+    translate = |phrase|
+        phrase
+        |> Str.split_on(" ")
+        |> List.map(translate_word)
+        |> Str.join_with(" ")
+}
+
 
 is_vowel = |char|
     ['a', 'e', 'i', 'o', 'u'] |> List.contains(char)
@@ -39,10 +47,3 @@ translate_word = |word|
     when maybe_result is
         Ok(result) -> result
         Err(_) -> crash("Unreachable")
-
-translate : Str -> Str
-translate = |phrase|
-    phrase
-    |> Str.split_on(" ")
-    |> List.map(translate_word)
-    |> Str.join_with(" ")

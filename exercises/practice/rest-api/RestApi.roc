@@ -1,6 +1,15 @@
-module [get, post]
+
 
 import json.Json
+RestApi :: {}.{
+    get : Database, { url : Str, payload ?? Str } -> Result Str _
+    get = |database, { url, payload ?? "" }|
+        crash("Please implement the 'get' function")
+
+    post : Database, { url : Str, payload ?? Str } -> Result Str _
+    post = |database, { url, payload ?? "" }|
+        crash("Please implement the 'post' function")
+}
 
 User : {
     name : Str,
@@ -10,11 +19,3 @@ User : {
 }
 
 Database : { users : List User }
-
-get : Database, { url : Str, payload ?? Str } -> Result Str _
-get = |database, { url, payload ?? "" }|
-    crash("Please implement the 'get' function")
-
-post : Database, { url : Str, payload ?? Str } -> Result Str _
-post = |database, { url, payload ?? "" }|
-    crash("Please implement the 'post' function")

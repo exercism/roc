@@ -1,7 +1,12 @@
-module [parse]
+
 
 import parser.Parser as P
 import parser.String as S
+SgfParsing :: {}.{
+    parse : Str -> Result GameTree [ParsingFailure Str, ParsingIncomplete Str]
+    parse = |sgf|
+        S.parse_str(game_tree, sgf)
+}
 
 # --- SGF GRAMMAR ---
 # Source: https://homepages.cwi.nl/~aeb/go/misc/sgfnotes.html
@@ -110,7 +115,3 @@ value_type =
 uc_letter : P.Parser (List U8) U8
 uc_letter =
     S.codeunit_satisfies(|b| b >= 'A' and b <= 'Z')
-
-parse : Str -> Result GameTree [ParsingFailure Str, ParsingIncomplete Str]
-parse = |sgf|
-    S.parse_str(game_tree, sgf)

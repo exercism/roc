@@ -1,4 +1,34 @@
-module [annotate]
+FlowerField :: {}.{
+    annotate : Str -> Str
+    annotate = |garden|
+        rows = garden |> Str.to_utf8 |> List.split_on('\n')
+        annotated =
+            rows
+            |> List.map_with_index(
+                |row, y|
+                    row
+                    |> List.map_with_index(
+                        |cell, x|
+                            if cell == '*' then
+                                '*'
+                            else
+                                when count_neighbors(rows, x, y) is
+                                    0 -> ' '
+                                    n -> '0' + n,
+                    )
+                    |> Str.from_utf8,
+            )
+
+        annotated
+        |> List.map(
+            |maybe_row|
+                when maybe_row is
+                    Ok(row) -> row
+                    Err(_) -> crash("Unreachable"),
+        ) # fromUtf8 cannot fail in the code above
+        |> Str.join_with("\n")
+}
+
 
 is_flower : List (List U8), I64, I64 -> Result Bool [OutOfBounds]
 is_flower = |rows, nx, ny|
@@ -25,32 +55,3 @@ count_neighbors = |rows, x, y|
             |> List.sum,
     )
     |> List.sum
-
-annotate : Str -> Str
-annotate = |garden|
-    rows = garden |> Str.to_utf8 |> List.split_on('\n')
-    annotated =
-        rows
-        |> List.map_with_index(
-            |row, y|
-                row
-                |> List.map_with_index(
-                    |cell, x|
-                        if cell == '*' then
-                            '*'
-                        else
-                            when count_neighbors(rows, x, y) is
-                                0 -> ' '
-                                n -> '0' + n,
-                )
-                |> Str.from_utf8,
-        )
-
-    annotated
-    |> List.map(
-        |maybe_row|
-            when maybe_row is
-                Ok(row) -> row
-                Err(_) -> crash("Unreachable"),
-    ) # fromUtf8 cannot fail in the code above
-    |> Str.join_with("\n")

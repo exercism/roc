@@ -1,13 +1,13 @@
-module [pascals_triangle]
-
-pascals_triangle : U64 -> List (List U64)
-pascals_triangle = |count|
-    List.range({ start: At(0), end: Before(count) })
-    |> List.map(
-        |row|
-            List.range({ start: At(0), end: At(row) })
-            |> List.map(|column| binomial_coefficient(row, column)),
-    )
+PascalsTriangle :: {}.{
+    pascals_triangle : U64 -> List (List U64)
+    pascals_triangle = |count|
+        List.range({ start: At(0), end: Before(count) })
+        |> List.map(
+            |row|
+                List.range({ start: At(0), end: At(row) })
+                |> List.map(|column| binomial_coefficient(row, column)),
+        )
+}
 
 binomial_coefficient : U64, U64 -> U64
 binomial_coefficient = |n, k|

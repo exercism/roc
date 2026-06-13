@@ -1,9 +1,9 @@
-module [recite]
-
-recite : U64, U64 -> Str
-recite = |start_verse, end_verse|
-    List.sublist(verse_list, { start: start_verse - 1, len: end_verse - (start_verse - 1) })
-    |> Str.join_with("\n\n")
+FoodChain :: {}.{
+    recite : U64, U64 -> Str
+    recite = |start_verse, end_verse|
+        List.sublist(verse_list, { start: start_verse - 1, len: end_verse - (start_verse - 1) })
+        |> Str.join_with("\n\n")
+}
 
 verse_list : List Str
 verse_list =

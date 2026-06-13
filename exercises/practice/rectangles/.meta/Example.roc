@@ -1,4 +1,34 @@
-module [rectangles]
+Rectangles :: {}.{
+    rectangles : Str -> U64
+    rectangles = |diagram|
+        grid =
+            diagram
+            |> Str.split_on("\n")
+            |> List.map(Str.to_utf8)
+        height = grid |> List.len
+        grid
+        |> List.map_with_index(
+            |row, y1| # number of rectangles with top on this row
+                row
+                |> List.map_with_index(
+                    |_char, x1| # number with top-left on this column
+                        List.range({ start: After(y1), end: Before(height) })
+                        |> List.map(
+                            |y2| # number of rectangles with bottom on this row
+                                List.range({ start: After(x1), end: Before(List.len(row)) })
+                                |> List.map(
+                                    |x2| # number with bottom-right on this column
+                                        if is_rectangle({ grid, x1, y1, x2, y2 }) then 1 else 0,
+                                )
+                                |> List.sum,
+                        )
+                        |> List.sum,
+                )
+                |> List.sum,
+        )
+        |> List.sum
+}
+
 
 ## Is there a rectangle between the top left (x1, y1) corner and the bottom
 ## right (x2, y2) corner.
@@ -26,32 +56,3 @@ is_rectangle = |{ grid, x1, y1, x2, y2 }|
         and ([y1, y2] |> List.all(has_horizontal_border))
         and ([x1, x2] |> List.all(has_vertical_border))
     )
-
-rectangles : Str -> U64
-rectangles = |diagram|
-    grid =
-        diagram
-        |> Str.split_on("\n")
-        |> List.map(Str.to_utf8)
-    height = grid |> List.len
-    grid
-    |> List.map_with_index(
-        |row, y1| # number of rectangles with top on this row
-            row
-            |> List.map_with_index(
-                |_char, x1| # number with top-left on this column
-                    List.range({ start: After(y1), end: Before(height) })
-                    |> List.map(
-                        |y2| # number of rectangles with bottom on this row
-                            List.range({ start: After(x1), end: Before(List.len(row)) })
-                            |> List.map(
-                                |x2| # number with bottom-right on this column
-                                    if is_rectangle({ grid, x1, y1, x2, y2 }) then 1 else 0,
-                            )
-                            |> List.sum,
-                    )
-                    |> List.sum,
-            )
-            |> List.sum,
-    )
-    |> List.sum

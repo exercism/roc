@@ -1,4 +1,15 @@
-module [winner]
+Connect :: {}.{
+    winner : Str -> Result [PlayerO, PlayerX] [NotFinished, InvalidCharacter U8, InvalidBoardShape]
+    winner = |board_str|
+        board = parse(board_str)?
+        validate(board)?
+        if board |> has_north_south_path(StoneO) then
+            Ok(PlayerO)
+        else if board |> transpose |> has_north_south_path(StoneX) then
+            Ok(PlayerX)
+        else
+            Err(NotFinished)
+}
 
 Cell : [StoneO, StoneX, Empty]
 Board : List (List Cell)
@@ -33,17 +44,6 @@ validate = |board|
         Err(InvalidBoardShape)
     else
         Ok({})
-
-winner : Str -> Result [PlayerO, PlayerX] [NotFinished, InvalidCharacter U8, InvalidBoardShape]
-winner = |board_str|
-    board = parse(board_str)?
-    validate(board)?
-    if board |> has_north_south_path(StoneO) then
-        Ok(PlayerO)
-    else if board |> transpose |> has_north_south_path(StoneX) then
-        Ok(PlayerX)
-    else
-        Err(NotFinished)
 
 transpose : Board -> Board
 transpose = |board|

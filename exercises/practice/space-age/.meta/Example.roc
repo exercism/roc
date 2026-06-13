@@ -1,4 +1,12 @@
-module [age]
+SpaceAge :: {}.{
+    age : Planet, Dec -> Dec
+    age = |planet, seconds|
+        period_in_earth_years = orbital_period_in_earth_years(planet)
+        period_in_seconds = period_in_earth_years * 365.25 * 24 * 60 * 60
+        planet_years = seconds / period_in_seconds
+        round(planet_years)
+}
+
 
 Planet : [
     Mercury,
@@ -10,13 +18,6 @@ Planet : [
     Uranus,
     Neptune,
 ]
-
-age : Planet, Dec -> Dec
-age = |planet, seconds|
-    period_in_earth_years = orbital_period_in_earth_years(planet)
-    period_in_seconds = period_in_earth_years * 365.25 * 24 * 60 * 60
-    planet_years = seconds / period_in_seconds
-    round(planet_years)
 
 round : Dec -> Dec
 round = |value|
