@@ -13,7 +13,11 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 				.map(
 					|index| {
 						encoded_index = (a * index + b) % alphabet_size
-						'a' + encoded_index.to_u8_wrap()
+						'a' + (
+							encoded_index.to_u8_try() ?? {
+								crash "Unreachable"
+							},
+						)
 					},
 				)
 				->collect()
@@ -40,7 +44,11 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 					)
 					.map(
 						|pair| {
-							pair.decoded_index.to_u8_wrap() + 'a'
+							(
+								pair.decoded_index.to_u8_try() ?? {
+									crash "Unreachable"
+								},
+							) + 'a'
 						},
 					)
 
