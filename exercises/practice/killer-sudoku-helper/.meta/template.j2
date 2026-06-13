@@ -22,9 +22,10 @@ import {{ exercise | to_pascal }} exposing [combinations]
 {%- if case["description"] != supercase["description"] %}
 # {{ case["description"] }}
 {%- endif %}
-expect
+expect {
     result = {{ case["property"] }}({{ to_cage(case["input"]["cage"]) }})
     result == {{ case["expected"] | to_roc }}
+}
 
 {% endfor -%}
 {%- endfor %}

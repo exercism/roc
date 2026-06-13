@@ -11,16 +11,17 @@ import {{ exercise | to_pascal }} exposing [encode, decode]
 
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
-expect
+expect {
     string = {{ case["input"]["string"] | to_roc }} 
     {%- if case["property"] == "consistency" %}
-    result = string |> encode |> Result.try(decode)
+    result = string -> encode() -> Result.try(decode)
     result == Ok(string)
-{%- else %}
-    result = string |> {{ case["property"] | to_snake }}
+    {%- else %}
+    result = string -> {{ case["property"] | to_snake }}
     expected = {{ case["expected"] | to_roc }} 
     result == Ok(expected)
-{%- endif %}
+    {%- endif %}
+}
 
 {% endfor %}
 {% endfor %}

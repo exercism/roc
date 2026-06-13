@@ -34,23 +34,24 @@ set property_map = {
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
 {% set property = property_map.get(case["property"], case["property"]) %}
-expect
+expect {
     {%- if "set" in case["input"] %}
     set = from_list({{ case["input"]["set"] | to_roc }})
-    result = set |> {{ property | to_snake }}
+    result = set.{{ property | to_snake }}()
     {%- if "element" in case["input"] %}({{(case["input"]["element"])}}){%- endif %}
     {%- else %}
     set1 = from_list({{ case["input"]["set1"] | to_roc }})
     set2 = from_list({{ case["input"]["set2"] | to_roc }})
-    result = set1 |> {{ property | to_snake }}(set2)
+    result = set1.{{ property | to_snake }}(set2)
     {%- endif %}
     {%- if case["expected"] is iterable %}
-    expected = {{ case["expected"] | to_roc }} |> from_list
-    result |> is_eq(expected)
+    expected = {{ case["expected"] | to_roc }} -> from_list()
+    result.is_eq(expected)
     {%- else %}
     expected = {{ case["expected"] | to_roc }}
     result == expected
     {%- endif %}
+}
 
 {% endfor %}
 {% endfor %}
@@ -61,11 +62,12 @@ expect
 
 {% for case in additional_cases -%}
 # {{ case["description"] }}
-expect
+expect {
     set = from_list({{ case["input"]["set"] | to_roc }})
-    result = set |> to_list |> List.sort_asc
+    result = set.to_list().sort_asc()
     expected = {{ case["expected"] | to_roc }}
     result == expected
+}
 
 {% endfor %}
 

@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/allergies/canonical-data.json
-# File last updated on 2026-06-12
+# File last updated on 2026-06-13
 
 import Allergies exposing [allergic_to, set]
 

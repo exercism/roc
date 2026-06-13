@@ -6,7 +6,7 @@ import {{ exercise | to_pascal }} exposing [transform]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect
+expect {
     legacy =
         Dict.from_list([
 {%- for score, letters in case["input"]["legacy"].items() %}
@@ -20,6 +20,7 @@ expect
 {%- endfor %}
         ])
     transform(legacy) == expected
+}
         
 {% endfor %}
 

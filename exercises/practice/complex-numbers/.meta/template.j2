@@ -4,8 +4,13 @@
 
 import {{ exercise | to_pascal }} exposing [real, imaginary, add, sub, mul, div, conjugate, abs, exp]
 
-is_approx_eq = |z1, z2|
-    z1.re |> Num.is_approx_eq(z2.re, {}) && z1.im |> Num.is_approx_eq(z2.im, {})
+is_approx_eq = |x1, x2| {
+    (x1 * 1e9 + 0.5).to_u64_wrap() == (x2 * 1e9 + 0.5).to_u64_wrap()
+}
+
+complex_is_approx_eq = |z1, z2| {
+    is_approx_eq(z1.re, z2.re) and is_approx_eq(z1.im, z2.im)
+}
 
 {% for supercase in cases %}
 ###
@@ -23,22 +28,24 @@ is_approx_eq = |z1, z2|
 {% for subcase in subcases -%}
 # {{ subcase["description"] }}
 {%- if subcase["input"]["z"] %}
-expect
+expect {
     z = {{ plugins.to_complex_number(subcase["input"]["z"]) }}
     result = {{ subcase["property"] }}(z)
     {%- if subcase["expected"] is iterable and subcase["expected"] is not string %}
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
-    result |> is_approx_eq(expected)
+    result -> complex_is_approx_eq(expected)
     {%- else %}
-    result |> Num.is_approx_eq({{ subcase["expected"] | to_roc }}, {})
+    result -> is_approx_eq({{ subcase["expected"] | to_roc }})
     {%- endif %}
+}
 {%- elif subcase["input"]["z1"] %}
-expect
+expect {
     z1 = {{ plugins.to_complex_number(subcase["input"]["z1"]) }}
     z2 = {{ plugins.to_complex_number(subcase["input"]["z2"]) }}
-    result = z1 |> {{ subcase["property"] }}(z2)
+    result = z1.{{ subcase["property"] }}(z2)
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
-    result |> is_approx_eq(expected)
+    result -> complex_is_approx_eq(expected)
+}
 {%- endif %}
 
 {% endfor %}

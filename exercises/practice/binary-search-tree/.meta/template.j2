@@ -30,7 +30,7 @@ import {{ exercise | to_pascal }} exposing [from_list, to_list]
 {%- if subcase["description"] != supercase["description"] %}
 # {{ subcase["description"] }}
 {%- endif %}
-expect
+expect {
     data = {{ to_int_list(subcase["input"]["treeData"]) }}
 {%- if subcase["property"] == "data" %}
     result = from_list(data)
@@ -42,6 +42,7 @@ expect
     expected = {{ to_int_list(subcase["expected"]) }}
     result == expected
 {%- endif %}
+}
 
 {% endfor %}
 

@@ -20,16 +20,16 @@ GameNode({
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect
+expect {
     sgf = {{ case["input"]["encoded"] | to_roc }}
     result = {{ case["property"] | to_snake }}(sgf)
     {%- if case["expected"]["error"] %}
-    result |> Result.is_err
+    result.is_err()
     {%- else %}
     expected = {{ to_node(case["expected"]) | indent(4) }}
     result == Ok(expected)
     {%- endif %}
-    
+}
 
 {% endfor %}
 

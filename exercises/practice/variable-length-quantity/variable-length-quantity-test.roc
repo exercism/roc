@@ -1,14 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/variable-length-quantity/canonical-data.json
-# File last updated on 2025-09-15
-app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.20.0/X73hGh05nNTkDHU06FHC0YfFaQB1pimX7gncRcao5mU.tar.br",
-}
-
-import pf.Stdout
-
-main! = |_args|
-    Stdout.line!("")
+# File last updated on 2026-06-13
 
 import VariableLengthQuantity exposing [encode, decode]
 
@@ -17,221 +9,264 @@ import VariableLengthQuantity exposing [encode, decode]
 ##
 
 # zero
-expect
-    integers = [0]
-    result = encode(integers)
-    expected = [0]
-    result == expected
+expect {
+	integers = [0]
+	result = encode(integers)
+	expected = [0]
+	result == expected
+}
 
 # arbitrary single byte
-expect
-    integers = [64]
-    result = encode(integers)
-    expected = [64]
-    result == expected
+expect {
+	integers = [64]
+	result = encode(integers)
+	expected = [64]
+	result == expected
+}
 
 # asymmetric single byte
-expect
-    integers = [83]
-    result = encode(integers)
-    expected = [83]
-    result == expected
+expect {
+	integers = [83]
+	result = encode(integers)
+	expected = [83]
+	result == expected
+}
 
 # largest single byte
-expect
-    integers = [127]
-    result = encode(integers)
-    expected = [127]
-    result == expected
+expect {
+	integers = [127]
+	result = encode(integers)
+	expected = [127]
+	result == expected
+}
 
 # smallest double byte
-expect
-    integers = [128]
-    result = encode(integers)
-    expected = [129, 0]
-    result == expected
+expect {
+	integers = [128]
+	result = encode(integers)
+	expected = [129, 0]
+	result == expected
+}
 
 # arbitrary double byte
-expect
-    integers = [8192]
-    result = encode(integers)
-    expected = [192, 0]
-    result == expected
+expect {
+	integers = [8192]
+	result = encode(integers)
+	expected = [192, 0]
+	result == expected
+}
 
 # asymmetric double byte
-expect
-    integers = [173]
-    result = encode(integers)
-    expected = [129, 45]
-    result == expected
+expect {
+	integers = [173]
+	result = encode(integers)
+	expected = [129, 45]
+	result == expected
+}
 
 # largest double byte
-expect
-    integers = [16383]
-    result = encode(integers)
-    expected = [255, 127]
-    result == expected
+expect {
+	integers = [16383]
+	result = encode(integers)
+	expected = [255, 127]
+	result == expected
+}
 
 # smallest triple byte
-expect
-    integers = [16384]
-    result = encode(integers)
-    expected = [129, 128, 0]
-    result == expected
+expect {
+	integers = [16384]
+	result = encode(integers)
+	expected = [129, 128, 0]
+	result == expected
+}
 
 # arbitrary triple byte
-expect
-    integers = [1048576]
-    result = encode(integers)
-    expected = [192, 128, 0]
-    result == expected
+expect {
+	integers = [1048576]
+	result = encode(integers)
+	expected = [192, 128, 0]
+	result == expected
+}
 
 # asymmetric triple byte
-expect
-    integers = [120220]
-    result = encode(integers)
-    expected = [135, 171, 28]
-    result == expected
+expect {
+	integers = [120220]
+	result = encode(integers)
+	expected = [135, 171, 28]
+	result == expected
+}
 
 # largest triple byte
-expect
-    integers = [2097151]
-    result = encode(integers)
-    expected = [255, 255, 127]
-    result == expected
+expect {
+	integers = [2097151]
+	result = encode(integers)
+	expected = [255, 255, 127]
+	result == expected
+}
 
 # smallest quadruple byte
-expect
-    integers = [2097152]
-    result = encode(integers)
-    expected = [129, 128, 128, 0]
-    result == expected
+expect {
+	integers = [2097152]
+	result = encode(integers)
+	expected = [129, 128, 128, 0]
+	result == expected
+}
 
 # arbitrary quadruple byte
-expect
-    integers = [134217728]
-    result = encode(integers)
-    expected = [192, 128, 128, 0]
-    result == expected
+expect {
+	integers = [134217728]
+	result = encode(integers)
+	expected = [192, 128, 128, 0]
+	result == expected
+}
 
 # asymmetric quadruple byte
-expect
-    integers = [3503876]
-    result = encode(integers)
-    expected = [129, 213, 238, 4]
-    result == expected
+expect {
+	integers = [3503876]
+	result = encode(integers)
+	expected = [129, 213, 238, 4]
+	result == expected
+}
 
 # largest quadruple byte
-expect
-    integers = [268435455]
-    result = encode(integers)
-    expected = [255, 255, 255, 127]
-    result == expected
+expect {
+	integers = [268435455]
+	result = encode(integers)
+	expected = [255, 255, 255, 127]
+	result == expected
+}
 
 # smallest quintuple byte
-expect
-    integers = [268435456]
-    result = encode(integers)
-    expected = [129, 128, 128, 128, 0]
-    result == expected
+expect {
+	integers = [268435456]
+	result = encode(integers)
+	expected = [129, 128, 128, 128, 0]
+	result == expected
+}
 
 # arbitrary quintuple byte
-expect
-    integers = [4278190080]
-    result = encode(integers)
-    expected = [143, 248, 128, 128, 0]
-    result == expected
+expect {
+	integers = [4278190080]
+	result = encode(integers)
+	expected = [143, 248, 128, 128, 0]
+	result == expected
+}
 
 # asymmetric quintuple byte
-expect
-    integers = [2254790917]
-    result = encode(integers)
-    expected = [136, 179, 149, 194, 5]
-    result == expected
+expect {
+	integers = [2254790917]
+	result = encode(integers)
+	expected = [136, 179, 149, 194, 5]
+	result == expected
+}
 
 # maximum 32-bit integer input
-expect
-    integers = [4294967295]
-    result = encode(integers)
-    expected = [143, 255, 255, 255, 127]
-    result == expected
+expect {
+	integers = [4294967295]
+	result = encode(integers)
+	expected = [143, 255, 255, 255, 127]
+	result == expected
+}
 
 # two single-byte values
-expect
-    integers = [64, 127]
-    result = encode(integers)
-    expected = [64, 127]
-    result == expected
+expect {
+	integers = [64, 127]
+	result = encode(integers)
+	expected = [64, 127]
+	result == expected
+}
 
 # two multi-byte values
-expect
-    integers = [16384, 1193046]
-    result = encode(integers)
-    expected = [129, 128, 0, 200, 232, 86]
-    result == expected
+expect {
+	integers = [16384, 1193046]
+	result = encode(integers)
+	expected = [129, 128, 0, 200, 232, 86]
+	result == expected
+}
 
 # many multi-byte values
-expect
-    integers = [8192, 1193046, 268435455, 0, 16383, 16384]
-    result = encode(integers)
-    expected = [192, 0, 200, 232, 86, 255, 255, 255, 127, 0, 255, 127, 129, 128, 0]
-    result == expected
+expect {
+	integers = [8192, 1193046, 268435455, 0, 16383, 16384]
+	result = encode(integers)
+	expected = [192, 0, 200, 232, 86, 255, 255, 255, 127, 0, 255, 127, 129, 128, 0]
+	result == expected
+}
 
 ##
 ## Decode a series of bytes, producing a series of integers.
 ##
 
 # one byte
-expect
-    bytes = [127]
-    result = decode bytes
-    expected = Ok([127])
-    result == expected
+expect {
+	bytes = [127]
+	result = decode
+	bytes
+	expected = Ok([127])
+	result == expected
+}
 
 # two bytes
-expect
-    bytes = [192, 0]
-    result = decode bytes
-    expected = Ok([8192])
-    result == expected
+expect {
+	bytes = [192, 0]
+	result = decode
+	bytes
+	expected = Ok([8192])
+	result == expected
+}
 
 # three bytes
-expect
-    bytes = [255, 255, 127]
-    result = decode bytes
-    expected = Ok([2097151])
-    result == expected
+expect {
+	bytes = [255, 255, 127]
+	result = decode
+	bytes
+	expected = Ok([2097151])
+	result == expected
+}
 
 # four bytes
-expect
-    bytes = [129, 128, 128, 0]
-    result = decode bytes
-    expected = Ok([2097152])
-    result == expected
+expect {
+	bytes = [129, 128, 128, 0]
+	result = decode
+	bytes
+	expected = Ok([2097152])
+	result == expected
+}
 
 # maximum 32-bit integer
-expect
-    bytes = [143, 255, 255, 255, 127]
-    result = decode bytes
-    expected = Ok([4294967295])
-    result == expected
+expect {
+	bytes = [143, 255, 255, 255, 127]
+	result = decode
+	bytes
+	expected = Ok([4294967295])
+	result == expected
+}
 
 # incomplete sequence causes error
-expect
-    bytes = [255]
-    result = decode bytes
-    result |> Result.is_err
+expect {
+	bytes = [255]
+	result = decode
+	bytes
+	result.is_err()
+}
 
 # incomplete sequence causes error, even if value is zero
-expect
-    bytes = [128]
-    result = decode bytes
-    result |> Result.is_err
+expect {
+	bytes = [128]
+	result = decode
+	bytes
+	result.is_err()
+}
 
 # multiple values
-expect
-    bytes = [192, 0, 200, 232, 86, 255, 255, 255, 127, 0, 255, 127, 129, 128, 0]
-    result = decode bytes
-    expected = Ok([8192, 1193046, 268435455, 0, 16383, 16384])
-    result == expected
+expect {
+	bytes = [192, 0, 200, 232, 86, 255, 255, 255, 127, 0, 255, 127, 129, 128, 0]
+	result = decode
+	bytes
+	expected = Ok([8192, 1193046, 268435455, 0, 16383, 16384])
+	result == expected
+}
 
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}

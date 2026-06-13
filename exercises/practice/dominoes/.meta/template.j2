@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [find_chain]
+import {{ exercise | to_pascal }} exposing [Domino, find_chain]
 
 {% macro to_list_of_pairs(dominoes) -%}
 [
@@ -12,52 +12,62 @@ import {{ exercise | to_pascal }} exposing [find_chain]
 ]
 {%- endmacro %}
 
-Domino : (U8, U8)
-
 ## Rotate each domino if needed to ensure that the small side is on the left
-canonicalize : List Domino -> List Domino
-canonicalize = |dominoes|
+canonicalize : List(Domino) -> List(Domino)
+canonicalize = |dominoes| {
     dominoes
-    |> List.map(|domino|
-        if domino.0 > domino.1 then (domino.1, domino.0) else domino
-    )
+    .map(|domino| {
+        if domino.0 > domino.1 (domino.1, domino.0) else domino
+    })
+}
 
 ## Ensure that the given result is Ok and is a valid chain for the
 ## given list of dominoes
-is_valid_chain_for : Result (List Domino) _, List Domino -> Bool
-is_valid_chain_for = |maybe_chain, dominoes|
-    when maybe_chain is
-        Err(_) -> Bool.false
-        Ok(chain) ->
-            if Set.from_list(canonicalize(chain)) == Set.from_list(canonicalize(dominoes)) then
-                when chain is
-                    [] -> Bool.true
-                    [.., last] ->
+is_valid_chain_for : Try(List(Domino), _), List(Domino) -> Bool
+is_valid_chain_for = |maybe_chain, dominoes| {
+    match maybe_chain {
+        Err(_) => Bool.False
+        Ok(chain) => {
+            if Set.from_list(canonicalize(chain)) == Set.from_list(canonicalize(dominoes)) {
+                match chain {
+                    [] => Bool.True
+                    [.., last] => {
                         chain
-                        |> List.walk_until(
+                        .fold_until(
                             Ok(last),
-                            |state, domino|
-                                when state is
-                                    Err(InvalidChain) -> crash "Unreachable"
-                                    Ok(previous) ->
-                                        if previous.1 == domino.0 then
+                            |state, domino| {
+                                match state {
+                                    Err(InvalidChain) => { crash "Unreachable" }
+                                    Ok(previous) => {
+                                        if previous.1 == domino.0 {
                                             Continue(Ok(domino))
-                                        else
+                                        } else {
                                             Break(Err(InvalidChain))
+                                        }
+                                    }
+                                }
+                            }
                         )
-                        |> Result.is_ok
-            else
-                Bool.false
+                        .is_ok()
+                    }
+                }
+            } else {
+                Bool.False
+            }
+        }
+    }
+}
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect
-    result = find_chain({{ to_list_of_pairs(case["input"]["dominoes"]) }})
+expect {
+    result = Domino.find_chain({{ to_list_of_pairs(case["input"]["dominoes"]) }})
     {%- if case["expected"] %}
-    result |> is_valid_chain_for({{ to_list_of_pairs(case["input"]["dominoes"]) }})
+    result -> is_valid_chain_for({{ to_list_of_pairs(case["input"]["dominoes"]) }})
     {%- else %}
-    result |> Result.is_err
+    result.is_err()
     {%- endif %}
+}
 
 {% endfor %}
 

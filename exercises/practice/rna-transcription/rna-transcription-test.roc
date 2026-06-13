@@ -1,44 +1,46 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rna-transcription/canonical-data.json
-# File last updated on 2025-09-15
-app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.20.0/X73hGh05nNTkDHU06FHC0YfFaQB1pimX7gncRcao5mU.tar.br",
-}
-
-import pf.Stdout
-
-main! = |_args|
-    Stdout.line!("")
+# File last updated on 2026-06-13
 
 import RnaTranscription exposing [to_rna]
 
 # Empty RNA sequence
-expect
-    result = to_rna("")
-    result == ""
+expect {
+	result = to_rna("")
+	result == ""
+}
 
 # RNA complement of cytosine is guanine
-expect
-    result = to_rna("C")
-    result == "G"
+expect {
+	result = to_rna("C")
+	result == "G"
+}
 
 # RNA complement of guanine is cytosine
-expect
-    result = to_rna("G")
-    result == "C"
+expect {
+	result = to_rna("G")
+	result == "C"
+}
 
 # RNA complement of thymine is adenine
-expect
-    result = to_rna("T")
-    result == "A"
+expect {
+	result = to_rna("T")
+	result == "A"
+}
 
 # RNA complement of adenine is uracil
-expect
-    result = to_rna("A")
-    result == "U"
+expect {
+	result = to_rna("A")
+	result == "U"
+}
 
 # RNA complement
-expect
-    result = to_rna("ACGTGGTCTTAA")
-    result == "UGCACCAGAAUU"
+expect {
+	result = to_rna("ACGTGGTCTTAA")
+	result == "UGCACCAGAAUU"
+}
 
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}

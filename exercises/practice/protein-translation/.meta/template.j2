@@ -6,14 +6,15 @@ import {{ exercise | to_pascal }} exposing [to_protein]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect
+expect {
     rna = {{ case["input"]["strand"] | to_roc }}
-    result = rna |> to_protein
+    result = rna -> to_protein()
     {%- if case["expected"]["error"] %}
-    result |> Result.is_err
+    result.is_err()
     {%- else %}
     result == Ok([{%- for aminoAcid in case["expected"] -%}{{ aminoAcid | to_pascal }}, {%- endfor %}])
     {%- endif %}
+}
 
 {% endfor %}
 
