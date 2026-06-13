@@ -6,26 +6,26 @@ count_words = |sentence|
     |> Str.to_utf8
     |> List.append(' ') # to ensure the last word is added
     |> List.walk(
-        { words: [], word: [], contraction_started: Bool.false },
+        { words: [], word: [], contraction_started: Bool.False },
         |state, char|
             { words, word, contraction_started } = state
             when char is
                 c if c >= 'A' and c <= 'Z' ->
-                    { words, word: word |> List.append((c - 'A' + 'a')), contraction_started: Bool.false }
+                    { words, word: word |> List.append((c - 'A' + 'a')), contraction_started: Bool.False }
 
                 c if c >= 'a' and c <= 'z' or c >= '0' and c <= '9' ->
-                    { words, word: word |> List.append(c), contraction_started: Bool.false }
+                    { words, word: word |> List.append(c), contraction_started: Bool.False }
 
                 c ->
                     if List.is_empty(word) then
                         state
                     else if c != '\'' or contraction_started then
                         if contraction_started then
-                            { words: words |> List.append((word |> List.drop_last(1))), word: [], contraction_started: Bool.false }
+                            { words: words |> List.append((word |> List.drop_last(1))), word: [], contraction_started: Bool.False }
                         else
-                            { words: words |> List.append(word), word: [], contraction_started: Bool.false }
+                            { words: words |> List.append(word), word: [], contraction_started: Bool.False }
                     else
-                        { words, word: word |> List.append(c), contraction_started: Bool.true },
+                        { words, word: word |> List.append(c), contraction_started: Bool.True },
     )
     |> .words
     |> List.drop_if(List.is_empty)

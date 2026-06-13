@@ -13,12 +13,12 @@ is_paired = |string|
                     help((open_brackets |> List.append(next_char)), rest_chars)
                 else if is_close(next_char) then
                     when open_brackets is
-                        [] -> Bool.false # missing opening bracket
+                        [] -> Bool.False # missing opening bracket
                         [.. as previous_opens, last_open] ->
                             if is_match((last_open, next_char)) then
                                 help(previous_opens, rest_chars)
                             else
-                                Bool.false # mismatching brackets
+                                Bool.False # mismatching brackets
                 else
                     help(open_brackets, rest_chars)
 

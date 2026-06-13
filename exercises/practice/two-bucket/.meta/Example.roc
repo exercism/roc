@@ -1,7 +1,7 @@
 module [measure]
 
 ## Breadth-First Search finds the shortest path from the `start` node to any successful
-## node (i.e., such that `success node == Bool.true`). The `neighbors` function must
+## node (i.e., such that `success node == Bool.True`). The `neighbors` function must
 ## return the list of direct neighbors of a given node.
 bfs = |{ start, neighbors, success }|
     help = |to_visit, visited, from|

@@ -13,7 +13,7 @@ valid = |number|
             |> List.sum
             |> Num.is_multiple_of(10)
 
-        _ -> Bool.false
+        _ -> Bool.False
 
 to_digits : Str -> Result (List U16) [IllegalCharacter]
 to_digits = |number|

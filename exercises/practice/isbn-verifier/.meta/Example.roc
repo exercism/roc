@@ -18,7 +18,7 @@ is_valid = |isbn|
         |> Str.to_utf8
         |> List.drop_if(|char| char == '-')
     if List.len(chars) != 10 then
-        Bool.false
+        Bool.False
     else
         values =
             chars

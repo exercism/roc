@@ -84,22 +84,22 @@ Config : {
 parse_flags : List Str -> Result Config _
 parse_flags = |flags|
     default_config = {
-        display_line_numbers: Bool.false,
-        display_file_names: Bool.false,
-        ignore_case: Bool.false,
-        match_full_lines: Bool.false,
-        invert_results: Bool.false,
+        display_line_numbers: Bool.False,
+        display_file_names: Bool.False,
+        ignore_case: Bool.False,
+        match_full_lines: Bool.False,
+        invert_results: Bool.False,
     }
     List.walk_try(
         flags,
         default_config,
         |config, flag|
             when flag is
-                "-l" -> Ok({ config & display_file_names: Bool.true })
-                "-n" -> Ok({ config & display_line_numbers: Bool.true })
-                "-i" -> Ok({ config & ignore_case: Bool.true })
-                "-x" -> Ok({ config & match_full_lines: Bool.true })
-                "-v" -> Ok({ config & invert_results: Bool.true })
+                "-l" -> Ok({ config & display_file_names: Bool.True })
+                "-n" -> Ok({ config & display_line_numbers: Bool.True })
+                "-i" -> Ok({ config & ignore_case: Bool.True })
+                "-x" -> Ok({ config & match_full_lines: Bool.True })
+                "-v" -> Ok({ config & invert_results: Bool.True })
                 _ -> Err(UnknownFlag(flag)),
     )
 

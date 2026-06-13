@@ -75,13 +75,13 @@ has_north_south_path = |board, stone|
     has_path_to_south : List Position, Set Position -> Bool
     has_path_to_south = |to_visit, visited|
         when to_visit is
-            [] -> Bool.false
+            [] -> Bool.False
             [position, .. as rest] ->
                 is_player_stone = board |> get_cell(position) == Ok(stone)
                 if is_player_stone and !(visited |> Set.contains(position)) then
                     { x, y } = position
                     if y + 1 == List.len(board) then
-                        Bool.true # we've reached the South!
+                        Bool.True # we've reached the South!
                     else
                         neighbors =
                             [(-1, 0), (1, 0), (0, -1), (1, -1), (-1, 1), (0, 1)]

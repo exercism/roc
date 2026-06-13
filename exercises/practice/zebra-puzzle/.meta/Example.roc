@@ -129,7 +129,7 @@ rule6 = |houses|
     ivory_house = houses |> List.find_first_index(|house| house.color == 3)
     when (green_house, ivory_house) is
         (Ok(green_index), Ok(ivory_index)) -> green_index == ivory_index + 1
-        _ -> Bool.true
+        _ -> Bool.True
 
 # The snail owner likes to go dancing.
 rule7 : List House -> Bool
@@ -168,7 +168,7 @@ rule11 = |houses|
     fox_house = houses |> List.find_first_index(|house| house.animal == 3)
     when (reader_house, fox_house) is
         (Ok(reader_index), Ok(fox_index)) -> (reader_index == fox_index + 1) or (fox_index == reader_index + 1)
-        _ -> Bool.true
+        _ -> Bool.True
 
 # The painter's house is next to the house with the horse.
 rule12 : List House -> Bool
@@ -177,7 +177,7 @@ rule12 = |houses|
     horse_house = houses |> List.find_first_index(|house| house.animal == 4)
     when (painter_house, horse_house) is
         (Ok(painter_index), Ok(horse_index)) -> (painter_index == horse_index + 1) or (horse_index == painter_index + 1)
-        _ -> Bool.true
+        _ -> Bool.True
 
 # The List person -> Bool
 rule13 : List House -> Bool
@@ -196,7 +196,7 @@ rule15 = |houses|
     blue_house = houses |> List.find_first_index(|house| house.color == 5)
     when (norwegian_house, blue_house) is
         (Ok(norwegian_index), Ok(blue_index)) -> (norwegian_index == blue_index + 1) or (blue_index == norwegian_index + 1)
-        _ -> Bool.true
+        _ -> Bool.True
 
 rule16 : List House -> Bool
 rule16 = |houses|

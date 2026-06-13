@@ -5,10 +5,10 @@ is_vowel = |char|
 
 rule1_applies = |chars|
     when chars is
-        [c, ..] if is_vowel(c) -> Bool.true
-        ['x', 'r', ..] -> Bool.true
-        ['y', 't', ..] -> Bool.true
-        _ -> Bool.false
+        [c, ..] if is_vowel(c) -> Bool.True
+        ['x', 'r', ..] -> Bool.True
+        ['y', 't', ..] -> Bool.True
+        _ -> Bool.False
 
 pig_latin_swap = |chars|
     if rule1_applies(chars) then

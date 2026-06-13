@@ -34,10 +34,10 @@ check_max_10_pins = |last_frame, pins|
 is_over : Game -> Bool
 is_over = |@Game({ frames })|
     when frames is
-        _ if List.len(frames) < 10 -> Bool.false
-        [.., Ball1(_)] | [.., Spare(_, _)] | [.., Strike] | [.., StrikeFill1(_)] -> Bool.false
-        [.., Ball2(_, _)] | [.., SpareFill(_)] | [.., StrikeFill2(_, _)] -> Bool.true
-        _ -> Bool.false
+        _ if List.len(frames) < 10 -> Bool.False
+        [.., Ball1(_)] | [.., Spare(_, _)] | [.., Strike] | [.., StrikeFill1(_)] -> Bool.False
+        [.., Ball2(_, _)] | [.., SpareFill(_)] | [.., StrikeFill2(_, _)] -> Bool.True
+        _ -> Bool.False
 
 roll : Game, U64 -> Result Game [MoreThan10Pins, GameOver]
 roll = |@Game({ frames }), pins|
