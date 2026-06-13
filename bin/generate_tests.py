@@ -157,9 +157,9 @@ def to_roc_multiline_string(lines: Union[str, List[str]]) -> str:
     elif len(lines) == 1:
         return to_roc_string(lines[0])
     else:
-        return "\n".join(
+        return "\n" + "\n".join(
             [r'\\' + escape_roc_string_content(line) for line in lines]
-        ).replace("${", r"\${")
+        ).replace("${", r"\${") + "\n"
 
 
 def to_roc_tuple(values: Any):
@@ -568,6 +568,8 @@ def generate(
     env.tests["error_case"] = error_case
     result = True
     for exercise in sorted(Path("exercises/practice").glob(exercise_glob)):
+        if not exercise.is_dir():
+            continue
         if not generate_exercise(env, spec_path, exercise, check):
             result = False
             if stop_on_failure:
