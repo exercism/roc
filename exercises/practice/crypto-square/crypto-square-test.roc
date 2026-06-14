@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/crypto-square/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-14
 
 import CryptoSquare exposing [ciphertext]
 
@@ -8,7 +8,7 @@ import CryptoSquare exposing [ciphertext]
 expect {
 	text = ""
 	result = ciphertext(text)
-	expected = Ok("")
+	expected = ""
 	result == expected
 }
 
@@ -16,7 +16,7 @@ expect {
 expect {
 	text = "... --- ..."
 	result = ciphertext(text)
-	expected = Ok("")
+	expected = ""
 	result == expected
 }
 
@@ -24,7 +24,7 @@ expect {
 expect {
 	text = "A"
 	result = ciphertext(text)
-	expected = Ok("a")
+	expected = "a"
 	result == expected
 }
 
@@ -32,7 +32,7 @@ expect {
 expect {
 	text = "  b "
 	result = ciphertext(text)
-	expected = Ok("b")
+	expected = "b"
 	result == expected
 }
 
@@ -40,7 +40,7 @@ expect {
 expect {
 	text = "@1,%!"
 	result = ciphertext(text)
-	expected = Ok("1")
+	expected = "1"
 	result == expected
 }
 
@@ -48,7 +48,7 @@ expect {
 expect {
 	text = "This is fun!"
 	result = ciphertext(text)
-	expected = Ok("tsf hiu isn")
+	expected = "tsf hiu isn"
 	result == expected
 }
 
@@ -56,7 +56,7 @@ expect {
 expect {
 	text = "Chill out."
 	result = ciphertext(text)
-	expected = Ok("clu hlt io ")
+	expected = "clu hlt io "
 	result == expected
 }
 
@@ -64,7 +64,7 @@ expect {
 expect {
 	text = "If man was meant to stay on the ground, god would have given us roots."
 	result = ciphertext(text)
-	expected = Ok("imtgdvs fearwer mayoogo anouuio ntnnlvt wttddes aohghn  sseoau ")
+	expected = "imtgdvs fearwer mayoogo anouuio ntnnlvt wttddes aohghn  sseoau "
 	result == expected
 }
 
