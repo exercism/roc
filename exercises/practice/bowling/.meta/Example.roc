@@ -147,7 +147,7 @@ map_triplets = |list, score_func| {
 	get_or_0 = |index| {
 		list.get(index) ?? Ball2(0, 0)
 	}
-	0.to(list.len()).map(
+	(0..<list.len()).map(
 		|index| {
 			score_func(get_or_0(index), get_or_0((index + 1)), get_or_0((index + 2)))
 		},

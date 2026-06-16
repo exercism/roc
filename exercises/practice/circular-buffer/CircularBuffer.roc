@@ -4,12 +4,12 @@ CircularBuffer :: { data : List(I64), start : U64, length : U64 }.{
 		crash "Please implement the 'create' function"
 	}
 
-	read : CircularBuffer -> Try({ updated_buffer : CircularBuffer, value : I64 }, [BufferEmpty])
+	read : CircularBuffer -> Try({ updated_buffer : CircularBuffer, value : I64 }, [BufferEmpty, ..])
 	read = |circular_buffer| {
 		crash "Please implement the 'read' function"
 	}
 
-	write : CircularBuffer, I64 -> Try(CircularBuffer, [BufferFull])
+	write : CircularBuffer, I64 -> Try(CircularBuffer, [BufferFull, ..])
 	write = |circular_buffer, value| {
 		crash "Please implement the 'write' function"
 	}

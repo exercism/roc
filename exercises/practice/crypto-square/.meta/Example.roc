@@ -28,7 +28,7 @@ CryptoSquare :: {}.{
 		if width == 0 {
 			""
 		} else {
-			0.to(width - 1)
+			(0..<width)
 				.map(
 					|column| {
 						rows.map(

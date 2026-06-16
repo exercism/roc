@@ -9,7 +9,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 	new = |{ a, b }| {
 		encode_map : List(U8)
 		encode_map = 
-			0.to(alphabet_size - 1)
+			(0..<alphabet_size)
 				.map(
 					|index| {
 						encoded_index = (a * index + b) % alphabet_size
