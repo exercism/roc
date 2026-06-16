@@ -1,4 +1,4 @@
 HelloWorld :: {}.{
-    hello : Str
-    hello = "Hello, World!"
+	hello : Str
+	hello = "Hello, World!"
 }
