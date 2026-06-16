@@ -2,15 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/complex-numbers/canonical-data.json
 # File last updated on 2026-06-13
 
-import ComplexNumbers exposing [real, imaginary, add, sub, mul, div, conjugate, abs, exp]
-
-is_approx_eq = |x1, x2| {
-	(x1 * 1e9 + 0.5).to_u64_wrap() == (x2 * 1e9 + 0.5).to_u64_wrap()
-}
-
-complex_is_approx_eq = |z1, z2| {
-	is_approx_eq(z1.re, z2.re) and is_approx_eq(z1.im, z2.im)
-}
+import ComplexNumbers exposing [Complex, real, imaginary, add, sub, mul, div, conjugate, abs, exp]
 
 ###
 ### Real part
@@ -76,7 +68,7 @@ expect {
 expect {
 	z1 = { re: 1, im: 0 }
 	z2 = { re: 2, im: 0 }
-	result = z1.add(z2)
+	result = add(z1, z2)
 	expected = { re: 3, im: 0 }
 	result->complex_is_approx_eq(expected)
 }
@@ -85,7 +77,7 @@ expect {
 expect {
 	z1 = { re: 0, im: 1 }
 	z2 = { re: 0, im: 2 }
-	result = z1.add(z2)
+	result = add(z1, z2)
 	expected = { re: 0, im: 3 }
 	result->complex_is_approx_eq(expected)
 }
@@ -94,7 +86,7 @@ expect {
 expect {
 	z1 = { re: 1, im: 2 }
 	z2 = { re: 3, im: 4 }
-	result = z1.add(z2)
+	result = add(z1, z2)
 	expected = { re: 4, im: 6 }
 	result->complex_is_approx_eq(expected)
 }
@@ -105,7 +97,7 @@ expect {
 expect {
 	z1 = { re: 1, im: 0 }
 	z2 = { re: 2, im: 0 }
-	result = z1.sub(z2)
+	result = sub(z1, z2)
 	expected = { re: -1, im: 0 }
 	result->complex_is_approx_eq(expected)
 }
@@ -114,7 +106,7 @@ expect {
 expect {
 	z1 = { re: 0, im: 1 }
 	z2 = { re: 0, im: 2 }
-	result = z1.sub(z2)
+	result = sub(z1, z2)
 	expected = { re: 0, im: -1 }
 	result->complex_is_approx_eq(expected)
 }
@@ -123,7 +115,7 @@ expect {
 expect {
 	z1 = { re: 1, im: 2 }
 	z2 = { re: 3, im: 4 }
-	result = z1.sub(z2)
+	result = sub(z1, z2)
 	expected = { re: -2, im: -2 }
 	result->complex_is_approx_eq(expected)
 }
@@ -134,7 +126,7 @@ expect {
 expect {
 	z1 = { re: 1, im: 0 }
 	z2 = { re: 2, im: 0 }
-	result = z1.mul(z2)
+	result = mul(z1, z2)
 	expected = { re: 2, im: 0 }
 	result->complex_is_approx_eq(expected)
 }
@@ -143,7 +135,7 @@ expect {
 expect {
 	z1 = { re: 0, im: 1 }
 	z2 = { re: 0, im: 2 }
-	result = z1.mul(z2)
+	result = mul(z1, z2)
 	expected = { re: -2, im: 0 }
 	result->complex_is_approx_eq(expected)
 }
@@ -152,7 +144,7 @@ expect {
 expect {
 	z1 = { re: 1, im: 2 }
 	z2 = { re: 3, im: 4 }
-	result = z1.mul(z2)
+	result = mul(z1, z2)
 	expected = { re: -5, im: 10 }
 	result->complex_is_approx_eq(expected)
 }
@@ -163,7 +155,7 @@ expect {
 expect {
 	z1 = { re: 1, im: 0 }
 	z2 = { re: 2, im: 0 }
-	result = z1.div(z2)
+	result = div(z1, z2)
 	expected = { re: 0.5, im: 0 }
 	result->complex_is_approx_eq(expected)
 }
@@ -172,7 +164,7 @@ expect {
 expect {
 	z1 = { re: 0, im: 1 }
 	z2 = { re: 0, im: 2 }
-	result = z1.div(z2)
+	result = div(z1, z2)
 	expected = { re: 0.5, im: 0 }
 	result->complex_is_approx_eq(expected)
 }
@@ -181,7 +173,7 @@ expect {
 expect {
 	z1 = { re: 1, im: 2 }
 	z2 = { re: 3, im: 4 }
-	result = z1.div(z2)
+	result = div(z1, z2)
 	expected = { re: 0.44, im: 0.08 }
 	result->complex_is_approx_eq(expected)
 }
@@ -305,7 +297,7 @@ expect {
 expect {
 	z1 = { re: 1, im: 2 }
 	z2 = { re: 5, im: 0 }
-	result = z1.add(z2)
+	result = add(z1, z2)
 	expected = { re: 6, im: 2 }
 	result->complex_is_approx_eq(expected)
 }
@@ -314,7 +306,7 @@ expect {
 expect {
 	z1 = { re: 5, im: 0 }
 	z2 = { re: 1, im: 2 }
-	result = z1.add(z2)
+	result = add(z1, z2)
 	expected = { re: 6, im: 2 }
 	result->complex_is_approx_eq(expected)
 }
@@ -323,7 +315,7 @@ expect {
 expect {
 	z1 = { re: 5, im: 7 }
 	z2 = { re: 4, im: 0 }
-	result = z1.sub(z2)
+	result = sub(z1, z2)
 	expected = { re: 1, im: 7 }
 	result->complex_is_approx_eq(expected)
 }
@@ -332,7 +324,7 @@ expect {
 expect {
 	z1 = { re: 4, im: 0 }
 	z2 = { re: 5, im: 7 }
-	result = z1.sub(z2)
+	result = sub(z1, z2)
 	expected = { re: -1, im: -7 }
 	result->complex_is_approx_eq(expected)
 }
@@ -341,7 +333,7 @@ expect {
 expect {
 	z1 = { re: 2, im: 5 }
 	z2 = { re: 5, im: 0 }
-	result = z1.mul(z2)
+	result = mul(z1, z2)
 	expected = { re: 10, im: 25 }
 	result->complex_is_approx_eq(expected)
 }
@@ -350,7 +342,7 @@ expect {
 expect {
 	z1 = { re: 5, im: 0 }
 	z2 = { re: 2, im: 5 }
-	result = z1.mul(z2)
+	result = mul(z1, z2)
 	expected = { re: 10, im: 25 }
 	result->complex_is_approx_eq(expected)
 }
@@ -359,7 +351,7 @@ expect {
 expect {
 	z1 = { re: 10, im: 100 }
 	z2 = { re: 10, im: 0 }
-	result = z1.div(z2)
+	result = div(z1, z2)
 	expected = { re: 1, im: 10 }
 	result->complex_is_approx_eq(expected)
 }
@@ -368,9 +360,21 @@ expect {
 expect {
 	z1 = { re: 5, im: 0 }
 	z2 = { re: 1, im: 1 }
-	result = z1.div(z2)
+	result = div(z1, z2)
 	expected = { re: 2.5, im: -2.5 }
 	result->complex_is_approx_eq(expected)
+}
+
+is_approx_eq : F64, F64 -> Bool
+is_approx_eq = |x1, x2| {
+	i1 = (x1 * 1000 + 0.5).to_u64_wrap()
+	i2 = (x2 * 1000 + 0.5).to_u64_wrap()
+	i1 == i2
+}
+
+complex_is_approx_eq : Complex, Complex -> Bool
+complex_is_approx_eq = |z1, z2| {
+	is_approx_eq(z1.re, z2.re) and is_approx_eq(z1.im, z2.im)
 }
 
 # This program is only used to run tests with `roc test`, so main! does nothing.

@@ -2,15 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [real, imaginary, add, sub, mul, div, conjugate, abs, exp]
-
-is_approx_eq = |x1, x2| {
-    (x1 * 1e9 + 0.5).to_u64_wrap() == (x2 * 1e9 + 0.5).to_u64_wrap()
-}
-
-complex_is_approx_eq = |z1, z2| {
-    is_approx_eq(z1.re, z2.re) and is_approx_eq(z1.im, z2.im)
-}
+import {{ exercise | to_pascal }} exposing [Complex, real, imaginary, add, sub, mul, div, conjugate, abs, exp]
 
 {% for supercase in cases %}
 ###
@@ -42,7 +34,7 @@ expect {
 expect {
     z1 = {{ plugins.to_complex_number(subcase["input"]["z1"]) }}
     z2 = {{ plugins.to_complex_number(subcase["input"]["z2"]) }}
-    result = z1.{{ subcase["property"] }}(z2)
+    result = {{ subcase["property"] }}(z1, z2)
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
     result -> complex_is_approx_eq(expected)
 }
@@ -52,5 +44,15 @@ expect {
 
 {% endfor %}
 {% endfor %}
+
+is_approx_eq = |x1, x2| {
+	i1 = (x1 * 1000 + 0.5).to_u64_try() ?? { crash "Unreachable" }
+	i2 = (x2 * 1000 + 0.5).to_u64_try() ?? { crash "Unreachable" }
+	i1 == i2
+}
+
+complex_is_approx_eq = |z1, z2| {
+	is_approx_eq(z1.re, z2.re) and is_approx_eq(z1.im, z2.im)
+}
 
 {{ macros.footer() }}
