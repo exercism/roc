@@ -1,100 +1,158 @@
-module [solve]
+Alphametics :: {}.{
+	solve : Str -> Try(List((U8, U8)), [InvalidAssignment, ..])
+	solve = |problem| {
+		{ addends, sum } = parse(problem)?
 
-solve : Str -> Result (List (U8, U8)) _
-solve = |problem|
-    { addends, sum } = parse(problem)?
+		# We can represent the equation as a dictionary of the letters mapped to their coefficients
+		# when we simplify the equation. For example, we can write AB + A + B == C as 11A + 2B + (-1)C == 0.
+		# That then becomes this dictionary: `Dict.from_list([('A', 11), ('B', 2), ('C', -1)])
+		equation : Dict(U8, I64)
+		equation = {
+			addends.fold(
+				Dict.empty(),
+				|dict, term| {
+					dict->insert_term(term, 1)
+				},
+			)->insert_term(sum, -1)
+		}
 
-    # We can represent the equation as a dictionary of the letters mapped to their coefficients
-    # when we simplify the equation. For example, we can write AB + A + B == C as 11A + 2B + (-1)C == 0.
-    # That then becomes this dictionary: `Dict.from_list [('A', 11), ('B', 2), ('C', -1)]
-    equation =
-        List.walk(
-            addends,
-            Dict.empty({}),
-            |dict, term|
-                insert_term(dict, term, 1),
-        )
-        |> insert_term(sum, -1)
+		leading_digits : Set(U8)
+		leading_digits = 
+			addends.map(
+				|letters| {
+					letters.first() ?? 0
+				},
+			)
+				->Set.from_list()
+				.insert(
+					sum.first() ?? 0,
+				)
 
-    leading_digits =
-        List.map(
-            addends,
-            |letters|
-                List.first(letters) |> Result.with_default(0),
-        )
-        |> Set.from_list
-        |> Set.insert((List.first(sum) |> Result.with_default(0)))
+		find_match : List((U8, U8)), List(U8), Set(U8) -> Try(List((U8, U8)), [InvalidAssignment, ..])
+		find_match = |assignments, remaining_vars, remaining_digits| {
+			match remaining_vars {
+				[] => {
+					total_val : I64
+					total_val = 
+						assignments.fold(
+							0,
+							|total, (letter, value)| {
+								(equation.get(letter) ?? 0) * value.to_i64() + total
+							},
+						)
 
-    find_match = |assignments, remaining_vars, remaining_digits|
-        when remaining_vars is
-            [] ->
-                total_val =
-                    List.walk(
-                        assignments,
-                        0,
-                        |total, (letter, value)|
-                            Dict.get(equation, letter)
-                            |> Result.with_default(0)
-                            |> Num.mul(Num.to_i64(value))
-                            |> Num.add(total),
-                    )
+					if total_val != 0 {
+						Err(InvalidAssignment)
+					} else {
+						Ok(assignments)
+					}
+				}
+				[letter, .. as rest] => {
+					find_first_ok(
+						remaining_digits,
+						|digit| {
+							if digit == 0 and leading_digits.contains(letter) {
+								Err(InvalidAssignment)
+							} else {
+								# Each digit has to be unique, so once we use a digit we remove it from the pool
+								find_match(assignments.append((letter, digit)), rest, remaining_digits.remove(digit))
+							}
+						},
+					)
+				}
+			}
+		}
 
-                if total_val != 0 then
-                    Err(InvalidAssignment)
-                else
-                    Ok(assignments)
-
-            [letter, .. as rest] ->
-                find_first_ok(
-                    remaining_digits,
-                    |digit|
-                        if digit == 0 and Set.contains(leading_digits, letter) then
-                            Err(InvalidAssignment)
-                        else
-                            # Each digit has to be unique, so once we use a digit we remove it from the pool
-                            find_match(List.append(assignments, (letter, digit)), rest, Set.remove(remaining_digits, digit)),
-                )
-
-    digits = List.range({ start: At(0), end: At(9) }) |> Set.from_list
-    find_match([], Dict.keys(equation), digits)
+		digits = Set.from_list([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+		find_match([], equation.keys(), digits)
+	}
+}
 
 # Apply a function to each element of a list until the function returns an Ok, then return that value
-find_first_ok : Set a, (a -> Result b err) -> Result b [NotFound]
-find_first_ok = |set, func|
-    Set.walk_until(
-        set,
-        Err(NotFound),
-        |state, elem|
-            when func(elem) is
-                Err(_) -> Continue(state)
-                Ok(val) -> Break(Ok(val)),
-    )
+find_first_ok : Set(a), (a -> Try(b, err)) -> Try(b, [InvalidAssignment, ..])
+find_first_ok = |set, func| {
+	set.to_list().fold_until(
+		Err(InvalidAssignment),
+		|state, elem| {
+			match func(elem) {
+				Err(_) => Continue(state)
+				Ok(val) => Break(Ok(val))
+			}
+		},
+	)
+}
 
 # Update the equation with the values of a term
-insert_term : Dict U8 I64, List U8, I64 -> Dict U8 I64
-insert_term = |equation, letters, polarity|
-    List.reverse(letters)
-    |> List.walk_with_index(
-        equation,
-        |dict, letter, index|
-            coeff =
-                Num.pow_int(10, index)
-                |> Num.to_i64
-                |> Num.mul(polarity)
-            Dict.update(
-                dict,
-                letter,
-                |val|
-                    when val is
-                        Err(Missing) -> Ok(coeff)
-                        Ok(c) -> Ok((c + coeff)),
-            ),
-    )
+insert_term : Dict(U8, I64), List(U8), I64 -> Dict(U8, I64)
+insert_term = |equation, letters, polarity| {
+	letters
+		->list_reverse()
+		.fold_with_index(
+			equation,
+			|dict, letter, index| {
+				coeff = pow_int(10, index) * polarity
+				dict.update(
+					letter,
+					|val| {
+						match val {
+							Err(Missing) => Ok(coeff)
+							Ok(c) => Ok((c + coeff))
+						}
+					},
+				)
+			},
+		)
+}
 
-parse : Str -> Result { addends : List (List U8), sum : List U8 } _
-parse = |problem|
-    { before, after } = Str.split_first(problem, " == ")?
-    addends =
-        Str.split_on(before, " + ")
-        |> List.map(Str.to_utf8)
-    Ok({ addends, sum: Str.to_utf8(after) })
+parse : Str -> Try({ addends : List(List(U8)), sum : List(U8) }, _)
+parse = |problem| {
+	{ before, after } = problem->split_first(" == ")?
+	addends = 
+		before
+			.split_on(
+				" + ",
+			)
+			.map(
+				|s| {
+					s.to_utf8()
+				},
+			)
+	Ok({ addends, sum: after.to_utf8() })
+}
+
+# The following function should soon be available in Roc's builtins
+split_first : Str, Str -> Try({ before : Str, after : Str }, [InvalidAssignment, ..])
+split_first = |str, sep| {
+	match str.split_on(sep) {
+		[] => Err(InvalidAssignment)
+		[_] => Err(InvalidAssignment)
+		[before, .. as rest] => Ok({ before, after: rest->Str.join_with(sep) })
+	}
+}
+
+list_reverse : List(a) -> List(a)
+list_reverse = |list| {
+	match list {
+		[] => []
+		[first, .. as rest] => list_reverse(rest).append(first)
+	}
+}
+
+reverse : Str -> Str
+reverse = |str| {
+	str
+		.to_utf8()
+		->list_reverse()
+		->Str.from_utf8()
+		?? ""
+}
+
+pow_int : I64, U64 -> I64
+pow_int = |number, pow| {
+	(1..=pow).fold(
+		1,
+		|acc, _| {
+			acc * number
+		},
+	)
+}
