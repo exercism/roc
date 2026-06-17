@@ -1,14 +1,29 @@
 HighScores :: {}.{
-    latest : List Score -> Result Score [ListWasEmpty]
-    latest = List.last
+	latest : List(U64) -> Try(U64, [ListWasEmpty])
+	latest = |scores| {
+		List.last(scores)
+	}
 
-    personal_best : List Score -> Result Score [ListWasEmpty]
-    personal_best = List.max
+	personal_best : List(U64) -> Try(U64, [ListWasEmpty])
+	personal_best = |scores| {
+		List.max(scores)
+	}
 
-    personal_top_three : List Score -> List Score
-    personal_top_three = |scores|
-        scores |> List.sort_desc |> List.take_first(3)
+	personal_top_three : List(U64) -> List(U64)
+	personal_top_three = |scores| {
+		scores->sort_desc().take_first(3)
+	}
 }
 
-
-Score : U64
+# The following functions should soon be available in Roc's builtins
+sort_desc = |list| {
+	list.sort_with(
+		|a, b| if a < b {
+			GT
+		} else if a > b {
+			LT
+		} else {
+			EQ
+		},
+	)
+}
