@@ -1,11 +1,23 @@
 FlattenArray :: {}.{
-    flatten : NestedValue -> List I64
-    flatten = |array|
-        when array is
-            NestedArray(list) -> list |> List.join_map(flatten)
-            Value(value) -> [value]
-            Null -> []
+	NestedValue := [Value(I64), Null, NestedArray(List(NestedValue))]
+
+	flatten : NestedValue -> List(I64)
+	flatten = |array| {
+		match array {
+			NestedArray(list) => list->join_map(flatten)
+			Value(value) => [value]
+			Null => []
+		}
+	}
 }
 
-
-NestedValue : [Value I64, Null, NestedArray (List NestedValue)]
+# The following function should soon be available in Roc's builtins
+join_map = |iter, func| {
+	var $state = []
+	for item in iter {
+		for subitem in func(item) {
+			$state = $state.append(subitem)
+		}
+	}
+	$state
+}
