@@ -16,3 +16,5 @@ SquareRoot :: {}.{
 		binary_search(0, radicand, radicand)
 	}
 }
+
+# TODO: update once https://github.com/roc-lang/roc/issues/9690 is fixed
