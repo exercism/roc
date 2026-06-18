@@ -1,29 +1,46 @@
 Hexadecimal :: {}.{
-    parse : Str -> Result U64 _
-    parse = |string|
-        if string == "" then
-            Err(InvalidNumStr)
-        else
-            string
-            |> Str.to_utf8
-            |> List.walk_try(
-                0,
-                |number, char|
-                    nibble = parse_nibble(char)?
-                    if number > 0xfffffffffffffff then
-                        Err(InvalidNumStr)
-                    else
-                        number |> Num.shift_left_by(4) |> Num.add(nibble) |> Ok,
-            )
+	parse : Str -> Try(U64, [InvalidNumStr])
+	parse = |string| {
+		if string == "" {
+			Err(InvalidNumStr)
+		} else {
+			digits = string.to_utf8()->map_try(parse_nibble)?
+			digits.fold_until(
+				Ok(0),
+				|acc_res, nibble| {
+					match acc_res {
+						Ok(number) => {
+							if number > 0xfffffffffffffff {
+								Break(Err(InvalidNumStr))
+							} else {
+								Continue(Ok(U64.shift_left_by(number, 4) + nibble))
+							}
+						}
+						Err(err) => Break(Err(err))
+					}
+				},
+			)
+		}
+	}
 }
 
+parse_nibble : U8 -> Try(U64, _)
+parse_nibble = |char| {
+	if char >= '0' and char <= '9' {
+		Ok((char - '0').to_u64())
+	} else if char >= 'A' and char <= 'F' {
+		Ok((char - 'A' + 10).to_u64())
+	} else if char >= 'a' and char <= 'f' {
+		Ok((char - 'a' + 10).to_u64())
+	} else {
+		Err(InvalidNumStr)
+	}
+}
 
-parse_nibble = |char|
-    if char >= '0' and char <= '9' then
-        Ok((char - '0' |> Num.to_u64))
-    else if char >= 'A' and char <= 'F' then
-        Ok((char - 'A' + 10 |> Num.to_u64))
-    else if char >= 'a' and char <= 'f' then
-        Ok((char - 'a' + 10 |> Num.to_u64))
-    else
-        Err(InvalidNumStr)
+map_try = |iter, func| {
+	var $state = []
+	for item in iter {
+		$state = $state.append(func(item)?)
+	}
+	Ok($state)
+}
