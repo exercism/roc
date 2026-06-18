@@ -21,7 +21,7 @@ expect {
 {%- else %}
 expect {
     bytes = {{ case["input"]["integers"] | to_roc }} 
-    result = decode bytes
+    result = decode(bytes)
     {%- if case["expected"]["error"] %}
     result.is_err()
     {%- else %}

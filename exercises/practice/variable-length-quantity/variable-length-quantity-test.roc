@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/variable-length-quantity/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-18
 
 import VariableLengthQuantity exposing [encode, decode]
 
@@ -199,8 +199,7 @@ expect {
 # one byte
 expect {
 	bytes = [127]
-	result = decode
-	bytes
+	result = decode(bytes)
 	expected = Ok([127])
 	result == expected
 }
@@ -208,8 +207,7 @@ expect {
 # two bytes
 expect {
 	bytes = [192, 0]
-	result = decode
-	bytes
+	result = decode(bytes)
 	expected = Ok([8192])
 	result == expected
 }
@@ -217,8 +215,7 @@ expect {
 # three bytes
 expect {
 	bytes = [255, 255, 127]
-	result = decode
-	bytes
+	result = decode(bytes)
 	expected = Ok([2097151])
 	result == expected
 }
@@ -226,8 +223,7 @@ expect {
 # four bytes
 expect {
 	bytes = [129, 128, 128, 0]
-	result = decode
-	bytes
+	result = decode(bytes)
 	expected = Ok([2097152])
 	result == expected
 }
@@ -235,8 +231,7 @@ expect {
 # maximum 32-bit integer
 expect {
 	bytes = [143, 255, 255, 255, 127]
-	result = decode
-	bytes
+	result = decode(bytes)
 	expected = Ok([4294967295])
 	result == expected
 }
@@ -244,24 +239,21 @@ expect {
 # incomplete sequence causes error
 expect {
 	bytes = [255]
-	result = decode
-	bytes
+	result = decode(bytes)
 	result.is_err()
 }
 
 # incomplete sequence causes error, even if value is zero
 expect {
 	bytes = [128]
-	result = decode
-	bytes
+	result = decode(bytes)
 	result.is_err()
 }
 
 # multiple values
 expect {
 	bytes = [192, 0, 200, 232, 86, 255, 255, 255, 127, 0, 255, 127, 129, 128, 0]
-	result = decode
-	bytes
+	result = decode(bytes)
 	expected = Ok([8192, 1193046, 268435455, 0, 16383, 16384])
 	result == expected
 }
