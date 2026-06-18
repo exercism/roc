@@ -1,34 +1,48 @@
 Matrix :: {}.{
-    column : Str, U64 -> Result (List I64) [InvalidNumStr, OutOfBounds]
-    column = |matrix_str, index|
-        if index == 0 then
-            Err(OutOfBounds)
-        else
-            matrix = parse_matrix(matrix_str)?
-            matrix |> List.map_try(|r| r |> List.get((index - 1)))
+	column : Str, U64 -> Try(List(I64), [BadNumStr, OutOfBounds, ..])
+	column = |matrix_str, index| {
+		if index == 0 {
+			Err(OutOfBounds)
+		} else {
+			matrix = parse_matrix(matrix_str)?
+			matrix->map_try(|r| r.get(index - 1))
+		}
+	}
 
-    row : Str, U64 -> Result (List I64) [InvalidNumStr, OutOfBounds]
-    row = |matrix_str, index|
-        if index == 0 then
-            Err(OutOfBounds)
-        else
-            matrix = parse_matrix(matrix_str)?
-            result = matrix |> List.get(index - 1)?
-            Ok(result)
+	row : Str, U64 -> Try(List(I64), [BadNumStr, OutOfBounds, ..])
+	row = |matrix_str, index| {
+		if index == 0 {
+			Err(OutOfBounds)
+		} else {
+			matrix = parse_matrix(matrix_str)?
+			result = matrix.get(index - 1)?
+			Ok(result)
+		}
+	}
 }
 
+parse_row : Str -> Try(List(I64), [BadNumStr, ..])
+parse_row = |row_str| {
+	row_str
+		.trim()
+		.split_on(" ")
+		.map(Str.trim)
+		.drop_if(Str.is_empty)
+		->map_try(I64.from_str)
+}
 
-parse_row : Str -> Result (List I64) [InvalidNumStr]
-parse_row = |row_str|
-    row_str
-    |> Str.trim
-    |> Str.split_on(" ")
-    |> List.map(Str.trim)
-    |> List.drop_if(Str.is_empty)
-    |> List.map_try(Str.to_i64)
+parse_matrix : Str -> Try(List(List(I64)), [BadNumStr, ..])
+parse_matrix = |matrix_str| {
+	matrix_str
+		.split_on("\n")
+		->map_try(parse_row)
+}
 
-parse_matrix : Str -> Result (List (List I64)) [InvalidNumStr]
-parse_matrix = |matrix_str|
-    matrix_str
-    |> Str.split_on("\n")
-    |> List.map_try(parse_row)
+# The following functions should soon be available in Roc's builtins
+map_try = |iter, func| {
+	var $state = []
+	for item in iter {
+		$state = $state.append(func(item)?)
+	}
+	Ok($state)
+}
