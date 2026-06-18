@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/kindergarten-garden/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-18
 
 import KindergartenGarden exposing [plants]
 
@@ -14,7 +14,7 @@ expect {
 		\\RC
 		\\GG
 
-	result = diagram.plants(Alice)
+	result = diagram->plants(Alice)
 	result == Ok(
 		[
 			Radishes,
@@ -31,7 +31,7 @@ expect {
 		\\VC
 		\\RC
 
-	result = diagram.plants(Alice)
+	result = diagram->plants(Alice)
 	result == Ok(
 		[
 			Violets,
@@ -48,7 +48,7 @@ expect {
 		\\VVCG
 		\\VVRC
 
-	result = diagram.plants(Bob)
+	result = diagram->plants(Bob)
 	result == Ok(
 		[
 			Clover,
@@ -67,7 +67,7 @@ expect {
 		\\VVCCGG
 		\\VVCCGG
 
-	result = diagram.plants(Bob)
+	result = diagram->plants(Bob)
 	result == Ok(
 		[
 			Clover,
@@ -84,7 +84,7 @@ expect {
 		\\VVCCGG
 		\\VVCCGG
 
-	result = diagram.plants(Charlie)
+	result = diagram->plants(Charlie)
 	result == Ok(
 		[
 			Grass,
@@ -105,7 +105,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Alice)
+	result = diagram->plants(Alice)
 	result == Ok(
 		[
 			Violets,
@@ -122,7 +122,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Bob)
+	result = diagram->plants(Bob)
 	result == Ok(
 		[
 			Clover,
@@ -139,7 +139,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Charlie)
+	result = diagram->plants(Charlie)
 	result == Ok(
 		[
 			Violets,
@@ -156,7 +156,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(David)
+	result = diagram->plants(David)
 	result == Ok(
 		[
 			Radishes,
@@ -173,7 +173,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Eve)
+	result = diagram->plants(Eve)
 	result == Ok(
 		[
 			Clover,
@@ -190,7 +190,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Fred)
+	result = diagram->plants(Fred)
 	result == Ok(
 		[
 			Grass,
@@ -207,7 +207,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Ginny)
+	result = diagram->plants(Ginny)
 	result == Ok(
 		[
 			Clover,
@@ -224,7 +224,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Harriet)
+	result = diagram->plants(Harriet)
 	result == Ok(
 		[
 			Violets,
@@ -241,7 +241,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Ileana)
+	result = diagram->plants(Ileana)
 	result == Ok(
 		[
 			Grass,
@@ -258,7 +258,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Joseph)
+	result = diagram->plants(Joseph)
 	result == Ok(
 		[
 			Violets,
@@ -275,7 +275,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Kincaid)
+	result = diagram->plants(Kincaid)
 	result == Ok(
 		[
 			Grass,
@@ -292,7 +292,7 @@ expect {
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram.plants(Larry)
+	result = diagram->plants(Larry)
 	result == Ok(
 		[
 			Grass,
