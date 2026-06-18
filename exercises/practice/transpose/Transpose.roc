@@ -1,5 +1,6 @@
 Transpose :: {}.{
-    transpose : Str -> Str
-    transpose = |string|
-        crash("Please implement the 'transpose' function")
+	transpose : Str -> Str
+	transpose = |string| {
+		crash "Please implement the 'transpose' function"
+	}
 }

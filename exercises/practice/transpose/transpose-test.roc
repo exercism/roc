@@ -1,21 +1,21 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/transpose/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-18
 
 import Transpose exposing [transpose]
 
 # empty string
 expect {
-	input = "".replace_each("□", " ")
-	result = transposeinput.replace_each(" ", "□")
+	input = ""
+	result = transpose(input)
 	expected = ""
 	result == expected
 }
 
 # two characters in a row
 expect {
-	input = "A1".replace_each("□", " ")
-	result = transposeinput.replace_each(" ", "□")
+	input = "A1"
+	result = transpose(input)
 	expected = 
 		\\A
 		\\1
@@ -28,11 +28,8 @@ expect {
 	input = 
 		\\A
 		\\1
-			.replace_each(
-				"□",
-				" ",
-			)
-	result = transposeinput.replace_each(" ", "□")
+
+	result = transpose(input)
 	expected = "A1"
 	result == expected
 }
@@ -42,11 +39,8 @@ expect {
 	input = 
 		\\ABC
 		\\123
-			.replace_each(
-				"□",
-				" ",
-			)
-	result = transposeinput.replace_each(" ", "□")
+
+	result = transpose(input)
 	expected = 
 		\\A1
 		\\B2
@@ -57,8 +51,8 @@ expect {
 
 # single line
 expect {
-	input = "Single□line.".replace_each("□", " ")
-	result = transposeinput.replace_each(" ", "□")
+	input = "Single line."
+	result = transpose(input)
 	expected = 
 		\\S
 		\\i
@@ -66,7 +60,7 @@ expect {
 		\\g
 		\\l
 		\\e
-		\\□
+		\\ 
 		\\l
 		\\i
 		\\n
@@ -79,25 +73,22 @@ expect {
 # first line longer than second line
 expect {
 	input = 
-		\\The□fourth□line.
-		\\The□fifth□line.
-			.replace_each(
-				"□",
-				" ",
-			)
-	result = transposeinput.replace_each(" ", "□")
+		\\The fourth line.
+		\\The fifth line.
+
+	result = transpose(input)
 	expected = 
 		\\TT
 		\\hh
 		\\ee
-		\\□□
+		\\  
 		\\ff
 		\\oi
 		\\uf
 		\\rt
 		\\th
-		\\h□
-		\\□l
+		\\h 
+		\\ l
 		\\li
 		\\in
 		\\ne
@@ -110,30 +101,27 @@ expect {
 # second line longer than first line
 expect {
 	input = 
-		\\The□first□line.
-		\\The□second□line.
-			.replace_each(
-				"□",
-				" ",
-			)
-	result = transposeinput.replace_each(" ", "□")
+		\\The first line.
+		\\The second line.
+
+	result = transpose(input)
 	expected = 
 		\\TT
 		\\hh
 		\\ee
-		\\□□
+		\\  
 		\\fs
 		\\ie
 		\\rc
 		\\so
 		\\tn
-		\\□d
-		\\l□
+		\\ d
+		\\l 
 		\\il
 		\\ni
 		\\en
 		\\.e
-		\\□.
+		\\ .
 
 	result == expected
 }
@@ -141,30 +129,27 @@ expect {
 # mixed line length
 expect {
 	input = 
-		\\The□longest□line.
-		\\A□long□line.
-		\\A□longer□line.
-		\\A□line.
-			.replace_each(
-				"□",
-				" ",
-			)
-	result = transposeinput.replace_each(" ", "□")
+		\\The longest line.
+		\\A long line.
+		\\A longer line.
+		\\A line.
+
+	result = transpose(input)
 	expected = 
 		\\TAAA
-		\\h□□□
+		\\h   
 		\\elll
-		\\□ooi
+		\\ ooi
 		\\lnnn
 		\\ogge
-		\\n□e.
+		\\n e.
 		\\glr
-		\\ei□
+		\\ei 
 		\\snl
 		\\tei
-		\\□.n
-		\\l□e
-		\\i□.
+		\\ .n
+		\\l e
+		\\i .
 		\\n
 		\\e
 		\\.
@@ -180,11 +165,8 @@ expect {
 		\\ABUSE
 		\\RESIN
 		\\TREND
-			.replace_each(
-				"□",
-				" ",
-			)
-	result = transposeinput.replace_each(" ", "□")
+
+	result = transpose(input)
 	expected = 
 		\\HEART
 		\\EMBER
@@ -202,11 +184,8 @@ expect {
 		\\OUTLINED
 		\\BLOOMING
 		\\SEPTETTE
-			.replace_each(
-				"□",
-				" ",
-			)
-	result = transposeinput.replace_each(" ", "□")
+
+	result = transpose(input)
 	expected = 
 		\\FOBS
 		\\RULE
@@ -229,18 +208,15 @@ expect {
 		\\SSSS
 		\\EEEEE
 		\\RRRRRR
-			.replace_each(
-				"□",
-				" ",
-			)
-	result = transposeinput.replace_each(" ", "□")
+
+	result = transpose(input)
 	expected = 
 		\\TEASER
-		\\□EASER
-		\\□□ASER
-		\\□□□SER
-		\\□□□□ER
-		\\□□□□□R
+		\\ EASER
+		\\  ASER
+		\\   SER
+		\\    ER
+		\\     R
 
 	result == expected
 }
@@ -254,18 +230,15 @@ expect {
 		\\444
 		\\555555
 		\\66666
-			.replace_each(
-				"□",
-				" ",
-			)
-	result = transposeinput.replace_each(" ", "□")
+
+	result = transpose(input)
 	expected = 
 		\\123456
-		\\1□3456
-		\\□□3456
-		\\□□3□56
-		\\□□□□56
-		\\□□□□5
+		\\1 3456
+		\\  3456
+		\\  3 56
+		\\    56
+		\\    5
 
 	result == expected
 }
