@@ -1,9 +1,10 @@
 ProteinTranslation :: {}.{
-    to_protein : Str -> Result Protein _
-    to_protein = |rna|
-        crash("Please implement the 'to_protein' function")
+	Codon : List(U8)
+	AminoAcid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, Tyrosine]
+	Protein : List(AminoAcid)
+
+	to_protein : Str -> Try(Protein, _)
+	to_protein = |rna| {
+		crash "Please implement the 'to_protein' function"
+	}
 }
-
-
-AminoAcid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, Tyrosine]
-Protein : List AminoAcid
