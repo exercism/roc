@@ -1,5 +1,6 @@
 Diamond :: {}.{
-    diamond : U8 -> Str
-    diamond = |letter|
-        crash("Please implement the 'diamond' function")
+	diamond : U8 -> Str
+	diamond = |letter| {
+		crash "Please implement the 'diamond' function"
+	}
 }
