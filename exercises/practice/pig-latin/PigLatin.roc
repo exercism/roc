@@ -1,5 +1,6 @@
 PigLatin :: {}.{
-    translate : Str -> Str
-    translate = |phrase|
-        crash("Please implement the 'translate' function")
+	translate : Str -> Str
+	translate = |phrase| {
+		crash "Please implement the 'translate' function"
+	}
 }
