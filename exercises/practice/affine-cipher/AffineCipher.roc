@@ -5,7 +5,7 @@ AffineCipher :: { a : U64, b : U64 }.{
 	group_length : U64
 	group_length = 5
 
-	new : { a : U64, b : U64 } -> Try(AffineCipher, [InvalidKey])
+	new : { a : U64, b : U64 } -> Try(AffineCipher, _)
 	new = |key| {
 		crash "Please implement the 'new' method"
 	}
