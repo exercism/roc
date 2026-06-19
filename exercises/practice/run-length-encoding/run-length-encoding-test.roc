@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/run-length-encoding/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-19
 
 import RunLengthEncoding exposing [encode, decode]
 
@@ -115,7 +115,8 @@ expect {
 # encode followed by decode gives original string
 expect {
 	string = "zzz ZZ  zZ"
-	result = string->encode()->Result.try(decode)
+	encoded = string->encode()?
+	result = encoded->decode()
 	result == Ok(string)
 }
 

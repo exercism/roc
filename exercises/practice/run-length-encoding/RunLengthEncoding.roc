@@ -1,9 +1,11 @@
 RunLengthEncoding :: {}.{
-    encode : Str -> Result Str _
-    encode = |string|
-        crash("Please implement the 'encode' function")
+	encode : Str -> Try(Str, _)
+	encode = |string| {
+		crash "Please implement the 'encode' function"
+	}
 
-    decode : Str -> Result Str _
-    decode = |string|
-        crash("Please implement the 'decode' function")
+	decode : Str -> Try(Str, _)
+	decode = |string| {
+		crash "Please implement the 'decode' function"
+	}
 }
