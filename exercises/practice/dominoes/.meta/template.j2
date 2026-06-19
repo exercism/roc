@@ -12,63 +12,60 @@ import {{ exercise | to_pascal }} exposing [Domino, find_chain]
 ]
 {%- endmacro %}
 
-## Rotate each domino if needed to ensure that the small side is on the left
-canonicalize : List(Domino) -> List(Domino)
-canonicalize = |dominoes| {
-    dominoes
-    .map(|domino| {
-        if domino.0 > domino.1 (domino.1, domino.0) else domino
-    })
-}
-
-## Ensure that the given result is Ok and is a valid chain for the
-## given list of dominoes
-is_valid_chain_for : Try(List(Domino), _), List(Domino) -> Bool
-is_valid_chain_for = |maybe_chain, dominoes| {
-    match maybe_chain {
-        Err(_) => Bool.False
-        Ok(chain) => {
-            if Set.from_list(canonicalize(chain)) == Set.from_list(canonicalize(dominoes)) {
-                match chain {
-                    [] => Bool.True
-                    [.., last] => {
-                        chain
-                        .fold_until(
-                            Ok(last),
-                            |state, domino| {
-                                match state {
-                                    Err(InvalidChain) => { crash "Unreachable" }
-                                    Ok(previous) => {
-                                        if previous.1 == domino.0 {
-                                            Continue(Ok(domino))
-                                        } else {
-                                            Break(Err(InvalidChain))
-                                        }
-                                    }
-                                }
-                            }
-                        )
-                        .is_ok()
-                    }
-                }
-            } else {
-                Bool.False
-            }
-        }
-    }
-}
-
 {% for case in cases -%}
 # {{ case["description"] }}
 expect {
-    result = Domino.find_chain({{ to_list_of_pairs(case["input"]["dominoes"]) }})
+    dominoes = {{ to_list_of_pairs(case["input"]["dominoes"]) }}
+    result = find_chain(dominoes)
     {%- if case["expected"] %}
-    result -> is_valid_chain_for({{ to_list_of_pairs(case["input"]["dominoes"]) }})
+    result -> is_valid_chain_for(dominoes)
     {%- else %}
     result.is_err()
     {%- endif %}
 }
 
 {% endfor %}
+
+# # Compare two dominoes in lexicographical order, for example (3, 1) > (2, 5)
+compare_dominoes : (U8, U8), (U8, U8) -> [LT, GT, EQ]
+compare_dominoes = |a, b| {
+	if a.0 < b.0 { LT } else if a.0 > b.0 { GT } else
+		if a.1 < b.1 { LT } else if a.1 > b.1 { GT } else { EQ }
+}
+
+# # Rotate each domino if needed to ensure that the small side is on the left
+# # then sort the dominoes in lexicographical order
+canonicalize : List((U8, U8)) -> List((U8, U8))
+canonicalize = |dominoes| {
+	maybe_flip : (U8, U8) -> (U8, U8)
+	maybe_flip = |domino| {
+		if domino.0 > domino.1 (domino.1, domino.0) else domino
+	}
+	dominoes.map(maybe_flip).sort_with(compare_dominoes)
+}
+
+# # Checks whether the list of dominoes forms a valid chain
+is_valid_chain = |dominoes| {
+	match dominoes {
+		[] => Bool.True
+		[(first_left, first_right), .. as rest] => {
+			var $previous = first_right
+			for (next_left, next_right) in rest {
+				if $previous != next_left { return Bool.False }
+				$previous = next_right
+			}
+			$previous == first_left
+		}
+	}
+}
+
+# # Check whether the given chain (if Ok) is valid and corresponds to the given
+# # list of dominoes
+is_valid_chain_for = |maybe_chain, dominoes| {
+	match maybe_chain {
+		Ok(chain) => (canonicalize(chain) == canonicalize(dominoes)) and is_valid_chain(chain)
+		Err(_) => Bool.False
+	}
+}
 
 {{ macros.footer() }}
