@@ -1,44 +1,38 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/flower-field/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-20
 
 import FlowerField exposing [annotate]
 
 # no rows
 expect {
-	garden = "".replace_each("·", " ")
+	garden = ""
 	result = annotate(garden)
-	expected = "".replace_each("·", " ")
+	expected = ""
 	result == expected
 }
 
 # no columns
 expect {
-	garden = "".replace_each("·", " ")
+	garden = ""
 	result = annotate(garden)
-	expected = "".replace_each("·", " ")
+	expected = ""
 	result == expected
 }
 
 # no flowers
 expect {
 	garden = 
-		\\···
-		\\···
-		\\···
-			.replace_each(
-				"·",
-				" ",
-			)
+		\\   
+		\\   
+		\\   
+
 	result = annotate(garden)
 	expected = 
-		\\···
-		\\···
-		\\···
-			.replace_each(
-				"·",
-				" ",
-			)
+		\\   
+		\\   
+		\\   
+
 	result == expected
 }
 
@@ -48,41 +42,29 @@ expect {
 		\\***
 		\\***
 		\\***
-			.replace_each(
-				"·",
-				" ",
-			)
+
 	result = annotate(garden)
 	expected = 
 		\\***
 		\\***
 		\\***
-			.replace_each(
-				"·",
-				" ",
-			)
+
 	result == expected
 }
 
 # flower surrounded by spaces
 expect {
 	garden = 
-		\\···
-		\\·*·
-		\\···
-			.replace_each(
-				"·",
-				" ",
-			)
+		\\   
+		\\ * 
+		\\   
+
 	result = annotate(garden)
 	expected = 
 		\\111
 		\\1*1
 		\\111
-			.replace_each(
-				"·",
-				" ",
-			)
+
 	result == expected
 }
 
@@ -90,52 +72,43 @@ expect {
 expect {
 	garden = 
 		\\***
-		\\*·*
+		\\* *
 		\\***
-			.replace_each(
-				"·",
-				" ",
-			)
+
 	result = annotate(garden)
 	expected = 
 		\\***
 		\\*8*
 		\\***
-			.replace_each(
-				"·",
-				" ",
-			)
+
 	result == expected
 }
 
 # horizontal line
 expect {
-	garden = "·*·*·".replace_each("·", " ")
+	garden = " * * "
 	result = annotate(garden)
-	expected = "1*2*1".replace_each("·", " ")
+	expected = "1*2*1"
 	result == expected
 }
 
 # horizontal line, flowers at edges
 expect {
-	garden = "*···*".replace_each("·", " ")
+	garden = "*   *"
 	result = annotate(garden)
-	expected = "*1·1*".replace_each("·", " ")
+	expected = "*1 1*"
 	result == expected
 }
 
 # vertical line
 expect {
 	garden = 
-		\\·
+		\\ 
 		\\*
-		\\·
+		\\ 
 		\\*
-		\\·
-			.replace_each(
-				"·",
-				" ",
-			)
+		\\ 
+
 	result = annotate(garden)
 	expected = 
 		\\1
@@ -143,10 +116,7 @@ expect {
 		\\2
 		\\*
 		\\1
-			.replace_each(
-				"·",
-				" ",
-			)
+
 	result == expected
 }
 
@@ -154,79 +124,61 @@ expect {
 expect {
 	garden = 
 		\\*
-		\\·
-		\\·
-		\\·
+		\\ 
+		\\ 
+		\\ 
 		\\*
-			.replace_each(
-				"·",
-				" ",
-			)
+
 	result = annotate(garden)
 	expected = 
 		\\*
 		\\1
-		\\·
+		\\ 
 		\\1
 		\\*
-			.replace_each(
-				"·",
-				" ",
-			)
+
 	result == expected
 }
 
 # cross
 expect {
 	garden = 
-		\\··*··
-		\\··*··
+		\\  *  
+		\\  *  
 		\\*****
-		\\··*··
-		\\··*··
-			.replace_each(
-				"·",
-				" ",
-			)
+		\\  *  
+		\\  *  
+
 	result = annotate(garden)
 	expected = 
-		\\·2*2·
+		\\ 2*2 
 		\\25*52
 		\\*****
 		\\25*52
-		\\·2*2·
-			.replace_each(
-				"·",
-				" ",
-			)
+		\\ 2*2 
+
 	result == expected
 }
 
 # large garden
 expect {
 	garden = 
-		\\·*··*·
-		\\··*···
-		\\····*·
-		\\···*·*
-		\\·*··*·
-		\\······
-			.replace_each(
-				"·",
-				" ",
-			)
+		\\ *  * 
+		\\  *   
+		\\    * 
+		\\   * *
+		\\ *  * 
+		\\      
+
 	result = annotate(garden)
 	expected = 
 		\\1*22*1
 		\\12*322
-		\\·123*2
+		\\ 123*2
 		\\112*4*
 		\\1*22*2
 		\\111111
-			.replace_each(
-				"·",
-				" ",
-			)
+
 	result == expected
 }
 

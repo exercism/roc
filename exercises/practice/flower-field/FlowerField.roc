@@ -1,5 +1,6 @@
 FlowerField :: {}.{
-    annotate : Str -> Str
-    annotate = |garden|
-        crash("Please implement the 'annotate' function")
+	annotate : Str -> Str
+	annotate = |garden| {
+		crash "Please implement the 'annotate' function"
+	}
 }
