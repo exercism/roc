@@ -6,9 +6,9 @@ You are building a tiny web server that queries an even tinier user database. So
 
 - the connection may be insecure: the URL must start with `"https://"`
 - the domain name may be invalid: in this exercise, it should be `"example.com"`
-- the page may not be found: only `"https://example.com/"`, `"https://example.com/users/"` and `"https://example.com/users/<userId>"` are allowed
-- the `userId` may not be a positive integer
-- no user may exist in the database with this `userId`
+- the page may not be found: only `"https://example.com/"`, `"https://example.com/users/"` and `"https://example.com/users/<user_id>"` are allowed
+- the `user_id` may not be a positive integer
+- no user may exist in the database with this `user_id`
 
 When things go wrong, it's important to give the end user a nice and helpful error message so that they can solve the issue. For this, you need to ensure that your code propagates informative errors from the point where the error is detected to the point where the error message is produced.
 
@@ -19,21 +19,21 @@ Luckily, Roc allows you to carry payload (i.e., data) inside your `Err` tag. It'
 - in many cases your error handling code may need to handle some errors differently than others. However, if the errors only carry string payloads, your error handling code will have to parse that string to know what problem occurred: this is inefficient and it can easily break if the error message is ever tweaked.
 - if your website is multilingual, you will need to translate the error message to the user's language. It's going to be much easier to do that if the error payload is machine-friendly data rather than an English string.
 
-So in this exercise, your errors will instead carry a meaningful tag along with its own helpful payload. For example, if the user is not found, the error will look like `Err (UserNotFound 42)`.
+So in this exercise, your errors will instead carry a meaningful tag along with its own helpful payload. For example, if the user is not found, the error will look like `Err(UserNotFound(42))`.
 
 Okay, let's get started! Here's what you need to do:
 
-1. Implement `getUser` to return the requested user from the `users` "database" (it's actually just a `Dict`). Make sure the function returns `Err (UserNotFound userId)` in case the user is not found, instead of `Err KeyNotFound`.
-2. Implement `parseUserId` to convert the URL's path (such as `"/users/123"`) to a positive integer user ID (`123`). In case of error, return `Err (InvalidUserId userIdStr)`.
+1. Implement `get_user` to return the requested user from the `users` "database" (it's actually just a `Dict`). Make sure the function returns `Err(UserNotFound(user_id))` in case the user is not found, instead of `Err(KeyNotFound)`.
+2. Implement `parse_user_id` to convert the URL's path (such as `"/users/123"`) to a positive integer user ID (`123`). In case of error, return `Err(InvalidUserId(user_id_str))`.
 3. Implement `getPage`:
-   - If the URL is `"https://example.com/"`, return `Ok "Home page"`
-   - If the URL is `"https://example.com/users/"`, return `Ok "Users page"`
-   - If the URL is `"https://example.com/users/<userId>"`, parse the user ID, load the user with that ID, and return `Ok "<user name>'s page"`
-   - If the URL prefix is not `"https://"`, return `Err (InsecureConnection url)`
-   - If the URL domain name is not `"example.com"`, return `Err (InvalidDomain url)`
-   - If the path is not `/` or `/users/` or `/users/<user id>`, return `Err (PageNotFound path)`
-   - If the user ID is not a positive integer, return `Err (InvalidUserId userIdStr)`
-   - If the user does not exist, return `Err (UserNotFound userId)`
+   - If the URL is `"https://example.com/"`, return `Ok("Home page")`
+   - If the URL is `"https://example.com/users/"`, return `Ok("Users page")`
+   - If the URL is `"https://example.com/users/<user_id>"`, parse the user ID, load the user with that ID, and return `Ok("<user name>'s page")`
+   - If the URL prefix is not `"https://"`, return `Err(InsecureConnection(url))`
+   - If the URL domain name is not `"example.com"`, return `Err(InvalidDomain(url))`
+   - If the path is not `/` or `/users/` or `/users/<user id>`, return `Err(PageNotFound(path))`
+   - If the user ID is not a positive integer, return `Err(InvalidUserId(user_id_str))`
+   - If the user does not exist, return `Err(UserNotFound(user_id))`
 4. Implement `errorMessage` to convert the previous errors to translated error messages. The function should at least handle English, but you are encouraged to try handling another language as well. The English error messages should like this:
 
 - `"Insecure connection (non HTTPS): http://example.com/users/789"`

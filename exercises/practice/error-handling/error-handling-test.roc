@@ -3,7 +3,7 @@
 import ErrorHandling exposing [get_user, parse_user_id, get_page, error_message]
 
 ##
-## get_user should return Ok <user> or Err UserNotFound <userId>
+## get_user should return Ok(<user>) or Err(UserNotFound(<user_id>))
 ##
 
 # get_user 123 should return Alice
@@ -31,49 +31,50 @@ expect {
 }
 
 ##
-## parse_user_id should parse a string to a positive integer and return
-## Ok <userId> if successful, or Err InvalidUserId <userIdStr> otherwise
+## parse_user_id should parse a string formatted as "/users/<user_id>" to a
+## positive integer, and return Ok(<user_id>) if successful, or
+## Err(InvalidUserId(<user_id_str>)) otherwise
 ##
 
-# Parsing a valid userId should return Ok <userId>
+# Parsing a valid user ID should return Ok(<user_id>)
 expect {
-	result = parse_user_id("123")
+	result = parse_user_id("/users/123")
 	result == Ok(123)
 }
 
 # Parsing an empty string should fail
 expect {
-	result = parse_user_id("")
+	result = parse_user_id("/users/")
 	result == Err(InvalidUserId(""))
 }
 
 # Parsing a negative number should fail
 expect {
-	result = parse_user_id("-123")
+	result = parse_user_id("/users/-123")
 	result == Err(InvalidUserId("-123"))
 }
 
 # Parsing a fractional number should fail
 expect {
-	result = parse_user_id("123.456")
+	result = parse_user_id("/users/123.456")
 	result == Err(InvalidUserId("123.456"))
 }
 
 # Parsing a number in scientific format should fail
 expect {
-	result = parse_user_id("1e03")
+	result = parse_user_id("/users/1e03")
 	result == Err(InvalidUserId("1e03"))
 }
 
 # Parsing a string containing letters should fail
 expect {
-	result = parse_user_id("abc")
+	result = parse_user_id("/users/abc")
 	result == Err(InvalidUserId("abc"))
 }
 
-# Parsing a string containing a valid userId followed by junk should fail
+# Parsing a string containing a valid user_id followed by junk should fail
 expect {
-	result = parse_user_id("123 abc")
+	result = parse_user_id("/users/123 abc")
 	result == Err(InvalidUserId("123 abc"))
 }
 
@@ -130,7 +131,7 @@ expect {
 	result == Err(PageNotFound("/oops"))
 }
 
-# Error: invalid userId
+# Error: invalid user_id
 expect {
 	result = get_page("https://example.com/users/abc")
 	result == Err(InvalidUserId("abc"))
@@ -143,92 +144,46 @@ expect {
 }
 
 ##
-## Handle errors and return a clear message to the user, in the user's language
+## Handle errors and return a clear message to the user, in the user's language.
 ## Your implementation must at least handle English, but you can handle other
 ## languages if you want
 ##
 
-# No error for root URL: just return the Ok result
-expect {
-	page_result = get_page("https://example.com/")
-	result = page_result?
-	|err| err->error_message(English)
-	result == Ok("Home page")
-}
-
-# No error for users URL: just return the Ok result
-expect {
-	page_result = get_page("https://example.com/users/")
-	result = page_result?
-	|err| err->error_message(English)
-	result == Ok("Users page")
-}
-
-# No error for specific user URL: just return the Ok result
-expect {
-	page_result = get_page("https://example.com/users/123")
-	result = page_result?
-	|err| err->error_message(English)
-	result == Ok("Alice's page")
-}
-
-# No error for specific user URL: just return the Ok result
-expect {
-	page_result = get_page("https://example.com/users/456")
-	result = page_result?
-	|err| err->error_message(English)
-	result == Ok("Bob's page")
-}
-
-# No error for specific user URL: just return the Ok result
-expect {
-	page_result = get_page("https://example.com/users/789")
-	result = page_result?
-	|err| err->error_message(English)
-	result == Ok("Charlie's page")
-}
-
 # Error: insecure connection
 # Note: instead of displaying an error message, the server could automatically
-
 # redirect the user to the HTTPS URL. This is an example of a recoverable error
 # which would be easy to handle because the error payload is machine-friendly
 expect {
-	page_result = get_page("http://example.com/users/789")
-	result = page_result?
-	|err| err->error_message(English)
+	page = get_page("http://example.com/users/789")
+	result = page.map_err(|e| e->error_message(English))
 	result == Err("Insecure connection (non HTTPS): http://example.com/users/789")
 }
 
 # Error: invalid domain name
 expect {
-	page_result = get_page("https://google.com/wrong")
-	result = page_result?
-	|err| err->error_message(English)
+	page = get_page("https://google.com/wrong")
+	result = page.map_err(|e| e->error_message(English))
 	result == Err("Invalid domain name: https://google.com/wrong")
 }
 
 # Error: page not found
 expect {
-	page_result = get_page("https://example.com/oops")
-	result = page_result?
-	|err| err->error_message(English)
+	page = get_page("https://example.com/oops")
+	result = page.map_err(|e| e->error_message(English))
 	result == Err("Page not found: /oops")
 }
 
-# Error: invalid userId
+# Error: invalid user_id
 expect {
-	page_result = get_page("https://example.com/users/abc")
-	result = page_result?
-	|err| err->error_message(English)
+	page = get_page("https://example.com/users/abc")
+	result = page.map_err(|e| e->error_message(English))
 	result == Err("User ID is not a positive integer: abc")
 }
 
 # Error: user not found
 expect {
-	page_result = get_page("https://example.com/users/42")
-	result = page_result?
-	|err| err->error_message(English)
+	page = get_page("https://example.com/users/42")
+	result = page.map_err(|e| e->error_message(English))
 	result == Err("User #42 was not found")
 }
 
