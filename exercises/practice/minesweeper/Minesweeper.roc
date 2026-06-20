@@ -1,5 +1,6 @@
 Minesweeper :: {}.{
-    annotate : Str -> Str
-    annotate = |minefield|
-        crash("Please implement the 'annotate' function")
+	annotate : Str -> Str
+	annotate = |minefield| {
+		crash "Please implement the 'annotate' function"
+	}
 }
