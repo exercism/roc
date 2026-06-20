@@ -1,5 +1,6 @@
 Say :: {}.{
-    say : U64 -> Result Str [OutOfBounds]
-    say = |number|
-        crash("Please implement the 'say' function")
+	say : U64 -> Try(Str, _)
+	say = |number| {
+		crash "Please implement the 'say' function"
+	}
 }
