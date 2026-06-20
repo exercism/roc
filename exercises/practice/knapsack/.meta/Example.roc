@@ -1,4 +1,6 @@
 Knapsack :: {}.{
+	Item : { weight : U64, value : U64 }
+
 	maximum_value : { items : List(Item), maximum_weight : U64 } -> U64
 	maximum_value = |{ items, maximum_weight }| {
 		match items {
@@ -16,4 +18,3 @@ Knapsack :: {}.{
 	}
 }
 
-Item := { weight : U64, value : U64 }

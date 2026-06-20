@@ -1,10 +1,10 @@
 QueenAttack :: {}.{
 	Square :: { row : U8, column : U8 }.{
 		rank : Square -> U8
-		rank = |{ row }| row + 1
+		rank = |{ row, column: _ }| row + 1
 
 		file : Square -> U8
-		file = |{ column }| column + 'A'
+		file = |{ row: _, column }| column + 'A'
 
 		create : Str -> Try(Square, [InvalidSquare])
 		create = |square_str| {

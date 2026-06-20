@@ -3,7 +3,7 @@ Acronym :: {}.{
 	abbreviate = |text| {
 		bytes = text.to_utf8()
 
-		{ acronym } = bytes.fold(
+		{ acronym, ready_for_letter: _ } = bytes.fold(
 			{ acronym: [], ready_for_letter: Bool.True },
 			|state, byte| {
 				if state.ready_for_letter and is_letter(byte) {
