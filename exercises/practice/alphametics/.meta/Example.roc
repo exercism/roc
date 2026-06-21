@@ -17,16 +17,17 @@ Alphametics :: {}.{
 		}
 
 		leading_digits : Set(U8)
-		leading_digits = 
+		leading_digits = {
 			addends.map(
 				|letters| {
 					letters.first() ?? 0
 				},
 			)
-				->Set.from_list()
-				.insert(
-					sum.first() ?? 0,
-				)
+			->Set.from_list()
+			.insert(
+				sum.first() ?? 0,
+			)
+		}
 
 		find_match : List((U8, U8)), List(U8), Set(U8) -> Try(List((U8, U8)), [InvalidAssignment, ..])
 		find_match = |assignments, remaining_vars, remaining_digits| {
@@ -86,7 +87,7 @@ find_first_ok = |set, func| {
 insert_term : Dict(U8, I64), List(U8), I64 -> Dict(U8, I64)
 insert_term = |equation, letters, polarity| {
 	letters
-		->list_reverse()
+		.rev()
 		.fold_with_index(
 			equation,
 			|dict, letter, index| {
@@ -120,6 +121,15 @@ parse = |problem| {
 	Ok({ addends, sum: after.to_utf8() })
 }
 
+reverse : Str -> Str
+reverse = |str| {
+	str
+		.to_utf8()
+		.rev()
+		->Str.from_utf8()
+		?? ""
+}
+
 # The following function should soon be available in Roc's builtins
 split_first : Str, Str -> Try({ before : Str, after : Str }, [InvalidAssignment, ..])
 split_first = |str, sep| {
@@ -128,23 +138,6 @@ split_first = |str, sep| {
 		[_] => Err(InvalidAssignment)
 		[before, .. as rest] => Ok({ before, after: rest->Str.join_with(sep) })
 	}
-}
-
-list_reverse : List(a) -> List(a)
-list_reverse = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => list_reverse(rest).append(first)
-	}
-}
-
-reverse : Str -> Str
-reverse = |str| {
-	str
-		.to_utf8()
-		->list_reverse()
-		->Str.from_utf8()
-		?? ""
 }
 
 pow_int : I64, U64 -> I64

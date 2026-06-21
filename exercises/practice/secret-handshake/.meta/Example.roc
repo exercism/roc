@@ -16,7 +16,7 @@ SecretHandshake :: {}.{
 		if U64.bitwise_and(number, 16) == 0 {
 			actions
 		} else {
-			actions->reverse()
+			actions.rev()
 		}
 	}
 }
@@ -30,12 +30,4 @@ join_map = |iter, func| {
 		}
 	}
 	$state
-}
-
-reverse : List(a) -> List(a)
-reverse = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => reverse(rest).append(first)
-	}
 }

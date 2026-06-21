@@ -27,16 +27,7 @@ verse = |index| {
 	blablabla = 
 		segments
 			.take_first(index)
-			->reverse()
+			.rev()
 			->Str.join_with(" the ")
 	"This is the ${blablabla}"
-}
-
-# List.reverse should soon be available in Roc's builtins
-reverse : List(a) -> List(a)
-reverse = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => reverse(rest).append(first)
-	}
 }

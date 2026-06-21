@@ -49,7 +49,7 @@ encode_integer = |integer| {
 	if integer == 0 {
 		[0]
 	} else {
-		help([], integer)->reverse()
+		help([], integer).rev()
 	}
 }
 
@@ -62,12 +62,4 @@ join_map = |iter, func| {
 		}
 	}
 	$state
-}
-
-reverse : List(a) -> List(a)
-reverse = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => reverse(rest).append(first)
-	}
 }

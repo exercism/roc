@@ -32,7 +32,7 @@ PalindromeProducts :: {}.{
 				}
 			}
 
-			help(min, min, max_u64, [])
+			help(min, min, U64.highest, [])
 		}
 	}
 
@@ -77,16 +77,5 @@ PalindromeProducts :: {}.{
 is_palindrome : U64 -> Bool
 is_palindrome = |number| {
 	digits = number.to_str().to_utf8()
-	digits == reverse(digits)
-}
-
-# The following will soon be available in Roc's builtins
-max_u64 = 18_446_744_073_709_551_615
-
-reverse : List(a) -> List(a)
-reverse = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => reverse(rest).append(first)
-	}
+	digits == digits.rev()
 }

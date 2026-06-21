@@ -39,18 +39,9 @@ str_reverse : Str -> Str
 str_reverse = |str| {
 	str
 		.to_utf8()
-		->reverse()
+		.rev()
 		->Str.from_utf8()
 		?? ""
-}
-
-# List.reverse should soon be available in Roc's builtins
-reverse : List(a) -> List(a)
-reverse = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => reverse(rest).append(first)
-	}
 }
 
 {{ macros.footer() }}

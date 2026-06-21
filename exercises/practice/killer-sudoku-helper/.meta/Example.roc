@@ -41,17 +41,6 @@ KillerSudokuHelper :: {}.{
 			.keep_if(
 				|combi| combi.len() == size.to_u64(),
 			)
-			.map(
-				reverse,
-			)
-	}
-}
-
-# List.reverse should soon be available in Roc's builtins
-reverse : List(a) -> List(a)
-reverse = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => reverse(rest).append(first)
+			.map(List.rev)
 	}
 }

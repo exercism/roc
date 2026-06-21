@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/accumulate/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-21
 
 import Accumulate exposing [accumulate]
 
@@ -72,18 +72,9 @@ str_reverse : Str -> Str
 str_reverse = |str| {
 	str
 		.to_utf8()
-		->reverse()
+		.rev()
 		->Str.from_utf8()
 		?? ""
-}
-
-# List.reverse should soon be available in Roc's builtins
-reverse : List(a) -> List(a)
-reverse = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => reverse(rest).append(first)
-	}
 }
 
 # This program is only used to run tests with `roc test`, so main! does nothing.

@@ -53,14 +53,5 @@ map_every_other_backwards = |list, func| {
 			[] => state
 		}
 	}
-	help([], list)->reverse()
-}
-
-# List.reverse should soon be available in Roc's builtins
-reverse : List(a) -> List(a)
-reverse = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => reverse(rest).append(first)
-	}
+	help([], list).rev()
 }

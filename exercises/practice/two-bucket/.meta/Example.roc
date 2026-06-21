@@ -99,7 +99,7 @@ bfs = |{ start, neighbors, success }| {
 							Err(KeyNotFound) => updated_path
 						}
 					}
-					Ok(reverse(path_back_to_start([], node)))
+					Ok(path_back_to_start([], node).rev())
 				} else {
 					neighbor_nodes = neighbors(node)
 					updated_from = 
@@ -119,13 +119,4 @@ bfs = |{ start, neighbors, success }| {
 # TODO: remove to_str once records have a to_hash method
 to_str = |{ volume_one, volume_two }| {
 	volume_one.to_str().concat(volume_two.to_str())
-}
-
-# The following function should soon be available in Roc's builtins
-reverse : List(a) -> List(a)
-reverse = |list| {
-	match list {
-		[] => []
-		[first, .. as rest] => reverse(rest).append(first)
-	}
 }
