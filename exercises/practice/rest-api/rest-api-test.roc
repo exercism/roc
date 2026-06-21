@@ -1,9 +1,9 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rest-api/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-21
 app [main!] {
-	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.7/DuRUyJh31Gt41YArMcVcvybLa2bCWboccWQ7Zq1KZPZ6.tar.zst",
-	json: "https://github.com/lukewilliamboswell/roc-json/releases/download/0.13.0/RqendgZw5e1RsQa3kFhgtnMP8efWoqGRsAvubx4-zus.tar.br",
+	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.8/8qf28cxTaxwA16Xe3VBR7YSP2KLVUqDHiPpFYgyikEa1.tar.zst",
+	json: "https://github.com/lukewilliamboswell/roc-json/...", # TODO: update when a zig-compatible release is available
 }
 
 import pf.Stdout
@@ -15,14 +15,8 @@ standardize_result = |result| {
 		->Result.try(
 			|string| {
 				string
-					.replace_each(
-						".0,",
-						",",
-					)
-					.replace_each(
-						".0}",
-						"}",
-					)
+					.replace_each(".0,", ",")
+					.replace_each(".0}", "}")
 					.to_utf8()
 					.drop_if(
 						|c| {

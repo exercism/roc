@@ -1,9 +1,9 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/gigasecond/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-21
 app [main!] {
-	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.7/DuRUyJh31Gt41YArMcVcvybLa2bCWboccWQ7Zq1KZPZ6.tar.zst",
-	isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.6.2/73w_H-aSJNcWqtXvMG4JQw_HoaApMBLnE92XD4OcVGU.tar.br",
+	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.8/8qf28cxTaxwA16Xe3VBR7YSP2KLVUqDHiPpFYgyikEa1.tar.zst",
+	isodate: "https://github.com/imclerran/roc-isodate/...", # TODO: update when a zig-compatible release is available
 }
 
 import pf.Stdout
