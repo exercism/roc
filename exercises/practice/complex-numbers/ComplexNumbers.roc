@@ -1,4 +1,6 @@
 ComplexNumbers :: {}.{
+	Complex : { re : F64, im : F64 }
+
 	real : Complex -> F64
 	real = |z| {
 		crash "Please implement the 'real' function"
@@ -45,4 +47,3 @@ ComplexNumbers :: {}.{
 	}
 }
 
-Complex : { re : F64, im : F64 }

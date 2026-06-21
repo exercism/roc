@@ -46,8 +46,8 @@ expect {
 {% endfor %}
 
 is_approx_eq = |x1, x2| {
-	i1 = (x1 * 1000 + 0.5).to_u64_try() ?? { crash "Unreachable" }
-	i2 = (x2 * 1000 + 0.5).to_u64_try() ?? { crash "Unreachable" }
+	i1 = (x1 * 1000 + 0.5).to_i64_try() ?? { crash "Unreachable" }
+	i2 = (x2 * 1000 + 0.5).to_i64_try() ?? { crash "Unreachable" }
 	i1 == i2
 }
 

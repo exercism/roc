@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/complex-numbers/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-21
 
 import ComplexNumbers exposing [Complex, real, imaginary, add, sub, mul, div, conjugate, abs, exp]
 
@@ -365,14 +365,16 @@ expect {
 	result->complex_is_approx_eq(expected)
 }
 
-is_approx_eq : F64, F64 -> Bool
 is_approx_eq = |x1, x2| {
-	i1 = (x1 * 1000 + 0.5).to_u64_wrap()
-	i2 = (x2 * 1000 + 0.5).to_u64_wrap()
+	i1 = (x1 * 1000 + 0.5).to_i64_try() ?? {
+		crash "Unreachable"
+	}
+	i2 = (x2 * 1000 + 0.5).to_i64_try() ?? {
+		crash "Unreachable"
+	}
 	i1 == i2
 }
 
-complex_is_approx_eq : Complex, Complex -> Bool
 complex_is_approx_eq = |z1, z2| {
 	is_approx_eq(z1.re, z2.re) and is_approx_eq(z1.im, z2.im)
 }
