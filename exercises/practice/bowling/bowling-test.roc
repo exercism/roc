@@ -1,29 +1,8 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/bowling/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-21
 
 import Bowling
-
-game_with_previous_rolls : List(U64) -> Try(Bowling, _)
-game_with_previous_rolls = |rolls| {
-	new_game = Bowling.new
-	rolls.fold_until(
-		Ok(new_game),
-		|state, pins| {
-			match state {
-				Ok(game) => {
-					match game.roll(pins) {
-						Ok(updated_game) => Continue(Ok(updated_game))
-						Err(err) => Break(Err(err))
-					}
-				}
-				Err(_) => {
-					crash "Impossible, we don't start or continue with an Err"
-				}
-			}
-		},
-	)
-}
 
 # should be able to score a game with all zeros
 expect {
@@ -375,6 +354,15 @@ expect {
 	game = game_with_previous_rolls(rolls)?
 	result = game.roll(2)
 	result.is_err()
+}
+
+game_with_previous_rolls : List(U64) -> Try(Bowling, _)
+game_with_previous_rolls = |rolls| {
+	var $game = Bowling.new
+	for pins in rolls {
+		$game = $game.roll(pins)?
+	}
+	Ok($game)
 }
 
 # This program is only used to run tests with `roc test`, so main! does nothing.

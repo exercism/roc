@@ -4,26 +4,6 @@
 
 import {{ exercise | to_pascal }}
 
-game_with_previous_rolls : List(U64) -> Try(Bowling, _)
-game_with_previous_rolls = |rolls| {
-    new_game = {{ exercise | to_pascal }}.new
-    rolls.fold_until(
-        Ok(new_game),
-        |state, pins| {
-            match state {
-                Ok(game) => {
-                    match game.roll(pins) {
-                        Ok(updated_game) => Continue(Ok(updated_game))
-                        Err(err) => Break(Err(err))
-                    }
-                }
-                Err(_) => { crash "Impossible, we don't start or continue with an Err" }
-            }
-        }
-    )
-}
-
-
 {% for case in cases -%}
 # {{ case["description"] }}
 expect {
@@ -53,5 +33,14 @@ expect {
 
 
 {% endfor %}
+
+game_with_previous_rolls : List(U64) -> Try(Bowling, _)
+game_with_previous_rolls = |rolls| {
+    var $game = Bowling.new
+    for pins in rolls {
+        $game = $game.roll(pins)?
+    }
+    Ok($game)
+}
 
 {{ macros.footer() }}
