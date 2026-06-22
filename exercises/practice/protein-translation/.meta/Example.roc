@@ -11,9 +11,7 @@ ProteinTranslation :: {}.{
 				[] => Ok(protein)
 				[codon, .. as rest] => {
 					match to_instruction(codon)? {
-						Append(amino_acid) => {
-							protein.append(amino_acid)->help(rest)
-						}
+						Append(amino_acid) => protein.append(amino_acid)->help(rest)
 						Stop => Ok(protein)
 					}
 				}
@@ -25,28 +23,24 @@ ProteinTranslation :: {}.{
 
 to_instruction : Codon -> Try([Append(AminoAcid), Stop], [InvalidCodon(Codon)])
 to_instruction = |codon| {
-	# See https://github.com/roc-lang/roc/issues/9700
-	codon_str = codon->Str.from_utf8() ?? {
-		crash "Unreachable"
-	}
-	match codon_str {
-		"AUG" => Ok(Append(Methionine))
-		"UUU" => Ok(Append(Phenylalanine))
-		"UUC" => Ok(Append(Phenylalanine))
-		"UUA" => Ok(Append(Leucine))
-		"UUG" => Ok(Append(Leucine))
-		"UCU" => Ok(Append(Serine))
-		"UCC" => Ok(Append(Serine))
-		"UCA" => Ok(Append(Serine))
-		"UCG" => Ok(Append(Serine))
-		"UAU" => Ok(Append(Tyrosine))
-		"UAC" => Ok(Append(Tyrosine))
-		"UGU" => Ok(Append(Cysteine))
-		"UGC" => Ok(Append(Cysteine))
-		"UGG" => Ok(Append(Tryptophan))
-		"UAA" => Ok(Stop)
-		"UAG" => Ok(Stop)
-		"UGA" => Ok(Stop)
+	match codon {
+		['A', 'U', 'G'] => Ok(Append(Methionine))
+		['U', 'U', 'U'] => Ok(Append(Phenylalanine))
+		['U', 'U', 'C'] => Ok(Append(Phenylalanine))
+		['U', 'U', 'A'] => Ok(Append(Leucine))
+		['U', 'U', 'G'] => Ok(Append(Leucine))
+		['U', 'C', 'U'] => Ok(Append(Serine))
+		['U', 'C', 'C'] => Ok(Append(Serine))
+		['U', 'C', 'A'] => Ok(Append(Serine))
+		['U', 'C', 'G'] => Ok(Append(Serine))
+		['U', 'A', 'U'] => Ok(Append(Tyrosine))
+		['U', 'A', 'C'] => Ok(Append(Tyrosine))
+		['U', 'G', 'U'] => Ok(Append(Cysteine))
+		['U', 'G', 'C'] => Ok(Append(Cysteine))
+		['U', 'G', 'G'] => Ok(Append(Tryptophan))
+		['U', 'A', 'A'] => Ok(Stop)
+		['U', 'A', 'G'] => Ok(Stop)
+		['U', 'G', 'A'] => Ok(Stop)
 		_ => Err(InvalidCodon(codon))
 	}
 }

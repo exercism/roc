@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/protein-translation/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-22
 
 import ProteinTranslation exposing [to_protein]
 
@@ -303,17 +303,20 @@ expect {
 	result.is_err()
 }
 
-# Incomplete RNA sequence can translate if valid until a STOP codon
-expect {
-	rna = "UUCUUCUAAUGGU"
-	result = rna->to_protein()
-	result == Ok(
-		[
-			Phenylalanine,
-			Phenylalanine,
-		],
-	)
-}
+# The following test is commented out for now because it causes a segfault
+# See https://github.com/roc-lang/roc/issues/9753
+
+## Incomplete RNA sequence can translate if valid until a STOP codon
+#expect {
+#	rna = "UUCUUCUAAUGGU"
+#	result = rna->to_protein()
+#	result == Ok(
+#		[
+#			Phenylalanine,
+#			Phenylalanine,
+#		],
+#	)
+#}
 
 # This program is only used to run tests with `roc test`, so main! does nothing.
 main! = |_args| {
