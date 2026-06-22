@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/isbn-verifier/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-22
 
 import IsbnVerifier exposing [is_valid]
 
@@ -43,6 +43,18 @@ expect {
 # X is only valid as a check digit
 expect {
 	result = is_valid("3-598-2X507-9")
+	result == Bool.False
+}
+
+# only one check digit is allowed
+expect {
+	result = is_valid("3-598-21508-96")
+	result == Bool.False
+}
+
+# X is not substituted by the value 10
+expect {
+	result = is_valid("3-598-2X507-5")
 	result == Bool.False
 }
 
