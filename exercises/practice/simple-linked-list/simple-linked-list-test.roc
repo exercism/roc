@@ -87,7 +87,7 @@ expect {
 			->expect_len(2)?
 			.pop()?
 			->expect_value(2)?
-	result2 =  # TODO: remove this workaround when the roc bug is fixed.
+	result2 =  # TODO: remove this workaround when issue #9743 is fixed
 		result1
 			->expect_len(1)?
 			.pop()?
