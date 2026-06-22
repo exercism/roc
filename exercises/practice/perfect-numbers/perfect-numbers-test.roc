@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/perfect-numbers/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-22
 
 import PerfectNumbers exposing [classify]
 
@@ -45,6 +45,12 @@ expect {
 # Large abundant number is classified correctly
 expect {
 	result = classify(33550335)
+	result == Ok(Abundant)
+}
+
+# Perfect square abundant number is classified correctly
+expect {
+	result = classify(196)
 	result == Ok(Abundant)
 }
 
