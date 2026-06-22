@@ -1,5 +1,6 @@
 Poker :: {}.{
-    best_hands : List Str -> Result (List Str) _
-    best_hands = |hands|
-        crash("Please implement the 'best_hands' function")
+	best_hands : List(Str) -> Try(List(Str), _)
+	best_hands = |hands| {
+		crash "Please implement the 'best_hands' function"
+	}
 }
