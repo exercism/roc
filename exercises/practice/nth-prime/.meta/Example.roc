@@ -5,11 +5,9 @@ NthPrime :: {}.{
 			Err(NoPrime0)
 		} else if number == 1 {
 			Ok(2)
-		} else if number == 2 {
-			Ok(3)
 		} else {
-			find_prime = |primes, index, number2| {
-				if primes.len() == number2 {
+			find_prime = |primes, index| {
+				if primes.len() == number {
 					primes
 				} else {
 					next_index = index + 2
@@ -20,10 +18,10 @@ NthPrime :: {}.{
 							primes.append(next_index)
 						}
 					}
-					find_prime(new_primes, next_index, number2)
+					find_prime(new_primes, next_index)
 				}
 			}
-			find_prime([2, 3, 5], 5, number)
+			find_prime([2, 3], 3)
 				.last()
 				.map_err(
 					|_| {
@@ -33,5 +31,3 @@ NthPrime :: {}.{
 		}
 	}
 }
-
-# TODO: remove number2 once https://github.com/roc-lang/roc/issues/9690 is fixed

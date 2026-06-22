@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/nth-prime/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-22
 
 import NthPrime exposing [prime]
 
@@ -16,7 +16,7 @@ expect {
 	result == Ok(3)
 }
 
-# sixth prime
+# sixth primes
 expect {
 	result = prime(6)
 	result == Ok(13)
