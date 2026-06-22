@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/flower-field/canonical-data.json
-# File last updated on 2026-06-20
+# File last updated on 2026-06-22
 
 import FlowerField exposing [annotate]
 
@@ -179,6 +179,14 @@ expect {
 		\\1*22*2
 		\\111111
 
+	result == expected
+}
+
+# multiple adjacent flowers
+expect {
+	garden = " ** "
+	result = annotate(garden)
+	expected = "1**1"
 	result == expected
 }
 
