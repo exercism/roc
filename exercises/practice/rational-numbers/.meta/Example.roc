@@ -1,55 +1,167 @@
 RationalNumbers :: {}.{
-    add : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-    add = |r1, r2|
-        Rational(a1, b1) = r1
-        Rational(a2, b2) = r2
-        Rational((a1 * b2 + a2 * b1), (b1 * b2)) |> reduce
+	Rational : { num : I64, den : I64 }
 
-    sub : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-    sub = |r1, r2|
-        Rational(a1, b1) = r1
-        Rational(a2, b2) = r2
-        Rational((a1 * b2 - a2 * b1), (b1 * b2)) |> reduce
+	add : Rational, Rational -> Rational
+	add = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+		{ num: num1 * den2 + num2 * den1, den: den1 * den2 }->reduce()
+	}
 
-    mul : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-    mul = |r1, r2|
-        Rational(a1, b1) = r1
-        Rational(a2, b2) = r2
-        Rational((a1 * a2), (b1 * b2)) |> reduce
+	sub : Rational, Rational -> Rational
+	sub = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+		{ num: num1 * den2 - num2 * den1, den: den1 * den2 }->reduce()
+	}
 
-    div : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-    div = |r1, r2|
-        Rational(a1, b1) = r1
-        Rational(a2, b2) = r2
-        Rational((a1 * b2), (a2 * b1)) |> reduce
+	mul : Rational, Rational -> Rational
+	mul = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+		{ num: num1 * num2, den: den1 * den2 }->reduce()
+	}
 
-    abs : [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-    abs = |r|
-        Rational(a, b) = r
-        Rational(Num.abs(a), Num.abs(b)) |> reduce
+	div : Rational, Rational -> Rational
+	div = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+		{ num: num1 * den2, den: num2 * den1 }->reduce()
+	}
 
-    exp : [Rational (Int a) (Int a)], Int a -> [Rational (Int a) (Int a)]
-    exp = |r, n|
-        Rational(a, b) = r
-        when n is
-            0 -> Rational(1, 1)
-            pos if pos > 0 -> Rational((a |> Num.pow_int(pos)), (b |> Num.pow_int(pos))) |> reduce
-            neg ->
-                m = Num.abs(neg)
-                Rational((b |> Num.pow_int(m)), (a |> Num.pow_int(m))) |> reduce
+	abs : Rational -> Rational
+	abs = |{ num, den }| {
+		{ num: num.abs(), den: den.abs() }->reduce()
+	}
 
-    exp_real : Frac a, [Rational (Int b) (Int b)] -> Frac a
-    exp_real = |x, r|
-        Rational(a, b) = r
-        x |> Num.pow((Num.to_frac(a) / Num.to_frac(b)))
+	exp : Rational, I64 -> Rational
+	exp = |{ num, den }, n| {
+		match n {
+			0 => { num: 1, den: 1 }
+			pos if pos > 0 => { num: pow_int(num, pos), den: pow_int(den, pos) }->reduce()
+			neg => {
+				m = neg.abs()
+				{ num: pow_int(den, m), den: pow_int(num, m) }->reduce()
+			}
+		}
+	}
 
-    reduce : [Rational (Int b) (Int b)] -> [Rational (Int b) (Int b)]
-    reduce = |r|
-        Rational(a, b) = r
-        gcd = |m, n| if n == 0 then m else gcd(n, (m % n))
-        sign = |n| if n < 0 then -1 else 1
-        abs_a = Num.abs(a)
-        abs_b = Num.abs(b)
-        d = gcd(abs_a, abs_b)
-        Rational((sign(a) * sign(b) * abs_a // d), (abs_b // d))
+	exp_real : F64, Rational -> F64
+	exp_real = |x, { num, den }| {
+		f : F64
+		f = num.to_f64() / den.to_f64()
+		pow_f64(x, f)
+	}
+
+	# # Reduce a rational number to its lowest terms, e.g., 6 / 8 --> 3 / 4
+	reduce : Rational -> Rational
+	reduce = |{ num, den }| {
+		gcd = |m, n| if n == 0 {
+			m
+		} else {
+			gcd(n, (m % n))
+		}
+		sign = |n| if n < 0 {
+			-1
+		} else {
+			1
+		}
+		abs_num = num.abs()
+		abs_den = den.abs()
+		d = gcd(abs_num, abs_den)
+		{ num: sign(num) * sign(den) * abs_num // d, den: abs_den // d }
+	}
+}
+
+pow_int : I64, I64 -> I64
+pow_int = |number, pow| {
+	(1..=pow).fold(
+		1,
+		|acc, _| {
+			acc * number
+		},
+	)
+}
+
+# The following functions should soon be available in Roc's builtins
+
+e = 2.718281828459045.F64
+
+# Calculates the natural logarithm of x, ln(x).
+ln_f64 : F64 -> F64
+ln_f64 = |x| {
+	if x <= 0.0 {
+		# Natural log is undefined for zero and negative numbers
+		crash "ln is undefined for zero or negative numbers"
+	} else {
+		var $norm_x = x
+		var $log_offset = 0.0
+
+		# Range reduction: keep x between [1/e, e]
+		while $norm_x > e {
+			$norm_x = $norm_x / e
+			$log_offset = $log_offset + 1.0
+		}
+		while $norm_x < 1 / e {
+			$norm_x = $norm_x * e
+			$log_offset = $log_offset - 1.0
+		}
+
+		# Area hyperbolic tangent series
+		z = ($norm_x - 1.0) / ($norm_x + 1.0)
+		z2 = z * z
+		var $z_term = z
+		var $ln_sum = 0.0
+		var $ln_n = 1.0
+
+		for _ in 0..<30.U8 {
+			$ln_sum = $ln_sum + ($z_term / $ln_n)
+			$z_term = $z_term * z2
+			$ln_n = $ln_n + 2.0
+		}
+
+		(2.0 * $ln_sum) + $log_offset
+	}
+}
+
+# Calculates e^x using the Taylor series.
+exp_f64 : F64 -> F64
+exp_f64 = |x| {
+	var $norm_x = x
+	var $exp_mult = 1.0
+
+	# Range reduction: keep x between [-1.0, 1.0]
+	while $norm_x > 1.0 {
+		$norm_x = $norm_x - 1.0
+		$exp_mult = $exp_mult * e
+	}
+	while $norm_x < -1.0 {
+		$norm_x = $norm_x + 1.0
+		$exp_mult = $exp_mult / e
+	}
+
+	# Taylor series 
+	var $exp_term = 1.0
+	var $exp_sum = 1.0
+	var $exp_n = 1.0
+
+	for _ in 0..<25.U8 {
+		$exp_term = $exp_term * $norm_x / $exp_n
+		$exp_sum = $exp_sum + $exp_term
+		$exp_n = $exp_n + 1.0
+	}
+
+	$exp_sum * $exp_mult
+}
+
+# Calculates x^p for 64-bit values using the newly separated functions.
+pow_f64 : F64, F64 -> F64
+pow_f64 = |x, p| {
+	if x == 0.0 {
+		if p == 0.0 {
+			1.0
+		} else {
+			0.0
+		}
+	} else if x < 0.0 {
+		# Fractional powers of negative numbers are undefined in pure real 64-bit math
+		crash "Raising a negative number to a fractional power is undefined"
+	} else if p == 0.0 {
+		1.0
+	} else {
+		# The core mathematical calculation
+		exp_f64(p * ln_f64(x))
+	}
 }

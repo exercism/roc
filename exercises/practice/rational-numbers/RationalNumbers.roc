@@ -1,35 +1,44 @@
 RationalNumbers :: {}.{
-    add : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-    add = |r1, r2|
-        crash("Please implement the 'add' function")
+	Rational : { num : I64, den : I64 }
 
-    sub : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-    sub = |r1, r2|
-        crash("Please implement the 'sub' function")
+	add : Rational, Rational -> Rational
+	add = |r1, r2| {
+		crash "Please implement the 'add' function"
+	}
 
-    mul : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-    mul = |r1, r2|
-        crash("Please implement the 'mul' function")
+	sub : Rational, Rational -> Rational
+	sub = |r1, r2| {
+		crash "Please implement the 'sub' function"
+	}
 
-    div : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-    div = |r1, r2|
-        crash("Please implement the 'div' function")
+	mul : Rational, Rational -> Rational
+	mul = |r1, r2| {
+		crash "Please implement the 'mul' function"
+	}
 
-    abs : [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-    abs = |r|
-        crash("Please implement the 'abs' function")
+	div : Rational, Rational -> Rational
+	div = |r1, r2| {
+		crash "Please implement the 'div' function"
+	}
 
-    exp : [Rational (Int a) (Int a)], Int a -> [Rational (Int a) (Int a)]
-    exp = |r, n|
-        crash("Please implement the 'exp' function")
+	abs : Rational -> Rational
+	abs = |r| {
+		crash "Please implement the 'abs' function"
+	}
 
-    exp_real : Frac a, [Rational (Int b) (Int b)] -> Frac a
-    exp_real = |x, r|
-        crash("Please implement the 'exp_real' function")
+	exp : Rational, I64 -> Rational
+	exp = |r, n| {
+		crash "Please implement the 'exp' function"
+	}
 
-    ## Reduce a rational number to its lowest terms, e.g., 6 / 8 --> 3 / 4
-    reduce : [Rational (Int b) (Int b)] -> [Rational (Int b) (Int b)]
-    reduce = |r|
-        crash("Please implement the 'reduce' function")
+	exp_real : F64, Rational -> F64
+	exp_real = |x, r| {
+		crash "Please implement the 'exp_real' function"
+	}
 
+	# # Reduce a rational number to its lowest terms, e.g., 6 / 8 --> 3 / 4
+	reduce : Rational -> Rational
+	reduce = |r| {
+		crash "Please implement the 'reduce' function"
+	}
 }
