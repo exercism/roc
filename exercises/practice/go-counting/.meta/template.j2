@@ -4,7 +4,7 @@
 
 {% macro to_territory(territory) %}
 {%- if territory == [] %}
-Set.empty({})
+Set.empty()
 {%- else %}
 Set.from_list([
 {%- for intersection in territory %}
@@ -16,28 +16,10 @@ Set.from_list([
 
 import {{ exercise | to_pascal }} exposing [territory, territories]
 
-## The following two comparison functions are temporary workarounds for Roc issue #7144:
-## comparing tags or records containing sets sometimes returns the wrong result
-## depending on the internal order of the set data, so we have to unwrap the sets
-## in order to compare them properly.
-compare_territory = |maybe_result, maybe_expected| {
-    match (maybe_result, maybe_expected) {
-      (Ok(result), Ok(expected)) => result.owner == expected.owner and result.territory == expected.territory
-      _ => Bool.False
-    }
-}
-
-compare_territories = |maybe_result, maybe_expected| {
-    match (maybe_result, maybe_expected) {
-      (Ok(result), Ok(expected)) => result.black == expected.black and result.white == expected.white and result.none == expected.none
-      _ => Bool.False
-    }
-}
-
 {% for case in cases -%}
 # {{ case["description"] }}
 expect {
-    board = {{ case["input"]["board"] | to_roc_multiline_string | replace(" ", "·") | indent(8) }}.replace_each("·", " ")
+    board = {{ case["input"]["board"] | to_roc_multiline_string | indent(8) }}
     result = board -> {{ case["property"] | to_snake }}
     {%- if case["property"] == "territory" %}({ x : {{ case["input"]["x"] }}, y : {{ case["input"]["y"] }} }){% endif %}
     {%- if case["expected"]["error"] %}
@@ -59,5 +41,23 @@ expect {
 }
 
 {% endfor %}
+
+## The following two comparison functions are temporary workarounds for Roc issue #7144:
+## comparing tags or records containing sets sometimes returns the wrong result
+## depending on the internal order of the set data, so we have to unwrap the sets
+## in order to compare them properly.
+compare_territory = |maybe_result, maybe_expected| {
+    match (maybe_result, maybe_expected) {
+      (Ok(result), Ok(expected)) => result.owner == expected.owner and result.territory == expected.territory
+      _ => Bool.False
+    }
+}
+
+compare_territories = |maybe_result, maybe_expected| {
+    match (maybe_result, maybe_expected) {
+      (Ok(result), Ok(expected)) => result.black == expected.black and result.white == expected.white and result.none == expected.none
+      _ => Bool.False
+    }
+}
 
 {{ macros.footer() }}
