@@ -17,7 +17,7 @@ Because of this, in Roc we use `List.append` often and rarely use `List.prepend`
 
 Roc uses slightly different names than the ones listed in the general instructions:
 
-* `concat` instead of `append`
+- `concat` instead of `append`
 - `join` instead of `concatenate`
 - `len` instead of `length`
 - `fold` instead of `foldl`
