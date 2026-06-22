@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/connect/canonical-data.json
-# File last updated on 2026-06-14
+# File last updated on 2026-06-22
 
 import Connect exposing [winner]
 
@@ -77,6 +77,30 @@ expect {
 		\\  O X O .
 		\\   X X O X
 		\\    . O X .
+
+	result = board->winner()
+	result == Ok(PlayerX)
+}
+
+# X wins with left-hand dead end fork
+expect {
+	board = 
+		\\. . X .
+		\\ X X . .
+		\\  . X X X
+		\\   O O O O
+
+	result = board->winner()
+	result == Ok(PlayerX)
+}
+
+# X wins with right-hand dead end fork
+expect {
+	board = 
+		\\. . X X
+		\\ X X . .
+		\\  . X X .
+		\\   O O O O
 
 	result = board->winner()
 	result == Ok(PlayerX)
