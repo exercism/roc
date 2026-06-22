@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/queen-attack/canonical-data.json
-# File last updated on 2026-06-18
+# File last updated on 2026-06-22
 
 import QueenAttack
 create = QueenAttack.Square.create

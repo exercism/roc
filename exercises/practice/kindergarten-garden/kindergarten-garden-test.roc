@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/kindergarten-garden/canonical-data.json
-# File last updated on 2026-06-18
+# File last updated on 2026-06-22
 
 import KindergartenGarden exposing [plants]
 

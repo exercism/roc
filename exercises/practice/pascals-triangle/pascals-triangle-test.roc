@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/pascals-triangle/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-22
 
 import PascalsTriangle exposing [pascals_triangle]
 

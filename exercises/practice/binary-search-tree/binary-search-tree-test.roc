@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/binary-search-tree/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-22
 
 import BinarySearchTree exposing [from_list, to_list]
 

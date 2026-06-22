@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/pythagorean-triplet/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-22
 
 import PythagoreanTriplet exposing [triplets_with_sum]
 
