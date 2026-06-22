@@ -305,6 +305,7 @@ expect {
 
 # The following test is commented out for now because it causes a segfault
 # See https://github.com/roc-lang/roc/issues/9753
+# TODO: uncomment once the issue is resolved
 
 ## Incomplete RNA sequence can translate if valid until a STOP codon
 #expect {
