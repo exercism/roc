@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/circular-buffer/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-06-22
 
 import CircularBuffer
 
@@ -20,9 +20,7 @@ expect {
 # can read an item just written
 expect {
 	_result = CircularBuffer.create({ capacity: 1 })
-		.write(
-			1,
-		)?
+		.write(1)?
 		.read()?
 		->expect_value(1)
 
@@ -32,9 +30,7 @@ expect {
 # each item may only be read once
 expect {
 	result = CircularBuffer.create({ capacity: 1 })
-		.write(
-			1,
-		)?
+		.write(1)?
 		.read()?
 		->expect_value(1)
 		.read()
@@ -45,12 +41,8 @@ expect {
 # items are read in the order they are written
 expect {
 	_result = CircularBuffer.create({ capacity: 2 })
-		.write(
-			1,
-		)?
-		.write(
-			2,
-		)?
+		.write(1)?
+		.write(2)?
 		.read()?
 		->expect_value(1)
 		.read()?
@@ -62,12 +54,8 @@ expect {
 # full buffer can't be written to
 expect {
 	result = CircularBuffer.create({ capacity: 1 })
-		.write(
-			1,
-		)?
-		.write(
-			2,
-		)
+		.write(1)?
+		.write(2)
 
 	result == Err(BufferFull)
 }
@@ -75,14 +63,10 @@ expect {
 # a read frees up capacity for another write
 expect {
 	_result = CircularBuffer.create({ capacity: 1 })
-		.write(
-			1,
-		)?
+		.write(1)?
 		.read()?
 		->expect_value(1)
-		.write(
-			2,
-		)?
+		.write(2)?
 		.read()?
 		->expect_value(2)
 
@@ -92,17 +76,11 @@ expect {
 # read position is maintained even across multiple writes
 expect {
 	_result = CircularBuffer.create({ capacity: 3 })
-		.write(
-			1,
-		)?
-		.write(
-			2,
-		)?
+		.write(1)?
+		.write(2)?
 		.read()?
 		->expect_value(1)
-		.write(
-			3,
-		)?
+		.write(3)?
 		.read()?
 		->expect_value(2)
 		.read()?
@@ -114,9 +92,7 @@ expect {
 # items cleared out of buffer can't be read
 expect {
 	result = CircularBuffer.create({ capacity: 1 })
-		.write(
-			1,
-		)?
+		.write(1)?
 		.clear()
 		.read()
 
@@ -126,13 +102,9 @@ expect {
 # clear frees up capacity for another write
 expect {
 	_result = CircularBuffer.create({ capacity: 1 })
-		.write(
-			1,
-		)?
+		.write(1)?
 		.clear()
-		.write(
-			2,
-		)?
+		.write(2)?
 		.read()?
 		->expect_value(2)
 
@@ -143,9 +115,7 @@ expect {
 expect {
 	_result = CircularBuffer.create({ capacity: 1 })
 		.clear()
-		.write(
-			1,
-		)?
+		.write(1)?
 		.read()?
 		->expect_value(1)
 
@@ -155,12 +125,8 @@ expect {
 # overwrite acts like write on non-full buffer
 expect {
 	_result = CircularBuffer.create({ capacity: 2 })
-		.write(
-			1,
-		)?
-		.overwrite(
-			2,
-		)
+		.write(1)?
+		.overwrite(2)
 		.read()?
 		->expect_value(1)
 		.read()?
@@ -172,15 +138,9 @@ expect {
 # overwrite replaces the oldest item on full buffer
 expect {
 	_result = CircularBuffer.create({ capacity: 2 })
-		.write(
-			1,
-		)?
-		.write(
-			2,
-		)?
-		.overwrite(
-			3,
-		)
+		.write(1)?
+		.write(2)?
+		.overwrite(3)
 		.read()?
 		->expect_value(2)
 		.read()?
@@ -192,23 +152,13 @@ expect {
 # overwrite replaces the oldest item remaining in buffer following a read
 expect {
 	_result = CircularBuffer.create({ capacity: 3 })
-		.write(
-			1,
-		)?
-		.write(
-			2,
-		)?
-		.write(
-			3,
-		)?
+		.write(1)?
+		.write(2)?
+		.write(3)?
 		.read()?
 		->expect_value(1)
-		.write(
-			4,
-		)?
-		.overwrite(
-			5,
-		)
+		.write(4)?
+		.overwrite(5)
 		.read()?
 		->expect_value(3)
 		.read()?
@@ -223,18 +173,10 @@ expect {
 expect {
 	result = CircularBuffer.create({ capacity: 2 })
 		.clear()
-		.write(
-			1,
-		)?
-		.write(
-			2,
-		)?
-		.overwrite(
-			3,
-		)
-		.overwrite(
-			4,
-		)
+		.write(1)?
+		.write(2)?
+		.overwrite(3)
+		.overwrite(4)
 		.read()?
 		->expect_value(3)
 		.read()?
