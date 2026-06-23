@@ -34,7 +34,7 @@ Okay, let's get started! Here's what you need to do:
    - If the path is not `/` or `/users/` or `/users/<user id>`, return `Err(PageNotFound(path))`
    - If the user ID is not a positive integer, return `Err(InvalidUserId(user_id_str))`
    - If the user does not exist, return `Err(UserNotFound(user_id))`
-4. Implement `errorMessage` to convert the previous errors to translated error messages. The function should at least handle English, but you are encouraged to try handling another language as well. The English error messages should like this:
+4. Implement `error_essage` to convert the previous errors to translated error messages. The function should at least handle English, but you are encouraged to try handling another language as well. The English error messages should like this:
 
 - `"Insecure connection (non HTTPS): http://example.com/users/789"`
 - `"Invalid domain name: https://google.com/wrong"`
