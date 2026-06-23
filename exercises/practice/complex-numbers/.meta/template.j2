@@ -1,8 +1,20 @@
 {%- import "generator_macros.j2" as macros with context -%}
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
+{% set equations = {
+    "real": "z.real",
+    "imaginary": "z.imaginary",
+    "conjugate": "z.conjugate()",
+    "abs": "z.abs()",
+    "exp": "z.exp()",
+    "add": "z1 + z2",
+    "sub": "z1 - z2",
+    "mul": "z1 * z2",
+    "div": "z1 / z2"
+} -%}
 
-import {{ exercise | to_pascal }} exposing [Complex, real, imaginary, add, sub, mul, div, conjugate, abs, exp]
+
+import Complex exposing [complex]
 
 {% for supercase in cases %}
 ###
@@ -22,7 +34,7 @@ import {{ exercise | to_pascal }} exposing [Complex, real, imaginary, add, sub, 
 {%- if subcase["input"]["z"] %}
 expect {
     z = {{ plugins.to_complex_number(subcase["input"]["z"]) }}
-    result = {{ subcase["property"] }}(z)
+    result = {{ equations[subcase["property"]] }}
     {%- if subcase["expected"] is iterable and subcase["expected"] is not string %}
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
     result -> complex_is_approx_eq(expected)
@@ -34,7 +46,7 @@ expect {
 expect {
     z1 = {{ plugins.to_complex_number(subcase["input"]["z1"]) }}
     z2 = {{ plugins.to_complex_number(subcase["input"]["z2"]) }}
-    result = {{ subcase["property"] }}(z1, z2)
+    result = {{ equations[subcase["property"]] }}
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
     result -> complex_is_approx_eq(expected)
 }
@@ -52,7 +64,7 @@ is_approx_eq = |x1, x2| {
 }
 
 complex_is_approx_eq = |z1, z2| {
-	is_approx_eq(z1.re, z2.re) and is_approx_eq(z1.im, z2.im)
+	is_approx_eq(z1.real, z2.real) and is_approx_eq(z1.imaginary, z2.imaginary)
 }
 
 {{ macros.footer() }}

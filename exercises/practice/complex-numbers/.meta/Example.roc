@@ -1,64 +1,59 @@
-ComplexNumbers :: {}.{
-	Complex := { re : F64, im : F64 }
+Complex := { real : F64, imaginary : F64 }.{
+	complex : F64, F64 -> Complex
+	complex = |real, imaginary| { { real, imaginary } }
 
-	real : Complex -> F64
-	real = |z| z.re
-
-	imaginary : Complex -> F64
-	imaginary = |z| z.im
-
-	add : Complex, Complex -> Complex
-	add = |{ re: a, im: b }, { re: c, im: d }| {
+	plus : Complex, Complex -> Complex
+	plus = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
 		{
-			re: a + c,
-			im: b + d,
+			real: a + c,
+			imaginary: b + d,
 		}
 	}
 
-	sub : Complex, Complex -> Complex
-	sub = |{ re: a, im: b }, { re: c, im: d }| {
+	minus : Complex, Complex -> Complex
+	minus = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
 		{
-			re: a - c,
-			im: b - d,
+			real: a - c,
+			imaginary: b - d,
 		}
 	}
 
-	mul : Complex, Complex -> Complex
-	mul = |{ re: a, im: b }, { re: c, im: d }| {
+	times : Complex, Complex -> Complex
+	times = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
 		{
-			re: a * c - b * d,
-			im: a * d + b * c,
+			real: a * c - b * d,
+			imaginary: a * d + b * c,
 		}
 	}
 
-	div : Complex, Complex -> Complex
-	div = |{ re: a, im: b }, { re: c, im: d }| {
+	div_by : Complex, Complex -> Complex
+	div_by = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
 		denominator = c * c + d * d
 		{
-			re: (a * c + b * d) / denominator,
-			im: (b * c - a * d) / denominator,
+			real: (a * c + b * d) / denominator,
+			imaginary: (b * c - a * d) / denominator,
 		}
 	}
 
 	conjugate : Complex -> Complex
 	conjugate = |z| {
 		{
-			re: z.re,
-			im: -z.im,
+			real: z.real,
+			imaginary: -z.imaginary,
 		}
 	}
 
 	abs : Complex -> F64
-	abs = |{ re: a, im: b }| {
+	abs = |{ real: a, imaginary: b }| {
 		sqrt(a * a + b * b)
 	}
 
 	exp : Complex -> Complex
 	exp = |z| {
-		factor = e->pow(z.re)
+		factor = e->pow(z.real)
 		{
-			re: factor * cos(z.im),
-			im: factor * sin(z.im),
+			real: factor * cos(z.imaginary),
+			imaginary: factor * sin(z.imaginary),
 		}
 	}
 }
