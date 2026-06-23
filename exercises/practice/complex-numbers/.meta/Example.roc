@@ -1,7 +1,8 @@
 Complex := { real : F64, imaginary : F64 }.{
-	complex : F64, F64 -> Complex
-	complex = |real, imaginary| { { real, imaginary } }
+	new : F64, F64 -> Complex
+	new = |real, imaginary| { { real, imaginary } }
 
+    # # The user can write plus(z1, z2), z1.plus(z2), or simply z1 + z2
 	plus : Complex, Complex -> Complex
 	plus = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
 		{
@@ -10,6 +11,7 @@ Complex := { real : F64, imaginary : F64 }.{
 		}
 	}
 
+	# # The user can write minus(z1, z2), z1.minus(z2), or simply z1 - z2
 	minus : Complex, Complex -> Complex
 	minus = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
 		{
@@ -18,6 +20,7 @@ Complex := { real : F64, imaginary : F64 }.{
 		}
 	}
 
+	# # The user can write times(z1, z2), z1.times(z2), or simply z1 * z2
 	times : Complex, Complex -> Complex
 	times = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
 		{
@@ -26,6 +29,7 @@ Complex := { real : F64, imaginary : F64 }.{
 		}
 	}
 
+	# # The user can write div_by(z1, z2), z1.div_by(z2), or simply z1 / z2
 	div_by : Complex, Complex -> Complex
 	div_by = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
 		denominator = c * c + d * d
