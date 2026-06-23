@@ -12,7 +12,7 @@ You are building a tiny web server that queries an even tinier user database. So
 
 When things go wrong, it's important to give the end user a nice and helpful error message so that they can solve the issue. For this, you need to ensure that your code propagates informative errors from the point where the error is detected to the point where the error message is produced.
 
-Luckily, Roc allows you to carry payload (i.e., data) inside your `Err` tag. It's tempting to carry an error message directly (e.g., `Err "User #42 was not found"`), and this may be fine in some simple cases, but this has several limitations:
+Luckily, Roc allows you to carry payload (i.e., data) inside your `Err` tag. It's tempting to carry an error message directly (e.g., `Err("User #42 was not found")`), and this may be fine in some simple cases, but this has several limitations:
 
 - you might not have enough context inside the function that detects the error to produce a sufficiently helpful error message.
   - For example, the `Str.to_u64` function can be used to parse all sorts of integers: days, seconds, user IDs, and more. If the error message just says `Could not convert string "0.5" to a positive integer`, the user may not have enough context to solve the issue.
