@@ -34,8 +34,8 @@ Try using:
 
 ```roc
 match list {
-    [] => ????
-    [first, .. as rest] => ????
+    [] => ...
+    [first, .. as rest] => ...
 }
 ```
 
@@ -43,7 +43,7 @@ or
 
 ```roc
 match list {
-    [] -> ????
-    [.. as rest, last] => ????
+    [] => ...
+    [.. as rest, last] => ...
 }
 ```
