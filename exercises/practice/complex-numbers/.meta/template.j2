@@ -3,7 +3,7 @@
 {{ macros.header() }}
 {% set equations = {
     "real": "z.real",
-    "imaginary": "z.imaginary",
+    "imaginary": "z.imag",
     "conjugate": "z.conjugate()",
     "abs": "z.abs()",
     "exp": "z.exp()",
@@ -64,7 +64,7 @@ is_approx_eq = |x1, x2| {
 }
 
 complex_is_approx_eq = |z1, z2| {
-	is_approx_eq(z1.real, z2.real) and is_approx_eq(z1.imaginary, z2.imaginary)
+	is_approx_eq(z1.real, z2.real) and is_approx_eq(z1.imag, z2.imag)
 }
 
 {{ macros.footer() }}

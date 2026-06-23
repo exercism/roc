@@ -1,41 +1,41 @@
-Complex := { real : F64, imaginary : F64 }.{
-	new : F64, F64 -> Complex
-	new = |real, imaginary| { { real, imaginary } }
+Complex := { real : F64, imag : F64 }.{
+	new : { real: F64, imag: F64 } -> Complex
+	new = |{ real, imag }| { { real, imag } }
 
     # # The user can write plus(z1, z2), z1.plus(z2), or simply z1 + z2
 	plus : Complex, Complex -> Complex
-	plus = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
+	plus = |{ real: a, imag: b }, { real: c, imag: d }| {
 		{
 			real: a + c,
-			imaginary: b + d,
+			imag: b + d,
 		}
 	}
 
 	# # The user can write minus(z1, z2), z1.minus(z2), or simply z1 - z2
 	minus : Complex, Complex -> Complex
-	minus = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
+	minus = |{ real: a, imag: b }, { real: c, imag: d }| {
 		{
 			real: a - c,
-			imaginary: b - d,
+			imag: b - d,
 		}
 	}
 
 	# # The user can write times(z1, z2), z1.times(z2), or simply z1 * z2
 	times : Complex, Complex -> Complex
-	times = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
+	times = |{ real: a, imag: b }, { real: c, imag: d }| {
 		{
 			real: a * c - b * d,
-			imaginary: a * d + b * c,
+			imag: a * d + b * c,
 		}
 	}
 
 	# # The user can write div_by(z1, z2), z1.div_by(z2), or simply z1 / z2
 	div_by : Complex, Complex -> Complex
-	div_by = |{ real: a, imaginary: b }, { real: c, imaginary: d }| {
+	div_by = |{ real: a, imag: b }, { real: c, imag: d }| {
 		denominator = c * c + d * d
 		{
 			real: (a * c + b * d) / denominator,
-			imaginary: (b * c - a * d) / denominator,
+			imag: (b * c - a * d) / denominator,
 		}
 	}
 
@@ -43,12 +43,12 @@ Complex := { real : F64, imaginary : F64 }.{
 	conjugate = |z| {
 		{
 			real: z.real,
-			imaginary: -z.imaginary,
+			imag: -z.imag,
 		}
 	}
 
 	abs : Complex -> F64
-	abs = |{ real: a, imaginary: b }| {
+	abs = |{ real: a, imag: b }| {
 		sqrt(a * a + b * b)
 	}
 
@@ -56,8 +56,8 @@ Complex := { real : F64, imaginary : F64 }.{
 	exp = |z| {
 		factor = e->pow(z.real)
 		{
-			real: factor * cos(z.imaginary),
-			imaginary: factor * sin(z.imaginary),
+			real: factor * cos(z.imag),
+			imag: factor * sin(z.imag),
 		}
 	}
 }

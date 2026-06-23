@@ -1,6 +1,6 @@
-Complex := { real: F64, imaginary: F64 }.{
-	new : F64, F64 -> Complex
-	new = |real, imaginary| {
+Complex := { real: F64, imag: F64 }.{
+	new : { real: F64, imag: F64 } -> Complex
+	new = |{ real, imag }| {
 		crash "Please implement the 'new' function"
 	}
 
