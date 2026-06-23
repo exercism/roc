@@ -2,21 +2,17 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [Rational, add, sub, mul, div, abs, exp, exp_real, reduce]
+import Rational
 
-is_approx_eq = |f1, f2| {
-    (f1 * 1e9 + 0.5).to_u64_wrap() == (f2 * 1e9 + 0.5).to_u64_wrap()
-}
-
-{% set property_map = {
-    "abs": "abs",
-    "add": "add",
-    "div": "div",
-    "exprational": "exp",
-    "expreal": "exp_real",
-    "mul": "mul",
-    "reduce": "reduce",
-    "sub": "sub",
+{% set equations = {
+    "add": "r1 + r2",
+    "sub": "r1 - r2",
+    "mul": "r1 * r2",
+    "div": "r1 / r2",
+    "abs": "r.abs()",
+    "reduce": "r.reduce()",
+    "exprational": "r.exp(n)",
+    "expreal": "Rational.exp_real(x, r)",
 }
 %}
 
@@ -26,19 +22,19 @@ expect {
 {%- if "r1" in case["input"] %}
     r1 = {{ plugins.to_roc_rational(case["input"]["r1"]) }}
     r2 = {{ plugins.to_roc_rational(case["input"]["r2"]) }}
-    result = r1->{{ property_map[case["property"]] | to_snake }}(r2)
+    result = {{ equations[case["property"]] }}
 {%- elif "r" in case["input"] %}
     {%- if "x" in case["input"] %}
     r = {{ plugins.to_roc_rational(case["input"]["r"]) }}
     x = {{ case["input"]["x"] | to_roc }}
-    result = x->{{ property_map[case["property"]] | to_snake }}(r)
+    result = {{ equations[case["property"]] }}
     {%- elif "n" in case["input"] %}
     r = {{ plugins.to_roc_rational(case["input"]["r"]) }}
     n = {{ case["input"]["n"] | to_roc }}
-    result = r->{{ property_map[case["property"]] | to_snake }}(n)
+    result = {{ equations[case["property"]] }}
     {%- else %}
     r = {{ plugins.to_roc_rational(case["input"]["r"]) }}
-    result = r->{{ property_map[case["property"]] | to_snake }}()
+    result = {{ equations[case["property"]] }}
     {%- endif %}
 {%- else %}
     crash "This test case is not implemented yet."
@@ -67,5 +63,9 @@ expect {
     {%- endif %}
 {% endfor %}
 {% endfor %}
+
+is_approx_eq = |f1, f2| {
+    (f1 * 1e9 + 0.5).to_u64_wrap() == (f2 * 1e9 + 0.5).to_u64_wrap()
+}
 
 {{ macros.footer() }}

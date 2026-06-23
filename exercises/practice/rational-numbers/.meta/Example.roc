@@ -1,23 +1,30 @@
-RationalNumbers :: {}.{
-	Rational : { num : I64, den : I64 }
+Rational :: { num : I64, den : I64 }.{
+	new : { num : I64, den : I64 } -> Rational
+	new = |{ num, den }| {
+		{ num, den }->reduce()
+	}
 
-	add : Rational, Rational -> Rational
-	add = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+	# # The user can write plus(r1, r2), r1.plus(r2), or simply r1 + r2
+	plus : Rational, Rational -> Rational
+	plus = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
 		{ num: num1 * den2 + num2 * den1, den: den1 * den2 }->reduce()
 	}
 
-	sub : Rational, Rational -> Rational
-	sub = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+	# # The user can write minus(r1, r2), r1.minus(r2), or simply r1 - r2
+	minus : Rational, Rational -> Rational
+	minus = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
 		{ num: num1 * den2 - num2 * den1, den: den1 * den2 }->reduce()
 	}
 
-	mul : Rational, Rational -> Rational
-	mul = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+	# # The user can write times(r1, r2), r1.times(r2), or simply r1 * r2
+	times : Rational, Rational -> Rational
+	times = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
 		{ num: num1 * num2, den: den1 * den2 }->reduce()
 	}
 
-	div : Rational, Rational -> Rational
-	div = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+	# # The user can write div_by(r1, r2), r1.div_by(r2), or simply r1 / r2
+	div_by : Rational, Rational -> Rational
+	div_by = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
 		{ num: num1 * den2, den: num2 * den1 }->reduce()
 	}
 
@@ -62,6 +69,12 @@ RationalNumbers :: {}.{
 		abs_den = den.abs()
 		d = gcd(abs_num, abs_den)
 		{ num: sign(num) * sign(den) * abs_num // d, den: abs_den // d }
+	}
+
+	# TODO: remove this function once https://github.com/roc-lang/roc/issues/9769 is resolved
+	is_eq : Rational, Rational -> Bool
+	is_eq = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+		(num1 == num2) and (den1 == den2)
 	}
 }
 
