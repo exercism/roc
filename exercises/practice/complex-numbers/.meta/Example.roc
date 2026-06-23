@@ -1,8 +1,10 @@
 Complex := { real : F64, imag : F64 }.{
-	new : { real: F64, imag: F64 } -> Complex
-	new = |{ real, imag }| { { real, imag } }
+	new : { real : F64, imag : F64 } -> Complex
+	new = |{ real, imag }| {
+		{ real, imag }
+	}
 
-    # # The user can write plus(z1, z2), z1.plus(z2), or simply z1 + z2
+	# # The user can write plus(z1, z2), z1.plus(z2), or simply z1 + z2
 	plus : Complex, Complex -> Complex
 	plus = |{ real: a, imag: b }, { real: c, imag: d }| {
 		{
@@ -65,6 +67,7 @@ Complex := { real : F64, imag : F64 }.{
 # The following function should soon be available in Roc's builtins
 
 e = 2.718281828459045.F64
+
 pi = 3.141592653589793.F64
 
 # Calculates the natural logarithm of x, ln(x).
