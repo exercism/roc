@@ -1,7 +1,8 @@
 Meetup :: {}.{
     meetup : { year : I64, month : U8, week : Week, day_of_week : DayOfWeek } -> Result Str _
-    meetup = |{ year, month, week, day_of_week }|
-        crash("Please implement the 'meetup' function")
+    meetup = |{ year, month, week, day_of_week }| {
+        crash "Please implement the 'meetup' function"
+    }
 
     # HINT: we have added the `roc-isodate` package to the app's header in
     #       meetup-test.roc, so you can use it here if you need to.
