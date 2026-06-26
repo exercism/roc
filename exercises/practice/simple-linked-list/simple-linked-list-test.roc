@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/simple-linked-list/canonical-data.json
-# File last updated on 2026-06-21
+# File last updated on 2026-06-26
 
 import SimpleLinkedList
 
@@ -82,19 +82,17 @@ expect {
 
 # Pop updates the count
 expect {
-	result1 = 
+	result = 
 		SimpleLinkedList.from_list([1, 2])
 			->expect_len(2)?
 			.pop()?
 			->expect_value(2)?
-	result2 =  # TODO: remove this workaround when issue #9743 is fixed
-		result1
 			->expect_len(1)?
 			.pop()?
 			->expect_value(1)?
 			.len()
 
-	result2 == 0
+	result == 0
 }
 
 ##
