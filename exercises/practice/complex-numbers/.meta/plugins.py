@@ -22,4 +22,4 @@ def to_complex_number(value):
     else:
         re = to_roc(value)
         im = 0
-    return f"Complex.new({{real: {re}, imag: {im}}})"
+    return f"Complex.{{real: {re}, imag: {im}}}"

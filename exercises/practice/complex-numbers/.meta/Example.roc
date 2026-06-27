@@ -1,9 +1,4 @@
 Complex := { real : F64, imag : F64 }.{
-	new : { real : F64, imag : F64 } -> Complex
-	new = |{ real, imag }| {
-		{ real, imag }
-	}
-
 	# # The user can write plus(z1, z2), z1.plus(z2), or simply z1 + z2
 	plus : Complex, Complex -> Complex
 	plus = |{ real: a, imag: b }, { real: c, imag: d }| {

@@ -1,9 +1,4 @@
 Complex := { real : F64, imag : F64 }.{
-	new : { real : F64, imag : F64 } -> Complex
-	new = |{ real, imag }| {
-		crash "Please implement the 'new' function"
-	}
-
 	# # The user can write plus(z1, z2), z1.plus(z2), or simply z1 + z2
 	plus : Complex, Complex -> Complex
 	plus = |z1, z2| {

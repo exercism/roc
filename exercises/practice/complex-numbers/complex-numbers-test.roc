@@ -10,21 +10,21 @@ import Complex
 
 # Real part of a purely real number
 expect {
-	z = Complex.new({ real: 1, imag: 0 })
+	z = Complex.{ real: 1, imag: 0 }
 	result = z.real
 	result->is_approx_eq(1)
 }
 
 # Real part of a purely imaginary number
 expect {
-	z = Complex.new({ real: 0, imag: 1 })
+	z = Complex.{ real: 0, imag: 1 }
 	result = z.real
 	result->is_approx_eq(0)
 }
 
 # Real part of a number with real and imaginary part
 expect {
-	z = Complex.new({ real: 1, imag: 2 })
+	z = Complex.{ real: 1, imag: 2 }
 	result = z.real
 	result->is_approx_eq(1)
 }
@@ -35,21 +35,21 @@ expect {
 
 # Imaginary part of a purely real number
 expect {
-	z = Complex.new({ real: 1, imag: 0 })
+	z = Complex.{ real: 1, imag: 0 }
 	result = z.imag
 	result->is_approx_eq(0)
 }
 
 # Imaginary part of a purely imaginary number
 expect {
-	z = Complex.new({ real: 0, imag: 1 })
+	z = Complex.{ real: 0, imag: 1 }
 	result = z.imag
 	result->is_approx_eq(1)
 }
 
 # Imaginary part of a number with real and imaginary part
 expect {
-	z = Complex.new({ real: 1, imag: 2 })
+	z = Complex.{ real: 1, imag: 2 }
 	result = z.imag
 	result->is_approx_eq(2)
 }
@@ -66,28 +66,28 @@ expect {
 
 # Add purely real numbers
 expect {
-	z1 = Complex.new({ real: 1, imag: 0 })
-	z2 = Complex.new({ real: 2, imag: 0 })
+	z1 = Complex.{ real: 1, imag: 0 }
+	z2 = Complex.{ real: 2, imag: 0 }
 	result = z1 + z2
-	expected = Complex.new({ real: 3, imag: 0 })
+	expected = Complex.{ real: 3, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Add purely imaginary numbers
 expect {
-	z1 = Complex.new({ real: 0, imag: 1 })
-	z2 = Complex.new({ real: 0, imag: 2 })
+	z1 = Complex.{ real: 0, imag: 1 }
+	z2 = Complex.{ real: 0, imag: 2 }
 	result = z1 + z2
-	expected = Complex.new({ real: 0, imag: 3 })
+	expected = Complex.{ real: 0, imag: 3 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Add numbers with real and imaginary part
 expect {
-	z1 = Complex.new({ real: 1, imag: 2 })
-	z2 = Complex.new({ real: 3, imag: 4 })
+	z1 = Complex.{ real: 1, imag: 2 }
+	z2 = Complex.{ real: 3, imag: 4 }
 	result = z1 + z2
-	expected = Complex.new({ real: 4, imag: 6 })
+	expected = Complex.{ real: 4, imag: 6 }
 	result->complex_is_approx_eq(expected)
 }
 
@@ -95,28 +95,28 @@ expect {
 
 # Subtract purely real numbers
 expect {
-	z1 = Complex.new({ real: 1, imag: 0 })
-	z2 = Complex.new({ real: 2, imag: 0 })
+	z1 = Complex.{ real: 1, imag: 0 }
+	z2 = Complex.{ real: 2, imag: 0 }
 	result = z1 - z2
-	expected = Complex.new({ real: -1, imag: 0 })
+	expected = Complex.{ real: -1, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Subtract purely imaginary numbers
 expect {
-	z1 = Complex.new({ real: 0, imag: 1 })
-	z2 = Complex.new({ real: 0, imag: 2 })
+	z1 = Complex.{ real: 0, imag: 1 }
+	z2 = Complex.{ real: 0, imag: 2 }
 	result = z1 - z2
-	expected = Complex.new({ real: 0, imag: -1 })
+	expected = Complex.{ real: 0, imag: -1 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Subtract numbers with real and imaginary part
 expect {
-	z1 = Complex.new({ real: 1, imag: 2 })
-	z2 = Complex.new({ real: 3, imag: 4 })
+	z1 = Complex.{ real: 1, imag: 2 }
+	z2 = Complex.{ real: 3, imag: 4 }
 	result = z1 - z2
-	expected = Complex.new({ real: -2, imag: -2 })
+	expected = Complex.{ real: -2, imag: -2 }
 	result->complex_is_approx_eq(expected)
 }
 
@@ -124,28 +124,28 @@ expect {
 
 # Multiply purely real numbers
 expect {
-	z1 = Complex.new({ real: 1, imag: 0 })
-	z2 = Complex.new({ real: 2, imag: 0 })
+	z1 = Complex.{ real: 1, imag: 0 }
+	z2 = Complex.{ real: 2, imag: 0 }
 	result = z1 * z2
-	expected = Complex.new({ real: 2, imag: 0 })
+	expected = Complex.{ real: 2, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Multiply purely imaginary numbers
 expect {
-	z1 = Complex.new({ real: 0, imag: 1 })
-	z2 = Complex.new({ real: 0, imag: 2 })
+	z1 = Complex.{ real: 0, imag: 1 }
+	z2 = Complex.{ real: 0, imag: 2 }
 	result = z1 * z2
-	expected = Complex.new({ real: -2, imag: 0 })
+	expected = Complex.{ real: -2, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Multiply numbers with real and imaginary part
 expect {
-	z1 = Complex.new({ real: 1, imag: 2 })
-	z2 = Complex.new({ real: 3, imag: 4 })
+	z1 = Complex.{ real: 1, imag: 2 }
+	z2 = Complex.{ real: 3, imag: 4 }
 	result = z1 * z2
-	expected = Complex.new({ real: -5, imag: 10 })
+	expected = Complex.{ real: -5, imag: 10 }
 	result->complex_is_approx_eq(expected)
 }
 
@@ -153,28 +153,28 @@ expect {
 
 # Divide purely real numbers
 expect {
-	z1 = Complex.new({ real: 1, imag: 0 })
-	z2 = Complex.new({ real: 2, imag: 0 })
+	z1 = Complex.{ real: 1, imag: 0 }
+	z2 = Complex.{ real: 2, imag: 0 }
 	result = z1 / z2
-	expected = Complex.new({ real: 0.5, imag: 0 })
+	expected = Complex.{ real: 0.5, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Divide purely imaginary numbers
 expect {
-	z1 = Complex.new({ real: 0, imag: 1 })
-	z2 = Complex.new({ real: 0, imag: 2 })
+	z1 = Complex.{ real: 0, imag: 1 }
+	z2 = Complex.{ real: 0, imag: 2 }
 	result = z1 / z2
-	expected = Complex.new({ real: 0.5, imag: 0 })
+	expected = Complex.{ real: 0.5, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Divide numbers with real and imaginary part
 expect {
-	z1 = Complex.new({ real: 1, imag: 2 })
-	z2 = Complex.new({ real: 3, imag: 4 })
+	z1 = Complex.{ real: 1, imag: 2 }
+	z2 = Complex.{ real: 3, imag: 4 }
 	result = z1 / z2
-	expected = Complex.new({ real: 0.44, imag: 0.08 })
+	expected = Complex.{ real: 0.44, imag: 0.08 }
 	result->complex_is_approx_eq(expected)
 }
 
@@ -184,35 +184,35 @@ expect {
 
 # Absolute value of a positive purely real number
 expect {
-	z = Complex.new({ real: 5, imag: 0 })
+	z = Complex.{ real: 5, imag: 0 }
 	result = z.abs()
 	result->is_approx_eq(5)
 }
 
 # Absolute value of a negative purely real number
 expect {
-	z = Complex.new({ real: -5, imag: 0 })
+	z = Complex.{ real: -5, imag: 0 }
 	result = z.abs()
 	result->is_approx_eq(5)
 }
 
 # Absolute value of a purely imaginary number with positive imaginary part
 expect {
-	z = Complex.new({ real: 0, imag: 5 })
+	z = Complex.{ real: 0, imag: 5 }
 	result = z.abs()
 	result->is_approx_eq(5)
 }
 
 # Absolute value of a purely imaginary number with negative imaginary part
 expect {
-	z = Complex.new({ real: 0, imag: -5 })
+	z = Complex.{ real: 0, imag: -5 }
 	result = z.abs()
 	result->is_approx_eq(5)
 }
 
 # Absolute value of a number with real and imaginary part
 expect {
-	z = Complex.new({ real: 3, imag: 4 })
+	z = Complex.{ real: 3, imag: 4 }
 	result = z.abs()
 	result->is_approx_eq(5)
 }
@@ -223,25 +223,25 @@ expect {
 
 # Conjugate a purely real number
 expect {
-	z = Complex.new({ real: 5, imag: 0 })
+	z = Complex.{ real: 5, imag: 0 }
 	result = z.conjugate()
-	expected = Complex.new({ real: 5, imag: 0 })
+	expected = Complex.{ real: 5, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Conjugate a purely imaginary number
 expect {
-	z = Complex.new({ real: 0, imag: 5 })
+	z = Complex.{ real: 0, imag: 5 }
 	result = z.conjugate()
-	expected = Complex.new({ real: 0, imag: -5 })
+	expected = Complex.{ real: 0, imag: -5 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Conjugate a number with real and imaginary part
 expect {
-	z = Complex.new({ real: 1, imag: 1 })
+	z = Complex.{ real: 1, imag: 1 }
 	result = z.conjugate()
-	expected = Complex.new({ real: 1, imag: -1 })
+	expected = Complex.{ real: 1, imag: -1 }
 	result->complex_is_approx_eq(expected)
 }
 
@@ -251,41 +251,41 @@ expect {
 
 # Euler's identity/formula
 expect {
-	z = Complex.new({ real: 0, imag: 3.141592653589793.F64 })
+	z = Complex.{ real: 0, imag: 3.141592653589793.F64 }
 	result = z.exp()
-	expected = Complex.new({ real: -1, imag: 0 })
+	expected = Complex.{ real: -1, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Exponential of 0
 expect {
-	z = Complex.new({ real: 0, imag: 0 })
+	z = Complex.{ real: 0, imag: 0 }
 	result = z.exp()
-	expected = Complex.new({ real: 1, imag: 0 })
+	expected = Complex.{ real: 1, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Exponential of a purely real number
 expect {
-	z = Complex.new({ real: 1, imag: 0 })
+	z = Complex.{ real: 1, imag: 0 }
 	result = z.exp()
-	expected = Complex.new({ real: 2.718281828459045.F64, imag: 0 })
+	expected = Complex.{ real: 2.718281828459045.F64, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Exponential of a number with real and imaginary part
 expect {
-	z = Complex.new({ real: 0.6931471805599453.F64, imag: 3.141592653589793.F64 })
+	z = Complex.{ real: 0.6931471805599453.F64, imag: 3.141592653589793.F64 }
 	result = z.exp()
-	expected = Complex.new({ real: -2, imag: 0 })
+	expected = Complex.{ real: -2, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Exponential resulting in a number with real and imaginary part
 expect {
-	z = Complex.new({ real: 0.6931471805599453.F64 / 2, imag: 3.141592653589793.F64 / 4 })
+	z = Complex.{ real: 0.6931471805599453.F64 / 2, imag: 3.141592653589793.F64 / 4 }
 	result = z.exp()
-	expected = Complex.new({ real: 1, imag: 1 })
+	expected = Complex.{ real: 1, imag: 1 }
 	result->complex_is_approx_eq(expected)
 }
 
@@ -295,73 +295,73 @@ expect {
 
 # Add real number to complex number
 expect {
-	z1 = Complex.new({ real: 1, imag: 2 })
-	z2 = Complex.new({ real: 5, imag: 0 })
+	z1 = Complex.{ real: 1, imag: 2 }
+	z2 = Complex.{ real: 5, imag: 0 }
 	result = z1 + z2
-	expected = Complex.new({ real: 6, imag: 2 })
+	expected = Complex.{ real: 6, imag: 2 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Add complex number to real number
 expect {
-	z1 = Complex.new({ real: 5, imag: 0 })
-	z2 = Complex.new({ real: 1, imag: 2 })
+	z1 = Complex.{ real: 5, imag: 0 }
+	z2 = Complex.{ real: 1, imag: 2 }
 	result = z1 + z2
-	expected = Complex.new({ real: 6, imag: 2 })
+	expected = Complex.{ real: 6, imag: 2 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Subtract real number from complex number
 expect {
-	z1 = Complex.new({ real: 5, imag: 7 })
-	z2 = Complex.new({ real: 4, imag: 0 })
+	z1 = Complex.{ real: 5, imag: 7 }
+	z2 = Complex.{ real: 4, imag: 0 }
 	result = z1 - z2
-	expected = Complex.new({ real: 1, imag: 7 })
+	expected = Complex.{ real: 1, imag: 7 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Subtract complex number from real number
 expect {
-	z1 = Complex.new({ real: 4, imag: 0 })
-	z2 = Complex.new({ real: 5, imag: 7 })
+	z1 = Complex.{ real: 4, imag: 0 }
+	z2 = Complex.{ real: 5, imag: 7 }
 	result = z1 - z2
-	expected = Complex.new({ real: -1, imag: -7 })
+	expected = Complex.{ real: -1, imag: -7 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Multiply complex number by real number
 expect {
-	z1 = Complex.new({ real: 2, imag: 5 })
-	z2 = Complex.new({ real: 5, imag: 0 })
+	z1 = Complex.{ real: 2, imag: 5 }
+	z2 = Complex.{ real: 5, imag: 0 }
 	result = z1 * z2
-	expected = Complex.new({ real: 10, imag: 25 })
+	expected = Complex.{ real: 10, imag: 25 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Multiply real number by complex number
 expect {
-	z1 = Complex.new({ real: 5, imag: 0 })
-	z2 = Complex.new({ real: 2, imag: 5 })
+	z1 = Complex.{ real: 5, imag: 0 }
+	z2 = Complex.{ real: 2, imag: 5 }
 	result = z1 * z2
-	expected = Complex.new({ real: 10, imag: 25 })
+	expected = Complex.{ real: 10, imag: 25 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Divide complex number by real number
 expect {
-	z1 = Complex.new({ real: 10, imag: 100 })
-	z2 = Complex.new({ real: 10, imag: 0 })
+	z1 = Complex.{ real: 10, imag: 100 }
+	z2 = Complex.{ real: 10, imag: 0 }
 	result = z1 / z2
-	expected = Complex.new({ real: 1, imag: 10 })
+	expected = Complex.{ real: 1, imag: 10 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Divide real number by complex number
 expect {
-	z1 = Complex.new({ real: 5, imag: 0 })
-	z2 = Complex.new({ real: 1, imag: 1 })
+	z1 = Complex.{ real: 5, imag: 0 }
+	z2 = Complex.{ real: 1, imag: 1 }
 	result = z1 / z2
-	expected = Complex.new({ real: 2.5, imag: -2.5 })
+	expected = Complex.{ real: 2.5, imag: -2.5 }
 	result->complex_is_approx_eq(expected)
 }
 
