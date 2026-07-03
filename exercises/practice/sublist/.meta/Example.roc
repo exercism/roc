@@ -1,7 +1,7 @@
 Sublist :: {}.{
 	sublist : List(U8), List(U8) -> [Equal, Sublist, Superlist, Unequal]
 	sublist = |list1, list2| {
-		match list1.len()->compare(list2.len()) {
+		match list1.len().compare(list2.len()) {
 			GT => {
 				match sublist(list2, list1) {
 					Sublist => Superlist
@@ -42,16 +42,5 @@ Sublist :: {}.{
 				}
 			}
 		}
-	}
-}
-
-# The following function should soon be available in Roc's builtins
-compare = |a, b| {
-	if a < b {
-		LT
-	} else if a > b {
-		GT
-	} else {
-		EQ
 	}
 }

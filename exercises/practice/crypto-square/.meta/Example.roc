@@ -44,6 +44,14 @@ CryptoSquare :: {}.{
 	}
 }
 
+sqrt_ceiling = |n| {
+	var $i = 0
+	while $i * $i < n {
+		$i = $i + 1
+	}
+	$i
+}
+
 # The following function should soon be available in Roc's builtins
 chunks_of = |iter, size| {
 	var $state = []
@@ -69,12 +77,4 @@ join_map = |iter, func| {
 		}
 	}
 	$state
-}
-
-sqrt_ceiling = |n| {
-	var $i = 0
-	while $i * $i < n {
-		$i = $i + 1
-	}
-	$i
 }

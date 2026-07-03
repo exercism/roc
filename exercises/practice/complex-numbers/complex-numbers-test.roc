@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/complex-numbers/canonical-data.json
-# File last updated on 2026-06-23
+# File last updated on 2026-07-03
 
 import Complex
 
@@ -251,7 +251,7 @@ expect {
 
 # Euler's identity/formula
 expect {
-	z = Complex.{ real: 0, imag: 3.141592653589793.F64 }
+	z = Complex.{ real: 0, imag: F64.pi }
 	result = z.exp()
 	expected = Complex.{ real: -1, imag: 0 }
 	result->complex_is_approx_eq(expected)
@@ -269,13 +269,13 @@ expect {
 expect {
 	z = Complex.{ real: 1, imag: 0 }
 	result = z.exp()
-	expected = Complex.{ real: 2.718281828459045.F64, imag: 0 }
+	expected = Complex.{ real: F64.e, imag: 0 }
 	result->complex_is_approx_eq(expected)
 }
 
 # Exponential of a number with real and imaginary part
 expect {
-	z = Complex.{ real: 0.6931471805599453.F64, imag: 3.141592653589793.F64 }
+	z = Complex.{ real: 0.6931471805599453.F64, imag: F64.pi }
 	result = z.exp()
 	expected = Complex.{ real: -2, imag: 0 }
 	result->complex_is_approx_eq(expected)
@@ -283,7 +283,7 @@ expect {
 
 # Exponential resulting in a number with real and imaginary part
 expect {
-	z = Complex.{ real: 0.6931471805599453.F64 / 2, imag: 3.141592653589793.F64 / 4 }
+	z = Complex.{ real: 0.6931471805599453.F64 / 2, imag: F64.pi / 4 }
 	result = z.exp()
 	expected = Complex.{ real: 1, imag: 1 }
 	result->complex_is_approx_eq(expected)

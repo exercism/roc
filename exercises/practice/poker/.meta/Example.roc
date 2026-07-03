@@ -156,48 +156,6 @@ get_rank = |hand| {
 	category * pow_int(13, 5) + rank_within_category
 }
 
-pow_int : U64, U64 -> U64
-pow_int = |number, pow| {
-	(1..=pow).fold(
-		1,
-		|acc, _| {
-			acc * number
-		},
-	)
-}
-
-sort_asc = |list| {
-	list.sort_with(
-		|a, b| {
-			if a < b {
-				LT
-			} else if a > b {
-				GT
-			} else {
-				EQ
-			}
-		},
-	)
-}
-
-sort_desc = |list| {
-	list.sort_with(
-		|a, b| {
-			if a > b {
-				LT
-			} else if a < b {
-				GT
-			} else {
-				EQ
-			}
-		},
-	)
-}
-
-take_last = |list, n| {
-	list.sublist({ start: list.len() - n, len: n })
-}
-
 # The following functions should soon be available in Roc's builtins
 join_map = |iter, func| {
 	var $state = []
@@ -215,4 +173,26 @@ map_try = |iter, func| {
 		$state = $state.append(func(item)?)
 	}
 	Ok($state)
+}
+
+pow_int : U64, U64 -> U64
+pow_int = |number, pow| {
+	(1..=pow).fold(
+		1,
+		|acc, _| {
+			acc * number
+		},
+	)
+}
+
+sort_asc = |list| {
+	list.sort_with(|a, b| a.compare(b))
+}
+
+sort_desc = |list| {
+	list.sort_with(|a, b| b.compare(a))
+}
+
+take_last = |list, n| {
+	list.sublist({ start: list.len() - n, len: n })
 }

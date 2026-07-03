@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/custom-set/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-07-03
 
 import CustomSet
 
@@ -460,18 +460,9 @@ expect {
 	result == expected
 }
 
+# The following function should soon be available in Roc's builtins
 sort_asc = |list| {
-	list.sort_with(
-		|a, b| {
-			if a < b {
-				LT
-			} else if a > b {
-				GT
-			} else {
-				EQ
-			}
-		},
-	)
+	list.sort_with(|a, b| a.compare(b))
 }
 
 # This program is only used to run tests with `roc test`, so main! does nothing.

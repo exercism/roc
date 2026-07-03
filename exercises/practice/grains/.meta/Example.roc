@@ -9,7 +9,7 @@ Grains :: {}.{
 	}
 
 	total_grains : U64
-	total_grains = max_u64
+	total_grains = U64.highest
 }
 
 # This function should soon be available in Roc's builtins
@@ -22,5 +22,3 @@ pow_int = |number, pow| {
 		},
 	)
 }
-
-max_u64 = 18_446_744_073_709_551_615

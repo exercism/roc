@@ -31,7 +31,7 @@ Change :: {}.{
 			}
 		}
 
-		help(coins->sort_desc(), target, max_u64)?
+		help(coins->sort_desc(), target, U64.highest)?
 	}
 		->sort_asc()
 		->Ok()
@@ -39,27 +39,9 @@ Change :: {}.{
 
 # The following functions should soon be available in Roc's builtins
 sort_asc = |list| {
-	list.sort_with(
-		|a, b| if a < b {
-			LT
-		} else if a > b {
-			GT
-		} else {
-			EQ
-		},
-	)
+	list.sort_with(|a, b| a.compare(b))
 }
 
 sort_desc = |list| {
-	list.sort_with(
-		|a, b| if a < b {
-			GT
-		} else if a > b {
-			LT
-		} else {
-			EQ
-		},
-	)
+	list.sort_with(|a, b| b.compare(a))
 }
-
-max_u64 = 18_446_744_073_709_551_615

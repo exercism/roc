@@ -64,14 +64,6 @@ chunks_of = |iter, size| {
 	$state
 }
 
-collect = |iter| {
-	var $state = []
-	for item in iter {
-		$state = $state.append(item)
-	}
-	$state
-}
-
 intersperse = |list, sep| {
 	match list {
 		[] => []
@@ -98,4 +90,33 @@ join_map = |iter, func| {
 		}
 	}
 	$state
+}
+
+fold_try : List(a), b, (b, a -> Try(b, err)) -> Try(b, err)
+fold_try = |list, init, func| {
+	list.fold_until(
+		Ok(init),
+		|state, item| {
+			match state {
+				Ok(internal_state) => {
+					match func(internal_state, item) {
+						Ok(new_state) => Continue(Ok(new_state))
+						Err(final_err) => Break(Err(final_err))
+					}
+				}
+				Err(_) => {
+					crash "Unreachable"
+				}
+			}
+		},
+	)
+}
+
+# The following functions should soon be available in Roc's builtins
+sort_asc = |list| {
+	list.sort_with(|a, b| a.compare(b))
+}
+
+sort_desc = |list| {
+	list.sort_with(|a, b| b.compare(a))
 }

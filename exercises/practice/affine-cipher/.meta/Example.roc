@@ -20,7 +20,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 						)
 					},
 				)
-				->collect()
+				->List.from_iter()
 
 		if Set.from_list(encode_map).len() < encode_map.len() {
 			Err(InvalidKey)
@@ -137,14 +137,6 @@ chunks_of = |iter, size| {
 	}
 	if $chunk.len() > 0 {
 		$state = $state.append($chunk)
-	}
-	$state
-}
-
-collect = |iter| {
-	var $state = []
-	for item in iter {
-		$state = $state.append(item)
 	}
 	$state
 }

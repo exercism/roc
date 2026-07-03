@@ -72,16 +72,7 @@ CustomSet :: { items : List(U64) }.{
 	}
 }
 
+# The following function should soon be available in Roc's builtins
 sort_asc = |list| {
-	list.sort_with(
-		|a, b| {
-			if a < b {
-				LT
-			} else if a > b {
-				GT
-			} else {
-				EQ
-			}
-		},
-	)
+	list.sort_with(|a, b| a.compare(b))
 }
