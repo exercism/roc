@@ -3,7 +3,7 @@
 # File last updated on 2026-06-21
 app [main!] {
 	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
-	unicode: "https://github.com/roc-lang/unicode/...", # TODO: update when a zig-compatible release is available
+	unicode: "https://github.com/roc-lang/unicode/releases/download/1.0.0/7Y6RP8ZkiMq8Vm7qQLGzm8cyEvww5EVT3YekRASH5VBg.tar.zst",
 }
 
 import pf.Stdout
