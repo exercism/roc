@@ -1,21 +1,20 @@
-
-
-import json.Json
 RestApi :: {}.{
-    get : Database, { url : Str, payload ?? Str } -> Result Str _
-    get = |database, { url, payload ?? "" }|
-        crash("Please implement the 'get' function")
+	User : {
+		name : Str,
+		owes : Dict(Str, Dec),
+		owed_by : Dict(Str, Dec),
+		balance : Dec,
+	}
 
-    post : Database, { url : Str, payload ?? Str } -> Result Str _
-    post = |database, { url, payload ?? "" }|
-        crash("Please implement the 'post' function")
+	Database : { users : List(User) }
+
+	get : Database, { url : Str, payload : Str } -> Try(Str, _)
+	get = |database, { url, payload }| {
+		crash "Please implement the 'get' function"
+	}
+
+	post : Database, { url : Str, payload : Str } -> Try(Str, _)
+	post = |database, { url, payload }| {
+		crash "Please implement the 'post' function"
+	}
 }
-
-User : {
-    name : Str,
-    owes : Dict Str F64,
-    owed_by : Dict Str F64,
-    balance : F64,
-}
-
-Database : { users : List User }
