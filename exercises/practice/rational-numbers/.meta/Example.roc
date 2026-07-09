@@ -70,12 +70,6 @@ Rational :: { num : I64, den : I64 }.{
 		d = gcd(abs_num, abs_den)
 		{ num: sign(num) * sign(den) * abs_num // d, den: abs_den // d }
 	}
-
-	# TODO: remove this function once https://github.com/roc-lang/roc/issues/9769 is resolved
-	is_eq : Rational, Rational -> Bool
-	is_eq = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
-		(num1 == num2) and (den1 == den2)
-	}
 }
 
 pow_int : I64, I64 -> I64
