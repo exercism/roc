@@ -23,10 +23,10 @@ Alphametics :: {}.{
 					letters.first() ?? 0
 				},
 			)
-			->Set.from_list()
-			.insert(
-				sum.first() ?? 0,
-			)
+				->Set.from_list()
+				.insert(
+					sum.first() ?? 0,
+				)
 		}
 
 		find_match : List((U8, U8)), List(U8), Set(U8) -> Try(List((U8, U8)), [InvalidAssignment, ..])
@@ -59,7 +59,7 @@ Alphametics :: {}.{
 								find_match(assignments.append((letter, digit)), rest, remaining_digits.remove(digit))
 							}
 						},
-					)
+					).map_err(|_| InvalidAssignment)
 				}
 			}
 		}
@@ -70,14 +70,14 @@ Alphametics :: {}.{
 }
 
 # Apply a function to each element of a list until the function returns an Ok, then return that value
-find_first_ok : Set(a), (a -> Try(b, err)) -> Try(b, [InvalidAssignment, ..])
+find_first_ok : Set(a), (a -> Try(b, err)) -> Try(b, [NotFound])
 find_first_ok = |set, func| {
 	set.to_list().fold_until(
-		Err(InvalidAssignment),
-		|state, elem| {
+		Err(NotFound),
+		|_, elem| {
 			match func(elem) {
-				Err(_) => Continue(state)
-				Ok(val) => Break(Ok(val))
+				Ok(result) => Break(Ok(result))
+				_ => Continue(Err(NotFound))
 			}
 		},
 	)
@@ -107,7 +107,7 @@ insert_term = |equation, letters, polarity| {
 
 parse : Str -> Try({ addends : List(List(U8)), sum : List(U8) }, _)
 parse = |problem| {
-	{ before, after } = problem->split_first(" == ")?
+	{ before, after } = problem->split_first(" == ") ? |_| InvalidAssignment
 	addends = 
 		before
 			.split_on(
@@ -131,11 +131,11 @@ reverse = |str| {
 }
 
 # The following function should soon be available in Roc's builtins
-split_first : Str, Str -> Try({ before : Str, after : Str }, [InvalidAssignment, ..])
+split_first : Str, Str -> Try({ before : Str, after : Str }, [NotFound])
 split_first = |str, sep| {
 	match str.split_on(sep) {
-		[] => Err(InvalidAssignment)
-		[_] => Err(InvalidAssignment)
+		[] => Err(NotFound)
+		[_] => Err(NotFound)
 		[before, .. as rest] => Ok({ before, after: rest->Str.join_with(sep) })
 	}
 }
