@@ -161,20 +161,9 @@ compare_strings = |string1, string2| {
 # The following function should soon be available in Roc's builtins
 fold_try : List(a), b, (b, a -> Try(b, err)) -> Try(b, err)
 fold_try = |list, init, func| {
-	list.fold_until(
-		Ok(init),
-		|state, item| {
-			match state {
-				Ok(internal_state) => {
-					match func(internal_state, item) {
-						Ok(new_state) => Continue(Ok(new_state))
-						Err(final_err) => Break(Err(final_err))
-					}
-				}
-				Err(_) => {
-					crash "Unreachable"
-				}
-			}
-		},
-	)
+	var $state = init
+	for item in list {
+		$state = func($state, item)?
+	}
+	Ok($state)
 }

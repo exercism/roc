@@ -94,22 +94,11 @@ join_map = |iter, func| {
 
 fold_try : List(a), b, (b, a -> Try(b, err)) -> Try(b, err)
 fold_try = |list, init, func| {
-	list.fold_until(
-		Ok(init),
-		|state, item| {
-			match state {
-				Ok(internal_state) => {
-					match func(internal_state, item) {
-						Ok(new_state) => Continue(Ok(new_state))
-						Err(final_err) => Break(Err(final_err))
-					}
-				}
-				Err(_) => {
-					crash "Unreachable"
-				}
-			}
-		},
-	)
+	var $state = init
+	for item in list {
+		$state = func($state, item)?
+	}
+	Ok($state)
 }
 
 # The following functions should soon be available in Roc's builtins
