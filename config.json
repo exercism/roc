@@ -588,6 +588,14 @@
         "difficulty": 4
       },
       {
+        "slug": "dot-dsl",
+        "name": "DOT DSL",
+        "uuid": "08cf7c8e-a997-4e66-9af4-97faa5dc5a97",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "eliuds-eggs",
         "name": "Eliud's Eggs",
         "uuid": "697273e9-a30c-47bc-bcb7-21aa0b776dd1",
