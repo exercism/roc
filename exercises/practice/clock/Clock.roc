@@ -18,4 +18,7 @@ Clock :: { hour : U8, minute : U8 }.{
 	subtract = |clock, { hour, minute }| {
 		crash "Please implement the 'subtract' function"
 	}
+
+	# The following line enables the default `is_eq` implementation
+	is_eq : _
 }

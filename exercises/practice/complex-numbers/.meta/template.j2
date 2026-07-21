@@ -56,14 +56,15 @@ expect {
 {% endfor %}
 {% endfor %}
 
+complex_is_approx_eq = |z1, z2| {
+	is_approx_eq(z1.real, z2.real) and is_approx_eq(z1.imag, z2.imag)
+}
+
+# The following function should soon be available in Roc's builtins
 is_approx_eq = |x1, x2| {
 	i1 = (x1 * 1000 + 0.5).to_i64_try() ?? { crash "Unreachable" }
 	i2 = (x2 * 1000 + 0.5).to_i64_try() ?? { crash "Unreachable" }
 	i1 == i2
-}
-
-complex_is_approx_eq = |z1, z2| {
-	is_approx_eq(z1.real, z2.real) and is_approx_eq(z1.imag, z2.imag)
 }
 
 {{ macros.footer() }}

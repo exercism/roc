@@ -33,8 +33,8 @@ SimpleLinkedList :: [Nil, Cons(U64, SimpleLinkedList)].{
 	reverse = |linked_list| {
 		help = |result, rest| {
 			match rest {
-				Nil => result
-				Cons(head, tail) => help((result->push(head)), tail)
+				SimpleLinkedList.Nil => result
+				Cons(head, tail) => help(result->push(head), tail)
 			}
 		}
 		help(Nil, linked_list)

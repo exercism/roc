@@ -46,12 +46,16 @@ to_instruction = |codon| {
 }
 
 # The following functions should soon be available in Roc's builtins
-chunks_of = |iter, size| {
+chunks_of : i, b -> List(List(a)) where [
+	i.iter : i -> Iter(a),
+	b.to_u64 : b -> U64
+]
+chunks_of = |list, size| {
 	var $state = []
 	var $chunk = []
-	for item in iter {
+	for item in list {
 		$chunk = $chunk.append(item)
-		if $chunk.len() == size {
+		if $chunk.len() == size.to_u64() {
 			$state = $state.append($chunk)
 			$chunk = []
 		}

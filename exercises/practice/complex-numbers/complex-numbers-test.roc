@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/complex-numbers/canonical-data.json
-# File last updated on 2026-07-03
+# File last updated on 2026-07-10
 
 import Complex
 
@@ -365,6 +365,11 @@ expect {
 	result->complex_is_approx_eq(expected)
 }
 
+complex_is_approx_eq = |z1, z2| {
+	is_approx_eq(z1.real, z2.real) and is_approx_eq(z1.imag, z2.imag)
+}
+
+# The following function should soon be available in Roc's builtins
 is_approx_eq = |x1, x2| {
 	i1 = (x1 * 1000 + 0.5).to_i64_try() ?? {
 		crash "Unreachable"
@@ -373,10 +378,6 @@ is_approx_eq = |x1, x2| {
 		crash "Unreachable"
 	}
 	i1 == i2
-}
-
-complex_is_approx_eq = |z1, z2| {
-	is_approx_eq(z1.real, z2.real) and is_approx_eq(z1.imag, z2.imag)
 }
 
 # This program is only used to run tests with `roc test`, so main! does nothing.

@@ -3,7 +3,10 @@ import parser.String as S
 
 SgfParsing :: {}.{
 	NodeProperties : Dict(Str, List(Str))
-	GameTree := [GameNode({ properties : NodeProperties, children : List(GameTree) })]
+	GameTree := { properties : NodeProperties, children : List(GameTree) }.{
+		# The following line enables the default `is_eq` implementation
+		is_eq : _
+	}
 
 	parse : Str -> Try(GameTree, [ParsingFailure(Str), ParsingIncomplete(Str)])
 	parse = |sgf| {
@@ -31,13 +34,14 @@ SgfParsing :: {}.{
 
 build_game_node : List(SgfParsing.NodeProperties), List(SgfParsing.GameTree) -> SgfParsing.GameTree
 build_game_node = |node_props, alternatives| {
+	help : List(SgfParsing.NodeProperties), List(SgfParsing.GameTree) -> SgfParsing.GameTree
 	help = |remaining_node_props, sub_trees| {
 		match remaining_node_props {
 			[root_node] =>
-				GameNode({ properties: root_node, children: sub_trees })
+				{ properties: root_node, children: sub_trees }
 
 			[.. as rest, last] =>
-				help(rest, [GameNode({ properties: last, children: sub_trees })])
+				help(rest, [{ properties: last, children: sub_trees }])
 
 			[] => {
 				crash "Unreachable: remaining_node_props list cannot be empty"

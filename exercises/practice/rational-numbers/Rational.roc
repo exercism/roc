@@ -48,4 +48,7 @@ Rational :: { num : I64, den : I64 }.{
 	reduce = |r| {
 		crash "Please implement the 'reduce' function"
 	}
+
+	# The following line enables the default `is_eq` implementation
+	is_eq : _
 }

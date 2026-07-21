@@ -131,7 +131,6 @@ reverse = |str| {
 }
 
 # The following function should soon be available in Roc's builtins
-split_first : Str, Str -> Try({ before : Str, after : Str }, [NotFound])
 split_first = |str, sep| {
 	match str.split_on(sep) {
 		[] => Err(NotFound)
@@ -140,7 +139,6 @@ split_first = |str, sep| {
 	}
 }
 
-pow_int : I64, U64 -> I64
 pow_int = |number, pow| {
 	(1..=pow).fold(
 		1,

@@ -17,13 +17,5 @@ HighScores :: {}.{
 
 # The following functions should soon be available in Roc's builtins
 sort_desc = |list| {
-	list.sort_with(
-		|a, b| if a < b {
-			GT
-		} else if a > b {
-			LT
-		} else {
-			EQ
-		},
-	)
+	list.sort_with(|a, b| b.compare(a))
 }

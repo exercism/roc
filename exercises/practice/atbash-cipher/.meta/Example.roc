@@ -48,12 +48,12 @@ invert = |char| {
 }
 
 # The following functions should soon be available in Roc's builtins
-chunks_of = |iter, size| {
+chunks_of = |list, size| {
 	var $state = []
 	var $chunk = []
-	for item in iter {
+	for item in list {
 		$chunk = $chunk.append(item)
-		if $chunk.len() == size {
+		if $chunk.len() == size.to_u64() {
 			$state = $state.append($chunk)
 			$chunk = []
 		}
@@ -65,16 +65,16 @@ chunks_of = |iter, size| {
 }
 
 intersperse = |list, sep| {
-	match list {
-		[] => []
-		[_] => list
-		[first, .. as rest] => [first, sep].concat(intersperse(rest, sep))
+	var $res = []
+	for item in list {
+		$res = $res.concat([item, sep])
 	}
+	$res.drop_last(1)
 }
 
-join = |iter| {
+join = |list| {
 	var $state = []
-	for sublist in iter {
+	for sublist in list {
 		for item in sublist {
 			$state = $state.append(item)
 		}
@@ -82,9 +82,9 @@ join = |iter| {
 	$state
 }
 
-join_map = |iter, func| {
+join_map = |list, func| {
 	var $state = []
-	for item in iter {
+	for item in list {
 		for subitem in func(item) {
 			$state = $state.append(subitem)
 		}
@@ -92,7 +92,6 @@ join_map = |iter, func| {
 	$state
 }
 
-fold_try : List(a), b, (b, a -> Try(b, err)) -> Try(b, err)
 fold_try = |list, init, func| {
 	var $state = init
 	for item in list {
@@ -101,7 +100,6 @@ fold_try = |list, init, func| {
 	Ok($state)
 }
 
-# The following functions should soon be available in Roc's builtins
 sort_asc = |list| {
 	list.sort_with(|a, b| a.compare(b))
 }

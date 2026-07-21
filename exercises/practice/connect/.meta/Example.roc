@@ -13,7 +13,7 @@ Connect :: {}.{
 	}
 }
 
-Cell := [StoneO, StoneX, Empty]
+Cell : [StoneO, StoneX, Empty]
 
 Board : List(List(Cell))
 
@@ -180,9 +180,9 @@ keep_oks = |iter, func| {
 		)
 }
 
-join_map = |iter, func| {
+join_map = |list, func| {
 	var $state = []
-	for item in iter {
+	for item in list {
 		for subitem in func(item) {
 			$state = $state.append(subitem)
 		}
@@ -190,9 +190,9 @@ join_map = |iter, func| {
 	$state
 }
 
-map_try = |iter, func| {
+map_try = |list, func| {
 	var $state = []
-	for item in iter {
+	for item in list {
 		$state = $state.append(func(item)?)
 	}
 	Ok($state)

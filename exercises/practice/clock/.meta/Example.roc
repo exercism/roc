@@ -31,4 +31,7 @@ Clock :: { hour : U8, minute : U8 }.{
 	subtract = |clock, { hour, minute }| {
 		clock.add({ hour: -(hour % 24 + minute // 60), minute: -(minute % 60) })
 	}
+
+	# The following line enables the default `is_eq` implementation
+	is_eq : _
 }

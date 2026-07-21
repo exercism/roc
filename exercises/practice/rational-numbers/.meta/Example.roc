@@ -70,6 +70,9 @@ Rational :: { num : I64, den : I64 }.{
 		d = gcd(abs_num, abs_den)
 		{ num: sign(num) * sign(den) * abs_num // d, den: abs_den // d }
 	}
+
+	# The following line enables the default `is_eq` implementation
+	is_eq : _
 }
 
 pow_int : I64, I64 -> I64

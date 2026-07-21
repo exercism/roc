@@ -59,7 +59,7 @@ RunLengthEncoding :: {}.{
 }
 
 # The following function should soon be available in Roc's builtins
-fold_try : List(a), b, (b, a -> Try(b, err)) -> Try(b, err)
+fold_try : i, b, (b, a -> Try(b, err)) -> Try(b, err) where [i.iter : i -> Iter(a)]
 fold_try = |list, init, func| {
 	var $state = init
 	for item in list {
@@ -67,3 +67,4 @@ fold_try = |list, init, func| {
 	}
 	Ok($state)
 }
+

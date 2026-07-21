@@ -27,4 +27,7 @@ BinarySearchTree := [Nil, Node({ value : U64, left : BinarySearchTree, right : B
 			}
 		}
 	}
+
+	# The following line enables the default `is_eq` implementation
+	is_eq : _
 }

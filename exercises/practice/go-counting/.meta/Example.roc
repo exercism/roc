@@ -174,9 +174,9 @@ search_territory = |board, intersection| {
 }
 
 # The following function should soon be available in Roc's builtins
-join = |iter| {
+join = |list| {
 	var $state = []
-	for sublist in iter {
+	for sublist in list {
 		for item in sublist {
 			$state = $state.append(item)
 		}
@@ -184,14 +184,10 @@ join = |iter| {
 	$state
 }
 
-map_try = |iter, func| {
+map_try = |list, func| {
 	var $state = []
-	for item in iter {
+	for item in list {
 		$state = $state.append(func(item)?)
 	}
 	Ok($state)
-}
-
-sub_saturated = |a, b| {
-	a.sub_checked(b) ?? 0
 }

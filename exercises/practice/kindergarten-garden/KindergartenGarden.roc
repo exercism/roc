@@ -1,6 +1,6 @@
 KindergartenGarden :: {}.{
-	Student := [Alice, Bob, Charlie, David, Eve, Fred, Ginny, Harriet, Ileana, Joseph, Kincaid, Larry]
-	Plant := [Grass, Clover, Radishes, Violets]
+	Student : [Alice, Bob, Charlie, David, Eve, Fred, Ginny, Harriet, Ileana, Joseph, Kincaid, Larry]
+	Plant : [Grass, Clover, Radishes, Violets]
 
 	plants : Str, Student -> Try(List(Plant), _)
 	plants = |diagram, student| {

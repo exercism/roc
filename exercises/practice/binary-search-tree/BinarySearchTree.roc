@@ -8,4 +8,7 @@ BinarySearchTree := [Nil, Node({ value : U64, left : BinarySearchTree, right : B
 	to_list = |tree| {
 		crash "Please implement the 'to_list' function"
 	}
+
+	# The following line enables the default `is_eq` implementation
+	is_eq : _
 }

@@ -25,7 +25,6 @@ list_digits = |number| {
 }
 
 # This function should soon be available in Roc's builtins
-pow_int : U64, U64 -> U64
 pow_int = |number, pow| {
 	(1..=pow).fold(
 		1,

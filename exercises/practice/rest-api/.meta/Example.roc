@@ -128,13 +128,13 @@ pop_amount = |dict, key| {
 	}
 }
 
-parse_json_loan : Str -> Try(RestApi.Loan, [InvalidJson])
+parse_json_loan : Str -> Try(RestApi.Loan, [InvalidJson, ..])
 parse_json_loan = |payload| Json.parse(payload).map_err(|_| InvalidJson)
 
-get_user : RestApi.Database, Str -> Try(RestApi.User, [NotFound])
+get_user : RestApi.Database, Str -> Try(RestApi.User, [NotFound, ..])
 get_user = |database, name| {
 	database.users
-		.find_first(|user| user.name == name)
+		.find_first(|user| user.name == name).map_err(|_| NotFound)
 }
 
 compare_strings : Str, Str -> [LT, EQ, GT]
@@ -159,7 +159,6 @@ compare_strings = |string1, string2| {
 }
 
 # The following function should soon be available in Roc's builtins
-fold_try : List(a), b, (b, a -> Try(b, err)) -> Try(b, err)
 fold_try = |list, init, func| {
 	var $state = init
 	for item in list {
@@ -167,3 +166,4 @@ fold_try = |list, init, func| {
 	}
 	Ok($state)
 }
+

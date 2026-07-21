@@ -34,9 +34,10 @@ parse_octal_digit = |char| {
 }
 
 # The following function should soon be available in Roc's builtins
-map_try = |iter, func| {
+map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
+map_try = |list, func| {
 	var $state = []
-	for item in iter {
+	for item in list {
 		$state = $state.append(func(item)?)
 	}
 	Ok($state)

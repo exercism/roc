@@ -23,9 +23,9 @@ Binary :: {}.{
 }
 
 # The following function should soon be available in Roc's builtins
-map_try = |iter, func| {
+map_try = |list, func| {
 	var $state = []
-	for item in iter {
+	for item in list {
 		$state = $state.append(func(item)?)
 	}
 	Ok($state)

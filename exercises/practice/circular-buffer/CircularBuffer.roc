@@ -23,4 +23,7 @@ CircularBuffer :: { data : List(I64), start : U64, length : U64 }.{
 	clear = |circular_buffer| {
 		crash "Please implement the 'clear' function"
 	}
+
+	# The following line enables the default `is_eq` implementation
+	is_eq : _
 }

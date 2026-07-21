@@ -1,6 +1,6 @@
 KindergartenGarden :: {}.{
-	Student := [Alice, Bob, Charlie, David, Eve, Fred, Ginny, Harriet, Ileana, Joseph, Kincaid, Larry]
-	Plant := [Grass, Clover, Radishes, Violets]
+	Student : [Alice, Bob, Charlie, David, Eve, Fred, Ginny, Harriet, Ileana, Joseph, Kincaid, Larry]
+	Plant : [Grass, Clover, Radishes, Violets]
 
 	plants : Str, Student -> Try(List(Plant), [UnknownPlant(U8), OutOfBounds])
 	plants = |diagram, student| {
@@ -40,9 +40,10 @@ student_index = |student| {
 	}
 }
 
-map_try = |iter, func| {
+map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
+map_try = |list, func| {
 	var $state = []
-	for item in iter {
+	for item in list {
 		$state = $state.append(func(item)?)
 	}
 	Ok($state)

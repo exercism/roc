@@ -1,6 +1,9 @@
 SgfParsing :: {}.{
 	NodeProperties : Dict(Str, List(Str))
-	GameTree : [GameNode, { properties : NodeProperties, children : List(GameTree) }]
+	GameTree := { properties : NodeProperties, children : List(GameTree) }.{
+		# The following line enables the default `is_eq` implementation
+		is_eq : _
+	}
 
 	parse : Str -> Try(GameTree, _)
 	parse = |sgf| {

@@ -85,6 +85,7 @@ TwoBucket :: {}.{
 }
 
 bfs = |{ start, neighbors, success }| {
+	help : List(_), Set(_), Dict(_, _) -> Try(_, _)
 	help = |to_visit, visited, from| {
 		match to_visit {
 			[] => Err(NoPathExists)

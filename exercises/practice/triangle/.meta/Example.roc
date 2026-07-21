@@ -1,12 +1,12 @@
 Triangle :: {}.{
 	is_equilateral : (F64, F64, F64) -> Bool
 	is_equilateral = |(a, b, c)| {
-		is_valid_triangle((a, b, c)) and approx_eq(a, b) and approx_eq(b, c)
+		is_valid_triangle((a, b, c)) and is_approx_eq(a, b) and is_approx_eq(b, c)
 	}
 
 	is_isosceles : (F64, F64, F64) -> Bool
 	is_isosceles = |(a, b, c)| {
-		is_valid_triangle((a, b, c)) and (approx_eq(a, b) or approx_eq(b, c) or approx_eq(a, c))
+		is_valid_triangle((a, b, c)) and (is_approx_eq(a, b) or is_approx_eq(b, c) or is_approx_eq(a, c))
 	}
 
 	is_scalene : (F64, F64, F64) -> Bool
@@ -20,8 +20,8 @@ is_valid_triangle = |(a, b, c)| {
 }
 
 # The following function should soon be available in Roc's builtins
-approx_eq : F64, F64 -> Bool
-approx_eq = |x, y| {
+is_approx_eq : F64, F64 -> Bool
+is_approx_eq = |x, y| {
 	to_int : F64 -> Try(I64, [OutOfRange])
 	to_int = |f| {
 		(f * 1e6).to_i64_try()

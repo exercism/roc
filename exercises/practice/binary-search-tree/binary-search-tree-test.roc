@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/binary-search-tree/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-07-21
 
 import BinarySearchTree exposing [from_list, to_list]
 
@@ -13,13 +13,11 @@ expect {
 		4,
 	]
 	result = from_list(data)
-	expected = Node(
-		{
-			value: 4,
-			left: Nil,
-			right: Nil,
-		},
-	)
+	expected = Node({
+		value: 4,
+		left: Nil,
+		right: Nil,
+	})
 	result == expected
 }
 
@@ -34,19 +32,15 @@ expect {
 		2,
 	]
 	result = from_list(data)
-	expected = Node(
-		{
-			value: 4,
-			left: Node(
-				{
-					value: 2,
-					left: Nil,
-					right: Nil,
-				},
-			),
+	expected = Node({
+		value: 4,
+		left: Node({
+			value: 2,
+			left: Nil,
 			right: Nil,
-		},
-	)
+		}),
+		right: Nil,
+	})
 	result == expected
 }
 
@@ -57,19 +51,15 @@ expect {
 		4,
 	]
 	result = from_list(data)
-	expected = Node(
-		{
+	expected = Node({
+		value: 4,
+		left: Node({
 			value: 4,
-			left: Node(
-				{
-					value: 4,
-					left: Nil,
-					right: Nil,
-				},
-			),
+			left: Nil,
 			right: Nil,
-		},
-	)
+		}),
+		right: Nil,
+	})
 	result == expected
 }
 
@@ -80,19 +70,15 @@ expect {
 		5,
 	]
 	result = from_list(data)
-	expected = Node(
-		{
-			value: 4,
+	expected = Node({
+		value: 4,
+		left: Nil,
+		right: Node({
+			value: 5,
 			left: Nil,
-			right: Node(
-				{
-					value: 5,
-					left: Nil,
-					right: Nil,
-				},
-			),
-		},
-	)
+			right: Nil,
+		}),
+	})
 	result == expected
 }
 
@@ -111,49 +97,35 @@ expect {
 		7,
 	]
 	result = from_list(data)
-	expected = Node(
-		{
-			value: 4,
-			left: Node(
-				{
-					value: 2,
-					left: Node(
-						{
-							value: 1,
-							left: Nil,
-							right: Nil,
-						},
-					),
-					right: Node(
-						{
-							value: 3,
-							left: Nil,
-							right: Nil,
-						},
-					),
-				},
-			),
-			right: Node(
-				{
-					value: 6,
-					left: Node(
-						{
-							value: 5,
-							left: Nil,
-							right: Nil,
-						},
-					),
-					right: Node(
-						{
-							value: 7,
-							left: Nil,
-							right: Nil,
-						},
-					),
-				},
-			),
-		},
-	)
+	expected = Node({
+		value: 4,
+		left: Node({
+			value: 2,
+			left: Node({
+				value: 1,
+				left: Nil,
+				right: Nil,
+			}),
+			right: Node({
+				value: 3,
+				left: Nil,
+				right: Nil,
+			}),
+		}),
+		right: Node({
+			value: 6,
+			left: Node({
+				value: 5,
+				left: Nil,
+				right: Nil,
+			}),
+			right: Node({
+				value: 7,
+				left: Nil,
+				right: Nil,
+			}),
+		}),
+	})
 	result == expected
 }
 
