@@ -19,7 +19,7 @@
 
 {%- if imports -%}
 app [main!] {
-    pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
+    pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst"
 {%- for name in imports -%},
     {% if name == "unicode" -%}
     unicode: "https://github.com/roc-lang/unicode/releases/download/1.0.0/7Y6RP8ZkiMq8Vm7qQLGzm8cyEvww5EVT3YekRASH5VBg.tar.zst",
