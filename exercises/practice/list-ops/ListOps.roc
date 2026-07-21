@@ -1,33 +1,51 @@
-module [append, concat, filter, length, map, foldl, foldr, reverse]
+ListOps :: {}.{
+	# # Note: this function is named "append" in the exercise instructions
+	# # but Roc prefers to name this "concat"
+	concat : List(a), List(a) -> List(a)
+	concat = |list1, list2| {
+		crash "Please implement the 'concat' function"
+	}
 
-append : List a, List a -> List a
-append = |list1, list2|
-    crash("Please implement the 'append' function")
+	# # Note: this function is named "concatenate" in the exercise instructions
+	# # but Roc prefers to name this "join"
+	join : List(List(a)) -> List(a)
+	join = |lists| {
+		crash "Please implement the 'join' function"
+	}
 
-concat : List (List a) -> List a
-concat = |lists|
-    crash("Please implement the 'concat' function")
+	filter : List(a), (a -> Bool) -> List(a)
+	filter = |list, function| {
+		crash "Please implement the 'filter' function"
+	}
 
-filter : List a, (a -> Bool) -> List a
-filter = |list, function|
-    crash("Please implement the 'filter' function")
+	# # Note: this function is named "length" in the exercise instructions
+	# # but Roc prefers to name this "len"
+	len : List(a) -> U64
+	len = |list| {
+		crash "Please implement the 'len' function"
+	}
 
-length : List a -> U64
-length = |list|
-    crash("Please implement the 'length' function")
+	map : List(a), (a -> b) -> List(b)
+	map = |list, function| {
+		crash "Please implement the 'map' function"
+	}
 
-map : List a, (a -> b) -> List b
-map = |list, function|
-    crash("Please implement the 'map' function")
+	# # Note: this function is named "foldl" in the exercise instructions
+	# # but Roc prefers to name this "fold"
+	fold : List(a), b, (b, a -> b) -> b
+	fold = |list, initial, function| {
+		crash "Please implement the 'fold' function"
+	}
 
-foldl : List a, b, (b, a -> b) -> b
-foldl = |list, initial, function|
-    crash("Please implement the 'foldl' function")
+	# # Note: this function is named "foldr" in the exercise instructions
+	# # but Roc prefers to name this "fold_rev"
+	fold_rev : List(a), b, (b, a -> b) -> b
+	fold_rev = |list, initial, function| {
+		crash "Please implement the 'fold_rev' function"
+	}
 
-foldr : List a, b, (b, a -> b) -> b
-foldr = |list, initial, function|
-    crash("Please implement the 'foldr' function")
-
-reverse : List a -> List a
-reverse = |list|
-    crash("Please implement the 'reverse' function")
+	reverse : List(a) -> List(a)
+	reverse = |list| {
+		crash "Please implement the 'reverse' function"
+	}
+}

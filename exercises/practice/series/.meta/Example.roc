@@ -1,20 +1,38 @@
-module [slices]
+Series :: {}.{
+	slices : Str, U64 -> List(Str)
+	slices = |string, slice_length| {
+		chars = string.to_utf8()
+		len = chars.len()
+		if len == 0 or slice_length == 0 or slice_length > len {
+			[]
+		} else {
+			maybe_list = 
+				(0..=(len - slice_length))
+					->map_try(
+						|start_index| {
+							chars
+								.sublist(
+									{ start: start_index, len: slice_length },
+								)
+								->Str.from_utf8()
+						},
+					)
+			match maybe_list {
+				Ok(list) => list
+				Err(BadUtf8(_)) => {
+					crash "Only ASCII strings are supported"
+				}
+			}
+		}
+	}
+}
 
-slices : Str, U64 -> List Str
-slices = |string, slice_length|
-    chars = string |> Str.to_utf8
-    len = chars |> List.len
-    if len == 0 or slice_length == 0 or slice_length > len then
-        []
-    else
-        maybe_list =
-            List.range({ start: At(0), end: At((len - slice_length)) })
-            |> List.map_try(
-                |start_index|
-                    chars
-                    |> List.sublist({ start: start_index, len: slice_length })
-                    |> Str.from_utf8,
-            )
-        when maybe_list is
-            Ok(list) -> list
-            Err(BadUtf8(_)) -> crash("Only ASCII strings are supported")
+# The following function should soon be available in Roc's builtins
+map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
+map_try = |list, func| {
+	var $state = []
+	for item in list {
+		$state = $state.append(func(item)?)
+	}
+	Ok($state)
+}

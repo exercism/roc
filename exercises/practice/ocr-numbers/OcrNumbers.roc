@@ -1,5 +1,6 @@
-module [convert]
-
-convert : Str -> Result Str _
-convert = |grid|
-    crash("Please implement the 'convert' function")
+OcrNumbers :: {}.{
+	convert : Str -> Try(Str, _)
+	convert = |grid| {
+		crash "Please implement the 'convert' function"
+	}
+}

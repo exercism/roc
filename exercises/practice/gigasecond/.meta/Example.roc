@@ -1,6 +1,13 @@
-module [add]
+
 
 import isodate.DateTime
+Gigasecond :: {}.{
+    add : Str -> Str
+    add = |moment|
+        when future_datetime(moment) is
+            Ok(string) -> string
+            Err(_) -> "Unexpected error"
+}
 
 future_datetime : Str -> Result Str [InvalidDateTimeFormat]
 future_datetime = |moment|
@@ -15,9 +22,3 @@ future_datetime = |moment|
             |> DateTime.to_iso_str
         ),
     )
-
-add : Str -> Str
-add = |moment|
-    when future_datetime(moment) is
-        Ok(string) -> string
-        Err(_) -> "Unexpected error"

@@ -1,39 +1,67 @@
-module [to_protein]
+ProteinTranslation :: {}.{
+	Codon : List(U8)
+	AminoAcid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, Tyrosine]
+	Protein : List(AminoAcid)
 
-Codon : List U8
-AminoAcid : [Cysteine, Leucine, Methionine, Phenylalanine, Serine, Tryptophan, Tyrosine]
-Protein : List AminoAcid
+	to_protein : Str -> Try(Protein, [InvalidCodon(Codon)])
+	to_protein = |rna| {
+		help : Protein, List(Codon) -> Try(Protein, [InvalidCodon(Codon)])
+		help = |protein, codons| {
+			match codons {
+				[] => Ok(protein)
+				[codon, .. as rest] => {
+					match to_instruction(codon)? {
+						Append(amino_acid) => protein.append(amino_acid)->help(rest)
+						Stop => Ok(protein)
+					}
+				}
+			}
+		}
+		help([], rna.to_utf8()->chunks_of(3))
+	}
+}
 
-to_instruction : Codon -> Result [Append AminoAcid, Stop] [InvalidCodon Codon]
-to_instruction = |codon|
-    when codon is
-        ['A', 'U', 'G'] -> Ok(Append(Methionine))
-        ['U', 'U', 'U'] -> Ok(Append(Phenylalanine))
-        ['U', 'U', 'C'] -> Ok(Append(Phenylalanine))
-        ['U', 'U', 'A'] -> Ok(Append(Leucine))
-        ['U', 'U', 'G'] -> Ok(Append(Leucine))
-        ['U', 'C', 'U'] -> Ok(Append(Serine))
-        ['U', 'C', 'C'] -> Ok(Append(Serine))
-        ['U', 'C', 'A'] -> Ok(Append(Serine))
-        ['U', 'C', 'G'] -> Ok(Append(Serine))
-        ['U', 'A', 'U'] -> Ok(Append(Tyrosine))
-        ['U', 'A', 'C'] -> Ok(Append(Tyrosine))
-        ['U', 'G', 'U'] -> Ok(Append(Cysteine))
-        ['U', 'G', 'C'] -> Ok(Append(Cysteine))
-        ['U', 'G', 'G'] -> Ok(Append(Tryptophan))
-        ['U', 'A', 'A'] -> Ok(Stop)
-        ['U', 'A', 'G'] -> Ok(Stop)
-        ['U', 'G', 'A'] -> Ok(Stop)
-        _ -> Err(InvalidCodon(codon))
+to_instruction : Codon -> Try([Append(AminoAcid), Stop], [InvalidCodon(Codon)])
+to_instruction = |codon| {
+	match codon {
+		['A', 'U', 'G'] => Ok(Append(Methionine))
+		['U', 'U', 'U'] => Ok(Append(Phenylalanine))
+		['U', 'U', 'C'] => Ok(Append(Phenylalanine))
+		['U', 'U', 'A'] => Ok(Append(Leucine))
+		['U', 'U', 'G'] => Ok(Append(Leucine))
+		['U', 'C', 'U'] => Ok(Append(Serine))
+		['U', 'C', 'C'] => Ok(Append(Serine))
+		['U', 'C', 'A'] => Ok(Append(Serine))
+		['U', 'C', 'G'] => Ok(Append(Serine))
+		['U', 'A', 'U'] => Ok(Append(Tyrosine))
+		['U', 'A', 'C'] => Ok(Append(Tyrosine))
+		['U', 'G', 'U'] => Ok(Append(Cysteine))
+		['U', 'G', 'C'] => Ok(Append(Cysteine))
+		['U', 'G', 'G'] => Ok(Append(Tryptophan))
+		['U', 'A', 'A'] => Ok(Stop)
+		['U', 'A', 'G'] => Ok(Stop)
+		['U', 'G', 'A'] => Ok(Stop)
+		_ => Err(InvalidCodon(codon))
+	}
+}
 
-to_protein : Str -> Result Protein [InvalidCodon Codon]
-to_protein = |rna|
-    help = |protein, codons|
-        when codons is
-            [] -> Ok(protein)
-            [codon, .. as rest] ->
-                when codon |> to_instruction is
-                    Ok(Append(amino_acid)) -> protein |> List.append(amino_acid) |> help(rest)
-                    Ok(Stop) -> Ok(protein)
-                    Err(err) -> Err(err)
-    help([], (rna |> Str.to_utf8 |> List.chunks_of(3)))
+# The following functions should soon be available in Roc's builtins
+chunks_of : i, b -> List(List(a)) where [
+	i.iter : i -> Iter(a),
+	b.to_u64 : b -> U64
+]
+chunks_of = |list, size| {
+	var $state = []
+	var $chunk = []
+	for item in list {
+		$chunk = $chunk.append(item)
+		if $chunk.len() == size.to_u64() {
+			$state = $state.append($chunk)
+			$chunk = []
+		}
+	}
+	if $chunk.len() > 0 {
+		$state = $state.append($chunk)
+	}
+	$state
+}

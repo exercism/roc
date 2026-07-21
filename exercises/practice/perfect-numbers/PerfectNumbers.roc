@@ -1,5 +1,6 @@
-module [classify]
-
-classify : U64 -> Result [Abundant, Deficient, Perfect] _
-classify = |number|
-    crash("Please implement the 'classify' function")
+PerfectNumbers :: {}.{
+	classify : U64 -> Try([Abundant, Deficient, Perfect], _)
+	classify = |number| {
+		crash "Please implement the 'classify' function"
+	}
+}

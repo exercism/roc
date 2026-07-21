@@ -1,29 +1,37 @@
-module [create, to_str, add, subtract]
+Clock :: { hour : U8, minute : U8 }.{
+	create : { hour : I64, minute : I64 } -> Clock
+	create = |{ hour, minute }| {
+		hour24 = (hour % 24 + minute // 60) % 24
+		minute60 = minute % 60
+		minutes_per_day = 24 * 60
+		total_minute = ((hour24 * 60 + minute60) % minutes_per_day + minutes_per_day) % minutes_per_day
+		hh = (total_minute // 60).to_u8_try() ?? {
+			crash "Unreachable"
+		}
+		mm = (total_minute % 60).to_u8_try() ?? {
+			crash "Unreachable"
+		}
+		{ hour: hh, minute: mm }
+	}
 
-Clock : { hour : U8, minute : U8 }
+	to_str : Clock -> Str
+	to_str = |{ hour, minute }| {
+		zero_padded = |num| "${if num < 10 "0" else ""}${num.to_str()}"
+		"${zero_padded(hour)}:${zero_padded(minute)}"
+	}
 
-minutes_per_day = 24 * 60
+	add : Clock, { hour : I64, minute : I64 } -> Clock
+	add = |clock, { hour, minute }| {
+		total_hour = clock.hour.to_i64() + (hour % 24 + minute // 60)
+		total_minute = clock.minute.to_i64() + minute % 60
+		create({ hour: total_hour, minute: total_minute })
+	}
 
-create : { hours ?? I64, minutes ?? I64 }* -> Clock
-create = |{ hours ?? 0, minutes ?? 0 }|
-    hours24 = (hours % 24 + minutes // 60) % 24
-    minutes60 = minutes % 60
-    total_minutes = ((hours24 * 60 + minutes60) % minutes_per_day + minutes_per_day) % minutes_per_day
-    hh = total_minutes // 60 |> Num.to_u8
-    mm = total_minutes % 60 |> Num.to_u8
-    { hour: hh, minute: mm }
+	subtract : Clock, { hour : I64, minute : I64 } -> Clock
+	subtract = |clock, { hour, minute }| {
+		clock.add({ hour: -(hour % 24 + minute // 60), minute: -(minute % 60) })
+	}
 
-to_str : Clock -> Str
-to_str = |{ hour, minute }|
-    zero_padded = |num| "${if num < 10 then "0" else ""}${num |> Num.to_str}"
-    "${zero_padded(hour)}:${zero_padded(minute)}"
-
-add : Clock, { hours ?? I64, minutes ?? I64 }* -> Clock
-add = |{ hour, minute }, { hours ?? 0, minutes ?? 0 }|
-    total_hours = Num.to_i64(hour) + (hours % 24 + minutes // 60)
-    total_minutes = Num.to_i64(minute) + minutes % 60
-    create({ hours: total_hours, minutes: total_minutes })
-
-subtract : Clock, { hours ?? I64, minutes ?? I64 }* -> Clock
-subtract = |clock, { hours ?? 0, minutes ?? 0 }|
-    clock |> add({ hours: -(hours % 24 + minutes // 60), minutes: -(minutes % 60) })
+	# The following line enables the default `is_eq` implementation
+	is_eq : _
+}

@@ -6,8 +6,11 @@ import {{ exercise | to_pascal }} exposing [owns_zebra, drinks_water]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect
+expect {
     result = {{ case["property"] | to_snake }}
     result == Ok({{ case["expected"] }})
+}
 
 {% endfor %}
+
+{{ macros.footer() }}

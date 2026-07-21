@@ -12,22 +12,27 @@ import {{ exercise | to_pascal }} exposing [encode, decode]
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
 {%- if case["property"] == "encode" %}
-expect
+expect {
     integers = {{ case["input"]["integers"] | to_roc }} 
     result = encode(integers)
     expected = {{ case["expected"] | to_roc }} 
     result == expected
+}
 {%- else %}
-expect
+expect {
     bytes = {{ case["input"]["integers"] | to_roc }} 
-    result = decode bytes
+    result = decode(bytes)
     {%- if case["expected"]["error"] %}
-    result |> Result.is_err
+    result.is_err()
     {%- else %}
     expected = Ok({{ case["expected"] | to_roc }})
     result == expected
     {%- endif %}
+}
 {%- endif %}
+
 
 {% endfor %}
 {% endfor %}
+
+{{ macros.footer() }}

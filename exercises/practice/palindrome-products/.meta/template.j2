@@ -4,18 +4,21 @@
 
 import {{ exercise | to_pascal }} exposing [smallest, largest]
 
-is_eq = |result, expected|
-    when (result, expected) is
-        (Ok({value, factors}), Ok({value: expected_value, factors: expected_factors})) ->
-            value == expected_value && factors == expected_factors
-        _ -> Bool.false
+is_eq = |result, expected| {
+    match (result, expected) {
+        (Ok({value, factors}), Ok({value: expected_value, factors: expected_factors})) => {
+            value == expected_value and factors == expected_factors
+        }
+        _ => Bool.False
+    }
+}
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect
+expect {
     result = {{ case["property"] | to_snake }}({{ case["input"] | to_roc }})
     {%- if case["expected"]["error"] %}
-    result |> Result.is_err
+    result.is_err()
     {%- else %}
     expected = Ok({
         value: {% if case["expected"]["value"] is none %}0{% else %}{{ case["expected"]["value"] }}{% endif %},
@@ -24,8 +27,10 @@ expect
             ({{ pair[0] }}, {{ pair[1] }}),{% endfor %}
         ])
     })
-    result |> is_eq(expected)
+    result->is_eq(expected)
     {%- endif %}
+}
 
 {% endfor %}
 
+{{ macros.footer() }}

@@ -22,7 +22,7 @@ roc test hello-world-test.roc
 If you've solved the exercise, you should see 0 failed tests, for example:
 
 ```
-0 failed and 1 passed in 583 ms.
+All (5) tests passed in 123.4 ms.
 ```
 
 However, if your code has any errors, they will look like this:
@@ -36,7 +36,7 @@ This expectation failed:
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-1 failed and 0 passed in 1264 ms.
+1 failed and 0 passed in 123.4 ms.
 ```
 
 This should help you fix your code. Once your code works, you can submit it using the `exercism submit` command (see `HELP.md` in the exercise directory for more details).

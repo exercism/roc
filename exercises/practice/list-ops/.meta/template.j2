@@ -2,14 +2,14 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [append, concat, filter, length, map, foldl, foldr, reverse]
+import {{ exercise | to_pascal }} exposing [concat, join, filter, len, map, fold, fold_rev, reverse]
 
 {% set function_map = {
-    "(acc, el) -> el * acc": "\\acc, el -> el * acc",
-    "(acc, el) -> el / acc": "\\acc, el -> el / acc",
-    "(acc, el) -> el + acc": "\\acc, el -> el + acc",
-    "(x) -> x + 1": "\\x -> x + 1",
-    "(x) -> x modulo 2 == 1": "Num.is_odd",
+    "(acc, el) -> el * acc": "|acc, el| el * acc",
+    "(acc, el) -> el / acc": "|acc, el| el / acc",
+    "(acc, el) -> el + acc": "|acc, el| el + acc",
+    "(x) -> x + 1": "|x| x + 1",
+    "(x) -> x modulo 2 == 1": "|n| n % 2 == 1",
 } -%}
 
 {% for supercase in cases %}
@@ -19,31 +19,48 @@ import {{ exercise | to_pascal }} exposing [append, concat, filter, length, map,
 
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
-expect
+expect {
 {%- if case["property"] == "append" %}
-    result = {{ case["property"] | to_snake }}({{ case["input"]["list1"] | to_roc }}, {{ case["input"]["list2"] | to_roc }})
+    result = {{ case["input"]["list1"] | to_roc }}->concat({{ case["input"]["list2"] | to_roc }})
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "concat" %}
-    result = {{ case["property"] | to_snake }}({{ case["input"]["lists"] | to_roc }})
+    result = {{ case["input"]["lists"] | to_roc }}->join()
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "filter" %}
-    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }}, {{ function_map[case["input"]["function"]] }})
+    result = {{ case["input"]["list"] | to_roc }}->filter({{ function_map[case["input"]["function"]] }})
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "length" %}
-    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }})
+    result = {{ case["input"]["list"] | to_roc }}->len()
     result == {{ case["expected"] }}
 {%- elif case["property"] == "map" %}
-    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }}, {{ function_map[case["input"]["function"]] }})
+    result = {{ case["input"]["list"] | to_roc }}->map({{ function_map[case["input"]["function"]] }})
     result == {{ case["expected"] }}
-{%- elif case["property"] in ("foldl", "foldr") %}
-    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }}, {{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %}|> Num.round{% endif %}
+{%- elif case["property"] == "foldl" %}
+    result = {{ case["input"]["list"] | to_roc }}->fold({{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %} -> round(){% endif %}
+    result == {{ case["expected"] | to_roc }}
+{%- elif case["property"] == "foldr" %}
+    result = {{ case["input"]["list"] | to_roc }}->fold_rev({{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %} -> round(){% endif %}
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "reverse" %}
-    result = {{ case["property"] | to_snake }}({{ case["input"]["list"] | to_roc }})
+    result = {{ case["input"]["list"] | to_roc }}->reverse()
     result == {{ case["expected"] | to_roc }}
 {%- else %}
-    Bool.true # This test case is not yet implemented
+    Bool.True # This test case is not yet implemented
 {%- endif %}
+}
 
 {% endfor -%}
 {% endfor -%}
+
+# The following function will soon be available in Roc's builtins
+round : Dec -> Dec
+round = |value| {
+	pow = 1000.0
+	(
+		(value * pow + 0.5).to_u64_try() ?? {
+			crash "Unreachable"
+		}
+	).to_dec() / pow
+}
+
+{{ macros.footer() }}

@@ -17,27 +17,27 @@
 
 {% macro header(imports=[], ignore=[]) -%}
 
-app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.20.0/X73hGh05nNTkDHU06FHC0YfFaQB1pimX7gncRcao5mU.tar.br"
 {%- if imports -%}
+app [main!] {
+    pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst"
 {%- for name in imports -%},
     {% if name == "unicode" -%}
-    unicode: "https://github.com/roc-lang/unicode/releases/download/0.3.0/9KKFsA4CdOz0JIOL7iBSI_2jGIXQ6TsFBXgd086idpY.tar.br"
+    unicode: "https://github.com/roc-lang/unicode/releases/download/1.0.0/7Y6RP8ZkiMq8Vm7qQLGzm8cyEvww5EVT3YekRASH5VBg.tar.zst",
     {%- elif name == "isodate" -%}
-    isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.6.2/73w_H-aSJNcWqtXvMG4JQw_HoaApMBLnE92XD4OcVGU.tar.br"
-    {%- elif name == "json" -%}
-    json: "https://github.com/lukewilliamboswell/roc-json/releases/download/0.13.0/RqendgZw5e1RsQa3kFhgtnMP8efWoqGRsAvubx4-zus.tar.br"
+    isodate: "https://github.com/imclerran/roc-isodate/...", # TODO: update when a zig-compatible release is available
     {%- elif name == "parser" -%}
-    parser: "https://github.com/lukewilliamboswell/roc-parser/releases/download/0.10.0/6eZYaXkrakq9fJ4oUc0VfdxU1Fap2iTuAN18q9OgQss.tar.br"
+    parser: "https://github.com/lukewilliamboswell/roc-parser/releases/download/0.11.0/HS5cXN8JrJKdxM2Y8azXzbHCxCx2qxocySTGr6sLGQTZ.tar.zst",
     {%- endif -%}
-{%- endfor -%}
-{%- endif %}
+{%- endfor %}
 }
 
 import pf.Stdout
-
-main! = |_args|
-    Stdout.line!("")
-
+{%- endif %}
 {%- endmacro %}
 
+{% macro footer() -%}
+
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| { Ok({}) }
+
+{%- endmacro %}

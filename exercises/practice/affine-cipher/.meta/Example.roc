@@ -1,79 +1,178 @@
-module [encode, decode]
+AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8) }.{
+	alphabet_size : U64
+	alphabet_size = 26
 
-alphabet_size : U64
-alphabet_size = 26
+	group_length : U64
+	group_length = 5
 
-group_length : U64
-group_length = 5
+	new : { a : U64, b : U64 } -> Try(AffineCipher, [InvalidKey])
+	new = |{ a, b }| {
+		encode_map : List(U8)
+		encode_map = 
+			(0..<alphabet_size)
+				.map(
+					|index| {
+						encoded_index = (a * index + b) % alphabet_size
+						'a' + (
+							encoded_index.to_u8_try() ?? {
+								crash "Unreachable"
+							},
+						)
+					},
+				)
+				->List.from_iter()
 
-encode : Str, { a : U64, b : U64 } -> Result Str [InvalidKey, BadUtf8 _ ]
-encode = |phrase, key|
-    alphabet = encoded_alphabet(key)?
-    phrase
-    |> Str.to_utf8
-    |> List.join_map(
-        |char|
-            if char >= '0' and char <= '9' then
-                [char]
-            else
-                char_lower = if char >= 'A' and char <= 'Z' then char - 'A' + 'a' else char
-                if char_lower >= 'a' and char_lower <= 'z' then
-                    index = char_lower - 'a' |> Num.to_u64
-                    when alphabet |> List.get(index) is
-                        Ok(encoded_char) -> [encoded_char]
-                        Err(OutOfBounds) -> crash("Unreachable: index cannot be out of bounds here")
-                else
-                    [],
-    )
-    |> List.chunks_of(group_length)
-    |> List.intersperse([' '])
-    |> List.join
-    |> Str.from_utf8
+		if Set.from_list(encode_map).len() < encode_map.len() {
+			Err(InvalidKey)
+		} else {
+			decode_map : List(U8)
+			decode_map = 
+				encode_map
+					.map_with_index(
+						|encoded, decoded_index| { encoded, decoded_index },
+					)
+					.sort_with(
+						|{ encoded: encoded1, decoded_index: _ }, { encoded: encoded2, decoded_index: _ }| {
+							if encoded1 < encoded2 {
+								LT
+							} else if encoded1 > encoded2 {
+								GT
+							} else {
+								EQ
+							}
+						},
+					)
+					.map(
+						|pair| {
+							(
+								pair.decoded_index.to_u8_try() ?? {
+									crash "Unreachable"
+								},
+							) + 'a'
+						},
+					)
 
-encoded_alphabet : { a : U64, b : U64 } -> Result (List U8) [InvalidKey]
-encoded_alphabet = |{ a, b }|
-    encoded =
-        List.range({ start: At('a'), end: At('z') })
-        |> List.map(
-            |char|
-                num = (char - 'a') |> Num.to_u64
-                index = (a * num + b) % alphabet_size
-                'a' + Num.to_u8(index),
-        )
-    if (encoded |> Set.from_list |> Set.len) < alphabet_size then
-        Err(InvalidKey)
-    else
-        Ok(encoded)
+			Ok({ a, b, encode_map, decode_map })
+		}
+	}
 
-decoded_alphabet : { a : U64, b : U64 } -> Result (List U8) [InvalidKey]
-decoded_alphabet = |key|
-    encoded_alphabet(key)?
-    |> List.map_with_index(|encoded, decoded_index| { encoded, decoded_index })
-    |> List.sort_with(
-        |{ encoded: encoded1 }, { encoded: encoded2 }|
-            Num.compare(encoded1, encoded2),
-    )
-    |> List.map(|pair| Num.to_u8(pair.decoded_index) + 'a')
-    |> Ok
+	encode : AffineCipher, Str -> Str
+	encode = |affine_cipher, phrase| {
+		maybe_result = phrase
+			.to_utf8()
+			->join_map(
+				|char| {
+					if char >= '0' and char <= '9' {
+						[char]
+					} else {
+						char_lower = if char >= 'A' and char <= 'Z' {
+							char - 'A' + 'a'
+						} else {
+							char
+						}
+						if char_lower >= 'a' and char_lower <= 'z' {
+							index = U8.to_u64(char_lower) - 'a'
+							match affine_cipher.encode_map.get(index) {
+								Ok(encoded_char) => [encoded_char]
+								Err(OutOfBounds) => {
+									crash "Unreachable: index cannot be out of bounds here"
+								}
+							}
+						} else {
+							[]
+						}
+					}
+				},
+			)
+			->chunks_of(group_length)
+			->intersperse([' '])
+			->join()
+			->Str.from_utf8()
+		match maybe_result {
+			Ok(result) => result
+			Err(_) => {
+				crash "Unreachable: ASCII characters are always valid UTF-8"
+			}
+		}
+	}
 
-decode : Str, { a : U64, b : U64 } -> Result Str [InvalidKey, BadUtf8 _, InvalidCharacter]
-decode = |phrase, key|
-    alphabet = decoded_alphabet(key)?
-    phrase
-    |> Str.to_utf8
-    |> List.map_try(
-        |char|
-            if char == ' ' then
-                Ok([])
-            else if char >= '0' and char <= '9' then
-                Ok([char])
-            else if char >= 'a' and char <= 'z' then
-                index = char - 'a' |> Num.to_u64
-                when alphabet |> List.get(index) is
-                    Ok(decoded_char) -> Ok([decoded_char])
-                    Err(OutOfBounds) -> crash("Unreachable: index cannot be out of bounds here")
-            else
-                Err(InvalidCharacter),
-    )?
-    |> List.join
-    |> Str.from_utf8
+	decode : AffineCipher, Str -> Try(Str, [BadUtf8(_), InvalidCharacter])
+	decode = |affine_cipher, phrase| {
+		phrase
+			.to_utf8()
+			->map_try(
+				|char| {
+					if char == ' ' {
+						Ok([])
+					} else if char >= '0' and char <= '9' {
+						Ok([char])
+					} else if char >= 'a' and char <= 'z' {
+						index = U8.to_u64(char) - 'a'
+						match affine_cipher.decode_map.get(index) {
+							Ok(decoded_char) => Ok([decoded_char])
+							Err(OutOfBounds) => {
+								crash "Unreachable: index cannot be out of bounds here"
+							}
+						}
+					} else {
+						Err(InvalidCharacter)
+					}
+				},
+			)?
+			->join()
+			->Str.from_utf8()
+	}
+}
+
+# The following functions should soon be available in Roc's builtins
+chunks_of = |list, size| {
+	var $state = []
+	var $chunk = []
+	for item in list {
+		$chunk = $chunk.append(item)
+		if $chunk.len() == size.to_u64() {
+			$state = $state.append($chunk)
+			$chunk = []
+		}
+	}
+	if $chunk.len() > 0 {
+		$state = $state.append($chunk)
+	}
+	$state
+}
+
+intersperse = |list, sep| {
+	var $res = []
+	for item in list {
+		$res = $res.concat([item, sep])
+	}
+	$res.drop_last(1)
+}
+
+join = |list| {
+	var $state = []
+	for sublist in list {
+		for i in sublist {
+			$state = $state.append(i)
+		}
+	}
+	$state
+}
+
+join_map = |list, func| {
+	var $state = []
+	for item in list {
+		for subitem in func(item) {
+			$state = $state.append(subitem)
+		}
+	}
+	$state
+}
+
+map_try = |list, func| {
+	var $state = []
+	for item in list {
+		$state = $state.append(func(item)?)
+	}
+	Ok($state)
+}

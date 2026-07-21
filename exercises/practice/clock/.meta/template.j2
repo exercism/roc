@@ -8,22 +8,25 @@ import {{ exercise | to_pascal }} exposing [create, add, subtract, to_str]
 # {{ case["description"] }}
 
 {%- if case["property"] == "create" %}
-expect
-    clock = create({{ plugins.to_hours_minutes_record(case["input"]) }})
-    result = clock |> to_str
+expect {
+    clock = create({{ plugins.to_hour_minute_record(case["input"]) }})
+    result = clock.to_str()
     expected = {{ case["expected"] | to_roc }} 
     result == expected
+}
 {%- elif case["property"] in ["add", "subtract"] %}
-expect
-    clock = create({{ plugins.to_hours_minutes_record(case["input"]) }})
-    result = clock |> {{ case["property"] | to_snake }}({ minutes: {{ case["input"]["value"] }} }) |> to_str
+expect {
+    clock = create({{ plugins.to_hour_minute_record(case["input"]) }})
+    result = clock.{{ case["property"] | to_snake }}({ hour: 0, minute: {{ case["input"]["value"] }} }).to_str()
     expected = {{ case["expected"] | to_roc }} 
     result == expected
+}
 {%- elif case["property"] == "equal" %}
-expect
-    clock1 = create({{ plugins.to_hours_minutes_record(case["input"]["clock1"]) }})
-    clock2 = create({{ plugins.to_hours_minutes_record(case["input"]["clock2"]) }})
+expect {
+    clock1 = create({{ plugins.to_hour_minute_record(case["input"]["clock1"]) }})
+    clock2 = create({{ plugins.to_hour_minute_record(case["input"]["clock2"]) }})
     clock1 {%- if case["expected"] %} == {%- else %} != {% endif %} clock2
+}
 
 {%- else %}
 # this test case is not implemented yet. Perhaps you can give it a try?
@@ -48,3 +51,5 @@ expect
 {% for case in additional_cases -%}
 {{ test_case(case) }}
 {% endfor %}
+
+{{ macros.footer() }}

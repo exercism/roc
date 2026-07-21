@@ -1,55 +1,125 @@
-module [add, sub, mul, div, abs, exp, exp_real, reduce]
+Rational :: { num : I64, den : I64 }.{
+	new : { num : I64, den : I64 } -> Rational
+	new = |{ num, den }| {
+		{ num, den }->reduce()
+	}
 
-add : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-add = |r1, r2|
-    Rational(a1, b1) = r1
-    Rational(a2, b2) = r2
-    Rational((a1 * b2 + a2 * b1), (b1 * b2)) |> reduce
+	# # The user can write plus(r1, r2), r1.plus(r2), or simply r1 + r2
+	plus : Rational, Rational -> Rational
+	plus = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+		{ num: num1 * den2 + num2 * den1, den: den1 * den2 }->reduce()
+	}
 
-sub : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-sub = |r1, r2|
-    Rational(a1, b1) = r1
-    Rational(a2, b2) = r2
-    Rational((a1 * b2 - a2 * b1), (b1 * b2)) |> reduce
+	# # The user can write minus(r1, r2), r1.minus(r2), or simply r1 - r2
+	minus : Rational, Rational -> Rational
+	minus = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+		{ num: num1 * den2 - num2 * den1, den: den1 * den2 }->reduce()
+	}
 
-mul : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-mul = |r1, r2|
-    Rational(a1, b1) = r1
-    Rational(a2, b2) = r2
-    Rational((a1 * a2), (b1 * b2)) |> reduce
+	# # The user can write times(r1, r2), r1.times(r2), or simply r1 * r2
+	times : Rational, Rational -> Rational
+	times = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+		{ num: num1 * num2, den: den1 * den2 }->reduce()
+	}
 
-div : [Rational (Int a) (Int a)], [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-div = |r1, r2|
-    Rational(a1, b1) = r1
-    Rational(a2, b2) = r2
-    Rational((a1 * b2), (a2 * b1)) |> reduce
+	# # The user can write div_by(r1, r2), r1.div_by(r2), or simply r1 / r2
+	div_by : Rational, Rational -> Rational
+	div_by = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
+		{ num: num1 * den2, den: num2 * den1 }->reduce()
+	}
 
-abs : [Rational (Int a) (Int a)] -> [Rational (Int a) (Int a)]
-abs = |r|
-    Rational(a, b) = r
-    Rational(Num.abs(a), Num.abs(b)) |> reduce
+	abs : Rational -> Rational
+	abs = |{ num, den }| {
+		{ num: num.abs(), den: den.abs() }->reduce()
+	}
 
-exp : [Rational (Int a) (Int a)], Int a -> [Rational (Int a) (Int a)]
-exp = |r, n|
-    Rational(a, b) = r
-    when n is
-        0 -> Rational(1, 1)
-        pos if pos > 0 -> Rational((a |> Num.pow_int(pos)), (b |> Num.pow_int(pos))) |> reduce
-        neg ->
-            m = Num.abs(neg)
-            Rational((b |> Num.pow_int(m)), (a |> Num.pow_int(m))) |> reduce
+	exp : Rational, I64 -> Rational
+	exp = |{ num, den }, n| {
+		match n {
+			0 => { num: 1, den: 1 }
+			pos if pos > 0 => { num: pow_int(num, pos), den: pow_int(den, pos) }->reduce()
+			neg => {
+				m = neg.abs()
+				{ num: pow_int(den, m), den: pow_int(num, m) }->reduce()
+			}
+		}
+	}
 
-exp_real : Frac a, [Rational (Int b) (Int b)] -> Frac a
-exp_real = |x, r|
-    Rational(a, b) = r
-    x |> Num.pow((Num.to_frac(a) / Num.to_frac(b)))
+	exp_real : F64, Rational -> F64
+	exp_real = |x, { num, den }| {
+		f : F64
+		f = num.to_f64() / den.to_f64()
+		x.pow(f)
+	}
 
-reduce : [Rational (Int b) (Int b)] -> [Rational (Int b) (Int b)]
-reduce = |r|
-    Rational(a, b) = r
-    gcd = |m, n| if n == 0 then m else gcd(n, (m % n))
-    sign = |n| if n < 0 then -1 else 1
-    abs_a = Num.abs(a)
-    abs_b = Num.abs(b)
-    d = gcd(abs_a, abs_b)
-    Rational((sign(a) * sign(b) * abs_a // d), (abs_b // d))
+	# # Reduce a rational number to its lowest terms, e.g., 6 / 8 --> 3 / 4
+	reduce : Rational -> Rational
+	reduce = |{ num, den }| {
+		gcd = |m, n| if n == 0 {
+			m
+		} else {
+			gcd(n, (m % n))
+		}
+		sign = |n| if n < 0 {
+			-1
+		} else {
+			1
+		}
+		abs_num = num.abs()
+		abs_den = den.abs()
+		d = gcd(abs_num, abs_den)
+		{ num: sign(num) * sign(den) * abs_num // d, den: abs_den // d }
+	}
+
+	# The following line enables the default `is_eq` implementation
+	is_eq : _
+}
+
+pow_int : I64, I64 -> I64
+pow_int = |number, pow| {
+	(1..=pow).fold(
+		1,
+		|acc, _| {
+			acc * number
+		},
+	)
+}
+
+# The following functions should soon be available in Roc's builtins
+
+# Calculates the natural logarithm of x, ln(x).
+log : F64 -> F64
+log = |x| {
+	if x <= 0.0 {
+		# Natural log is undefined for zero and negative numbers
+		crash "log is undefined for zero or negative numbers"
+	} else {
+		var $norm_x = x
+		var $log_offset = 0.0
+
+		# Range reduction: keep x between [1/e, e]
+		while $norm_x > F64.e {
+			$norm_x = $norm_x / F64.e
+			$log_offset = $log_offset + 1.0
+		}
+		while $norm_x < 1 / F64.e {
+			$norm_x = $norm_x * F64.e
+			$log_offset = $log_offset - 1.0
+		}
+
+		# Area hyperbolic tangent series
+		z = ($norm_x - 1.0) / ($norm_x + 1.0)
+		z2 = z * z
+		var $z_term = z
+		var $log_sum = 0.0
+		var $log_n = 1.0
+
+		for _ in 0..<30.U8 {
+			$log_sum = $log_sum + ($z_term / $log_n)
+			$z_term = $z_term * z2
+			$log_n = $log_n + 2.0
+		}
+
+		(2.0 * $log_sum) + $log_offset
+	}
+}

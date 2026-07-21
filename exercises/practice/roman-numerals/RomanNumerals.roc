@@ -1,5 +1,6 @@
-module [roman]
-
-roman : U64 -> Result Str _
-roman = |number|
-    crash("Please implement the 'roman' function")
+RomanNumerals :: {}.{
+	roman : U64 -> Try(Str, [InvalidNumber(U64)])
+	roman = |number| {
+		crash "Please implement the 'roman' function"
+	}
+}

@@ -1,5 +1,6 @@
-module [abbreviate]
-
-abbreviate : Str -> Str
-abbreviate = |text|
-    crash("Please implement the 'abbreviate' function")
+Acronym :: {}.{
+	abbreviate : Str -> Str
+	abbreviate = |text| {
+		crash "Please implement the 'abbreviate' function"
+	}
+}

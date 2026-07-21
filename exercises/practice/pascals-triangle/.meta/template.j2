@@ -6,11 +6,14 @@ import {{ exercise | to_pascal }} exposing [pascals_triangle]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect
+expect {
     result = pascals_triangle({{ case["input"]["count"] | to_roc }})
     expected = [{%- for row in case["expected"] %}
         {{ row | to_roc }},
     {%- endfor %}]
     result == expected
+}
 
 {% endfor %}
+
+{{ macros.footer() }}

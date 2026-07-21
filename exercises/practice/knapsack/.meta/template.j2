@@ -6,7 +6,7 @@ import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect
+expect {
     {%- if case["input"]["items"] == [] %}
     items = []
     {%- else %}
@@ -18,5 +18,8 @@ expect
     {%- endif %}
     result = {{ case["property"] | to_snake }}({ items, maximum_weight: {{ case["input"]["maximumWeight"] }} })
     result == {{ case["expected"] | to_roc }}
+}
 
 {% endfor %}
+
+{{ macros.footer() }}

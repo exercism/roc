@@ -88,10 +88,11 @@ cat << END_TEST > "exercises/practice/${slug}/${slug}-test.roc"
 END_TEST
 
 cat << END_STUB > "exercises/practice/${slug}/${slug_pascal}.roc"
-module [${slug_camel}]
-
-${slug_camel} = |my_arg|
-    crash "Please implement the '${slug_camel}' function"
+${slug_pascal} :: {}.{
+    ${slug_camel} = |my_arg| {
+        crash "Please implement the '${slug_camel}' function"
+    }
+}
 END_STUB
 
 cp "exercises/practice/${slug}/${slug_pascal}.roc" "exercises/practice/${slug}/.meta/Example.roc"
@@ -107,7 +108,7 @@ Your next steps are:
 - Create the example solution in 'exercises/practice/${slug}/.meta/Example.roc'
 - Verify the example solution by running 'bin/verify-exercises ${slug}'
 - Edit the stub solution in 'exercises/practice/${slug}/${slug_pascal}.roc'
-- Format all your Roc code by running 'roc format' on each .roc file
+- Format all your Roc code by running 'roc fmt' on each .roc file
 - Update the 'difficulty' value for the exercise's entry in the 'config.json' file
 - Validate CI using 'bin/configlet lint' and 'bin/configlet fmt'
 NEXT_STEPS

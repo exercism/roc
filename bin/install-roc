@@ -5,12 +5,11 @@
 
 function download_alpha_release() {
     local install_dir="${1}"
-    local install_file="${install_dir}/roc.tar.gz"
-    local release_url="https://github.com/roc-lang/roc/releases/download/alpha4-rolling/roc-linux_x86_64-alpha4-rolling.tar.gz"
+    rm -rf "${install_dir}"
     mkdir -p "${install_dir}"
-    wget -q -O ${install_file} ${release_url}
-    tar -xzf "${install_file}" -C "${install_dir}" --strip-components 1
-    rm -f "${install_file}"
+    cd "${install_dir}"
+    wget --secure-protocol=TLSv1_2 -qO- https://roc-lang.org/install_roc.sh | ROC_CONTINUE_IF_STALE=y ROC_ADD_TO_PATH=n sh
+    ln -s roc_nightly*/roc roc
 }
 
 function update_shell {

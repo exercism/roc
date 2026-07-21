@@ -1,78 +1,303 @@
-# File last updated on 2025-1-4
-app [main!] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.20.0/X73hGh05nNTkDHU06FHC0YfFaQB1pimX7gncRcao5mU.tar.br",
+# These tests are auto-generated with test data from:
+# https://github.com/exercism/problem-specifications/tree/main/exercises/simple-linked-list/canonical-data.json
+# File last updated on 2026-07-21
+
+import SimpleLinkedList
+
+##
+## count
+##
+
+# Empty list has length of zero
+expect {
+	result = 
+		SimpleLinkedList.from_list([])
+			.len()
+
+	result == 0
 }
 
-import pf.Stdout
+# Singleton list has length of one
+expect {
+	result = 
+		SimpleLinkedList.from_list([1])
+			.len()
 
-main! = |_args|
-    Stdout.line!("")
+	result == 1
+}
 
-import SimpleLinkedList exposing [from_list, to_list, push, pop, reverse, len]
+# Non-empty list has correct length
+expect {
+	result = 
+		SimpleLinkedList.from_list([1, 2, 3])
+			.len()
 
-# can create an empty linked list
-expect
-    result = [] |> from_list |> to_list
-    expected = []
-    result == expected
+	result == 3
+}
 
-# can create a linked list with a single element
-expect
-    result = [123] |> from_list |> to_list
-    expected = [123]
-    result == expected
+##
+## pop
+##
 
-# can create a linked list with multiple elements
-expect
-    result = [123, 456, 789] |> from_list |> to_list
-    expected = [123, 456, 789]
-    result == expected
+# Pop from empty list is an error
+expect {
+	result = 
+		SimpleLinkedList.from_list([])
+			.pop()
 
-# can push items to a linked list
-expect
-    result = [123] |> from_list |> push(456) |> push(789) |> to_list
-    expected = [123, 456, 789]
-    result == expected
+	result.is_err()
+}
 
-# can pop an item from a linked list
-expect
-    pop_result = [123, 456, 789] |> from_list |> pop
-    result = pop_result |> Result.try(|popped| Ok(popped.value))
-    expected = Ok(789)
-    result == expected
+# Can pop from singleton list
+expect {
+	result = 
+		SimpleLinkedList.from_list([1])
+			.pop()?
+			.value
 
-# the last element should be gone after pop
-expect
-    pop_result = [123, 456, 789] |> from_list |> pop
-    result = pop_result |> Result.try(|popped| Ok((popped.linked_list |> to_list)))
-    expected = Ok([123, 456])
-    result == expected
+	result == 1
+}
 
-# cannot pop an empty linked list
-expect
-    result = [] |> from_list |> pop
-    result |> Result.is_err
+# Can pop from non-empty list
+expect {
+	result = 
+		SimpleLinkedList.from_list([1, 2])
+			.pop()?
+			.value
 
-# can reverse a linked list
-expect
-    result = [123, 456, 789] |> from_list |> reverse |> to_list
-    expected = [789, 456, 123]
-    result == expected
+	result == 2
+}
 
-# can reverse an empty linked list and it's still empty
-expect
-    result = [] |> from_list |> reverse |> to_list
-    expected = []
-    result == expected
+# Can pop multiple items
+expect {
+	result = 
+		SimpleLinkedList.from_list([1, 2])
+			.pop()?
+			->expect_value(2)?
+			.pop()?
+			.value
 
-# can get the length of a linked list
-expect
-    result = [123, 456, 789] |> from_list |> len
-    expected = 3
-    result == expected
+	result == 1
+}
 
-# can get the length of an empty linked list
-expect
-    result = [] |> from_list |> len
-    expected = 0
-    result == expected
+# Pop updates the count
+expect {
+	result = 
+		SimpleLinkedList.from_list([1, 2])
+			->expect_len(2)?
+			.pop()?
+			->expect_value(2)?
+			->expect_len(1)?
+			.pop()?
+			->expect_value(1)?
+			.len()
+
+	result == 0
+}
+
+##
+## push
+##
+
+# Push updates count
+expect {
+	result = 
+		SimpleLinkedList.from_list([1, 2])
+			.push(3)
+			.len()
+
+	result == 3
+}
+
+# Push and pop
+expect {
+	result = 
+		SimpleLinkedList.from_list([])
+			.push(1)
+			.push(2)
+			.pop()?
+			->expect_value(2)?
+			.push(3)
+			->expect_len(2)?
+			.pop()?
+			->expect_value(3)?
+			.pop()?
+			->expect_value(1)?
+			.len()
+
+	result == 0
+}
+
+##
+## peek
+##
+
+# Peek on empty list is an error
+expect {
+	result = 
+		SimpleLinkedList.from_list([])
+			.peek()
+
+	result.is_err()
+}
+
+# Can peek on singleton list
+expect {
+	result = 
+		SimpleLinkedList.from_list([1])
+			.peek()?
+
+	result == 1
+}
+
+# Can peek on non-empty list
+expect {
+	result = 
+		SimpleLinkedList.from_list([1, 2])
+			.peek()?
+
+	result == 2
+}
+
+# Peek does not change the count
+expect {
+	result = 
+		SimpleLinkedList.from_list([1, 2])
+			->expect_peek(2)?
+			.len()
+
+	result == 2
+}
+
+# Can peek after a pop and push
+expect {
+	result = 
+		SimpleLinkedList.from_list([])
+			.push(1)
+			.push(2)
+			->expect_peek(2)?
+			.pop()?
+			->expect_value(2)?
+			->expect_peek(1)?
+			.push(3)
+			.peek()?
+
+	result == 3
+}
+
+##
+## toList FIFO
+##
+
+# Empty linked list to list is empty
+expect {
+	result = 
+		SimpleLinkedList.from_list([])
+			.to_list()
+
+	result == []
+}
+
+# To list with multiple values
+expect {
+	result = 
+		SimpleLinkedList.from_list([1, 2, 3])
+			.to_list()
+
+	result == [1, 2, 3]
+}
+
+# To list after a pop
+expect {
+	result = 
+		SimpleLinkedList.from_list([])
+			.push(1)
+			.push(2)
+			.push(3)
+			.pop()?
+			->expect_value(3)?
+			.push(4)
+			.to_list()
+
+	result == [1, 2, 4]
+}
+
+##
+## reverse
+##
+
+# Reversed empty list has same values
+expect {
+	result = 
+		SimpleLinkedList.from_list([])
+			.reverse()
+			.to_list()
+
+	result == []
+}
+
+# Reversed singleton list is same list
+expect {
+	result = 
+		SimpleLinkedList.from_list([1])
+			.reverse()
+			.to_list()
+
+	result == [1]
+}
+
+# Reversed non-empty list is reversed
+expect {
+	result = 
+		SimpleLinkedList.from_list([1, 2, 3])
+			.reverse()
+			->expect_len(3)?
+			.pop()?
+			->expect_value(1)?
+			.pop()?
+			->expect_value(2)?
+			.pop()?
+			.value
+
+	result == 3
+}
+
+# Double reverse
+expect {
+	result = 
+		SimpleLinkedList.from_list([1, 2, 3])
+			.reverse()
+			.reverse()
+			.pop()?
+			->expect_value(3)?
+			.pop()?
+			->expect_value(2)?
+			.pop()?
+			.value
+
+	result == 1
+}
+
+expect_value : { updated_list : SimpleLinkedList, value : U64 }, U64 -> Try(SimpleLinkedList, [UnexpectedValue(U64)])
+expect_value = |{ updated_list, value }, expected_value| {
+	if value == expected_value Ok(updated_list) else Err(UnexpectedValue(value))
+}
+
+expect_len : SimpleLinkedList, U64 -> Try(SimpleLinkedList, [UnexpectedLen(U64)])
+expect_len = |list, expected_len| {
+	actual_len = list.len()
+	if actual_len == expected_len Ok(list) else Err(UnexpectedLen(actual_len))
+}
+
+expect_peek : SimpleLinkedList, U64 -> Try(SimpleLinkedList, [UnexpectedPeek(U64), LinkedListWasEmpty])
+expect_peek = |list, expected_peek| {
+	match list.peek() {
+		Ok(actual_peek) => if actual_peek == expected_peek Ok(list) else Err(UnexpectedPeek(actual_peek))
+		Err(LinkedListWasEmpty) => Err(LinkedListWasEmpty)
+	}
+}
+
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}

@@ -1,0 +1,81 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }}
+
+{% for supercase in cases if supercase["description"] != "toList LIFO" %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+expect {
+    result =
+        SimpleLinkedList.from_list({{ case["input"]["initialValues"] | to_roc }})
+    {%- for op in case["input"]["operations"] %}
+        {%- if op["operation"] == "push" %}
+        .push({{ op["value"] }})
+        {%- elif op["operation"] == "pop" %}
+        .pop()
+            {%- if not op["expected"] is mapping %}?
+                {%- if loop.last %}
+        .value
+                {%- else %}
+        ->expect_value({{ op["expected"] | to_roc }})?
+                {%- endif %}
+            {%- endif %}
+        {%- elif op["operation"] == "peek" %}
+            {%- if loop.last %}
+        .peek(){%- if not op["expected"] is mapping %}?{%- endif %}
+            {%- else %}
+        ->expect_peek({{ op["expected"] | to_roc }})?
+            {%- endif %}
+        {%- elif op["operation"] == "count" %}
+            {%- if loop.last %}
+        .len()
+            {%- else %}
+        ->expect_len({{ op["expected"] | to_roc }})?
+            {%- endif %}
+        {%- elif op["operation"] == "toList" %}
+        .to_list()
+        {%- else %}
+        .{{ op["operation"] }}({{ op["value"] }})
+        {%- endif %}
+
+    {%- if loop.last %}
+        {%- if op["expected"] is mapping %}
+
+    result.is_err()
+        {%- else %}
+
+    result == {{ op["expected"] | to_roc }}
+        {%- endif %}
+    {%- endif %}
+    {%- endfor %}
+}
+
+{% endfor %}
+{% endfor %}
+
+expect_value : { updated_list: SimpleLinkedList, value: U64 }, U64 -> Try(SimpleLinkedList, [UnexpectedValue(U64)])
+expect_value = |{ updated_list, value }, expected_value| {
+    if value == expected_value Ok(updated_list) else Err(UnexpectedValue(value))
+}
+
+expect_len : SimpleLinkedList, U64 -> Try(SimpleLinkedList, [UnexpectedLen(U64)])
+expect_len = |list, expected_len| {
+    actual_len = list.len()
+    if actual_len == expected_len Ok(list) else Err(UnexpectedLen(actual_len))
+}
+
+expect_peek : SimpleLinkedList, U64 -> Try(SimpleLinkedList, [UnexpectedPeek(U64), LinkedListWasEmpty])
+expect_peek = |list, expected_peek| {
+    match list.peek() {
+        Ok(actual_peek) => if actual_peek == expected_peek Ok(list) else Err(UnexpectedPeek(actual_peek))
+        Err(LinkedListWasEmpty) => Err(LinkedListWasEmpty)
+    }
+}
+
+{{ macros.footer() }}

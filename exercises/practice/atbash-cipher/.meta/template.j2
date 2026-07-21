@@ -11,11 +11,14 @@ import {{ exercise | to_pascal }} exposing [encode, decode]
 
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
-expect
-    phrase = {{ case["input"]["phrase"] | to_roc }} 
-    result = phrase |> {{ case["property"] | to_snake }}
-    expected = {{ case["expected"] | to_roc }} 
+expect {
+    phrase = {{ case["input"]["phrase"] | to_roc }}
+    result = phrase->AtbashCipher.{{ case["property"] | to_snake }}
+    expected = {{ case["expected"] | to_roc }}
     result == Ok(expected)
+}
 
 {% endfor %}
 {% endfor %}
+
+{{ macros.footer() }}

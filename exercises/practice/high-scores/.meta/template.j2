@@ -15,9 +15,12 @@ import {{ exercise | to_pascal }} exposing [latest, personal_best, personal_top_
 {%- if case["description"] != supercase["description"] %}
 # {{ case["description"] }}
 {%- endif %}
-expect
+expect {
     result = {{ case["property"] | to_snake }}({{ case["input"]["scores"] }})
     result == {% if case["property"] != "personalTopThree" %}Ok({{ case["expected"] | to_roc }}){%- else -%}{{ case["expected"] | to_roc }}{% endif %}
+}
 
 {% endfor -%}
 {%- endfor %}
+
+{{ macros.footer() }}

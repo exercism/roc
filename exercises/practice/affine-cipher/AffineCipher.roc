@@ -1,9 +1,22 @@
-module [encode, decode]
+AffineCipher :: { a : U64, b : U64 }.{
+	alphabet_size : U64
+	alphabet_size = 26
 
-encode : Str, { a : U64, b : U64 } -> Result Str _
-encode = |phrase, key|
-    crash("Please implement the 'encode' function")
+	group_length : U64
+	group_length = 5
 
-decode : Str, { a : U64, b : U64 } -> Result Str _
-decode = |phrase, key|
-    crash("Please implement the 'decode' function")
+	new : { a : U64, b : U64 } -> Try(AffineCipher, _)
+	new = |key| {
+		crash "Please implement the 'new' method"
+	}
+
+	encode : Str, AffineCipher -> Try(Str, _)
+	encode = |affine_cipher, phrase| {
+		crash "Please implement the 'encode' method"
+	}
+
+	decode : Str, AffineCipher -> Try(Str, _)
+	decode = |affine_cipher, phrase| {
+		crash "Please implement the 'decode' method"
+	}
+}

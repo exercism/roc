@@ -11,9 +11,12 @@ import {{ exercise | to_pascal }} exposing [is_equilateral, is_isosceles, is_sca
 
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
-expect
+expect {
     result = is_{{ case["property"] }}({{ case["input"]["sides"] | to_roc_tuple }})
     result == {{ case["expected"] | to_roc }}
+}
 
 {% endfor %}
 {% endfor %}
+
+{{ macros.footer() }}

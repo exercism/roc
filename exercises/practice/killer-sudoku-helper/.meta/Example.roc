@@ -1,26 +1,46 @@
-module [combinations]
+KillerSudokuHelper :: {}.{
+	Combination : List(U8)
 
-Combination : List U8
-
-combinations : { sum : U8, size : U8, exclude ?? List U8 } -> List Combination
-combinations = |{ sum, size, exclude ?? [] }|
-    help = |target, digits|
-        if target == 0 then
-            [[]]
-        else
-            when digits is
-                [] -> []
-                [single] -> if single == target then [[single]] else []
-                [first, .. as rest] ->
-                    if first > target then
-                        []
-                    else
-                        help((target - first), rest)
-                        |> List.map(|combi| combi |> List.append(first))
-                        |> List.concat(help(target, rest))
-    available_digits =
-        [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        |> List.drop_if(|digit| exclude |> List.contains(digit))
-    help(sum, available_digits)
-    |> List.keep_if(|combi| List.len(combi) == size |> Num.to_u64)
-    |> List.map(List.reverse)
+	combinations : { sum : U8, size : U8, exclude : List(U8) } -> List(Combination)
+	combinations = |{ sum, size, exclude }| {
+		help = |target, digits| {
+			if target == 0 {
+				[[]]
+			} else {
+				match digits {
+					[] => []
+					[single] => {
+						if single == target {
+							[[single]]
+						} else {
+							[]
+						}
+					}
+					[first, .. as rest] => {
+						if first > target {
+							[]
+						} else {
+							help((target - first), rest)
+								.map(
+									|combi| combi.append(first),
+								)
+								.concat(
+									help(target, rest),
+								)
+						}
+					}
+				}
+			}
+		}
+		available_digits = 
+			[1, 2, 3, 4, 5, 6, 7, 8, 9]
+				.drop_if(
+					|digit| exclude.contains(digit),
+				)
+		help(sum, available_digits)
+			.keep_if(
+				|combi| combi.len() == size.to_u64(),
+			)
+			.map(List.rev)
+	}
+}

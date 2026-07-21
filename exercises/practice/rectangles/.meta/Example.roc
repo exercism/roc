@@ -1,57 +1,75 @@
-module [rectangles]
+Rectangles :: {}.{
+	rectangles : Str -> U64
+	rectangles = |diagram| {
+		grid = 
+			diagram
+				.split_on("\n")
+				.map(|s| s.to_utf8())
+		height = grid.len()
+		grid
+			.map_with_index(
+				|row, y1| {
+					row
+						.map_with_index(
+							|_char, x1| {
+								y2s = ((y1 + 1)..<height).fold([], |acc, y| acc.append(y))
+								y2s
+									.map(
+										|y2| {
+											x2s = ((x1 + 1)..<row.len()).fold([], |acc, x| acc.append(x))
+											x2s
+												.map(
+													|x2| {
+														if is_rectangle({ grid, x1, y1, x2, y2 }) {
+															1
+														} else {
+															0
+														}
+													},
+												)
+												.sum()
+										},
+									)
+									.sum()
+							},
+						)
+						.sum()
+				},
+			)
+			.sum()
+	}
+}
 
-## Is there a rectangle between the top left (x1, y1) corner and the bottom
-## right (x2, y2) corner.
-is_rectangle : { grid : List (List U8), x1 : U64, y1 : U64, x2 : U64, y2 : U64 } -> Bool
-is_rectangle = |{ grid, x1, y1, x2, y2 }|
-    get_cell = 
-        |(x, y)|
-            grid
-            |> List.get(y)?
-            |> List.get(x)
+is_rectangle : { grid : List(List(U8)), x1 : U64, y1 : U64, x2 : U64, y2 : U64 } -> Bool
+is_rectangle = |{ grid, x1, y1, x2, y2 }| {
+	get_cell = |pos| {
+		(x, y) = pos
+		grid.get(y)?.get(x)
+	}
 
-    is_corner = |pos| get_cell(pos) == Ok('+')
-    is_horizontal = |pos| is_corner(pos) or get_cell(pos) == Ok('-')
-    is_vertical = |pos| is_corner(pos) or get_cell(pos) == Ok('|')
+	is_corner = |pos| {
+		get_cell(pos) == Ok('+')
+	}
+	is_horizontal = |pos| {
+		is_corner(pos) or get_cell(pos) == Ok('-')
+	}
+	is_vertical = |pos| {
+		is_corner(pos) or get_cell(pos) == Ok('|')
+	}
 
-    has_horizontal_border = |y|
-        List.range({ start: At(x1), end: At(x2) })
-        |> List.all(|x| is_horizontal((x, y)))
-        
-    has_vertical_border = |x|
-        List.range({ start: At(y1), end: At(y2) })
-        |> List.all(|y| is_vertical((x, y)))
-    (
-        ([(x1, y1), (x2, y1), (x1, y2), (x2, y2)] |> List.all(is_corner))
-        and ([y1, y2] |> List.all(has_horizontal_border))
-        and ([x1, x2] |> List.all(has_vertical_border))
-    )
+	has_horizontal_border = |y| {
+		xs = (x1..=x2).fold([], |acc, x| acc.append(x))
+		xs.all(|x| is_horizontal((x, y)))
+	}
 
-rectangles : Str -> U64
-rectangles = |diagram|
-    grid =
-        diagram
-        |> Str.split_on("\n")
-        |> List.map(Str.to_utf8)
-    height = grid |> List.len
-    grid
-    |> List.map_with_index(
-        |row, y1| # number of rectangles with top on this row
-            row
-            |> List.map_with_index(
-                |_char, x1| # number with top-left on this column
-                    List.range({ start: After(y1), end: Before(height) })
-                    |> List.map(
-                        |y2| # number of rectangles with bottom on this row
-                            List.range({ start: After(x1), end: Before(List.len(row)) })
-                            |> List.map(
-                                |x2| # number with bottom-right on this column
-                                    if is_rectangle({ grid, x1, y1, x2, y2 }) then 1 else 0,
-                            )
-                            |> List.sum,
-                    )
-                    |> List.sum,
-            )
-            |> List.sum,
-    )
-    |> List.sum
+	has_vertical_border = |x| {
+		ys = (y1..=y2).fold([], |acc, y| acc.append(y))
+		ys.all(|y| is_vertical((x, y)))
+	}
+
+	(
+		[(x1, y1), (x2, y1), (x1, y2), (x2, y2)].all(is_corner)
+			and [y1, y2].all(has_horizontal_border)
+				and [x1, x2].all(has_vertical_border),
+	)
+}
