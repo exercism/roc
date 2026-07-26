@@ -7,16 +7,18 @@ Series :: {}.{
 			[]
 		} else {
 			maybe_list = 
-				(0..=(len - slice_length))
-					.map_try(
-						|start_index| {
-							chars
-								.sublist(
-									{ start: start_index, len: slice_length },
-								)
-								->Str.from_utf8()
-						},
-					)
+				(
+					(0..=(len - slice_length))
+						->List.from_iter(),
+				).map_try(
+					|start_index| {
+						chars
+							.sublist(
+								{ start: start_index, len: slice_length },
+							)
+							->Str.from_utf8()
+					},
+				)
 			match maybe_list {
 				Ok(list) => list
 				Err(BadUtf8(_)) => {
