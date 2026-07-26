@@ -8,7 +8,7 @@ Series :: {}.{
 		} else {
 			maybe_list = 
 				(0..=(len - slice_length))
-					->map_try(
+					.map_try(
 						|start_index| {
 							chars
 								.sublist(
@@ -25,14 +25,4 @@ Series :: {}.{
 			}
 		}
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

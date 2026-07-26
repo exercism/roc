@@ -125,7 +125,7 @@ parse_flags = |flags| {
 
 collect_files : List(Str) -> Try(List({ name : Str, text : Str }), _)
 collect_files = |names| {
-	names->map_try(
+	names.map_try(
 		|name| {
 			match name {
 				"midsummer-night.txt" => Ok({ name: "midsummer-night.txt", text: midsummer_night })
@@ -147,13 +147,4 @@ join_map = |list, func| {
 		}
 	}
 	$state
-}
-
-map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

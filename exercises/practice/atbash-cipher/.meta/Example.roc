@@ -18,7 +18,7 @@ AtbashCipher :: {}.{
 			)
 			->chunks_of(5)
 			->intersperse([' '])
-			->join()
+			.join()
 			->Str.from_utf8()
 	}
 
@@ -70,16 +70,6 @@ intersperse = |list, sep| {
 		$res = $res.concat([item, sep])
 	}
 	$res.drop_last(1)
-}
-
-join = |list| {
-	var $state = []
-	for sublist in list {
-		for item in sublist {
-			$state = $state.append(item)
-		}
-	}
-	$state
 }
 
 join_map = |list, func| {

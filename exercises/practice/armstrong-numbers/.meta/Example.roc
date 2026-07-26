@@ -7,7 +7,7 @@ ArmstrongNumbers :: {}.{
 			digits
 				.map(
 					|digit| {
-						digit->pow_int(len)
+						digit.pow(len)
 					},
 				)
 				.sum()
@@ -22,14 +22,4 @@ list_digits = |number| {
 	} else {
 		list_digits((number // 10)).append((number % 10))
 	}
-}
-
-# This function should soon be available in Roc's builtins
-pow_int = |number, pow| {
-	(1..=pow).fold(
-		1,
-		|acc, _| {
-			acc * number
-		},
-	)
 }

@@ -37,10 +37,10 @@ Rational :: { num : I64, den : I64 }.{
 	exp = |{ num, den }, n| {
 		match n {
 			0 => { num: 1, den: 1 }
-			pos if pos > 0 => { num: pow_int(num, pos), den: pow_int(den, pos) }->reduce()
+			pos if pos > 0 => { num: num.pow(pos), den: den.pow(pos) }->reduce()
 			neg => {
 				m = neg.abs()
-				{ num: pow_int(den, m), den: pow_int(num, m) }->reduce()
+				{ num: den.pow(m), den: num.pow(m) }->reduce()
 			}
 		}
 	}
@@ -73,16 +73,6 @@ Rational :: { num : I64, den : I64 }.{
 
 	# The following line enables the default `is_eq` implementation
 	is_eq : _
-}
-
-pow_int : I64, I64 -> I64
-pow_int = |number, pow| {
-	(1..=pow).fold(
-		1,
-		|acc, _| {
-			acc * number
-		},
-	)
 }
 
 # The following functions should soon be available in Roc's builtins

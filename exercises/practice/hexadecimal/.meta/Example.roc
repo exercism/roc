@@ -4,7 +4,7 @@ Hexadecimal :: {}.{
 		if string == "" {
 			Err(InvalidNumStr)
 		} else {
-			digits = string.to_utf8()->map_try(parse_nibble)?
+			digits = string.to_utf8().map_try(parse_nibble)?
 			digits.fold_until(
 				Ok(0),
 				|acc_res, nibble| {
@@ -13,7 +13,7 @@ Hexadecimal :: {}.{
 							if number > 0xfffffffffffffff {
 								Break(Err(InvalidNumStr))
 							} else {
-								Continue(Ok(U64.shift_left_by(number, 4) + nibble))
+								Continue(Ok(number.shl_wrap(4) + nibble))
 							}
 						}
 						Err(err) => Break(Err(err))
@@ -35,13 +35,4 @@ parse_nibble = |char| {
 	} else {
 		Err(InvalidNumStr)
 	}
-}
-
-map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

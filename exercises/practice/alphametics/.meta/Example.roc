@@ -91,7 +91,8 @@ insert_term = |equation, letters, polarity| {
 		.fold_with_index(
 			equation,
 			|dict, letter, index| {
-				coeff = pow_int(10, index) * polarity
+				index_i64 = index.to_i64_try() ?? { crash "Unreachable" }
+				coeff = 10.I64.pow(index_i64) * polarity
 				dict.update(
 					letter,
 					|val| {
@@ -107,7 +108,7 @@ insert_term = |equation, letters, polarity| {
 
 parse : Str -> Try({ addends : List(List(U8)), sum : List(U8) }, _)
 parse = |problem| {
-	{ before, after } = problem->split_first(" == ") ? |_| InvalidAssignment
+	{ before, after } = problem.split_first(" == ") ? |_| InvalidAssignment
 	addends = 
 		before
 			.split_on(
@@ -128,22 +129,4 @@ reverse = |str| {
 		.rev()
 		->Str.from_utf8()
 		?? ""
-}
-
-# The following function should soon be available in Roc's builtins
-split_first = |str, sep| {
-	match str.split_on(sep) {
-		[] => Err(NotFound)
-		[_] => Err(NotFound)
-		[before, .. as rest] => Ok({ before, after: rest->Str.join_with(sep) })
-	}
-}
-
-pow_int = |number, pow| {
-	(1..=pow).fold(
-		1,
-		|acc, _| {
-			acc * number
-		},
-	)
 }

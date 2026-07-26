@@ -43,7 +43,7 @@ SaddlePoints :: {}.{
 										Ok({ height, row_index })
 									},
 								)
-								->keep_oks(|id| id)
+								.keep_oks(|id| id)
 
 						min_in_column : U8
 						min_in_column = column.map(|c| c.height).min() ?? 0.U8
@@ -68,16 +68,4 @@ join_map = |list, func| {
 		}
 	}
 	$state
-}
-
-keep_oks = |iter, func| {
-	iter
-		->join_map(
-			|item| {
-				match func(item) {
-					Ok(result) => [result]
-					Err(_) => []
-				}
-			},
-		)
 }

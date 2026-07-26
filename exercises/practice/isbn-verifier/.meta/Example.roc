@@ -16,7 +16,7 @@ IsbnVerifier :: {}.{
 					.map_with_index(
 						char_value,
 					)
-					->keep_oks(|v| v)
+					.keep_oks(|v| v)
 			values.len() == 10 and (values.sum()) % 11 == 0
 		}
 	}
@@ -38,18 +38,6 @@ char_value = |char, index| {
 }
 
 # The following functions should soon be available in Roc's builtins
-keep_oks = |iter, func| {
-	iter
-		->join_map(
-			|item| {
-				match func(item) {
-					Ok(result) => [result]
-					Err(_) => []
-				}
-			},
-		)
-}
-
 join_map : i, (a -> j) -> List(b) where [i.iter : i -> Iter(a), j.iter : j -> Iter(b)]
 join_map = |list, func| {
 	var $state = []

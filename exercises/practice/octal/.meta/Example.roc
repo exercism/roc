@@ -4,7 +4,7 @@ Octal :: {}.{
 		if string == "" {
 			Err(InvalidNumStr)
 		} else {
-			digits = string.to_utf8()->map_try(parse_octal_digit)?
+			digits = string.to_utf8().map_try(parse_octal_digit)?
 			digits.fold_until(
 				Ok(0),
 				|acc_res, octal_digit| {
@@ -13,7 +13,7 @@ Octal :: {}.{
 							if number > 0x1fffffffffffffff {
 								Break(Err(InvalidNumStr))
 							} else {
-								Continue(Ok(U64.shift_left_by(number, 3) + octal_digit))
+								Continue(Ok(number.shl_wrap(3) + octal_digit))
 							}
 						}
 						Err(err) => Break(Err(err))
@@ -31,14 +31,4 @@ parse_octal_digit = |char| {
 	} else {
 		Err(InvalidNumStr)
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

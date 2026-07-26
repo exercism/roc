@@ -7,7 +7,7 @@ KindergartenGarden :: {}.{
 		start_index = 2 * student_index(student)
 		grid = diagram.to_utf8().split_on('\n')
 		[(0, 0), (0, 1), (1, 0), (1, 1)]
-			->map_try(
+			.map_try(
 				|(row, column)| {
 					plant = grid.get(row)?.get(start_index + column)?
 					match plant {
@@ -38,13 +38,4 @@ student_index = |student| {
 		Kincaid => 10
 		Larry => 11
 	}
-}
-
-map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

@@ -121,7 +121,7 @@ parse = |str| {
 			defs = parse_defs(def_lines)?
 			program.split_on(" ")
 				->flatten_defs(defs)
-				->map_try(to_op)
+				.map_try(to_op)
 		}
 		[] => Ok([])
 	}
@@ -292,13 +292,4 @@ join_map = |list, func| {
 		}
 	}
 	$state
-}
-
-map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

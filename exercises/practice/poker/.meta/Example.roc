@@ -3,7 +3,7 @@ Poker :: {}.{
 
 	best_hands : List(Str) -> Try(List(Str), HandParsingError)
 	best_hands = |hands| {
-		parsed_hands = hands->map_try(parse_hand)?
+		parsed_hands = hands.map_try(parse_hand)?
 		ranks = parsed_hands.map(get_rank)
 		top_rank = ranks.fold(
 			0,
@@ -43,7 +43,7 @@ parse_hand = |hand_str| {
 	if num_cards != 5 {
 		Err(InvalidNumberOfCards(num_cards))
 	} else {
-		cards->map_try(parse_card)
+		cards.map_try(parse_card)
 	}
 }
 
@@ -153,7 +153,7 @@ get_rank = |hand| {
 				)
 		}
 
-	category * pow_int(13, 5) + rank_within_category
+	category * 13.U64.pow(5) + rank_within_category
 }
 
 # The following functions should soon be available in Roc's builtins
@@ -165,24 +165,6 @@ join_map = |iter, func| {
 		}
 	}
 	$state
-}
-
-map_try = |iter, func| {
-	var $state = []
-	for item in iter {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
-}
-
-pow_int : U64, U64 -> U64
-pow_int = |number, pow| {
-	(1..=pow).fold(
-		1,
-		|acc, _| {
-			acc * number
-		},
-	)
 }
 
 sort_asc = |list| {

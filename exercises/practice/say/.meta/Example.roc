@@ -21,7 +21,7 @@ Say :: {}.{
 					(1000, 100, "hundred"),
 					(100, 1, ""),
 				]
-					->keep_oks(
+					.keep_oks(
 						|triple| {
 							(modulo, divisor, name) = triple
 							how_many = (number % modulo) // divisor
@@ -77,18 +77,6 @@ tens_after_ten = [
 ]
 
 # The following functions should soon be available in Roc's builtins
-keep_oks = |iter, func| {
-	iter
-		->join_map(
-			|item| {
-				match func(item) {
-					Ok(result) => [result]
-					Err(_) => []
-				}
-			},
-		)
-}
-
 join_map : i, (a -> j) -> List(b) where [i.iter : i -> Iter(a), j.iter : j -> Iter(b)]
 join_map = |list, func| {
 	var $state = []
@@ -98,13 +86,4 @@ join_map = |list, func| {
 		}
 	}
 	$state
-}
-
-map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

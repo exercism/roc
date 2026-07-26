@@ -3,7 +3,7 @@ Binary :: {}.{
 	decimal = |binary_str| {
 		binary_str
 			.to_utf8()
-			->map_try(
+			.map_try(
 				|char| {
 					match char {
 						'0' => Ok(0)
@@ -20,13 +20,4 @@ Binary :: {}.{
 			)
 			->Ok
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

@@ -21,10 +21,10 @@ GoCounting :: {}.{
 								if stone == None [{ x, y }] else []
 							},
 						)
-							->join()
+							.join()
 					},
 				)
-				->join()
+				.join()
 		}
 		empty_intersections.fold(
 			{ black: Set.empty(), white: Set.empty(), none: Set.empty() },
@@ -75,9 +75,9 @@ parse = |board_str| {
 			board_str
 				.to_utf8()
 				.split_on('\n')
-				->map_try(
+				.map_try(
 					|row| {
-						row->map_try(
+						row.map_try(
 							|char| {
 								match char {
 									'B' => Ok(Black)
@@ -171,23 +171,4 @@ search_territory = |board, intersection| {
 			}
 		{ owner, territory: search_result.visited }
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-join = |list| {
-	var $state = []
-	for sublist in list {
-		for item in sublist {
-			$state = $state.append(item)
-		}
-	}
-	$state
-}
-
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

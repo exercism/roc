@@ -58,7 +58,7 @@ reorder_with = |message, get_indices, rails| {
 	} else {
 		chars = message.to_utf8()
 		indices = get_indices(chars.len(), rails)
-		result = indices->map_try(|index| chars.get(index))
+		result = indices.map_try(|index| chars.get(index))
 		match result {
 			Ok(encrypted_chars) => Str.from_utf8(encrypted_chars)
 			Err(OutOfBounds) => {
@@ -78,13 +78,4 @@ join_map = |list, func| {
 		}
 	}
 	$state
-}
-
-map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

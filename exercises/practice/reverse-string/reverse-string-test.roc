@@ -3,7 +3,7 @@
 # File last updated on 2026-06-21
 app [main!] {
 	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
-	unicode: "https://github.com/roc-lang/unicode/releases/download/1.0.0/7Y6RP8ZkiMq8Vm7qQLGzm8cyEvww5EVT3YekRASH5VBg.tar.zst",
+	unicode: "https://github.com/roc-lang/unicode/releases/download/2.0.0/9ZvqNzsNkpqFmGTeATAY3BNBD7mP41jqZx2w2N19tBvh.tar.zst",
 }
 
 import pf.Stdout

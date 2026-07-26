@@ -6,7 +6,7 @@ Tournament :: {}.{
 		} else {
 			rows = table.split_on("\n")
 			parsed_rows = 
-				rows->map_try(
+				rows.map_try(
 					|row| {
 						match row.split_on(";") {
 							[team1, team2, result_str] => {
@@ -176,14 +176,4 @@ align_right = |number| {
 	} else {
 		"${number.to_str()}"
 	}
-}
-
-# The following functions should soon be available in Roc's builtins
-map_try : i, (a -> Try(b, err)) -> Try(List(b), err) where [i.iter : i -> Iter(a)]
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

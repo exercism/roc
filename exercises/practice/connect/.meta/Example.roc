@@ -28,13 +28,13 @@ parse = |board_str| {
 		.split_on(
 			'\n',
 		)
-		->map_try(
+		.map_try(
 			|row| {
 				row
 					.drop_if(
 						|char| char == ' ',
 					)
-					->map_try(
+					.map_try(
 						|char| {
 							match char {
 								'O' => Ok(StoneO)
@@ -162,24 +162,12 @@ has_north_south_path = |board, stone| {
 					}
 				},
 			)
-			->keep_oks(|id| id)
+			.keep_oks(|id| id)
 	}
 	has_path_to_south(north_stones, Set.empty())
 }
 
 # The following functions should soon be available in Roc's builtins
-keep_oks = |iter, func| {
-	iter
-		->join_map(
-			|item| {
-				match func(item) {
-					Ok(result) => [result]
-					Err(_) => []
-				}
-			},
-		)
-}
-
 join_map = |list, func| {
 	var $state = []
 	for item in list {
@@ -188,12 +176,4 @@ join_map = |list, func| {
 		}
 	}
 	$state
-}
-
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }

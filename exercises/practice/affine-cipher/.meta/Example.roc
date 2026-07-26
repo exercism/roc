@@ -86,7 +86,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 			)
 			->chunks_of(group_length)
 			->intersperse([' '])
-			->join()
+			.join()
 			->Str.from_utf8()
 		match maybe_result {
 			Ok(result) => result
@@ -100,7 +100,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 	decode = |affine_cipher, phrase| {
 		phrase
 			.to_utf8()
-			->map_try(
+			.map_try(
 				|char| {
 					if char == ' ' {
 						Ok([])
@@ -119,7 +119,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 					}
 				},
 			)?
-			->join()
+			.join()
 			->Str.from_utf8()
 	}
 }
@@ -149,16 +149,6 @@ intersperse = |list, sep| {
 	$res.drop_last(1)
 }
 
-join = |list| {
-	var $state = []
-	for sublist in list {
-		for i in sublist {
-			$state = $state.append(i)
-		}
-	}
-	$state
-}
-
 join_map = |list, func| {
 	var $state = []
 	for item in list {
@@ -167,12 +157,4 @@ join_map = |list, func| {
 		}
 	}
 	$state
-}
-
-map_try = |list, func| {
-	var $state = []
-	for item in list {
-		$state = $state.append(func(item)?)
-	}
-	Ok($state)
 }
