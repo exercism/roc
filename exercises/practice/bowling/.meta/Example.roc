@@ -179,4 +179,3 @@ fold_try = |list, init, func| {
 	}
 	Ok($state)
 }
-

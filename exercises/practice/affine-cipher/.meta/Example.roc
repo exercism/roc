@@ -58,35 +58,36 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 
 	encode : AffineCipher, Str -> Str
 	encode = |affine_cipher, phrase| {
-		maybe_result = phrase
-			.to_utf8()
-			->join_map(
-				|char| {
-					if char >= '0' and char <= '9' {
-						[char]
-					} else {
-						char_lower = if char >= 'A' and char <= 'Z' {
-							char - 'A' + 'a'
+		maybe_result = (
+			phrase
+				.to_utf8()
+				->join_map(
+					|char| {
+						if char >= '0' and char <= '9' {
+							[char]
 						} else {
-							char
-						}
-						if char_lower >= 'a' and char_lower <= 'z' {
-							index = U8.to_u64(char_lower) - 'a'
-							match affine_cipher.encode_map.get(index) {
-								Ok(encoded_char) => [encoded_char]
-								Err(OutOfBounds) => {
-									crash "Unreachable: index cannot be out of bounds here"
-								}
+							char_lower = if char >= 'A' and char <= 'Z' {
+								char - 'A' + 'a'
+							} else {
+								char
 							}
-						} else {
-							[]
+							if char_lower >= 'a' and char_lower <= 'z' {
+								index = U8.to_u64(char_lower) - 'a'
+								match affine_cipher.encode_map.get(index) {
+									Ok(encoded_char) => [encoded_char]
+									Err(OutOfBounds) => {
+										crash "Unreachable: index cannot be out of bounds here"
+									}
+								}
+							} else {
+								[]
+							}
 						}
-					}
-				},
-			)
-			->chunks_of(group_length)
-			->intersperse([' '])
-			.join()
+					},
+				)
+				->chunks_of(group_length)
+				->intersperse([' ']),
+		).join()
 			->Str.from_utf8()
 		match maybe_result {
 			Ok(result) => result

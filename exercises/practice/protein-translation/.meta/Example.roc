@@ -46,10 +46,8 @@ to_instruction = |codon| {
 }
 
 # The following functions should soon be available in Roc's builtins
-chunks_of : i, b -> List(List(a)) where [
-	i.iter : i -> Iter(a),
-	b.to_u64 : b -> U64
-]
+chunks_of : i, b -> List(List(a))
+	where [i.iter : i -> Iter(a), b.to_u64 : b -> U64]
 chunks_of = |list, size| {
 	var $state = []
 	var $chunk = []

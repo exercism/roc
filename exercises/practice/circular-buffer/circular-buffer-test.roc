@@ -29,23 +29,25 @@ expect {
 
 # each item may only be read once
 expect {
-	result = CircularBuffer.create({ capacity: 1 })
-		.write(1)?
-		.read()?
-		->expect_value(1)
-		.read()
+	result = (
+		CircularBuffer.create({ capacity: 1 })
+			.write(1)?
+			.read()?
+			->expect_value(1),
+	).read()
 
 	result == Err(BufferEmpty)
 }
 
 # items are read in the order they are written
 expect {
-	_result = CircularBuffer.create({ capacity: 2 })
-		.write(1)?
-		.write(2)?
-		.read()?
-		->expect_value(1)
-		.read()?
+	_result = (
+		CircularBuffer.create({ capacity: 2 })
+			.write(1)?
+			.write(2)?
+			.read()?
+			->expect_value(1),
+	).read()?
 		->expect_value(2)
 
 	Bool.True
@@ -62,11 +64,12 @@ expect {
 
 # a read frees up capacity for another write
 expect {
-	_result = CircularBuffer.create({ capacity: 1 })
-		.write(1)?
-		.read()?
-		->expect_value(1)
-		.write(2)?
+	_result = (
+		CircularBuffer.create({ capacity: 1 })
+			.write(1)?
+			.read()?
+			->expect_value(1),
+	).write(2)?
 		.read()?
 		->expect_value(2)
 
@@ -75,15 +78,17 @@ expect {
 
 # read position is maintained even across multiple writes
 expect {
-	_result = CircularBuffer.create({ capacity: 3 })
-		.write(1)?
-		.write(2)?
-		.read()?
-		->expect_value(1)
-		.write(3)?
-		.read()?
-		->expect_value(2)
-		.read()?
+	_result = (
+		(
+			CircularBuffer.create({ capacity: 3 })
+				.write(1)?
+				.write(2)?
+				.read()?
+				->expect_value(1),
+		).write(3)?
+			.read()?
+			->expect_value(2),
+	).read()?
 		->expect_value(3)
 
 	Bool.True
@@ -124,12 +129,13 @@ expect {
 
 # overwrite acts like write on non-full buffer
 expect {
-	_result = CircularBuffer.create({ capacity: 2 })
-		.write(1)?
-		.overwrite(2)
-		.read()?
-		->expect_value(1)
-		.read()?
+	_result = (
+		CircularBuffer.create({ capacity: 2 })
+			.write(1)?
+			.overwrite(2)
+			.read()?
+			->expect_value(1),
+	).read()?
 		->expect_value(2)
 
 	Bool.True
@@ -137,13 +143,14 @@ expect {
 
 # overwrite replaces the oldest item on full buffer
 expect {
-	_result = CircularBuffer.create({ capacity: 2 })
-		.write(1)?
-		.write(2)?
-		.overwrite(3)
-		.read()?
-		->expect_value(2)
-		.read()?
+	_result = (
+		CircularBuffer.create({ capacity: 2 })
+			.write(1)?
+			.write(2)?
+			.overwrite(3)
+			.read()?
+			->expect_value(2),
+	).read()?
 		->expect_value(3)
 
 	Bool.True
@@ -151,19 +158,22 @@ expect {
 
 # overwrite replaces the oldest item remaining in buffer following a read
 expect {
-	_result = CircularBuffer.create({ capacity: 3 })
-		.write(1)?
-		.write(2)?
-		.write(3)?
-		.read()?
-		->expect_value(1)
-		.write(4)?
-		.overwrite(5)
-		.read()?
-		->expect_value(3)
-		.read()?
-		->expect_value(4)
-		.read()?
+	_result = (
+		(
+			(
+				CircularBuffer.create({ capacity: 3 })
+					.write(1)?
+					.write(2)?
+					.write(3)?
+					.read()?
+					->expect_value(1),
+			).write(4)?
+				.overwrite(5)
+				.read()?
+				->expect_value(3),
+		).read()?
+			->expect_value(4),
+	).read()?
 		->expect_value(5)
 
 	Bool.True
@@ -171,17 +181,19 @@ expect {
 
 # initial clear does not affect wrapping around
 expect {
-	result = CircularBuffer.create({ capacity: 2 })
-		.clear()
-		.write(1)?
-		.write(2)?
-		.overwrite(3)
-		.overwrite(4)
-		.read()?
-		->expect_value(3)
-		.read()?
-		->expect_value(4)
-		.read()
+	result = (
+		(
+			CircularBuffer.create({ capacity: 2 })
+				.clear()
+				.write(1)?
+				.write(2)?
+				.overwrite(3)
+				.overwrite(4)
+				.read()?
+				->expect_value(3),
+		).read()?
+			->expect_value(4),
+	).read()
 
 	result == Err(BufferEmpty)
 }

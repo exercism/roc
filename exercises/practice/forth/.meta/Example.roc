@@ -119,9 +119,10 @@ parse = |str| {
 	match Str.split_on(Str.trim(str), "\n") {
 		[.. as def_lines, program] => {
 			defs = parse_defs(def_lines)?
-			program.split_on(" ")
-				->flatten_defs(defs)
-				.map_try(to_op)
+			(
+				program.split_on(" ")
+					->flatten_defs(defs),
+			).map_try(to_op)
 		}
 		[] => Ok([])
 	}

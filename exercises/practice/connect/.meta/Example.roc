@@ -152,16 +152,17 @@ has_north_south_path = |board, stone| {
 
 	north_stones : List(Position)
 	north_stones = {
-		board
-			->first_row()
-			.map_with_index(
-				|cell, x| {
-					match cell {
-						StoneO | StoneX => if cell == stone Ok({ x, y: 0 }) else Err(NotPlayerStone)
-						Empty => Err(NotPlayerStone)
-					}
-				},
-			)
+		(
+			board
+				->first_row(),
+		).map_with_index(
+			|cell, x| {
+				match cell {
+					StoneO | StoneX => if cell == stone Ok({ x, y: 0 }) else Err(NotPlayerStone)
+					Empty => Err(NotPlayerStone)
+				}
+			},
+		)
 			.keep_oks(|id| id)
 	}
 	has_path_to_south(north_stones, Set.empty())

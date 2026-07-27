@@ -6,4 +6,3 @@ Knapsack :: {}.{
 		crash "Please implement the 'maximum_value' function"
 	}
 }
-

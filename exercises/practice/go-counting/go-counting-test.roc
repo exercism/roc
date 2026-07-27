@@ -14,18 +14,14 @@ expect {
 		\\  W  
 
 	result = board->territory({ x: 0, y: 1 })
-	expected = Ok(
-		{
-			owner: Black,
-			territory: Set.from_list(
-				[
-					{ x: 0, y: 0 },
-					{ x: 0, y: 1 },
-					{ x: 1, y: 0 },
-				],
-			),
-		},
-	)
+	expected = Ok({
+		owner: Black,
+		territory: Set.from_list([
+			{ x: 0, y: 0 },
+			{ x: 0, y: 1 },
+			{ x: 1, y: 0 },
+		]),
+	})
 	result->compare_territory(expected)
 }
 
@@ -39,16 +35,12 @@ expect {
 		\\  W  
 
 	result = board->territory({ x: 2, y: 3 })
-	expected = Ok(
-		{
-			owner: White,
-			territory: Set.from_list(
-				[
-					{ x: 2, y: 3 },
-				],
-			),
-		},
-	)
+	expected = Ok({
+		owner: White,
+		territory: Set.from_list([
+			{ x: 2, y: 3 },
+		]),
+	})
 	result->compare_territory(expected)
 }
 
@@ -62,18 +54,14 @@ expect {
 		\\  W  
 
 	result = board->territory({ x: 1, y: 4 })
-	expected = Ok(
-		{
-			owner: None,
-			territory: Set.from_list(
-				[
-					{ x: 0, y: 3 },
-					{ x: 0, y: 4 },
-					{ x: 1, y: 4 },
-				],
-			),
-		},
-	)
+	expected = Ok({
+		owner: None,
+		territory: Set.from_list([
+			{ x: 0, y: 3 },
+			{ x: 0, y: 4 },
+			{ x: 1, y: 4 },
+		]),
+	})
 	result->compare_territory(expected)
 }
 
@@ -87,12 +75,10 @@ expect {
 		\\  W  
 
 	result = board->territory({ x: 1, y: 1 })
-	expected = Ok(
-		{
-			owner: None,
-			territory: Set.empty(),
-		},
-	)
+	expected = Ok({
+		owner: None,
+		territory: Set.empty(),
+	})
 	result->compare_territory(expected)
 }
 
@@ -126,17 +112,13 @@ expect {
 expect {
 	board = " "
 	result = board->territories()
-	expected = Ok(
-		{
-			black: Set.empty(),
-			white: Set.empty(),
-			none: Set.from_list(
-				[
-					{ x: 0, y: 0 },
-				],
-			),
-		},
-	)
+	expected = Ok({
+		black: Set.empty(),
+		white: Set.empty(),
+		none: Set.from_list([
+			{ x: 0, y: 0 },
+		]),
+	})
 	result->compare_territories(expected)
 }
 
@@ -147,23 +129,17 @@ expect {
 		\\ BW 
 
 	result = board->territories()
-	expected = Ok(
-		{
-			black: Set.from_list(
-				[
-					{ x: 0, y: 0 },
-					{ x: 0, y: 1 },
-				],
-			),
-			white: Set.from_list(
-				[
-					{ x: 3, y: 0 },
-					{ x: 3, y: 1 },
-				],
-			),
-			none: Set.empty(),
-		},
-	)
+	expected = Ok({
+		black: Set.from_list([
+			{ x: 0, y: 0 },
+			{ x: 0, y: 1 },
+		]),
+		white: Set.from_list([
+			{ x: 3, y: 0 },
+			{ x: 3, y: 1 },
+		]),
+		none: Set.empty(),
+	})
 	result->compare_territories(expected)
 }
 
@@ -171,18 +147,14 @@ expect {
 expect {
 	board = " B "
 	result = board->territories()
-	expected = Ok(
-		{
-			black: Set.from_list(
-				[
-					{ x: 0, y: 0 },
-					{ x: 2, y: 0 },
-				],
-			),
-			white: Set.empty(),
-			none: Set.empty(),
-		},
-	)
+	expected = Ok({
+		black: Set.from_list([
+			{ x: 0, y: 0 },
+			{ x: 2, y: 0 },
+		]),
+		white: Set.empty(),
+		none: Set.empty(),
+	})
 	result->compare_territories(expected)
 }
 

@@ -58,21 +58,19 @@ TwoBucket :: {}.{
 				Ok(path) => {
 					match path {
 						[.. as rest, last] => {
-							Ok(
-								{
-									moves: rest.len() + 1,
-									goal_bucket: if last.volume_one == goal {
-										One
-									} else {
-										Two
-									},
-									other_bucket: if last.volume_one == goal {
-										last.volume_two
-									} else {
-										last.volume_one
-									},
+							Ok({
+								moves: rest.len() + 1,
+								goal_bucket: if last.volume_one == goal {
+									One
+								} else {
+									Two
 								},
-							)
+								other_bucket: if last.volume_one == goal {
+									last.volume_two
+								} else {
+									last.volume_one
+								},
+							})
 						}
 						_ => Err(NoSolutionExists)
 					}

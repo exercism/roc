@@ -17,6 +17,6 @@ Isogram :: {}.{
 					},
 				) # to uppercase
 
-		chars.len() == chars->Set.from_list().len()
+		chars.len() == (chars->Set.from_list()).len()
 	}
 }

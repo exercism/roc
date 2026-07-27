@@ -46,10 +46,11 @@ pig_latin_swap = |chars| {
 translate_word : Str -> Str
 translate_word = |word| {
 	maybe_result = 
-		word
-			.to_utf8()
-			->pig_latin_swap()
-			.concat(['a', 'y'])
+		(
+			word
+				.to_utf8()
+				->pig_latin_swap(),
+		).concat(['a', 'y'])
 			->Str.from_utf8()
 	match maybe_result {
 		Ok(result) => result

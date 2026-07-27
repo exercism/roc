@@ -18,15 +18,16 @@ Alphametics :: {}.{
 
 		leading_digits : Set(U8)
 		leading_digits = {
-			addends.map(
-				|letters| {
-					letters.first() ?? 0
-				},
-			)
-				->Set.from_list()
-				.insert(
-					sum.first() ?? 0,
+			(
+				addends.map(
+					|letters| {
+						letters.first() ?? 0
+					},
 				)
+					->Set.from_list(),
+			).insert(
+				sum.first() ?? 0,
+			)
 		}
 
 		find_match : List((U8, U8)), List(U8), Set(U8) -> Try(List((U8, U8)), [InvalidAssignment, ..])
@@ -91,8 +92,10 @@ insert_term = |equation, letters, polarity| {
 		.fold_with_index(
 			equation,
 			|dict, letter, index| {
-				index_i64 = index.to_i64_try() ?? { crash "Unreachable" }
-				coeff = 10.I64.pow(index_i64) * polarity
+				index_i64 = index.to_i64_try() ?? {
+					crash "Unreachable"
+				}
+				coeff = (10.I64).pow(index_i64) * polarity
 				dict.update(
 					letter,
 					|val| {

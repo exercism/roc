@@ -2,13 +2,11 @@ ErrorHandling :: {}.{
 	User : { name : Str }
 	UserId : U64
 	users : Dict(UserId, User)
-	users = Dict.from_list(
-		[
-			(123, { name: "Alice" }),
-			(456, { name: "Bob" }),
-			(789, { name: "Charlie" }),
-		],
-	)
+	users = Dict.from_list([
+		(123, { name: "Alice" }),
+		(456, { name: "Bob" }),
+		(789, { name: "Charlie" }),
+	])
 
 	# # Returns the user with the given user_id, or UserNotFound(user_id)
 	get_user : UserId -> Try(User, _)

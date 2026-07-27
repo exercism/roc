@@ -13,7 +13,7 @@ RestApi :: {}.{
 	get : Database, { url : Str, payload : Str } -> Try(Str, [Http404(Str), Http422(Str)])
 	get = |database, { url, payload }| {
 		match url {
-			"/users" | "/users/" => database->get_users(payload).map_err(|_| Http422(payload))
+			"/users" | "/users/" => (database->get_users(payload)).map_err(|_| Http422(payload))
 			bad_url => Err(Http404(bad_url))
 		}
 	}
@@ -27,8 +27,8 @@ RestApi :: {}.{
 			}
 		}
 		match url {
-			"/add" => database->add_user(payload).map_err(|_| InvalidJson).map_err(handle_error)
-			"/iou" => database->add_loan(payload).map_err(handle_error)
+			"/add" => (database->add_user(payload)).map_err(|_| InvalidJson).map_err(handle_error)
+			"/iou" => (database->add_loan(payload)).map_err(handle_error)
 			bad_url => Err(Http404(bad_url))
 		}
 	}
@@ -77,7 +77,7 @@ parse_json_users = |payload| {
 add_user : RestApi.Database, Str -> Try(Str, [InvalidJson])
 add_user = |_database, payload| {
 	user_payload = parse_json_user(payload)?
-	new_user : User
+	new_user : RestApi.User
 	new_user = 
 		{
 			name: user_payload.user,
@@ -166,4 +166,3 @@ fold_try = |list, init, func| {
 	}
 	Ok($state)
 }
-

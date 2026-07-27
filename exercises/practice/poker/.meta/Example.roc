@@ -96,19 +96,20 @@ get_rank = |hand| {
 			)
 	is_special_straight = card_values == [2, 3, 4, 5, 14] # straight starting with Ace
 	is_straight = is_consecutive or is_special_straight
-	is_flush = (hand.map(|c| c.suit)->Set.from_list().len()) == 1
+	is_flush = ((hand.map(|c| c.suit)->Set.from_list()).len()) == 1
 
 	value_groups = 
-		card_values
-			.fold(
-				List.repeat(0, 13),
-				|counters, card_value| {
-					counters.update((card_value - 2), |group_size| group_size + 1) ?? counters
-				},
-			)
-			.map_with_index(|counter, value| counter * 13 + value)
-			->sort_desc()
-			.map(|group_rank| { size: group_rank // 13, value: group_rank % 13 + 2 })
+		(
+			card_values
+				.fold(
+					List.repeat(0, 13),
+					|counters, card_value| {
+						counters.update((card_value - 2), |group_size| group_size + 1) ?? counters
+					},
+				)
+				.map_with_index(|counter, value| counter * 13 + value)
+				->sort_desc(),
+		).map(|group_rank| { size: group_rank // 13, value: group_rank % 13 + 2 })
 			.drop_if(
 				|group| {
 					{ size, value: _ } = group
@@ -153,7 +154,7 @@ get_rank = |hand| {
 				)
 		}
 
-	category * 13.U64.pow(5) + rank_within_category
+	category * (13.U64).pow(5) + rank_within_category
 }
 
 # The following functions should soon be available in Roc's builtins

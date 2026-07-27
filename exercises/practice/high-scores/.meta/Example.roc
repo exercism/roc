@@ -11,7 +11,7 @@ HighScores :: {}.{
 
 	personal_top_three : List(U64) -> List(U64)
 	personal_top_three = |scores| {
-		scores->sort_desc().take_first(3)
+		(scores->sort_desc()).take_first(3)
 	}
 }
 

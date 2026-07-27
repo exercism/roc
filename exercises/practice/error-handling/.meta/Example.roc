@@ -2,13 +2,11 @@ ErrorHandling :: {}.{
 	User : { name : Str }
 	UserId : U64
 	users : Dict(UserId, User)
-	users = Dict.from_list(
-		[
-			(123, { name: "Alice" }),
-			(456, { name: "Bob" }),
-			(789, { name: "Charlie" }),
-		],
-	)
+	users = Dict.from_list([
+		(123, { name: "Alice" }),
+		(456, { name: "Bob" }),
+		(789, { name: "Charlie" }),
+	])
 
 	# # Returns the user with the given user_id, or UserNotFound(user_id)
 	get_user : UserId -> Try(User, [UserNotFound(UserId), ..])
@@ -22,7 +20,7 @@ ErrorHandling :: {}.{
 	parse_user_id : Str -> Try(UserId, [InvalidUserId(Str), ..])
 	parse_user_id = |path| {
 		user_id_str = path.drop_prefix("/users/")
-		user_id_str->U64.from_str().map_err(|_| InvalidUserId(user_id_str))
+		(user_id_str->U64.from_str()).map_err(|_| InvalidUserId(user_id_str))
 	}
 
 	# # Takes a URL and returns the page content, or the appropriate error

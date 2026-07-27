@@ -1,6 +1,6 @@
 Gigasecond :: {}.{
-    add : Str -> Str
-    add = |moment| {
-        crash "Please implement the 'add' function"
-    }
+	add : Str -> Str
+	add = |moment| {
+		crash "Please implement the 'add' function"
+	}
 }

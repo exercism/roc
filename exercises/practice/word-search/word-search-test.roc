@@ -20,11 +20,9 @@ expect {
 	grid = "clojurermt"
 	words_to_search_for = ["clojure"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 1 }, end: { column: 7, row: 1 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 1 }, end: { column: 7, row: 1 } }),
+	])
 	result == expected
 }
 
@@ -33,11 +31,9 @@ expect {
 	grid = "mtclojurer"
 	words_to_search_for = ["clojure"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 3, row: 1 }, end: { column: 9, row: 1 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 3, row: 1 }, end: { column: 9, row: 1 } }),
+	])
 	result == expected
 }
 
@@ -46,11 +42,9 @@ expect {
 	grid = "coffeelplx"
 	words_to_search_for = ["coffee"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("coffee", { start: { column: 1, row: 1 }, end: { column: 6, row: 1 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("coffee", { start: { column: 1, row: 1 }, end: { column: 6, row: 1 } }),
+	])
 	result == expected
 }
 
@@ -59,11 +53,9 @@ expect {
 	grid = "xcoffeezlp"
 	words_to_search_for = ["coffee"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("coffee", { start: { column: 2, row: 1 }, end: { column: 7, row: 1 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("coffee", { start: { column: 2, row: 1 }, end: { column: 7, row: 1 } }),
+	])
 	result == expected
 }
 
@@ -75,11 +67,9 @@ expect {
 
 	words_to_search_for = ["clojure"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 2, row: 2 }, end: { column: 8, row: 2 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 2, row: 2 }, end: { column: 8, row: 2 } }),
+	])
 	result == expected
 }
 
@@ -92,11 +82,9 @@ expect {
 
 	words_to_search_for = ["clojure"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 3 }, end: { column: 7, row: 3 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 3 }, end: { column: 7, row: 3 } }),
+	])
 	result == expected
 }
 
@@ -116,11 +104,9 @@ expect {
 
 	words_to_search_for = ["clojure"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
+	])
 	result == expected
 }
 
@@ -140,11 +126,9 @@ expect {
 
 	words_to_search_for = ["clojure"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 9 }, end: { column: 7, row: 9 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 9 }, end: { column: 7, row: 9 } }),
+	])
 	result == expected
 }
 
@@ -164,11 +148,9 @@ expect {
 
 	words_to_search_for = ["fortran"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("fortran", { start: { column: 1, row: 7 }, end: { column: 7, row: 7 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("fortran", { start: { column: 1, row: 7 }, end: { column: 7, row: 7 } }),
+	])
 	result == expected
 }
 
@@ -188,12 +170,10 @@ expect {
 
 	words_to_search_for = ["fortran", "clojure"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
-			("fortran", { start: { column: 1, row: 7 }, end: { column: 7, row: 7 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
+		("fortran", { start: { column: 1, row: 7 }, end: { column: 7, row: 7 } }),
+	])
 	result == expected
 }
 
@@ -202,11 +182,9 @@ expect {
 	grid = "rixilelhrs"
 	words_to_search_for = ["elixir"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("elixir", { start: { column: 6, row: 1 }, end: { column: 1, row: 1 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("elixir", { start: { column: 6, row: 1 }, end: { column: 1, row: 1 } }),
+	])
 	result == expected
 }
 
@@ -226,12 +204,10 @@ expect {
 
 	words_to_search_for = ["elixir", "clojure"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
-			("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
+		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
+	])
 	result == expected
 }
 
@@ -251,13 +227,11 @@ expect {
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
-			("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
-			("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
+		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
+		("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
+	])
 	result == expected
 }
 
@@ -277,14 +251,12 @@ expect {
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
-			("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
-			("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
-			("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
+		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
+		("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
+		("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
+	])
 	result == expected
 }
 
@@ -304,15 +276,13 @@ expect {
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
-			("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
-			("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
-			("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
-			("java", { start: { column: 1, row: 1 }, end: { column: 4, row: 4 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
+		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
+		("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
+		("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
+		("java", { start: { column: 1, row: 1 }, end: { column: 4, row: 4 } }),
+	])
 	result == expected
 }
 
@@ -332,16 +302,14 @@ expect {
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
-			("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
-			("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
-			("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
-			("java", { start: { column: 1, row: 1 }, end: { column: 4, row: 4 } }),
-			("lua", { start: { column: 8, row: 9 }, end: { column: 6, row: 7 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
+		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
+		("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
+		("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
+		("java", { start: { column: 1, row: 1 }, end: { column: 4, row: 4 } }),
+		("lua", { start: { column: 8, row: 9 }, end: { column: 6, row: 7 } }),
+	])
 	result == expected
 }
 
@@ -361,17 +329,15 @@ expect {
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua", "lisp"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
-			("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
-			("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
-			("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
-			("java", { start: { column: 1, row: 1 }, end: { column: 4, row: 4 } }),
-			("lua", { start: { column: 8, row: 9 }, end: { column: 6, row: 7 } }),
-			("lisp", { start: { column: 3, row: 6 }, end: { column: 6, row: 3 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
+		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
+		("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
+		("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
+		("java", { start: { column: 1, row: 1 }, end: { column: 4, row: 4 } }),
+		("lua", { start: { column: 8, row: 9 }, end: { column: 6, row: 7 } }),
+		("lisp", { start: { column: 3, row: 6 }, end: { column: 6, row: 3 } }),
+	])
 	result == expected
 }
 
@@ -391,18 +357,16 @@ expect {
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua", "lisp", "ruby"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
-			("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
-			("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
-			("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
-			("java", { start: { column: 1, row: 1 }, end: { column: 4, row: 4 } }),
-			("lua", { start: { column: 8, row: 9 }, end: { column: 6, row: 7 } }),
-			("lisp", { start: { column: 3, row: 6 }, end: { column: 6, row: 3 } }),
-			("ruby", { start: { column: 8, row: 6 }, end: { column: 5, row: 9 } }),
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
+		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
+		("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
+		("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
+		("java", { start: { column: 1, row: 1 }, end: { column: 4, row: 4 } }),
+		("lua", { start: { column: 8, row: 9 }, end: { column: 6, row: 7 } }),
+		("lisp", { start: { column: 3, row: 6 }, end: { column: 6, row: 3 } }),
+		("ruby", { start: { column: 8, row: 6 }, end: { column: 5, row: 9 } }),
+	])
 	result == expected
 }
 
@@ -422,19 +386,17 @@ expect {
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua", "lisp", "ruby", "haskell"]
 	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[
-			("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
-			("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
-			("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
-			("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
-			("java", { start: { column: 1, row: 1 }, end: { column: 4, row: 4 } }),
-			("lua", { start: { column: 8, row: 9 }, end: { column: 6, row: 7 } }),
-			("lisp", { start: { column: 3, row: 6 }, end: { column: 6, row: 3 } }),
-			("ruby", { start: { column: 8, row: 6 }, end: { column: 5, row: 9 } }),
-			# "haskell" is not in the grid
-		],
-	)
+	expected = Dict.from_list([
+		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
+		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
+		("ecmascript", { start: { column: 10, row: 1 }, end: { column: 10, row: 10 } }),
+		("rust", { start: { column: 9, row: 5 }, end: { column: 9, row: 2 } }),
+		("java", { start: { column: 1, row: 1 }, end: { column: 4, row: 4 } }),
+		("lua", { start: { column: 8, row: 9 }, end: { column: 6, row: 7 } }),
+		("lisp", { start: { column: 3, row: 6 }, end: { column: 6, row: 3 } }),
+		("ruby", { start: { column: 8, row: 6 }, end: { column: 5, row: 9 } }),
+		# "haskell" is not in the grid
+	])
 	result == expected
 }
 

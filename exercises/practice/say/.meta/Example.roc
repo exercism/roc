@@ -14,27 +14,28 @@ Say :: {}.{
 			}
 		} else if number < 1_000_000_000_000 {
 			words = 
-				[
-					(1_000_000_000_000, 1_000_000_000, "billion"),
-					(1_000_000_000, 1_000_000, "million"),
-					(1_000_000, 1000, "thousand"),
-					(1000, 100, "hundred"),
-					(100, 1, ""),
-				]
-					.keep_oks(
-						|triple| {
-							(modulo, divisor, name) = triple
-							how_many = (number % modulo) // divisor
-							if how_many == 0 {
-								Err(NothingToSay)
-							} else {
-								say_how_many = say(how_many).map_err(|_| NothingToSay)?
-								Ok("${say_how_many} ${name}")
-							}
-						},
-					)
-					->Str.join_with(" ")
-					.trim_end()
+				(
+					[
+						(1_000_000_000_000, 1_000_000_000, "billion"),
+						(1_000_000_000, 1_000_000, "million"),
+						(1_000_000, 1000, "thousand"),
+						(1000, 100, "hundred"),
+						(100, 1, ""),
+					]
+						.keep_oks(
+							|triple| {
+								(modulo, divisor, name) = triple
+								how_many = (number % modulo) // divisor
+								if how_many == 0 {
+									Err(NothingToSay)
+								} else {
+									say_how_many = say(how_many).map_err(|_| NothingToSay)?
+									Ok("${say_how_many} ${name}")
+								}
+							},
+						)
+						->Str.join_with(" "),
+				).trim_end()
 			Ok(words)
 		} else {
 			Err(OutOfBounds)

@@ -1,24 +1,25 @@
 AtbashCipher :: {}.{
 	encode : Str -> Try(Str, _)
 	encode = |phrase| {
-		phrase
-			.to_utf8()
-			->join_map(
-				|char| {
-					if char >= 'A' and char <= 'Z' {
-						[invert((char - 'A' + 'a'))]
-					} else if char >= 'a' and char <= 'z' {
-						[invert(char)]
-					} else if char >= '0' and char <= '9' {
-						[char]
-					} else {
-						[]
-					}
-				},
-			)
-			->chunks_of(5)
-			->intersperse([' '])
-			.join()
+		(
+			phrase
+				.to_utf8()
+				->join_map(
+					|char| {
+						if char >= 'A' and char <= 'Z' {
+							[invert((char - 'A' + 'a'))]
+						} else if char >= 'a' and char <= 'z' {
+							[invert(char)]
+						} else if char >= '0' and char <= '9' {
+							[char]
+						} else {
+							[]
+						}
+					},
+				)
+				->chunks_of(5)
+				->intersperse([' ']),
+		).join()
 			->Str.from_utf8()
 	}
 

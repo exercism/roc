@@ -7,15 +7,16 @@ OcrNumbers :: {}.{
 			grid_chars = grid.to_utf8().split_on('\n')
 			size = check_size(grid_chars)?
 			digits_str = 
-				grid_chars
-					->chunks_of(4)
-					.map(
-						|row_group| {
-							get_digit_grids(row_group, size.width)
-								.map(identify_digit)
-								->Str.join_with("")
-						},
-					)
+				(
+					grid_chars
+						->chunks_of(4),
+				).map(
+					|row_group| {
+						get_digit_grids(row_group, size.width)
+							.map(identify_digit)
+							->Str.join_with("")
+					},
+				)
 					->Str.join_with(",")
 			Ok(digits_str)
 		}
@@ -93,10 +94,8 @@ identify_digit = |digit_grid| {
 }
 
 # The following functions should soon be available in Roc's builtins
-chunks_of : i, b -> List(List(a)) where [
-	i.iter : i -> Iter(a),
-	b.to_u64 : b -> U64
-]
+chunks_of : i, b -> List(List(a))
+	where [i.iter : i -> Iter(a), b.to_u64 : b -> U64]
 chunks_of = |list, size| {
 	var $state = []
 	var $chunk = []

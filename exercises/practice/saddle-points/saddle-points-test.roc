@@ -12,11 +12,9 @@ expect {
 		[6, 6, 7],
 	]
 	result = tree_heights->saddle_points()
-	expected = Set.from_list(
-		[
-			{ row: 2, column: 1 },
-		],
-	)
+	expected = Set.from_list([
+		{ row: 2, column: 1 },
+	])
 	result == expected
 }
 
@@ -54,13 +52,11 @@ expect {
 		[1, 5, 4],
 	]
 	result = tree_heights->saddle_points()
-	expected = Set.from_list(
-		[
-			{ row: 1, column: 2 },
-			{ row: 2, column: 2 },
-			{ row: 3, column: 2 },
-		],
-	)
+	expected = Set.from_list([
+		{ row: 1, column: 2 },
+		{ row: 2, column: 2 },
+		{ row: 3, column: 2 },
+	])
 	result == expected
 }
 
@@ -72,13 +68,11 @@ expect {
 		[7, 5, 6],
 	]
 	result = tree_heights->saddle_points()
-	expected = Set.from_list(
-		[
-			{ row: 2, column: 1 },
-			{ row: 2, column: 2 },
-			{ row: 2, column: 3 },
-		],
-	)
+	expected = Set.from_list([
+		{ row: 2, column: 1 },
+		{ row: 2, column: 2 },
+		{ row: 2, column: 3 },
+	])
 	result == expected
 }
 
@@ -90,11 +84,9 @@ expect {
 		[3, 2, 5],
 	]
 	result = tree_heights->saddle_points()
-	expected = Set.from_list(
-		[
-			{ row: 3, column: 3 },
-		],
-	)
+	expected = Set.from_list([
+		{ row: 3, column: 3 },
+	])
 	result == expected
 }
 
@@ -105,12 +97,10 @@ expect {
 		[3, 2, 4],
 	]
 	result = tree_heights->saddle_points()
-	expected = Set.from_list(
-		[
-			{ row: 1, column: 3 },
-			{ row: 1, column: 1 },
-		],
-	)
+	expected = Set.from_list([
+		{ row: 1, column: 3 },
+		{ row: 1, column: 1 },
+	])
 	result == expected
 }
 
@@ -123,12 +113,10 @@ expect {
 		[1],
 	]
 	result = tree_heights->saddle_points()
-	expected = Set.from_list(
-		[
-			{ row: 2, column: 1 },
-			{ row: 4, column: 1 },
-		],
-	)
+	expected = Set.from_list([
+		{ row: 2, column: 1 },
+		{ row: 4, column: 1 },
+	])
 	result == expected
 }
 
@@ -138,12 +126,10 @@ expect {
 		[2, 5, 3, 5],
 	]
 	result = tree_heights->saddle_points()
-	expected = Set.from_list(
-		[
-			{ row: 1, column: 2 },
-			{ row: 1, column: 4 },
-		],
-	)
+	expected = Set.from_list([
+		{ row: 1, column: 2 },
+		{ row: 1, column: 4 },
+	])
 	result == expected
 }
 

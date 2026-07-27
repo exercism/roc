@@ -31,9 +31,10 @@ letter_value = |letter| {
 		]
 			.find_first(
 				|(letters, _)| {
-					letters
-						->Str.to_utf8()
-						.contains(to_upper(letter))
+					(
+						letters
+							->Str.to_utf8(),
+					).contains(to_upper(letter))
 				},
 			) ?? ("", 0)
 	val
