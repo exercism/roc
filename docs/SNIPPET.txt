@@ -1,14 +1,15 @@
-factorial = |number| {
-    match number {
-        1 => 1
-        n => n * factorial(n - 1)
-    }
-}
-
-expect factorial(5) == 1 * 2 * 3 * 4 * 5
+print_remaining! = |todos|
+	todos
+		.keep_if(|todo| todo.status != Done)
+		.for_each!(|todo| echo!("- ${todo.name}\n"))
 
 main! = |_args| {
-    result = factorial(20)
-    echo!("factorial 20 = ${result.to_str()}")
-    Ok({})
+	todos = [
+		{ name: "Buy groceries", status: Done },
+		{ name: "Join Exercism", status: Done },
+		{ name: "Learn Roc",     status: InProgress },
+		{ name: "Call mom",      status: NotStarted },
+	]
+	print_remaining!(todos)
+	Ok({})
 }
