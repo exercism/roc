@@ -6,8 +6,6 @@ app [main!] {
 	isodate: "https://github.com/ageron/roc-isodate/releases/download/0.8.0/B2h6tefXQtEz9VG6QukLDBoGXhRtwGLj9sZHDEJaTHkS.tar.zst",
 }
 
-import pf.Stdout
-
 import Meetup exposing [meetup]
 
 # when teenth Monday is the 13th, the first day of the teenth week

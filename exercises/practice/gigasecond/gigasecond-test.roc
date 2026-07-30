@@ -1,12 +1,10 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/gigasecond/canonical-data.json
-# File last updated on 2026-06-21
+# File last updated on 2026-07-30
 app [main!] {
 	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.21.0/4rAQg8kUYZ3Vksr4qMQHpaFYNiHSn9GgS7gVxghd1XYV.tar.zst",
-	isodate: "https://github.com/imclerran/roc-isodate/...",
+	isodate: "https://github.com/ageron/roc-isodate/releases/download/0.8.0/B2h6tefXQtEz9VG6QukLDBoGXhRtwGLj9sZHDEJaTHkS.tar.zst",
 }
-
-import pf.Stdout
 
 import Gigasecond exposing [add]
 
