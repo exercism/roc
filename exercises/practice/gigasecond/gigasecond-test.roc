@@ -2,8 +2,8 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/gigasecond/canonical-data.json
 # File last updated on 2026-06-21
 app [main!] {
-	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
-	isodate: "https://github.com/imclerran/roc-isodate/...", # TODO: update when a zig-compatible release is available
+	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.21.0/4rAQg8kUYZ3Vksr4qMQHpaFYNiHSn9GgS7gVxghd1XYV.tar.zst",
+	isodate: "https://github.com/imclerran/roc-isodate/...",
 }
 
 import pf.Stdout
