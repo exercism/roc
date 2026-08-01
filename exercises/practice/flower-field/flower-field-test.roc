@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/flower-field/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import FlowerField exposing [annotate]
 
@@ -22,13 +22,13 @@ expect {
 
 # no flowers
 expect {
-	garden = 
+	garden =
 		\\   
 		\\   
 		\\   
 
 	result = annotate(garden)
-	expected = 
+	expected =
 		\\   
 		\\   
 		\\   
@@ -38,13 +38,13 @@ expect {
 
 # garden full of flowers
 expect {
-	garden = 
+	garden =
 		\\***
 		\\***
 		\\***
 
 	result = annotate(garden)
-	expected = 
+	expected =
 		\\***
 		\\***
 		\\***
@@ -54,13 +54,13 @@ expect {
 
 # flower surrounded by spaces
 expect {
-	garden = 
+	garden =
 		\\   
 		\\ * 
 		\\   
 
 	result = annotate(garden)
-	expected = 
+	expected =
 		\\111
 		\\1*1
 		\\111
@@ -70,13 +70,13 @@ expect {
 
 # space surrounded by flowers
 expect {
-	garden = 
+	garden =
 		\\***
 		\\* *
 		\\***
 
 	result = annotate(garden)
-	expected = 
+	expected =
 		\\***
 		\\*8*
 		\\***
@@ -102,7 +102,7 @@ expect {
 
 # vertical line
 expect {
-	garden = 
+	garden =
 		\\ 
 		\\*
 		\\ 
@@ -110,7 +110,7 @@ expect {
 		\\ 
 
 	result = annotate(garden)
-	expected = 
+	expected =
 		\\1
 		\\*
 		\\2
@@ -122,7 +122,7 @@ expect {
 
 # vertical line, flowers at edges
 expect {
-	garden = 
+	garden =
 		\\*
 		\\ 
 		\\ 
@@ -130,7 +130,7 @@ expect {
 		\\*
 
 	result = annotate(garden)
-	expected = 
+	expected =
 		\\*
 		\\1
 		\\ 
@@ -142,7 +142,7 @@ expect {
 
 # cross
 expect {
-	garden = 
+	garden =
 		\\  *  
 		\\  *  
 		\\*****
@@ -150,7 +150,7 @@ expect {
 		\\  *  
 
 	result = annotate(garden)
-	expected = 
+	expected =
 		\\ 2*2 
 		\\25*52
 		\\*****
@@ -162,7 +162,7 @@ expect {
 
 # large garden
 expect {
-	garden = 
+	garden =
 		\\ *  * 
 		\\  *   
 		\\    * 
@@ -171,7 +171,7 @@ expect {
 		\\      
 
 	result = annotate(garden)
-	expected = 
+	expected =
 		\\1*22*1
 		\\12*322
 		\\ 123*2

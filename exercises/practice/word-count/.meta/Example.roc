@@ -1,7 +1,7 @@
 WordCount :: {}.{
 	count_words : Str -> Dict(Str, U64)
 	count_words = |sentence| {
-		all_words = 
+		all_words =
 			sentence
 				.to_utf8()
 				.append(' ')
@@ -34,7 +34,7 @@ WordCount :: {}.{
 		all_words.fold(
 			Dict.empty(),
 			|result, chars| {
-				word = 
+				word =
 					match Str.from_utf8(chars) {
 						Ok(parsed_word) => parsed_word
 						Err(BadUtf8(_)) => {

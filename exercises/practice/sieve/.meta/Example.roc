@@ -23,7 +23,7 @@ Sieve :: {}.{
 									}
 								},
 							)
-							->help_sieve(found_primes.append(prime))
+							|> help_sieve(found_primes.append(prime))
 					}
 				}
 			}

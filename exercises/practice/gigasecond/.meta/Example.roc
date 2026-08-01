@@ -17,5 +17,5 @@ future_datetime = |moment| {
 		.div_trunc_by(1_000_000_000.I128) # nanos to seconds
 		.plus(1_000_000_000.I128) # add a gigasecond
 		.times(1_000_000_000.I128) # back to nanos
-	DateTime.from_nanos_since_epoch(new_nanos).to_iso_str()->Ok()
+	DateTime.from_nanos_since_epoch(new_nanos).to_iso_str() |> Ok
 }

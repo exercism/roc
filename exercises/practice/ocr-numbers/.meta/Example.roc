@@ -6,18 +6,18 @@ OcrNumbers :: {}.{
 		} else {
 			grid_chars = grid.to_utf8().split_on('\n')
 			size = check_size(grid_chars)?
-			digits_str = 
+			digits_str =
 				(
 					grid_chars
-						->chunks_of(4),
+						|> chunks_of(4),
 				).map(
 					|row_group| {
 						get_digit_grids(row_group, size.width)
 							.map(identify_digit)
-							->Str.join_with("")
+							|> Str.join_with("")
 					},
 				)
-					->Str.join_with(",")
+					|> Str.join_with(",")
 			Ok(digits_str)
 		}
 	}
@@ -55,7 +55,7 @@ check_size = |grid_chars| {
 ## Given four rows from the full grid, return the 3x4 grid for each digit
 get_digit_grids : List(List(U8)), U64 -> List(List(List(U8)))
 get_digit_grids = |row_group, full_grid_width| {
-	chunked_rows = row_group.map(|row| row->chunks_of(3))
+	chunked_rows = row_group.map(|row| row |> chunks_of(3))
 	num_horizontal_chunks = full_grid_width // 3
 	(0..<num_horizontal_chunks)
 		.map(
@@ -73,7 +73,7 @@ get_digit_grids = |row_group, full_grid_width| {
 					)
 			},
 		)
-		->List.from_iter()
+		|> List.from_iter
 }
 
 identify_digit : List(List(U8)) -> Str

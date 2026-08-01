@@ -3,8 +3,8 @@ House :: {}.{
 	recite = |start_verse, end_verse| {
 		(start_verse..=end_verse)
 			.map(verse)
-			->List.from_iter()
-			->Str.join_with("\n")
+			|> List.from_iter
+			|> Str.join_with("\n")
 	}
 }
 
@@ -24,10 +24,10 @@ segments = [
 ]
 
 verse = |index| {
-	blablabla = 
+	blablabla =
 		segments
 			.take_first(index)
 			.rev()
-			->Str.join_with(" the ")
+			|> Str.join_with(" the ")
 	"This is the ${blablabla}"
 }

@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/list-ops/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import ListOps exposing [concat, join, filter, len, map, fold, fold_rev, reverse]
 
@@ -10,25 +10,25 @@ import ListOps exposing [concat, join, filter, len, map, fold, fold_rev, reverse
 
 # empty lists
 expect {
-	result = []->concat([])
+	result = [] |> concat([])
 	result == []
 }
 
 # list to empty list
 expect {
-	result = []->concat([1, 2, 3, 4])
+	result = [] |> concat([1, 2, 3, 4])
 	result == [1, 2, 3, 4]
 }
 
 # empty list to list
 expect {
-	result = [1, 2, 3, 4]->concat([])
+	result = [1, 2, 3, 4] |> concat([])
 	result == [1, 2, 3, 4]
 }
 
 # non-empty lists
 expect {
-	result = [1, 2]->concat([2, 3, 4, 5])
+	result = [1, 2] |> concat([2, 3, 4, 5])
 	result == [1, 2, 2, 3, 4, 5]
 }
 
@@ -38,19 +38,19 @@ expect {
 
 # empty list
 expect {
-	result = []->join()
+	result = [] |> join
 	result == []
 }
 
 # list of lists
 expect {
-	result = [[1, 2], [3], [], [4, 5, 6]]->join()
+	result = [[1, 2], [3], [], [4, 5, 6]] |> join
 	result == [1, 2, 3, 4, 5, 6]
 }
 
 # list of nested lists
 expect {
-	result = [[[1], [2]], [[3]], [[]], [[4, 5, 6]]]->join()
+	result = [[[1], [2]], [[3]], [[]], [[4, 5, 6]]] |> join
 	result == [[1], [2], [3], [], [4, 5, 6]]
 }
 
@@ -60,13 +60,13 @@ expect {
 
 # empty list
 expect {
-	result = []->filter(|n| n % 2 == 1)
+	result = [] |> filter(|n| n % 2 == 1)
 	result == []
 }
 
 # non-empty list
 expect {
-	result = [1, 2, 3, 5]->filter(|n| n % 2 == 1)
+	result = [1, 2, 3, 5] |> filter(|n| n % 2 == 1)
 	result == [1, 3, 5]
 }
 
@@ -76,13 +76,13 @@ expect {
 
 # empty list
 expect {
-	result = []->len()
+	result = [] |> len
 	result == 0
 }
 
 # non-empty list
 expect {
-	result = [1, 2, 3, 4]->len()
+	result = [1, 2, 3, 4] |> len
 	result == 4
 }
 
@@ -92,13 +92,13 @@ expect {
 
 # empty list
 expect {
-	result = []->map(|x| x + 1)
+	result = [] |> map(|x| x + 1)
 	result == []
 }
 
 # non-empty list
 expect {
-	result = [1, 3, 5, 7]->map(|x| x + 1)
+	result = [1, 3, 5, 7] |> map(|x| x + 1)
 	result == [2, 4, 6, 8]
 }
 
@@ -108,19 +108,19 @@ expect {
 
 # empty list
 expect {
-	result = []->fold(2, |acc, el| el * acc)
+	result = [] |> fold(2, |acc, el| el * acc)
 	result == 2
 }
 
 # direction independent function applied to non-empty list
 expect {
-	result = [1, 2, 3, 4]->fold(5, |acc, el| el + acc)
+	result = [1, 2, 3, 4] |> fold(5, |acc, el| el + acc)
 	result == 15
 }
 
 # direction dependent function applied to non-empty list
 expect {
-	result = [1, 2, 3, 4]->fold(24, |acc, el| el / acc)->round()
+	result = [1, 2, 3, 4] |> fold(24, |acc, el| el / acc) |> round
 	result == 64
 }
 
@@ -130,19 +130,19 @@ expect {
 
 # empty list
 expect {
-	result = []->fold_rev(2, |acc, el| el * acc)
+	result = [] |> fold_rev(2, |acc, el| el * acc)
 	result == 2
 }
 
 # direction independent function applied to non-empty list
 expect {
-	result = [1, 2, 3, 4]->fold_rev(5, |acc, el| el + acc)
+	result = [1, 2, 3, 4] |> fold_rev(5, |acc, el| el + acc)
 	result == 15
 }
 
 # direction dependent function applied to non-empty list
 expect {
-	result = [1, 2, 3, 4]->fold_rev(24, |acc, el| el / acc)->round()
+	result = [1, 2, 3, 4] |> fold_rev(24, |acc, el| el / acc) |> round
 	result == 9
 }
 
@@ -152,19 +152,19 @@ expect {
 
 # empty list
 expect {
-	result = []->reverse()
+	result = [] |> reverse
 	result == []
 }
 
 # non-empty list
 expect {
-	result = [1, 3, 5, 7]->reverse()
+	result = [1, 3, 5, 7] |> reverse
 	result == [7, 5, 3, 1]
 }
 
 # list of lists is not flattened
 expect {
-	result = [[1, 2], [3], [], [4, 5, 6]]->reverse()
+	result = [[1, 2], [3], [], [4, 5, 6]] |> reverse
 	result == [[4, 5, 6], [], [3], [1, 2]]
 }
 

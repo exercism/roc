@@ -68,7 +68,7 @@ CustomSet :: { items : List(U64) }.{
 
 	union : CustomSet, CustomSet -> CustomSet
 	union = |set1, set2| {
-		set1.to_list().concat(set2.to_list())->from_list()
+		set1.to_list().concat(set2.to_list()) |> from_list
 	}
 }
 

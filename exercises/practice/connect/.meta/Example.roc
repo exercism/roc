@@ -3,9 +3,9 @@ Connect :: {}.{
 	winner = |board_str| {
 		board = parse(board_str)?
 		_ = validate(board)?
-		if board->has_north_south_path(StoneO) {
+		if board |> has_north_south_path(StoneO) {
 			Ok(PlayerO)
-		} else if board->transpose()->has_north_south_path(StoneX) {
+		} else if board |> transpose |> has_north_south_path(StoneX) {
 			Ok(PlayerX)
 		} else {
 			Err(NotFinished)
@@ -51,7 +51,7 @@ parse = |board_str| {
 # # Ensure that the board has a least one cell, and that all rows have the same length
 validate : Board -> Try({}, [InvalidBoardShape, ..])
 validate = |board| {
-	row_lengths = board.map(List.len)->Set.from_list()
+	row_lengths = board.map(List.len) |> Set.from_list
 	if row_lengths.len() != 1 or row_lengths == Set.from_list([0]) {
 		Err(InvalidBoardShape)
 	} else {
@@ -61,14 +61,14 @@ validate = |board| {
 
 transpose : Board -> Board
 transpose = |board| {
-	width = (board->first_row()).len()
+	width = (board |> first_row).len()
 	(0..<width)
 		.map(
 			|x| {
 				(0..<board.len())
 					.map(
 						|y| {
-							match board->get_cell({ x, y }) {
+							match board |> get_cell({ x, y }) {
 								Ok(cell) => cell
 								Err(OutOfBounds) => {
 									crash "Unreachable: all rows have the same length"
@@ -76,10 +76,10 @@ transpose = |board| {
 							}
 						},
 					)
-					->List.from_iter()
+					|> List.from_iter
 			},
 		)
-		->List.from_iter()
+		|> List.from_iter
 }
 
 first_row : Board -> List(Cell)
@@ -104,7 +104,7 @@ has_north_south_path = |board, stone| {
 		match to_visit {
 			[] => Bool.False
 			[position, .. as rest] => {
-				is_player_stone = board->get_cell(position) == Ok(stone)
+				is_player_stone = board |> get_cell(position) == Ok(stone)
 				if is_player_stone and !(visited.contains(position)) {
 					{ x, y } = position
 					if y + 1 == board.len() {
@@ -112,7 +112,7 @@ has_north_south_path = |board, stone| {
 					} else {
 						neighbors = {
 							[(-1, 0), (1, 0), (0, -1), (1, -1), (-1, 1), (0, 1)]
-								->join_map(
+								|> join_map(
 									|(dx, dy)| {
 										nx = (
 											x.to_i64_try() ?? {
@@ -154,7 +154,7 @@ has_north_south_path = |board, stone| {
 	north_stones = {
 		(
 			board
-				->first_row(),
+				|> first_row,
 		).map_with_index(
 			|cell, x| {
 				match cell {

@@ -27,7 +27,7 @@ expect {
             ({{ pair[0] }}, {{ pair[1] }}),{% endfor %}
         ])
     })
-    result->is_eq(expected)
+    result|>is_eq(expected)
     {%- endif %}
 }
 

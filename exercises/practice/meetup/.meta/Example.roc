@@ -33,14 +33,14 @@ Meetup :: {}.{
 					}
 				}
 			}
-			Ok("${year->pad_number(4)}-${month->pad_number(2)}-${day_of_month->pad_number(2)}")
+			Ok("${year |> pad_number(4)}-${month |> pad_number(2)}-${day_of_month |> pad_number(2)}")
 		}
 }
 
 pad_number : _, U64 -> Str
 pad_number = |number, pad| {
 	number_str = number.to_str()
-	num_zeros = pad.minus_saturated(number_str->Str.to_utf8()->List.len())
+	num_zeros = pad.minus_saturated(number_str |> Str.to_utf8 |> List.len)
 	zeros_str = "0".repeat(num_zeros)
 	"${zeros_str}${number_str}"
 }

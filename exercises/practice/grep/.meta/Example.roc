@@ -9,7 +9,7 @@ Grep :: {}.{
 		files = collect_files(file_names)?
 		display_file_names = files.len() > 1
 		files
-			->join_map(
+			|> join_map(
 				|file| {
 					match find_matches(config, pattern, file.text) {
 						[] => []
@@ -18,13 +18,13 @@ Grep :: {}.{
 							matches.map(
 								|match_info| {
 									{ line, index } = match_info
-									line_number = 
+									line_number =
 										if config.display_line_numbers {
 											"${(index + 1).to_str()}:"
 										} else {
 											""
 										}
-									file_name = 
+									file_name =
 										if display_file_names {
 											"${file.name}:"
 										} else {
@@ -37,8 +37,8 @@ Grep :: {}.{
 					}
 				},
 			)
-			->Str.join_with("\n")
-			->Ok()
+			|> Str.join_with("\n")
+			|> Ok
 	}
 }
 
@@ -49,14 +49,14 @@ find_matches = |config, pattern, text| {
 		.keep_if(
 			|match_info| {
 				{ line, index: _ } = match_info
-				(line_to_match, pattern_to_match) = 
+				(line_to_match, pattern_to_match) =
 					if config.ignore_case {
 						(to_lower(line), to_lower(pattern))
 					} else {
 						(line, pattern)
 					}
 
-				matches = 
+				matches =
 					if config.match_full_lines {
 						line_to_match == pattern_to_match
 					} else {
@@ -81,7 +81,7 @@ to_lower = |str| {
 				}
 			},
 		)
-		->Str.from_utf8()
+		|> Str.from_utf8
 		?? ""
 }
 

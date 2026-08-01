@@ -31,10 +31,10 @@ Change :: {}.{
 			}
 		}
 
-		help(coins->sort_desc(), target, U64.highest)?
+		help(coins |> sort_desc, target, U64.highest)?
 	}
-		->sort_asc()
-		->Ok()
+		|> sort_asc
+		|> Ok
 }
 
 # The following functions should soon be available in Roc's builtins

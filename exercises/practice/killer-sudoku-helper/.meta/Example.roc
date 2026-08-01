@@ -32,7 +32,7 @@ KillerSudokuHelper :: {}.{
 				}
 			}
 		}
-		available_digits = 
+		available_digits =
 			[1, 2, 3, 4, 5, 6, 7, 8, 9]
 				.drop_if(
 					|digit| exclude.contains(digit),

@@ -4,7 +4,7 @@ PrimeFactors :: {}.{
 		find_prime_factors = |factors, n, p| {
 			if n < 2 {
 				factors
-			} else if n->is_multiple_of(p) {
+			} else if n |> is_multiple_of(p) {
 				find_prime_factors(factors.append(p), (n // p), p)
 			} else if p * p < n {
 				next_p = if p == 2 {

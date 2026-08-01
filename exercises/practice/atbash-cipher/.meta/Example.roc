@@ -4,7 +4,7 @@ AtbashCipher :: {}.{
 		(
 			phrase
 				.to_utf8()
-				->join_map(
+				|> join_map(
 					|char| {
 						if char >= 'A' and char <= 'Z' {
 							[invert((char - 'A' + 'a'))]
@@ -17,10 +17,10 @@ AtbashCipher :: {}.{
 						}
 					},
 				)
-				->chunks_of(5)
-				->intersperse([' ']),
+				|> chunks_of(5)
+				|> intersperse([' ']),
 		).join()
-			->Str.from_utf8()
+			|> Str.from_utf8
 	}
 
 	decode : Str -> Try(Str, _)
@@ -35,7 +35,7 @@ AtbashCipher :: {}.{
 			.map(
 				invert,
 			)
-			->Str.from_utf8()
+			|> Str.from_utf8
 	}
 }
 

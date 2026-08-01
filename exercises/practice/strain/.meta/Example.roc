@@ -17,9 +17,9 @@ Strain :: {}.{
 				[] => non_discarded_items
 				[first, .. as rest] => {
 					if predicate(first) {
-						rest->loop(non_discarded_items)
+						rest |> loop(non_discarded_items)
 					} else {
-						rest->loop(non_discarded_items.append(first))
+						rest |> loop(non_discarded_items.append(first))
 					}
 				}
 			}

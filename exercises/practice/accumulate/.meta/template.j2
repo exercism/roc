@@ -32,7 +32,7 @@ to_upper_char = |byte| {
 
 to_upper : Str -> Str
 to_upper = |str| {
-	str.to_utf8().map(to_upper_char)->Str.from_utf8() ?? ""
+	str.to_utf8().map(to_upper_char)|>Str.from_utf8() ?? ""
 }
 
 str_reverse : Str -> Str
@@ -40,7 +40,7 @@ str_reverse = |str| {
 	str
 		.to_utf8()
 		.rev()
-		->Str.from_utf8()
+		|>Str.from_utf8()
 		?? ""
 }
 

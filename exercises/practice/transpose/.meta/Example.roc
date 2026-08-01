@@ -10,7 +10,7 @@ Transpose :: {}.{
 		(0..<max_width)
 			.map(
 				|col| {
-					max_row = 
+					max_row =
 						chars
 							.find_last_index(
 								|row_chars| row_chars.len() > col,
@@ -21,12 +21,12 @@ Transpose :: {}.{
 						.map(
 							|row| get_char(row, col) ?? ' ',
 						)
-						->List.from_iter()
-						->Str.from_utf8()
+						|> List.from_iter
+						|> Str.from_utf8
 						?? ""
 				},
 			)
-			->List.from_iter()
-			->Str.join_with("\n")
+			|> List.from_iter
+			|> Str.join_with("\n")
 	}
 }

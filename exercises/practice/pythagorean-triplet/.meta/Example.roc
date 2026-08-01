@@ -14,7 +14,7 @@ PythagoreanTriplet :: {}.{
 				}
 			} else {
 				c = sum - a - b
-				new_triplets = 
+				new_triplets =
 					if a * a + b * b == c * c {
 						triplets.append((a, b, c)) # success!
 					} else {
@@ -23,6 +23,6 @@ PythagoreanTriplet :: {}.{
 				help(new_triplets, a, (b + 1)) # increment b
 			}
 		}
-		help([], 1, 2)->Set.from_list()
+		help([], 1, 2) |> Set.from_list
 	}
 }

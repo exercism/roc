@@ -3,14 +3,14 @@ FoodChain :: {}.{
 	recite = |start_verse, end_verse| {
 		verse_list
 			.sublist({ start: start_verse - 1, len: end_verse - (start_verse - 1) })
-			->Str.join_with("\n\n")
+			|> Str.join_with("\n\n")
 	}
 }
 
 verse_list : List(Str)
 verse_list = {
 	initial_state = { verses: [], verse_body: "I don't know why she swallowed the fly. Perhaps she'll die.", previous_animal: "fly" }
-	result = 
+	result =
 		animals.fold(
 			initial_state,
 			|{ verses, verse_body, previous_animal }, animal| {
@@ -29,7 +29,7 @@ verse_list = {
 
 # I would prefer to use an if expression here, but I ran into a compiler bug doing that
 animal_descriptions : Dict(Str, Str)
-animal_descriptions = 
+animal_descriptions =
 	Dict.single("spider", " that wriggled and jiggled and tickled inside her")
 
 animals : List({ name : Str, exclamation : Str })

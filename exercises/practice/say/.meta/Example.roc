@@ -13,7 +13,7 @@ Say :: {}.{
 				Ok(tens_word)
 			}
 		} else if number < 1_000_000_000_000 {
-			words = 
+			words =
 				(
 					[
 						(1_000_000_000_000, 1_000_000_000, "billion"),
@@ -34,7 +34,7 @@ Say :: {}.{
 								}
 							},
 						)
-						->Str.join_with(" "),
+						|> Str.join_with(" "),
 				).trim_end()
 			Ok(words)
 		} else {

@@ -6,17 +6,17 @@ Series :: {}.{
 		if len == 0 or slice_length == 0 or slice_length > len {
 			[]
 		} else {
-			maybe_list = 
+			maybe_list =
 				(
 					(0..=(len - slice_length))
-						->List.from_iter(),
+						|> List.from_iter,
 				).map_try(
 					|start_index| {
 						chars
 							.sublist(
 								{ start: start_index, len: slice_length },
 							)
-							->Str.from_utf8()
+							|> Str.from_utf8
 					},
 				)
 			match maybe_list {

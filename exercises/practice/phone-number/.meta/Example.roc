@@ -1,7 +1,7 @@
 PhoneNumber :: {}.{
 	clean : Str -> Try(Str, [InvalidNumber])
 	clean = |phone_number| {
-		digits = 
+		digits =
 			phone_number
 				.to_utf8()
 				.keep_if(|c| c >= '0' and c <= '9')

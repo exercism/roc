@@ -3,7 +3,7 @@ ArmstrongNumbers :: {}.{
 	is_armstrong_number = |number| {
 		digits = list_digits(number)
 		len = digits.len()
-		candidate = 
+		candidate =
 			digits
 				.map(
 					|digit| {

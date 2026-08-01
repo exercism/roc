@@ -19,7 +19,7 @@ Dominoes :: {}.{
 							.fold_with_index_until(
 								Err(NoChainExists),
 								|_, (domino_left, domino_right), index| {
-									maybe_chain = 
+									maybe_chain =
 										if last_used_right == domino_left {
 											find_chain_helper(used.append((domino_left, domino_right)), available.drop_at(index))
 										} else if last_used_right == domino_right {

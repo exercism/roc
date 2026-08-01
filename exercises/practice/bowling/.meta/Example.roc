@@ -60,33 +60,34 @@ Bowling :: { frames : List(Frame) }.{
 		if game.is_over() {
 			{ frames } = game
 			points = {
-				frames->map_triplets(
-					|frame1, frame2, frame3| {
-						match frame1 {
-							Ball2(pins1, pins2) => {
-								pins1 + pins2
-							}
-							Spare(pins1, pins2) => {
-								pins1 + pins2 + first_pins(frame2)
-							}
-							Strike => {
-								match frame2 {
-									Strike => {
-										10 + 10 + first_pins(frame3)
-									}
-									_ => {
-										10 + total_pins(frame2)
+				frames
+					|> map_triplets(
+						|frame1, frame2, frame3| {
+							match frame1 {
+								Ball2(pins1, pins2) => {
+									pins1 + pins2
+								}
+								Spare(pins1, pins2) => {
+									pins1 + pins2 + first_pins(frame2)
+								}
+								Strike => {
+									match frame2 {
+										Strike => {
+											10 + 10 + first_pins(frame3)
+										}
+										_ => {
+											10 + total_pins(frame2)
+										}
 									}
 								}
+								SpareFill(_) => 0 # already counted in the Spare
+								StrikeFill2(_, _) => 0 # already counter in the Strike
+								Ball1(_) | StrikeFill1(_) => {
+									crash "Impossible, unfinished frames should not exist in a finished game"
+								}
 							}
-							SpareFill(_) => 0 # already counted in the Spare
-							StrikeFill2(_, _) => 0 # already counter in the Strike
-							Ball1(_) | StrikeFill1(_) => {
-								crash "Impossible, unfinished frames should not exist in a finished game"
-							}
-						}
-					},
-				)
+						},
+					)
 			}
 			Ok(points.sum())
 		}
@@ -151,7 +152,8 @@ map_triplets = |list, score_func| {
 		|index| {
 			score_func(get_or_0(index), get_or_0((index + 1)), get_or_0((index + 2)))
 		},
-	)->List.from_iter()
+	)
+		|> List.from_iter
 }
 
 first_pins : Frame -> U64

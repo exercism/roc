@@ -11,7 +11,7 @@ Anagram :: {}.{
 			)
 			.keep_if(
 				|word| {
-					word->is_anagram_of(subject) ?? Bool.False
+					word |> is_anagram_of(subject) ?? Bool.False
 				},
 			)
 	}
@@ -29,7 +29,7 @@ to_upper = |text| {
 				}
 			},
 		)
-		->Str.from_utf8()
+		|> Str.from_utf8
 		?? "Unreachable"
 }
 
@@ -37,7 +37,7 @@ compare_graphemes : Str, Str -> _
 compare_graphemes = |g1, g2| {
 	s1 = g1.to_utf8()
 	s2 = g2.to_utf8()
-	cmp = 
+	cmp =
 		s1.map2(
 			s2,
 			|b1, b2| {
@@ -65,11 +65,11 @@ compare_graphemes = |g1, g2| {
 
 sorted_graphemes = |word| {
 	graphemes = Grapheme.split(word)?
-	graphemes.sort_with(compare_graphemes)->Ok
+	graphemes.sort_with(compare_graphemes) |> Ok
 }
 
 is_anagram_of = |word1, word2| {
-	sorted1 = (word1->to_upper()->sorted_graphemes())?
-	sorted2 = (word2->to_upper()->sorted_graphemes())?
+	sorted1 = (word1 |> to_upper |> sorted_graphemes)?
+	sorted2 = (word2 |> to_upper |> sorted_graphemes)?
 	Ok((sorted1 == sorted2))
 }

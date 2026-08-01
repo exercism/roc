@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/accumulate/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import Accumulate exposing [accumulate]
 
@@ -65,7 +65,7 @@ to_upper_char = |byte| {
 
 to_upper : Str -> Str
 to_upper = |str| {
-	str.to_utf8().map(to_upper_char)->Str.from_utf8() ?? ""
+	str.to_utf8().map(to_upper_char) |> Str.from_utf8 ?? ""
 }
 
 str_reverse : Str -> Str
@@ -73,7 +73,7 @@ str_reverse = |str| {
 	str
 		.to_utf8()
 		.rev()
-		->Str.from_utf8()
+		|> Str.from_utf8
 		?? ""
 }
 

@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/palindrome-products/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import PalindromeProducts exposing [smallest, largest]
 
@@ -22,7 +22,7 @@ expect {
 			(1, 1),
 		]),
 	})
-	result->is_eq(expected)
+	result |> is_eq(expected)
 }
 
 # find the largest palindrome from single digit factors
@@ -35,7 +35,7 @@ expect {
 			(3, 3),
 		]),
 	})
-	result->is_eq(expected)
+	result |> is_eq(expected)
 }
 
 # find the smallest palindrome from double digit factors
@@ -47,7 +47,7 @@ expect {
 			(11, 11),
 		]),
 	})
-	result->is_eq(expected)
+	result |> is_eq(expected)
 }
 
 # find the largest palindrome from double digit factors
@@ -59,7 +59,7 @@ expect {
 			(91, 99),
 		]),
 	})
-	result->is_eq(expected)
+	result |> is_eq(expected)
 }
 
 # find the smallest palindrome from triple digit factors
@@ -71,7 +71,7 @@ expect {
 			(101, 101),
 		]),
 	})
-	result->is_eq(expected)
+	result |> is_eq(expected)
 }
 
 # find the largest palindrome from triple digit factors
@@ -83,7 +83,7 @@ expect {
 			(913, 993),
 		]),
 	})
-	result->is_eq(expected)
+	result |> is_eq(expected)
 }
 
 # find the smallest palindrome from four digit factors
@@ -95,7 +95,7 @@ expect {
 			(1001, 1001),
 		]),
 	})
-	result->is_eq(expected)
+	result |> is_eq(expected)
 }
 
 # find the largest palindrome from four digit factors
@@ -107,31 +107,21 @@ expect {
 			(9901, 9999),
 		]),
 	})
-	result->is_eq(expected)
+	result |> is_eq(expected)
 }
 
 # empty result for smallest if no palindrome in the range
 expect {
 	result = smallest({ min: 1002, max: 1003 })
-	expected = Ok({
-		value: 0,
-		factors: Set.from_list(
-			[],
-		),
-	})
-	result->is_eq(expected)
+	expected = Ok({ value: 0, factors: Set.from_list([]) })
+	result |> is_eq(expected)
 }
 
 # empty result for largest if no palindrome in the range
 expect {
 	result = largest({ min: 15, max: 15 })
-	expected = Ok({
-		value: 0,
-		factors: Set.from_list(
-			[],
-		),
-	})
-	result->is_eq(expected)
+	expected = Ok({ value: 0, factors: Set.from_list([]) })
+	result |> is_eq(expected)
 }
 
 # error result for smallest if min is more than max
@@ -155,7 +145,7 @@ expect {
 			(3297, 3333),
 		]),
 	})
-	result->is_eq(expected)
+	result |> is_eq(expected)
 }
 
 # This program is only used to run tests with `roc test`, so main! does nothing.

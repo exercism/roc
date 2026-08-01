@@ -1,7 +1,7 @@
 IsbnVerifier :: {}.{
 	is_valid : Str -> Bool
 	is_valid = |isbn| {
-		chars = 
+		chars =
 			isbn
 				.to_utf8()
 				.drop_if(
@@ -11,7 +11,7 @@ IsbnVerifier :: {}.{
 			Bool.False
 		} else {
 			values : List(U64)
-			values = 
+			values =
 				chars
 					.map_with_index(
 						char_value,

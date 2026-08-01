@@ -5,7 +5,7 @@ CryptoSquare :: {}.{
 			(
 				text
 					.to_utf8()
-					->join_map(
+					|> join_map(
 						|char| {
 							if (char >= 'a' and char <= 'z') or (char >= '0' and char <= '9') {
 								[char]
@@ -17,14 +17,14 @@ CryptoSquare :: {}.{
 						},
 					),
 			).map(
-				|c| [c]->Str.from_utf8() ?? {
+				|c| [c] |> Str.from_utf8 ?? {
 					crash "Unreachable"
 				},
 			)
 		}
 		length = chars.len()
-		width = length->sqrt_ceiling() # to_f64().sqrt().ceiling().to_u64()
-		rows = chars->chunks_of(width)
+		width = length |> sqrt_ceiling # to_f64().sqrt().ceiling().to_u64()
+		rows = chars |> chunks_of(width)
 
 		if width == 0 {
 			""
@@ -36,11 +36,12 @@ CryptoSquare :: {}.{
 							|row| {
 								row.get(column) ?? " "
 							},
-						)->Str.join_with("")
+						)
+							|> Str.join_with("")
 					},
 				)
-				->List.from_iter()
-				->Str.join_with(" ")
+				|> List.from_iter
+				|> Str.join_with(" ")
 		}
 	}
 }

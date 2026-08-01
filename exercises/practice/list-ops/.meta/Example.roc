@@ -11,7 +11,7 @@ ListOps :: {}.{
 	join = |lists| {
 		match lists {
 			[] => []
-			[first, .. as rest] => first->concat(join(rest))
+			[first, .. as rest] => first |> concat(join(rest))
 		}
 	}
 

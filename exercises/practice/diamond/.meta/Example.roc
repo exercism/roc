@@ -11,12 +11,12 @@ Diamond :: {}.{
 						.map(
 							|col_index| get_char(row_index, col_index, letter_index),
 						)
-						->List.from_iter()
-						->unwrap_from_utf8()
+						|> List.from_iter
+						|> unwrap_from_utf8
 				},
 			)
-			->List.from_iter()
-			->Str.join_with("\n")
+			|> List.from_iter
+			|> Str.join_with("\n")
 	}
 }
 

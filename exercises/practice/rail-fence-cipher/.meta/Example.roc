@@ -12,21 +12,22 @@ RailFenceCipher :: {}.{
 
 encoded_indices : U64, U64 -> List(U64)
 encoded_indices = |len, rails| {
-	indices = (0..<len)->List.from_iter()
+	indices = (0..<len) |> List.from_iter
 	(0..<rails)
-		->join_map(
+		|> join_map(
 			|rail| {
 				period = 2 * (rails - 1)
-				indices->join_map(
-					|index| {
-						to_rail = index % period
-						if to_rail == rail or to_rail == period - rail {
-							[index]
-						} else {
-							[]
-						}
-					},
-				)
+				indices
+					|> join_map(
+						|index| {
+							to_rail = index % period
+							if to_rail == rail or to_rail == period - rail {
+								[index]
+							} else {
+								[]
+							}
+						},
+					)
 			},
 		)
 }

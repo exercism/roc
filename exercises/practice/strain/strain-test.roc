@@ -1,13 +1,13 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/strain/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import Strain exposing [keep, discard]
 
 # keep on empty list returns empty list
 expect {
 	list = []
-	result = list->keep(|_| Bool.True)
+	result = list |> keep(|_| Bool.True)
 	expected = []
 	result == expected
 }
@@ -15,7 +15,7 @@ expect {
 # keeps everything
 expect {
 	list = [1, 3, 5]
-	result = list->keep(|_| Bool.True)
+	result = list |> keep(|_| Bool.True)
 	expected = [1, 3, 5]
 	result == expected
 }
@@ -23,7 +23,7 @@ expect {
 # keeps nothing
 expect {
 	list = [1, 3, 5]
-	result = list->keep(|_| Bool.False)
+	result = list |> keep(|_| Bool.False)
 	expected = []
 	result == expected
 }
@@ -31,7 +31,7 @@ expect {
 # keeps first and last
 expect {
 	list = [1, 2, 3]
-	result = list->keep(|x| x % 2 == 1)
+	result = list |> keep(|x| x % 2 == 1)
 	expected = [1, 3]
 	result == expected
 }
@@ -39,7 +39,7 @@ expect {
 # keeps neither first nor last
 expect {
 	list = [1, 2, 3]
-	result = list->keep(|x| x % 2 == 0)
+	result = list |> keep(|x| x % 2 == 0)
 	expected = [2]
 	result == expected
 }
@@ -47,7 +47,7 @@ expect {
 # keeps strings
 expect {
 	list = ["apple", "zebra", "banana", "zombies", "cherimoya", "zealot"]
-	result = list->keep(|x| x.starts_with("z"))
+	result = list |> keep(|x| x.starts_with("z"))
 	expected = ["zebra", "zombies", "zealot"]
 	result == expected
 }
@@ -55,7 +55,7 @@ expect {
 # keeps lists
 expect {
 	list = [[1, 2, 3], [5, 5, 5], [5, 1, 2], [2, 1, 2], [1, 5, 2], [2, 2, 1], [1, 2, 5]]
-	result = list->keep(|x| x.contains(5))
+	result = list |> keep(|x| x.contains(5))
 	expected = [[5, 5, 5], [5, 1, 2], [1, 5, 2], [1, 2, 5]]
 	result == expected
 }
@@ -63,7 +63,7 @@ expect {
 # discard on empty list returns empty list
 expect {
 	list = []
-	result = list->discard(|_| Bool.True)
+	result = list |> discard(|_| Bool.True)
 	expected = []
 	result == expected
 }
@@ -71,7 +71,7 @@ expect {
 # discards everything
 expect {
 	list = [1, 3, 5]
-	result = list->discard(|_| Bool.True)
+	result = list |> discard(|_| Bool.True)
 	expected = []
 	result == expected
 }
@@ -79,7 +79,7 @@ expect {
 # discards nothing
 expect {
 	list = [1, 3, 5]
-	result = list->discard(|_| Bool.False)
+	result = list |> discard(|_| Bool.False)
 	expected = [1, 3, 5]
 	result == expected
 }
@@ -87,7 +87,7 @@ expect {
 # discards first and last
 expect {
 	list = [1, 2, 3]
-	result = list->discard(|x| x % 2 == 1)
+	result = list |> discard(|x| x % 2 == 1)
 	expected = [2]
 	result == expected
 }
@@ -95,7 +95,7 @@ expect {
 # discards neither first nor last
 expect {
 	list = [1, 2, 3]
-	result = list->discard(|x| x % 2 == 0)
+	result = list |> discard(|x| x % 2 == 0)
 	expected = [1, 3]
 	result == expected
 }
@@ -103,7 +103,7 @@ expect {
 # discards strings
 expect {
 	list = ["apple", "zebra", "banana", "zombies", "cherimoya", "zealot"]
-	result = list->discard(|x| x.starts_with("z"))
+	result = list |> discard(|x| x.starts_with("z"))
 	expected = ["apple", "banana", "cherimoya"]
 	result == expected
 }
@@ -111,7 +111,7 @@ expect {
 # discards lists
 expect {
 	list = [[1, 2, 3], [5, 5, 5], [5, 1, 2], [2, 1, 2], [1, 5, 2], [2, 2, 1], [1, 2, 5]]
-	result = list->discard(|x| x.contains(5))
+	result = list |> discard(|x| x.contains(5))
 	expected = [[1, 2, 3], [2, 1, 2], [2, 2, 1]]
 	result == expected
 }

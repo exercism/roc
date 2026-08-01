@@ -46,7 +46,7 @@ map_every_other_backwards = |list, func| {
 				state
 					.append(y)
 					.append(func(x))
-					->help(rest)
+					|> help(rest)
 			}
 
 			[x] => state.append(x)

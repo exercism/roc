@@ -18,6 +18,6 @@ Binary :: {}.{
 					dec * 2 + bit
 				},
 			)
-			->Ok
+			|> Ok
 	}
 }

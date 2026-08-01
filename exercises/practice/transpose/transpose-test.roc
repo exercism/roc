@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/transpose/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import Transpose exposing [transpose]
 
@@ -16,7 +16,7 @@ expect {
 expect {
 	input = "A1"
 	result = transpose(input)
-	expected = 
+	expected =
 		\\A
 		\\1
 
@@ -25,7 +25,7 @@ expect {
 
 # two characters in a column
 expect {
-	input = 
+	input =
 		\\A
 		\\1
 
@@ -36,12 +36,12 @@ expect {
 
 # simple
 expect {
-	input = 
+	input =
 		\\ABC
 		\\123
 
 	result = transpose(input)
-	expected = 
+	expected =
 		\\A1
 		\\B2
 		\\C3
@@ -53,7 +53,7 @@ expect {
 expect {
 	input = "Single line."
 	result = transpose(input)
-	expected = 
+	expected =
 		\\S
 		\\i
 		\\n
@@ -72,12 +72,12 @@ expect {
 
 # first line longer than second line
 expect {
-	input = 
+	input =
 		\\The fourth line.
 		\\The fifth line.
 
 	result = transpose(input)
-	expected = 
+	expected =
 		\\TT
 		\\hh
 		\\ee
@@ -100,12 +100,12 @@ expect {
 
 # second line longer than first line
 expect {
-	input = 
+	input =
 		\\The first line.
 		\\The second line.
 
 	result = transpose(input)
-	expected = 
+	expected =
 		\\TT
 		\\hh
 		\\ee
@@ -128,14 +128,14 @@ expect {
 
 # mixed line length
 expect {
-	input = 
+	input =
 		\\The longest line.
 		\\A long line.
 		\\A longer line.
 		\\A line.
 
 	result = transpose(input)
-	expected = 
+	expected =
 		\\TAAA
 		\\h   
 		\\elll
@@ -159,7 +159,7 @@ expect {
 
 # square
 expect {
-	input = 
+	input =
 		\\HEART
 		\\EMBER
 		\\ABUSE
@@ -167,7 +167,7 @@ expect {
 		\\TREND
 
 	result = transpose(input)
-	expected = 
+	expected =
 		\\HEART
 		\\EMBER
 		\\ABUSE
@@ -179,14 +179,14 @@ expect {
 
 # rectangle
 expect {
-	input = 
+	input =
 		\\FRACTURE
 		\\OUTLINED
 		\\BLOOMING
 		\\SEPTETTE
 
 	result = transpose(input)
-	expected = 
+	expected =
 		\\FOBS
 		\\RULE
 		\\ATOP
@@ -201,7 +201,7 @@ expect {
 
 # triangle
 expect {
-	input = 
+	input =
 		\\T
 		\\EE
 		\\AAA
@@ -210,7 +210,7 @@ expect {
 		\\RRRRRR
 
 	result = transpose(input)
-	expected = 
+	expected =
 		\\TEASER
 		\\ EASER
 		\\  ASER
@@ -223,7 +223,7 @@ expect {
 
 # jagged triangle
 expect {
-	input = 
+	input =
 		\\11
 		\\2
 		\\3333
@@ -232,7 +232,7 @@ expect {
 		\\66666
 
 	result = transpose(input)
-	expected = 
+	expected =
 		\\123456
 		\\1 3456
 		\\  3456

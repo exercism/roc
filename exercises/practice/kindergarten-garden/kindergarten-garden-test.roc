@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/kindergarten-garden/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import KindergartenGarden exposing [plants]
 
@@ -10,11 +10,11 @@ import KindergartenGarden exposing [plants]
 
 # garden with single student
 expect {
-	diagram = 
+	diagram =
 		\\RC
 		\\GG
 
-	result = diagram->plants(Alice)
+	result = diagram |> plants(Alice)
 	result == Ok([
 		Radishes,
 		Clover,
@@ -25,11 +25,11 @@ expect {
 
 # different garden with single student
 expect {
-	diagram = 
+	diagram =
 		\\VC
 		\\RC
 
-	result = diagram->plants(Alice)
+	result = diagram |> plants(Alice)
 	result == Ok([
 		Violets,
 		Clover,
@@ -40,11 +40,11 @@ expect {
 
 # garden with two students
 expect {
-	diagram = 
+	diagram =
 		\\VVCG
 		\\VVRC
 
-	result = diagram->plants(Bob)
+	result = diagram |> plants(Bob)
 	result == Ok([
 		Clover,
 		Grass,
@@ -57,11 +57,11 @@ expect {
 
 # second student's garden
 expect {
-	diagram = 
+	diagram =
 		\\VVCCGG
 		\\VVCCGG
 
-	result = diagram->plants(Bob)
+	result = diagram |> plants(Bob)
 	result == Ok([
 		Clover,
 		Clover,
@@ -72,11 +72,11 @@ expect {
 
 # third student's garden
 expect {
-	diagram = 
+	diagram =
 		\\VVCCGG
 		\\VVCCGG
 
-	result = diagram->plants(Charlie)
+	result = diagram |> plants(Charlie)
 	result == Ok([
 		Grass,
 		Grass,
@@ -91,11 +91,11 @@ expect {
 
 # for Alice, first student's garden
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Alice)
+	result = diagram |> plants(Alice)
 	result == Ok([
 		Violets,
 		Radishes,
@@ -106,11 +106,11 @@ expect {
 
 # for Bob, second student's garden
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Bob)
+	result = diagram |> plants(Bob)
 	result == Ok([
 		Clover,
 		Grass,
@@ -121,11 +121,11 @@ expect {
 
 # for Charlie
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Charlie)
+	result = diagram |> plants(Charlie)
 	result == Ok([
 		Violets,
 		Violets,
@@ -136,11 +136,11 @@ expect {
 
 # for David
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(David)
+	result = diagram |> plants(David)
 	result == Ok([
 		Radishes,
 		Violets,
@@ -151,11 +151,11 @@ expect {
 
 # for Eve
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Eve)
+	result = diagram |> plants(Eve)
 	result == Ok([
 		Clover,
 		Grass,
@@ -166,11 +166,11 @@ expect {
 
 # for Fred
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Fred)
+	result = diagram |> plants(Fred)
 	result == Ok([
 		Grass,
 		Clover,
@@ -181,11 +181,11 @@ expect {
 
 # for Ginny
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Ginny)
+	result = diagram |> plants(Ginny)
 	result == Ok([
 		Clover,
 		Grass,
@@ -196,11 +196,11 @@ expect {
 
 # for Harriet
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Harriet)
+	result = diagram |> plants(Harriet)
 	result == Ok([
 		Violets,
 		Radishes,
@@ -211,11 +211,11 @@ expect {
 
 # for Ileana
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Ileana)
+	result = diagram |> plants(Ileana)
 	result == Ok([
 		Grass,
 		Clover,
@@ -226,11 +226,11 @@ expect {
 
 # for Joseph
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Joseph)
+	result = diagram |> plants(Joseph)
 	result == Ok([
 		Violets,
 		Clover,
@@ -241,11 +241,11 @@ expect {
 
 # for Kincaid, second to last student's garden
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Kincaid)
+	result = diagram |> plants(Kincaid)
 	result == Ok([
 		Grass,
 		Clover,
@@ -256,11 +256,11 @@ expect {
 
 # for Larry, last student's garden
 expect {
-	diagram = 
+	diagram =
 		\\VRCGVVRVCGGCCGVRGCVCGCGV
 		\\VRCCCGCRRGVCGCRVVCVGCGCV
 
-	result = diagram->plants(Larry)
+	result = diagram |> plants(Larry)
 	result == Ok([
 		Grass,
 		Violets,

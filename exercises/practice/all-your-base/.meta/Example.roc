@@ -18,7 +18,7 @@ AllYourBase :: {}.{
 					acc * input_base + digit
 				},
 			)
-			to_digits(number, output_base)->Ok
+			to_digits(number, output_base) |> Ok
 		}
 	}
 }

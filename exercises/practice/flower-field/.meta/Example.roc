@@ -2,7 +2,7 @@ FlowerField :: {}.{
 	annotate : Str -> Str
 	annotate = |garden| {
 		rows = garden.to_utf8().split_on('\n')
-		annotated = 
+		annotated =
 			rows.map_with_index(
 				|row, y| {
 					row.map_with_index(
@@ -17,7 +17,7 @@ FlowerField :: {}.{
 							}
 						},
 					)
-						->Str.from_utf8()
+						|> Str.from_utf8
 				},
 			)
 
@@ -31,7 +31,7 @@ FlowerField :: {}.{
 				}
 			},
 		)
-			->Str.join_with("\n")
+			|> Str.join_with("\n")
 	}
 }
 

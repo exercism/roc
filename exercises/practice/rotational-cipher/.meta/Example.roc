@@ -6,7 +6,7 @@ RotationalCipher :: {}.{
 			.map(
 				|c| shift_char(c, shift_key),
 			)
-			->Str.from_utf8()
+			|> Str.from_utf8
 			?? "Unreachable"
 	}
 }

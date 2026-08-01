@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rational-numbers/canonical-data.json
-# File last updated on 2026-06-23
+# File last updated on 2026-08-01
 
 import Rational
 
@@ -283,7 +283,7 @@ expect {
 	r = Rational.new({ num: 4, den: 3 })
 	x = 8
 	result = Rational.exp_real(x, r)
-	result->is_approx_eq(16.0.F64)
+	result |> is_approx_eq(16.0.F64)
 }
 
 # Raise a real number to a negative rational number
@@ -291,7 +291,7 @@ expect {
 	r = Rational.new({ num: -1, den: 2 })
 	x = 9
 	result = Rational.exp_real(x, r)
-	result->is_approx_eq(0.3333333333333333.F64)
+	result |> is_approx_eq(0.3333333333333333.F64)
 }
 
 # Raise a real number to a zero rational number
@@ -299,7 +299,7 @@ expect {
 	r = Rational.new({ num: 0, den: 1 })
 	x = 2
 	result = Rational.exp_real(x, r)
-	result->is_approx_eq(1.0.F64)
+	result |> is_approx_eq(1.0.F64)
 }
 
 ##

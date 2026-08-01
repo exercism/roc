@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/word-search/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import WordSearch exposing [search]
 
@@ -8,10 +8,10 @@ import WordSearch exposing [search]
 expect {
 	grid = "jefblpepre"
 	words_to_search_for = ["clojure"]
-	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[],
-	)
+	result = grid |> search(words_to_search_for)
+	expected = Dict.from_list([
+		# "clojure" is not in the grid
+	])
 	result == expected
 }
 
@@ -19,7 +19,7 @@ expect {
 expect {
 	grid = "clojurermt"
 	words_to_search_for = ["clojure"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 1 }, end: { column: 7, row: 1 } }),
 	])
@@ -30,7 +30,7 @@ expect {
 expect {
 	grid = "mtclojurer"
 	words_to_search_for = ["clojure"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 3, row: 1 }, end: { column: 9, row: 1 } }),
 	])
@@ -41,7 +41,7 @@ expect {
 expect {
 	grid = "coffeelplx"
 	words_to_search_for = ["coffee"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("coffee", { start: { column: 1, row: 1 }, end: { column: 6, row: 1 } }),
 	])
@@ -52,7 +52,7 @@ expect {
 expect {
 	grid = "xcoffeezlp"
 	words_to_search_for = ["coffee"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("coffee", { start: { column: 2, row: 1 }, end: { column: 7, row: 1 } }),
 	])
@@ -61,12 +61,12 @@ expect {
 
 # Should locate a left to right word in two line grid
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\tclojurerm
 
 	words_to_search_for = ["clojure"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 2, row: 2 }, end: { column: 8, row: 2 } }),
 	])
@@ -75,13 +75,13 @@ expect {
 
 # Should locate a left to right word in three line grid
 expect {
-	grid = 
+	grid =
 		\\camdcimgtc
 		\\jefblpepre
 		\\clojurermt
 
 	words_to_search_for = ["clojure"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 3 }, end: { column: 7, row: 3 } }),
 	])
@@ -90,7 +90,7 @@ expect {
 
 # Should locate a left to right word in ten line grid
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -103,7 +103,7 @@ expect {
 		\\clojurermt
 
 	words_to_search_for = ["clojure"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
 	])
@@ -112,7 +112,7 @@ expect {
 
 # Should locate that left to right word in a different position in a ten line grid
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -125,7 +125,7 @@ expect {
 		\\jalaycalmp
 
 	words_to_search_for = ["clojure"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 9 }, end: { column: 7, row: 9 } }),
 	])
@@ -134,7 +134,7 @@ expect {
 
 # Should locate a different left to right word in a ten line grid
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -147,7 +147,7 @@ expect {
 		\\jalaycalmp
 
 	words_to_search_for = ["fortran"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("fortran", { start: { column: 1, row: 7 }, end: { column: 7, row: 7 } }),
 	])
@@ -156,7 +156,7 @@ expect {
 
 # Should locate multiple words
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -169,7 +169,7 @@ expect {
 		\\clojurermt
 
 	words_to_search_for = ["fortran", "clojure"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
 		("fortran", { start: { column: 1, row: 7 }, end: { column: 7, row: 7 } }),
@@ -181,7 +181,7 @@ expect {
 expect {
 	grid = "rixilelhrs"
 	words_to_search_for = ["elixir"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("elixir", { start: { column: 6, row: 1 }, end: { column: 1, row: 1 } }),
 	])
@@ -190,7 +190,7 @@ expect {
 
 # Should locate multiple words written in different horizontal directions
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -203,7 +203,7 @@ expect {
 		\\clojurermt
 
 	words_to_search_for = ["elixir", "clojure"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
 		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
@@ -213,7 +213,7 @@ expect {
 
 # Should locate words written top to bottom
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -226,7 +226,7 @@ expect {
 		\\clojurermt
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
 		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
@@ -237,7 +237,7 @@ expect {
 
 # Should locate words written bottom to top
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -250,7 +250,7 @@ expect {
 		\\clojurermt
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
 		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
@@ -262,7 +262,7 @@ expect {
 
 # Should locate words written top left to bottom right
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -275,7 +275,7 @@ expect {
 		\\clojurermt
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
 		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
@@ -288,7 +288,7 @@ expect {
 
 # Should locate words written bottom right to top left
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -301,7 +301,7 @@ expect {
 		\\clojurermt
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
 		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
@@ -315,7 +315,7 @@ expect {
 
 # Should locate words written bottom left to top right
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -328,7 +328,7 @@ expect {
 		\\clojurermt
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua", "lisp"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
 		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
@@ -343,7 +343,7 @@ expect {
 
 # Should locate words written top right to bottom left
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -356,7 +356,7 @@ expect {
 		\\clojurermt
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua", "lisp", "ruby"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
 		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
@@ -372,7 +372,7 @@ expect {
 
 # Should fail to locate a word that is not in the puzzle
 expect {
-	grid = 
+	grid =
 		\\jefblpepre
 		\\camdcimgtc
 		\\oivokprjsm
@@ -385,7 +385,7 @@ expect {
 		\\clojurermt
 
 	words_to_search_for = ["clojure", "elixir", "ecmascript", "rust", "java", "lua", "lisp", "ruby", "haskell"]
-	result = grid->search(words_to_search_for)
+	result = grid |> search(words_to_search_for)
 	expected = Dict.from_list([
 		("clojure", { start: { column: 1, row: 10 }, end: { column: 7, row: 10 } }),
 		("elixir", { start: { column: 6, row: 5 }, end: { column: 1, row: 5 } }),
@@ -402,29 +402,32 @@ expect {
 
 # Should fail to locate words that are not on horizontal, vertical, or diagonal lines
 expect {
-	grid = 
+	grid =
 		\\abc
 		\\def
 
 	words_to_search_for = ["aef", "ced", "abf", "cbd"]
-	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[],
-	)
+	result = grid |> search(words_to_search_for)
+	expected = Dict.from_list([
+		# "aef" is not in the grid
+		# "ced" is not in the grid
+		# "abf" is not in the grid
+		# "cbd" is not in the grid
+	])
 	result == expected
 }
 
 # Should not concatenate different lines to find a horizontal word
 expect {
-	grid = 
+	grid =
 		\\abceli
 		\\xirdfg
 
 	words_to_search_for = ["elixir"]
-	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[],
-	)
+	result = grid |> search(words_to_search_for)
+	expected = Dict.from_list([
+		# "elixir" is not in the grid
+	])
 	result == expected
 }
 
@@ -432,16 +435,16 @@ expect {
 expect {
 	grid = "silabcdefp"
 	words_to_search_for = ["lisp"]
-	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[],
-	)
+	result = grid |> search(words_to_search_for)
+	expected = Dict.from_list([
+		# "lisp" is not in the grid
+	])
 	result == expected
 }
 
 # Should not wrap around vertically to find a word
 expect {
-	grid = 
+	grid =
 		\\s
 		\\u
 		\\r
@@ -451,10 +454,10 @@ expect {
 		\\t
 
 	words_to_search_for = ["rust"]
-	result = grid->search(words_to_search_for)
-	expected = Dict.from_list(
-		[],
-	)
+	result = grid |> search(words_to_search_for)
+	expected = Dict.from_list([
+		# "rust" is not in the grid
+	])
 	result == expected
 }
 

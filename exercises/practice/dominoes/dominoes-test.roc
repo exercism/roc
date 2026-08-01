@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/dominoes/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import Dominoes exposing [Domino, find_chain]
 
@@ -8,7 +8,7 @@ import Dominoes exposing [Domino, find_chain]
 expect {
 	dominoes = []
 	result = find_chain(dominoes)
-	result->is_valid_chain_for(dominoes)
+	result |> is_valid_chain_for(dominoes)
 }
 
 # singleton input = singleton output
@@ -17,7 +17,7 @@ expect {
 		(1, 1),
 	]
 	result = find_chain(dominoes)
-	result->is_valid_chain_for(dominoes)
+	result |> is_valid_chain_for(dominoes)
 }
 
 # singleton that can't be chained
@@ -37,7 +37,7 @@ expect {
 		(2, 3),
 	]
 	result = find_chain(dominoes)
-	result->is_valid_chain_for(dominoes)
+	result |> is_valid_chain_for(dominoes)
 }
 
 # can reverse dominoes
@@ -48,7 +48,7 @@ expect {
 		(2, 3),
 	]
 	result = find_chain(dominoes)
-	result->is_valid_chain_for(dominoes)
+	result |> is_valid_chain_for(dominoes)
 }
 
 # can't be chained
@@ -106,7 +106,7 @@ expect {
 		(2, 4),
 	]
 	result = find_chain(dominoes)
-	result->is_valid_chain_for(dominoes)
+	result |> is_valid_chain_for(dominoes)
 }
 
 # separate loops
@@ -120,7 +120,7 @@ expect {
 		(3, 3),
 	]
 	result = find_chain(dominoes)
-	result->is_valid_chain_for(dominoes)
+	result |> is_valid_chain_for(dominoes)
 }
 
 # nine elements
@@ -137,7 +137,7 @@ expect {
 		(5, 6),
 	]
 	result = find_chain(dominoes)
-	result->is_valid_chain_for(dominoes)
+	result |> is_valid_chain_for(dominoes)
 }
 
 # separate three-domino loops

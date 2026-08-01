@@ -1,140 +1,140 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/connect/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import Connect exposing [winner]
 
 # an empty board has no winner
 expect {
-	board = 
+	board =
 		\\. . . . .
 		\\ . . . . .
 		\\  . . . . .
 		\\   . . . . .
 		\\    . . . . .
 
-	result = board->winner()
+	result = board |> winner
 	result == Err(NotFinished)
 }
 
 # X can win on a 1x1 board
 expect {
 	board = "X"
-	result = board->winner()
+	result = board |> winner
 	result == Ok(PlayerX)
 }
 
 # O can win on a 1x1 board
 expect {
 	board = "O"
-	result = board->winner()
+	result = board |> winner
 	result == Ok(PlayerO)
 }
 
 # only edges does not make a winner
 expect {
-	board = 
+	board =
 		\\O O O X
 		\\ X . . X
 		\\  X . . X
 		\\   X O O O
 
-	result = board->winner()
+	result = board |> winner
 	result == Err(NotFinished)
 }
 
 # illegal diagonal does not make a winner
 expect {
-	board = 
+	board =
 		\\X O . .
 		\\ O X X X
 		\\  O X O .
 		\\   . O X .
 		\\    X X O O
 
-	result = board->winner()
+	result = board |> winner
 	result == Err(NotFinished)
 }
 
 # nobody wins crossing adjacent angles
 expect {
-	board = 
+	board =
 		\\X . . .
 		\\ . X O .
 		\\  O . X O
 		\\   . O . X
 		\\    . . O .
 
-	result = board->winner()
+	result = board |> winner
 	result == Err(NotFinished)
 }
 
 # X wins crossing from left to right
 expect {
-	board = 
+	board =
 		\\. O . .
 		\\ O X X X
 		\\  O X O .
 		\\   X X O X
 		\\    . O X .
 
-	result = board->winner()
+	result = board |> winner
 	result == Ok(PlayerX)
 }
 
 # X wins with left-hand dead end fork
 expect {
-	board = 
+	board =
 		\\. . X .
 		\\ X X . .
 		\\  . X X X
 		\\   O O O O
 
-	result = board->winner()
+	result = board |> winner
 	result == Ok(PlayerX)
 }
 
 # X wins with right-hand dead end fork
 expect {
-	board = 
+	board =
 		\\. . X X
 		\\ X X . .
 		\\  . X X .
 		\\   O O O O
 
-	result = board->winner()
+	result = board |> winner
 	result == Ok(PlayerX)
 }
 
 # O wins crossing from top to bottom
 expect {
-	board = 
+	board =
 		\\. O . .
 		\\ O X X X
 		\\  O O O .
 		\\   X X O X
 		\\    . O X .
 
-	result = board->winner()
+	result = board |> winner
 	result == Ok(PlayerO)
 }
 
 # X wins using a convoluted path
 expect {
-	board = 
+	board =
 		\\. X X . .
 		\\ X . X . X
 		\\  . X . X .
 		\\   . X X . .
 		\\    O O O O O
 
-	result = board->winner()
+	result = board |> winner
 	result == Ok(PlayerX)
 }
 
 # X wins using a spiral path
 expect {
-	board = 
+	board =
 		\\O X X X X X X X X
 		\\ O X O O O O O O O
 		\\  O X O X X X X X O
@@ -145,7 +145,7 @@ expect {
 		\\       O O O O O O O X O
 		\\        X X X X X X X X O
 
-	result = board->winner()
+	result = board |> winner
 	result == Ok(PlayerX)
 }
 

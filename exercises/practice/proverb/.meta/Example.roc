@@ -4,7 +4,7 @@ Proverb :: {}.{
 		match strings {
 			[] => ""
 			[first_thing, .. as rest] => {
-				(_, lines) = 
+				(_, lines) =
 					rest.fold(
 						(first_thing, []),
 						|(thing1, acc_lines), thing2| {
@@ -16,7 +16,7 @@ Proverb :: {}.{
 					.append(
 						"And all for the want of a ${first_thing}.",
 					)
-					->Str.join_with("\n")
+					|> Str.join_with("\n")
 			}
 		}
 	}

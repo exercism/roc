@@ -21,28 +21,28 @@ import {{ exercise | to_pascal }} exposing [concat, join, filter, len, map, fold
 # {{ case["description"] }}
 expect {
 {%- if case["property"] == "append" %}
-    result = {{ case["input"]["list1"] | to_roc }}->concat({{ case["input"]["list2"] | to_roc }})
+    result = {{ case["input"]["list1"] | to_roc }}|>concat({{ case["input"]["list2"] | to_roc }})
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "concat" %}
-    result = {{ case["input"]["lists"] | to_roc }}->join()
+    result = {{ case["input"]["lists"] | to_roc }}|>join()
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "filter" %}
-    result = {{ case["input"]["list"] | to_roc }}->filter({{ function_map[case["input"]["function"]] }})
+    result = {{ case["input"]["list"] | to_roc }}|>filter({{ function_map[case["input"]["function"]] }})
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "length" %}
-    result = {{ case["input"]["list"] | to_roc }}->len()
+    result = {{ case["input"]["list"] | to_roc }}|>len()
     result == {{ case["expected"] }}
 {%- elif case["property"] == "map" %}
-    result = {{ case["input"]["list"] | to_roc }}->map({{ function_map[case["input"]["function"]] }})
+    result = {{ case["input"]["list"] | to_roc }}|>map({{ function_map[case["input"]["function"]] }})
     result == {{ case["expected"] }}
 {%- elif case["property"] == "foldl" %}
-    result = {{ case["input"]["list"] | to_roc }}->fold({{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %} -> round(){% endif %}
+    result = {{ case["input"]["list"] | to_roc }}|>fold({{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %} |> round(){% endif %}
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "foldr" %}
-    result = {{ case["input"]["list"] | to_roc }}->fold_rev({{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %} -> round(){% endif %}
+    result = {{ case["input"]["list"] | to_roc }}|>fold_rev({{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %} |> round(){% endif %}
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "reverse" %}
-    result = {{ case["input"]["list"] | to_roc }}->reverse()
+    result = {{ case["input"]["list"] | to_roc }}|>reverse()
     result == {{ case["expected"] | to_roc }}
 {%- else %}
     Bool.True # This test case is not yet implemented

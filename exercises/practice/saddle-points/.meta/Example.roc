@@ -19,23 +19,23 @@ SaddlePoints :: {}.{
 									[]
 							},
 						)
-							->join_map(|id| id) # TODO: replace with .join() when available
+							|> join_map(|id| id) # TODO: replace with .join() when available
 					},
 				)
-				->join_map(|id2| id2) # TODO: replace with .join() when available
-				->Set.from_list()
+				|> join_map(|id2| id2) # TODO: replace with .join() when available
+				|> Set.from_list
 		}
 
 		num_columns : U64
 		num_columns = tree_heights.map(List.len).max() ?? 0
 
 		smallest_trees_north_south : Set(Position)
-		smallest_trees_north_south = 
+		smallest_trees_north_south =
 			(0..<num_columns)
-				->join_map(
+				|> join_map(
 					|column_index| {
 						column : List({ height : U8, row_index : U64 })
-						column = 
+						column =
 							tree_heights
 								.map_with_index(
 									|row, row_index| {
@@ -52,7 +52,7 @@ SaddlePoints :: {}.{
 							.map(|{ height: _, row_index }| { row: row_index + 1, column: column_index + 1 })
 					},
 				)
-				->Set.from_list()
+				|> Set.from_list
 
 		tallest_trees_east_west.intersection(smallest_trees_north_south)
 	}

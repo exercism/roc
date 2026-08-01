@@ -31,7 +31,7 @@ expect {
     result = set1.{{ property | to_snake }}(set2)
     {%- endif %}
     {%- if case["expected"] is iterable %}
-    expected = {{ case["expected"] | to_roc }} -> {{ exercise | to_pascal }}.from_list()
+    expected = {{ case["expected"] | to_roc }} |> {{ exercise | to_pascal }}.from_list()
     result.is_eq(expected)
     {%- else %}
     expected = {{ case["expected"] | to_roc }}
@@ -50,7 +50,7 @@ expect {
 # {{ case["description"] }}
 expect {
     set = {{ exercise | to_pascal }}.from_list({{ case["input"]["set"] | to_roc }})
-    result = set.to_list()->sort_asc()
+    result = set.to_list()|>sort_asc()
     expected = {{ case["expected"] | to_roc }}
     result == expected
 }

@@ -5,7 +5,7 @@ Tournament :: {}.{
 			Ok(header)
 		} else {
 			rows = table.split_on("\n")
-			parsed_rows = 
+			parsed_rows =
 				rows.map_try(
 					|row| {
 						match row.split_on(";") {
@@ -23,8 +23,8 @@ Tournament :: {}.{
 					|tally_dict_acc, triple| {
 						(team1, team2, result) = triple
 						tally_dict_acc
-							->update_tally_dict(team1, result)
-							->update_tally_dict(team2, opposite_result(result))
+							|> update_tally_dict(team1, result)
+							|> update_tally_dict(team2, opposite_result(result))
 					},
 				)
 			}
@@ -81,7 +81,7 @@ update_team_tally = |team_tally, result| {
 
 tally_dict_to_table : Dict(Str, TeamTally) -> Str
 tally_dict_to_table = |tally_dict| {
-	table_content = 
+	table_content =
 		tally_dict
 			.to_list()
 			.sort_with(
@@ -102,14 +102,14 @@ tally_dict_to_table = |tally_dict| {
 			.map(
 				|pair| {
 					(team, team_tally) = pair
-					tally_columns = 
+					tally_columns =
 						[team_tally.mp, team_tally.w, team_tally.d, team_tally.l, team_tally.p]
 							.map(align_right)
-							->Str.join_with(" | ")
+							|> Str.join_with(" | ")
 					"${pad_right(team, 30)} | ${tally_columns}"
 				},
 			)
-			->Str.join_with("\n")
+			|> Str.join_with("\n")
 	"${header}\n${table_content}"
 }
 
@@ -120,7 +120,7 @@ compare_strings : Str, Str -> [LT, EQ, GT]
 compare_strings = |string1, string2| {
 	b1 = string1.to_utf8()
 	b2 = string2.to_utf8()
-	cmp_result = 
+	cmp_result =
 		List.map2(
 			b1,
 			b2,
@@ -162,7 +162,7 @@ pad_right = |string, width| {
 	chars = string.to_utf8()
 	length = chars.len()
 	spaces = if length < width {
-		List.repeat(" ", (width - length))->Str.join_with("")
+		List.repeat(" ", (width - length)) |> Str.join_with("")
 	} else {
 		""
 	}

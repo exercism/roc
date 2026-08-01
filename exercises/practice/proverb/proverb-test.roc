@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/proverb/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import Proverb exposing [recite]
 
@@ -21,7 +21,7 @@ expect {
 # two pieces
 expect {
 	result = recite(["nail", "shoe"])
-	expected = 
+	expected =
 		\\For want of a nail the shoe was lost.
 		\\And all for the want of a nail.
 
@@ -31,7 +31,7 @@ expect {
 # three pieces
 expect {
 	result = recite(["nail", "shoe", "horse"])
-	expected = 
+	expected =
 		\\For want of a nail the shoe was lost.
 		\\For want of a shoe the horse was lost.
 		\\And all for the want of a nail.
@@ -42,7 +42,7 @@ expect {
 # full proverb
 expect {
 	result = recite(["nail", "shoe", "horse", "rider", "message", "battle", "kingdom"])
-	expected = 
+	expected =
 		\\For want of a nail the shoe was lost.
 		\\For want of a shoe the horse was lost.
 		\\For want of a horse the rider was lost.
@@ -57,7 +57,7 @@ expect {
 # four pieces modernized
 expect {
 	result = recite(["pin", "gun", "soldier", "battle"])
-	expected = 
+	expected =
 		\\For want of a pin the gun was lost.
 		\\For want of a gun the soldier was lost.
 		\\For want of a soldier the battle was lost.

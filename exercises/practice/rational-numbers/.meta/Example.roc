@@ -1,46 +1,46 @@
 Rational :: { num : I64, den : I64 }.{
 	new : { num : I64, den : I64 } -> Rational
 	new = |{ num, den }| {
-		{ num, den }->reduce()
+		{ num, den } |> reduce
 	}
 
 	# # The user can write plus(r1, r2), r1.plus(r2), or simply r1 + r2
 	plus : Rational, Rational -> Rational
 	plus = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
-		{ num: num1 * den2 + num2 * den1, den: den1 * den2 }->reduce()
+		{ num: num1 * den2 + num2 * den1, den: den1 * den2 } |> reduce
 	}
 
 	# # The user can write minus(r1, r2), r1.minus(r2), or simply r1 - r2
 	minus : Rational, Rational -> Rational
 	minus = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
-		{ num: num1 * den2 - num2 * den1, den: den1 * den2 }->reduce()
+		{ num: num1 * den2 - num2 * den1, den: den1 * den2 } |> reduce
 	}
 
 	# # The user can write times(r1, r2), r1.times(r2), or simply r1 * r2
 	times : Rational, Rational -> Rational
 	times = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
-		{ num: num1 * num2, den: den1 * den2 }->reduce()
+		{ num: num1 * num2, den: den1 * den2 } |> reduce
 	}
 
 	# # The user can write div_by(r1, r2), r1.div_by(r2), or simply r1 / r2
 	div_by : Rational, Rational -> Rational
 	div_by = |{ num: num1, den: den1 }, { num: num2, den: den2 }| {
-		{ num: num1 * den2, den: num2 * den1 }->reduce()
+		{ num: num1 * den2, den: num2 * den1 } |> reduce
 	}
 
 	abs : Rational -> Rational
 	abs = |{ num, den }| {
-		{ num: num.abs(), den: den.abs() }->reduce()
+		{ num: num.abs(), den: den.abs() } |> reduce
 	}
 
 	exp : Rational, I64 -> Rational
 	exp = |{ num, den }, n| {
 		match n {
 			0 => { num: 1, den: 1 }
-			pos if pos > 0 => { num: num.pow(pos), den: den.pow(pos) }->reduce()
+			pos if pos > 0 => { num: num.pow(pos), den: den.pow(pos) } |> reduce
 			neg => {
 				m = neg.abs()
-				{ num: den.pow(m), den: num.pow(m) }->reduce()
+				{ num: den.pow(m), den: num.pow(m) } |> reduce
 			}
 		}
 	}

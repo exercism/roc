@@ -8,10 +8,10 @@ PascalsTriangle :: {}.{
 						.map(
 							|column| binomial_coefficient(row, column),
 						)
-						->List.from_iter()
+						|> List.from_iter
 				},
 			)
-			->List.from_iter()
+			|> List.from_iter
 	}
 }
 
@@ -20,13 +20,13 @@ binomial_coefficient = |n, k| {
 	if k == 0 or k == n {
 		1
 	} else {
-		numerator = 
+		numerator =
 			((n + 1 - k)..=n)
 				.fold(
 					1,
 					|product, value| product * value,
 				)
-		denominator = 
+		denominator =
 			(1..=k)
 				.fold(
 					1,

@@ -4,7 +4,7 @@ PigLatin :: {}.{
 		phrase
 			.split_on(" ")
 			.map(translate_word)
-			->Str.join_with(" ")
+			|> Str.join_with(" ")
 	}
 }
 
@@ -25,7 +25,7 @@ pig_latin_swap = |chars| {
 	if rule1_applies(chars) {
 		chars
 	} else {
-		(_, split_index) = 
+		(_, split_index) =
 			chars
 				.fold_until(
 					(0, 0),
@@ -45,13 +45,13 @@ pig_latin_swap = |chars| {
 
 translate_word : Str -> Str
 translate_word = |word| {
-	maybe_result = 
+	maybe_result =
 		(
 			word
 				.to_utf8()
-				->pig_latin_swap(),
+				|> pig_latin_swap,
 		).concat(['a', 'y'])
-			->Str.from_utf8()
+			|> Str.from_utf8
 	match maybe_result {
 		Ok(result) => result
 		Err(_) => {

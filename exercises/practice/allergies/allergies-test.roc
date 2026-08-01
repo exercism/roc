@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/allergies/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import Allergies exposing [allergic_to, set]
 
@@ -247,61 +247,61 @@ expect {
 # list when: no allergies
 expect {
 	result = set(0)
-	result == []->Set.from_list()
+	result == [] |> Set.from_list
 }
 
 # list when: just eggs
 expect {
 	result = set(1)
-	result == [Eggs]->Set.from_list()
+	result == [Eggs] |> Set.from_list
 }
 
 # list when: just peanuts
 expect {
 	result = set(2)
-	result == [Peanuts]->Set.from_list()
+	result == [Peanuts] |> Set.from_list
 }
 
 # list when: just strawberries
 expect {
 	result = set(8)
-	result == [Strawberries]->Set.from_list()
+	result == [Strawberries] |> Set.from_list
 }
 
 # list when: eggs and peanuts
 expect {
 	result = set(3)
-	result == [Eggs, Peanuts]->Set.from_list()
+	result == [Eggs, Peanuts] |> Set.from_list
 }
 
 # list when: more than eggs but not peanuts
 expect {
 	result = set(5)
-	result == [Eggs, Shellfish]->Set.from_list()
+	result == [Eggs, Shellfish] |> Set.from_list
 }
 
 # list when: lots of stuff
 expect {
 	result = set(248)
-	result == [Strawberries, Tomatoes, Chocolate, Pollen, Cats]->Set.from_list()
+	result == [Strawberries, Tomatoes, Chocolate, Pollen, Cats] |> Set.from_list
 }
 
 # list when: everything
 expect {
 	result = set(255)
-	result == [Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]->Set.from_list()
+	result == [Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats] |> Set.from_list
 }
 
 # list when: no allergen score parts
 expect {
 	result = set(509)
-	result == [Eggs, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]->Set.from_list()
+	result == [Eggs, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats] |> Set.from_list
 }
 
 # list when: no allergen score parts without highest valid score
 expect {
 	result = set(257)
-	result == [Eggs]->Set.from_list()
+	result == [Eggs] |> Set.from_list
 }
 
 # This program is only used to run tests with `roc test`, so main! does nothing.

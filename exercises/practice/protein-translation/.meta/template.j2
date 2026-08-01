@@ -8,7 +8,7 @@ import {{ exercise | to_pascal }} exposing [to_protein]
 # {{ case["description"] }}
 expect {
     rna = {{ case["input"]["strand"] | to_roc }}
-    result = rna -> to_protein()
+    result = rna |> to_protein()
     {%- if case["expected"]["error"] %}
     result.is_err()
     {%- else %}

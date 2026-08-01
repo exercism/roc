@@ -42,7 +42,7 @@ expect {
 {%- if case["expected"] is iterable %}
     result == {{ plugins.to_roc_rational(case["expected"]) }}
 {%- else %}
-    result->is_approx_eq({{ case["expected"] | to_roc }})
+    result|>is_approx_eq({{ case["expected"] | to_roc }})
 {%- endif %}
 }
 

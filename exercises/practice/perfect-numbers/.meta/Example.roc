@@ -28,6 +28,6 @@ aliquot_sum = |number| {
 					acc
 				},
 			)
-			->Ok()
+			|> Ok
 	}
 }

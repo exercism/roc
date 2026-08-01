@@ -1,19 +1,19 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/go-counting/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import GoCounting exposing [territory, territories]
 
 # Black corner territory on 5x5 board
 expect {
-	board = 
+	board =
 		\\  B  
 		\\ B B 
 		\\B W B
 		\\ W W 
 		\\  W  
 
-	result = board->territory({ x: 0, y: 1 })
+	result = board |> territory({ x: 0, y: 1 })
 	expected = Ok({
 		owner: Black,
 		territory: Set.from_list([
@@ -22,38 +22,38 @@ expect {
 			{ x: 1, y: 0 },
 		]),
 	})
-	result->compare_territory(expected)
+	result |> compare_territory(expected)
 }
 
 # White center territory on 5x5 board
 expect {
-	board = 
+	board =
 		\\  B  
 		\\ B B 
 		\\B W B
 		\\ W W 
 		\\  W  
 
-	result = board->territory({ x: 2, y: 3 })
+	result = board |> territory({ x: 2, y: 3 })
 	expected = Ok({
 		owner: White,
 		territory: Set.from_list([
 			{ x: 2, y: 3 },
 		]),
 	})
-	result->compare_territory(expected)
+	result |> compare_territory(expected)
 }
 
 # Open corner territory on 5x5 board
 expect {
-	board = 
+	board =
 		\\  B  
 		\\ B B 
 		\\B W B
 		\\ W W 
 		\\  W  
 
-	result = board->territory({ x: 1, y: 4 })
+	result = board |> territory({ x: 1, y: 4 })
 	expected = Ok({
 		owner: None,
 		territory: Set.from_list([
@@ -62,56 +62,56 @@ expect {
 			{ x: 1, y: 4 },
 		]),
 	})
-	result->compare_territory(expected)
+	result |> compare_territory(expected)
 }
 
 # A stone and not a territory on 5x5 board
 expect {
-	board = 
+	board =
 		\\  B  
 		\\ B B 
 		\\B W B
 		\\ W W 
 		\\  W  
 
-	result = board->territory({ x: 1, y: 1 })
+	result = board |> territory({ x: 1, y: 1 })
 	expected = Ok({
 		owner: None,
 		territory: Set.empty(),
 	})
-	result->compare_territory(expected)
+	result |> compare_territory(expected)
 }
 
 # Invalid because X is too high for 5x5 board
 expect {
-	board = 
+	board =
 		\\  B  
 		\\ B B 
 		\\B W B
 		\\ W W 
 		\\  W  
 
-	result = board->territory({ x: 5, y: 1 })
+	result = board |> territory({ x: 5, y: 1 })
 	result.is_err()
 }
 
 # Invalid because Y is too high for 5x5 board
 expect {
-	board = 
+	board =
 		\\  B  
 		\\ B B 
 		\\B W B
 		\\ W W 
 		\\  W  
 
-	result = board->territory({ x: 1, y: 5 })
+	result = board |> territory({ x: 1, y: 5 })
 	result.is_err()
 }
 
 # One territory is the whole board
 expect {
 	board = " "
-	result = board->territories()
+	result = board |> territories
 	expected = Ok({
 		black: Set.empty(),
 		white: Set.empty(),
@@ -119,16 +119,16 @@ expect {
 			{ x: 0, y: 0 },
 		]),
 	})
-	result->compare_territories(expected)
+	result |> compare_territories(expected)
 }
 
 # Two territory rectangular board
 expect {
-	board = 
+	board =
 		\\ BW 
 		\\ BW 
 
-	result = board->territories()
+	result = board |> territories
 	expected = Ok({
 		black: Set.from_list([
 			{ x: 0, y: 0 },
@@ -140,13 +140,13 @@ expect {
 		]),
 		none: Set.empty(),
 	})
-	result->compare_territories(expected)
+	result |> compare_territories(expected)
 }
 
 # Two region rectangular board
 expect {
 	board = " B "
-	result = board->territories()
+	result = board |> territories
 	expected = Ok({
 		black: Set.from_list([
 			{ x: 0, y: 0 },
@@ -155,7 +155,7 @@ expect {
 		white: Set.empty(),
 		none: Set.empty(),
 	})
-	result->compare_territories(expected)
+	result |> compare_territories(expected)
 }
 
 ## The following two comparison functions are temporary workarounds for Roc issue #7144:

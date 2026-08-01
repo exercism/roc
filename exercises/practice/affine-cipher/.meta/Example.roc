@@ -8,7 +8,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 	new : { a : U64, b : U64 } -> Try(AffineCipher, [InvalidKey])
 	new = |{ a, b }| {
 		encode_map : List(U8)
-		encode_map = 
+		encode_map =
 			(0..<alphabet_size)
 				.map(
 					|index| {
@@ -20,13 +20,13 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 						)
 					},
 				)
-				->List.from_iter()
+				|> List.from_iter
 
 		if Set.from_list(encode_map).len() < encode_map.len() {
 			Err(InvalidKey)
 		} else {
 			decode_map : List(U8)
-			decode_map = 
+			decode_map =
 				encode_map
 					.map_with_index(
 						|encoded, decoded_index| { encoded, decoded_index },
@@ -61,7 +61,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 		maybe_result = (
 			phrase
 				.to_utf8()
-				->join_map(
+				|> join_map(
 					|char| {
 						if char >= '0' and char <= '9' {
 							[char]
@@ -85,10 +85,10 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 						}
 					},
 				)
-				->chunks_of(group_length)
-				->intersperse([' ']),
+				|> chunks_of(group_length)
+				|> intersperse([' ']),
 		).join()
-			->Str.from_utf8()
+			|> Str.from_utf8
 		match maybe_result {
 			Ok(result) => result
 			Err(_) => {
@@ -121,7 +121,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 				},
 			)?
 			.join()
-			->Str.from_utf8()
+			|> Str.from_utf8
 	}
 }
 

@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/tournament/canonical-data.json
-# File last updated on 2026-06-13
+# File last updated on 2026-08-01
 
 import Tournament exposing [tally]
 
@@ -66,7 +66,7 @@ expect {
 
 # There can be more than one match
 expect {
-	table = 
+	table =
 		\\Allegoric Alaskans;Blithering Badgers;win
 		\\Allegoric Alaskans;Blithering Badgers;win
 
@@ -82,7 +82,7 @@ expect {
 
 # There can be more than one winner
 expect {
-	table = 
+	table =
 		\\Allegoric Alaskans;Blithering Badgers;loss
 		\\Allegoric Alaskans;Blithering Badgers;win
 
@@ -98,7 +98,7 @@ expect {
 
 # There can be more than two teams
 expect {
-	table = 
+	table =
 		\\Allegoric Alaskans;Blithering Badgers;win
 		\\Blithering Badgers;Courageous Californians;win
 		\\Courageous Californians;Allegoric Alaskans;loss
@@ -116,7 +116,7 @@ expect {
 
 # typical input
 expect {
-	table = 
+	table =
 		\\Allegoric Alaskans;Blithering Badgers;win
 		\\Devastating Donkeys;Courageous Californians;draw
 		\\Devastating Donkeys;Allegoric Alaskans;win
@@ -138,7 +138,7 @@ expect {
 
 # incomplete competition (not all pairs have played)
 expect {
-	table = 
+	table =
 		\\Allegoric Alaskans;Blithering Badgers;loss
 		\\Devastating Donkeys;Allegoric Alaskans;loss
 		\\Courageous Californians;Blithering Badgers;draw
@@ -158,7 +158,7 @@ expect {
 
 # ties broken alphabetically
 expect {
-	table = 
+	table =
 		\\Courageous Californians;Devastating Donkeys;win
 		\\Allegoric Alaskans;Blithering Badgers;win
 		\\Devastating Donkeys;Allegoric Alaskans;loss
@@ -180,7 +180,7 @@ expect {
 
 # ensure points sorted numerically
 expect {
-	table = 
+	table =
 		\\Devastating Donkeys;Blithering Badgers;win
 		\\Devastating Donkeys;Blithering Badgers;win
 		\\Devastating Donkeys;Blithering Badgers;win

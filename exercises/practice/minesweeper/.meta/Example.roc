@@ -2,7 +2,7 @@ Minesweeper :: {}.{
 	annotate : Str -> Str
 	annotate = |minefield| {
 		rows = minefield.to_utf8().split_on('\n')
-		annotated = 
+		annotated =
 			rows.map_with_index(
 				|row, y| {
 					row.map_with_index(
@@ -17,7 +17,7 @@ Minesweeper :: {}.{
 							}
 						},
 					)
-						->Str.from_utf8()
+						|> Str.from_utf8
 				},
 			)
 
@@ -32,7 +32,7 @@ Minesweeper :: {}.{
 					}
 				},
 			)
-			->Str.join_with("\n")
+			|> Str.join_with("\n")
 	}
 }
 

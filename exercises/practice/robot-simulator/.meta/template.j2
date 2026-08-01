@@ -13,7 +13,7 @@ import {{ exercise | to_pascal }} exposing [move]
 # {{ case["description"] }}
 expect {
     robot = {{ plugins.to_robot(case["input"]) }}
-    result = robot->move({{ case["input"]["instructions"] | to_roc }})
+    result = robot|>move({{ case["input"]["instructions"] | to_roc }})
     result == {{ plugins.to_robot(case["expected"]) }}
 }
 

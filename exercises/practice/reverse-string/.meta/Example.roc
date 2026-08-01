@@ -15,7 +15,7 @@ ReverseString :: {}.{
 	reverse : Str -> Str
 	reverse = |string| {
 		match Grapheme.split(string) {
-			Ok(graphemes) => graphemes.rev()->Str.join_with("")
+			Ok(graphemes) => graphemes.rev() |> Str.join_with("")
 			Err(_) => {
 				crash "Unexpected error: could not split the string into graphemes"
 			}
@@ -26,7 +26,7 @@ ReverseString :: {}.{
 	## faster and simpler than the implementation above, plus it does not require an
 	## external package, but it is only guaranteed to work on ASCII strings.
 	reverse_ascii = |string| {
-		match string.to_utf8().rev()->Str.from_utf8() {
+		match string.to_utf8().rev() |> Str.from_utf8 {
 			Ok(reversed) => reversed
 			Err(_) => {
 				crash "This implementation online works on ASCII strings"

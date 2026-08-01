@@ -19,7 +19,7 @@ to_upper = |letter| {
 
 letter_value : U8 -> U64
 letter_value = |letter| {
-	(_, val) = 
+	(_, val) =
 		[
 			("AEIOULNRST", 1),
 			("DG", 2),
@@ -33,7 +33,7 @@ letter_value = |letter| {
 				|(letters, _)| {
 					(
 						letters
-							->Str.to_utf8(),
+							|> Str.to_utf8,
 					).contains(to_upper(letter))
 				},
 			) ?? ("", 0)

@@ -1,7 +1,7 @@
 VariableLengthQuantity :: {}.{
 	encode : List(U32) -> List(U8)
 	encode = |integers| {
-		integers->join_map(encode_integer)
+		integers |> join_map(encode_integer)
 	}
 
 	decode : List(U8) -> Try(List(U32), [IncompleteSequence])

@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/minesweeper/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import Minesweeper exposing [annotate]
 
@@ -22,13 +22,13 @@ expect {
 
 # no mines
 expect {
-	minefield = 
+	minefield =
 		\\   
 		\\   
 		\\   
 
 	result = annotate(minefield)
-	expected = 
+	expected =
 		\\   
 		\\   
 		\\   
@@ -38,13 +38,13 @@ expect {
 
 # minefield with only mines
 expect {
-	minefield = 
+	minefield =
 		\\***
 		\\***
 		\\***
 
 	result = annotate(minefield)
-	expected = 
+	expected =
 		\\***
 		\\***
 		\\***
@@ -54,13 +54,13 @@ expect {
 
 # mine surrounded by spaces
 expect {
-	minefield = 
+	minefield =
 		\\   
 		\\ * 
 		\\   
 
 	result = annotate(minefield)
-	expected = 
+	expected =
 		\\111
 		\\1*1
 		\\111
@@ -70,13 +70,13 @@ expect {
 
 # space surrounded by mines
 expect {
-	minefield = 
+	minefield =
 		\\***
 		\\* *
 		\\***
 
 	result = annotate(minefield)
-	expected = 
+	expected =
 		\\***
 		\\*8*
 		\\***
@@ -102,7 +102,7 @@ expect {
 
 # vertical line
 expect {
-	minefield = 
+	minefield =
 		\\ 
 		\\*
 		\\ 
@@ -110,7 +110,7 @@ expect {
 		\\ 
 
 	result = annotate(minefield)
-	expected = 
+	expected =
 		\\1
 		\\*
 		\\2
@@ -122,7 +122,7 @@ expect {
 
 # vertical line, mines at edges
 expect {
-	minefield = 
+	minefield =
 		\\*
 		\\ 
 		\\ 
@@ -130,7 +130,7 @@ expect {
 		\\*
 
 	result = annotate(minefield)
-	expected = 
+	expected =
 		\\*
 		\\1
 		\\ 
@@ -142,7 +142,7 @@ expect {
 
 # cross
 expect {
-	minefield = 
+	minefield =
 		\\  *  
 		\\  *  
 		\\*****
@@ -150,7 +150,7 @@ expect {
 		\\  *  
 
 	result = annotate(minefield)
-	expected = 
+	expected =
 		\\ 2*2 
 		\\25*52
 		\\*****
@@ -162,7 +162,7 @@ expect {
 
 # large minefield
 expect {
-	minefield = 
+	minefield =
 		\\ *  * 
 		\\  *   
 		\\    * 
@@ -171,7 +171,7 @@ expect {
 		\\      
 
 	result = annotate(minefield)
-	expected = 
+	expected =
 		\\1*22*1
 		\\12*322
 		\\ 123*2

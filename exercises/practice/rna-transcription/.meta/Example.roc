@@ -1,13 +1,13 @@
 RnaTranscription :: {}.{
 	to_rna : Str -> Str
 	to_rna = |dna| {
-		maybe_rna = 
+		maybe_rna =
 			dna
 				.to_utf8()
 				.map(
 					complement,
 				)
-				->Str.from_utf8()
+				|> Str.from_utf8
 
 		match maybe_rna {
 			Ok(rna) => rna

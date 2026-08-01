@@ -41,7 +41,7 @@ GoCounting :: {}.{
 				}
 			},
 		)
-			->Ok()
+			|> Ok
 	}
 }
 
@@ -71,7 +71,7 @@ parse = |board_str| {
 	if board_str == "" {
 		Err(BoardWasEmpty)
 	} else {
-		rows = 
+		rows =
 			board_str
 				.to_utf8()
 				.split_on('\n')
@@ -122,7 +122,7 @@ search_territory = |board, intersection| {
 						}
 
 						None => {
-							neighbors = 
+							neighbors =
 								[
 									{
 										x: (
@@ -161,7 +161,7 @@ search_territory = |board, intersection| {
 	if search_result.visited.is_empty() {
 		{ owner: None, territory: Set.empty() }
 	} else {
-		owner = 
+		owner =
 			if search_result.surrounding_stones == Set.from_list([Black]) {
 				Black
 			} else if search_result.surrounding_stones == Set.from_list([White]) {

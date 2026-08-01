@@ -8,7 +8,7 @@ Etl :: {}.{
 						.map(
 							|c| (to_lower(c), score),
 						)
-						->Dict.from_list()
+						|> Dict.from_list
 				},
 			)
 	}

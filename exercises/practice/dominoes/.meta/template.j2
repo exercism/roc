@@ -18,7 +18,7 @@ expect {
     dominoes = {{ to_list_of_pairs(case["input"]["dominoes"]) }}
     result = find_chain(dominoes)
     {%- if case["expected"] %}
-    result -> is_valid_chain_for(dominoes)
+    result |> is_valid_chain_for(dominoes)
     {%- else %}
     result.is_err()
     {%- endif %}

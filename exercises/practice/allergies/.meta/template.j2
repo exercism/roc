@@ -13,7 +13,7 @@ expect {
     result == {{ case["expected"] | to_roc }}
     {%- else %}
     result = set({{ case["input"]["score"] }})
-    result == [{{ case["expected"] | map('to_pascal') | join(", ") }}]->Set.from_list
+    result == [{{ case["expected"] | map('to_pascal') | join(", ") }}]|>Set.from_list
     {%- endif %}
 }
 

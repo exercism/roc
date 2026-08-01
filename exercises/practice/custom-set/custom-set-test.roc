@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/custom-set/canonical-data.json
-# File last updated on 2026-07-03
+# File last updated on 2026-08-01
 
 import CustomSet
 
@@ -258,7 +258,7 @@ expect {
 expect {
 	set = CustomSet.from_list([])
 	result = set.insert(3)
-	expected = [3]->CustomSet.from_list()
+	expected = [3] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -267,7 +267,7 @@ expect {
 expect {
 	set = CustomSet.from_list([1, 2, 4])
 	result = set.insert(3)
-	expected = [1, 2, 3, 4]->CustomSet.from_list()
+	expected = [1, 2, 3, 4] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -276,7 +276,7 @@ expect {
 expect {
 	set = CustomSet.from_list([1, 2, 3])
 	result = set.insert(3)
-	expected = [1, 2, 3]->CustomSet.from_list()
+	expected = [1, 2, 3] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -290,7 +290,7 @@ expect {
 	set1 = CustomSet.from_list([])
 	set2 = CustomSet.from_list([])
 	result = set1.intersection(set2)
-	expected = []->CustomSet.from_list()
+	expected = [] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -300,7 +300,7 @@ expect {
 	set1 = CustomSet.from_list([])
 	set2 = CustomSet.from_list([3, 2, 5])
 	result = set1.intersection(set2)
-	expected = []->CustomSet.from_list()
+	expected = [] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -310,7 +310,7 @@ expect {
 	set1 = CustomSet.from_list([1, 2, 3, 4])
 	set2 = CustomSet.from_list([])
 	result = set1.intersection(set2)
-	expected = []->CustomSet.from_list()
+	expected = [] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -320,7 +320,7 @@ expect {
 	set1 = CustomSet.from_list([1, 2, 3])
 	set2 = CustomSet.from_list([4, 5, 6])
 	result = set1.intersection(set2)
-	expected = []->CustomSet.from_list()
+	expected = [] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -330,7 +330,7 @@ expect {
 	set1 = CustomSet.from_list([1, 2, 3, 4])
 	set2 = CustomSet.from_list([3, 2, 5])
 	result = set1.intersection(set2)
-	expected = [2, 3]->CustomSet.from_list()
+	expected = [2, 3] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -344,7 +344,7 @@ expect {
 	set1 = CustomSet.from_list([])
 	set2 = CustomSet.from_list([])
 	result = set1.difference(set2)
-	expected = []->CustomSet.from_list()
+	expected = [] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -354,7 +354,7 @@ expect {
 	set1 = CustomSet.from_list([])
 	set2 = CustomSet.from_list([3, 2, 5])
 	result = set1.difference(set2)
-	expected = []->CustomSet.from_list()
+	expected = [] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -364,7 +364,7 @@ expect {
 	set1 = CustomSet.from_list([1, 2, 3, 4])
 	set2 = CustomSet.from_list([])
 	result = set1.difference(set2)
-	expected = [1, 2, 3, 4]->CustomSet.from_list()
+	expected = [1, 2, 3, 4] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -374,7 +374,7 @@ expect {
 	set1 = CustomSet.from_list([3, 2, 1])
 	set2 = CustomSet.from_list([2, 4])
 	result = set1.difference(set2)
-	expected = [1, 3]->CustomSet.from_list()
+	expected = [1, 3] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -384,7 +384,7 @@ expect {
 	set1 = CustomSet.from_list([1, 1])
 	set2 = CustomSet.from_list([1])
 	result = set1.difference(set2)
-	expected = []->CustomSet.from_list()
+	expected = [] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -398,7 +398,7 @@ expect {
 	set1 = CustomSet.from_list([])
 	set2 = CustomSet.from_list([])
 	result = set1.union(set2)
-	expected = []->CustomSet.from_list()
+	expected = [] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -408,7 +408,7 @@ expect {
 	set1 = CustomSet.from_list([])
 	set2 = CustomSet.from_list([2])
 	result = set1.union(set2)
-	expected = [2]->CustomSet.from_list()
+	expected = [2] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -418,7 +418,7 @@ expect {
 	set1 = CustomSet.from_list([1, 3])
 	set2 = CustomSet.from_list([])
 	result = set1.union(set2)
-	expected = [1, 3]->CustomSet.from_list()
+	expected = [1, 3] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -428,7 +428,7 @@ expect {
 	set1 = CustomSet.from_list([1, 3])
 	set2 = CustomSet.from_list([2, 3])
 	result = set1.union(set2)
-	expected = [3, 2, 1]->CustomSet.from_list()
+	expected = [3, 2, 1] |> CustomSet.from_list
 	result.is_eq(expected)
 }
 
@@ -439,7 +439,7 @@ expect {
 # an empty set has an empty list of items
 expect {
 	set = CustomSet.from_list([])
-	result = set.to_list()->sort_asc()
+	result = set.to_list() |> sort_asc
 	expected = []
 	result == expected
 }
@@ -447,7 +447,7 @@ expect {
 # a set can provide the list of its items
 expect {
 	set = CustomSet.from_list([1, 2, 3, 4])
-	result = set.to_list()->sort_asc()
+	result = set.to_list() |> sort_asc
 	expected = [1, 2, 3, 4]
 	result == expected
 }
@@ -455,7 +455,7 @@ expect {
 # duplicate items must be removed
 expect {
 	set = CustomSet.from_list([1, 2, 2, 3, 3, 3, 4, 4, 4, 4])
-	result = set.to_list()->sort_asc()
+	result = set.to_list() |> sort_asc
 	expected = [1, 2, 3, 4]
 	result == expected
 }

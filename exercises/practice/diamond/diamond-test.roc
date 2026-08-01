@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/diamond/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import Diamond exposing [diamond]
 
@@ -14,7 +14,7 @@ expect {
 # Degenerate case with no row containing 3 distinct groups of spaces
 expect {
 	result = diamond('B')
-	expected = 
+	expected =
 		\\ A 
 		\\B B
 		\\ A 
@@ -25,7 +25,7 @@ expect {
 # Smallest non-degenerate case with odd diamond side length
 expect {
 	result = diamond('C')
-	expected = 
+	expected =
 		\\  A  
 		\\ B B 
 		\\C   C
@@ -38,7 +38,7 @@ expect {
 # Smallest non-degenerate case with even diamond side length
 expect {
 	result = diamond('D')
-	expected = 
+	expected =
 		\\   A   
 		\\  B B  
 		\\ C   C 
@@ -53,7 +53,7 @@ expect {
 # Largest possible diamond
 expect {
 	result = diamond('Z')
-	expected = 
+	expected =
 		\\                         A                         
 		\\                        B B                        
 		\\                       C   C                       

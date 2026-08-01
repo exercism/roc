@@ -1,7 +1,7 @@
 Rectangles :: {}.{
 	rectangles : Str -> U64
 	rectangles = |diagram| {
-		grid = 
+		grid =
 			diagram
 				.split_on("\n")
 				.map(|s| s.to_utf8())

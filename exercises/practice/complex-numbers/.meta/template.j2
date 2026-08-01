@@ -36,9 +36,9 @@ expect {
     result = {{ equations[subcase["property"]] }}
     {%- if subcase["expected"] is iterable and subcase["expected"] is not string %}
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
-    result -> complex_is_approx_eq(expected)
+    result |> complex_is_approx_eq(expected)
     {%- else %}
-    result -> is_approx_eq({{ subcase["expected"] | to_roc }})
+    result |> is_approx_eq({{ subcase["expected"] | to_roc }})
     {%- endif %}
 }
 {%- elif subcase["input"]["z1"] %}
@@ -47,7 +47,7 @@ expect {
     z2 = {{ plugins.to_complex_number(subcase["input"]["z2"]) }}
     result = {{ equations[subcase["property"]] }}
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
-    result -> complex_is_approx_eq(expected)
+    result |> complex_is_approx_eq(expected)
 }
 {%- endif %}
 

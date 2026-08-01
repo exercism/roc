@@ -22,7 +22,7 @@ SpiralMatrix :: {}.{
 					}
 
 					(x, y) = (state.x + dx, state.y + dy)
-					matrix = 
+					matrix =
 						state.matrix
 							.update(
 								y.to_u64_try() ?? {

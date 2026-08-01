@@ -11,13 +11,13 @@ ProteinTranslation :: {}.{
 				[] => Ok(protein)
 				[codon, .. as rest] => {
 					match to_instruction(codon)? {
-						Append(amino_acid) => protein.append(amino_acid)->help(rest)
+						Append(amino_acid) => protein.append(amino_acid) |> help(rest)
 						Stop => Ok(protein)
 					}
 				}
 			}
 		}
-		help([], rna.to_utf8()->chunks_of(3))
+		help([], rna.to_utf8() |> chunks_of(3))
 	}
 }
 

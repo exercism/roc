@@ -26,7 +26,7 @@ LargestSeriesProduct :: {}.{
 									)
 							},
 						)
-						->List.from_iter(),
+						|> List.from_iter,
 				).max() # TODO: replace with Iter.max when available
 					.map_err(
 						|_| {

@@ -121,7 +121,7 @@ parse = |str| {
 			defs = parse_defs(def_lines)?
 			(
 				program.split_on(" ")
-					->flatten_defs(defs),
+					|> flatten_defs(defs),
 			).map_try(to_op)
 		}
 		[] => Ok([])
@@ -190,14 +190,15 @@ is_builtin = |token| {
 
 flatten_defs : List(Str), Defs -> List(Str)
 flatten_defs = |tokens, defs| {
-	tokens->join_map(
-		|token| {
-			match defs.get(token) {
-				Ok(body) => body
-				_ => [token]
-			}
-		},
-	)
+	tokens
+		|> join_map(
+			|token| {
+				match defs.get(token) {
+					Ok(body) => body
+					_ => [token]
+				}
+			},
+		)
 }
 
 to_op : Str -> Try(Op, _)
@@ -237,12 +238,12 @@ handle_error = |err| {
 
 show_execution : Stack, List(Op) -> Str
 show_execution = |stack, ops| {
-	stack_str = 
+	stack_str =
 		stack.map(|n| n.to_str())
-			->Str.join_with(" ")
-	ops_str = 
+			|> Str.join_with(" ")
+	ops_str =
 		ops.map(op_to_str)
-			->Str.join_with(" ")
+			|> Str.join_with(" ")
 	"${stack_str} | ${ops_str}"
 }
 
@@ -263,7 +264,7 @@ op_to_str = |op| {
 
 to_lower : Str -> Str
 to_lower = |str| {
-	result = 
+	result =
 		str.to_utf8()
 			.map(
 				|byte| {
@@ -274,7 +275,7 @@ to_lower = |str| {
 					}
 				},
 			)
-			->Str.from_utf8()
+			|> Str.from_utf8
 	match result {
 		Ok(s) => s
 		_ => {

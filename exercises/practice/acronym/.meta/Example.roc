@@ -18,7 +18,7 @@ Acronym :: {}.{
 
 		capitalized = acronym.map(capitalize)
 
-		match capitalized->Str.from_utf8() {
+		match capitalized |> Str.from_utf8 {
 			Err(_) => {
 				crash "There was an error converting the bytes to a Str! This should never happen."
 			}

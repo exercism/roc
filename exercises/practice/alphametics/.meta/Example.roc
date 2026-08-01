@@ -11,9 +11,10 @@ Alphametics :: {}.{
 			addends.fold(
 				Dict.empty(),
 				|dict, term| {
-					dict->insert_term(term, 1)
+					dict |> insert_term(term, 1)
 				},
-			)->insert_term(sum, -1)
+			)
+				|> insert_term(sum, -1)
 		}
 
 		leading_digits : Set(U8)
@@ -24,7 +25,7 @@ Alphametics :: {}.{
 						letters.first() ?? 0
 					},
 				)
-					->Set.from_list(),
+					|> Set.from_list,
 			).insert(
 				sum.first() ?? 0,
 			)
@@ -35,7 +36,7 @@ Alphametics :: {}.{
 			match remaining_vars {
 				[] => {
 					total_val : I64
-					total_val = 
+					total_val =
 						assignments.fold(
 							0,
 							|total, (letter, value)| {
@@ -112,7 +113,7 @@ insert_term = |equation, letters, polarity| {
 parse : Str -> Try({ addends : List(List(U8)), sum : List(U8) }, _)
 parse = |problem| {
 	{ before, after } = problem.split_first(" == ") ? |_| InvalidAssignment
-	addends = 
+	addends =
 		before
 			.split_on(
 				" + ",
@@ -130,6 +131,6 @@ reverse = |str| {
 	str
 		.to_utf8()
 		.rev()
-		->Str.from_utf8()
+		|> Str.from_utf8
 		?? ""
 }

@@ -14,7 +14,7 @@ Poker :: {}.{
 			},
 		)
 		List.map2(hands, ranks, |hand, rank| { hand, rank })
-			->join_map(
+			|> join_map(
 				|res| {
 					{ hand, rank } = res
 					if rank == top_rank {
@@ -24,7 +24,7 @@ Poker :: {}.{
 					}
 				},
 			)
-			->Ok()
+			|> Ok
 	}
 }
 
@@ -86,7 +86,7 @@ parse_suit = |char| {
 get_rank : Hand -> U64
 get_rank = |hand| {
 	card_values = sort_asc(hand.map(|c| U8.to_u64(c.value)))
-	is_consecutive = 
+	is_consecutive =
 		List.map2(card_values, take_last(card_values, 4), |card1, card2| (card1, card2))
 			.all(
 				|pair| {
@@ -96,9 +96,9 @@ get_rank = |hand| {
 			)
 	is_special_straight = card_values == [2, 3, 4, 5, 14] # straight starting with Ace
 	is_straight = is_consecutive or is_special_straight
-	is_flush = ((hand.map(|c| c.suit)->Set.from_list()).len()) == 1
+	is_flush = ((hand.map(|c| c.suit) |> Set.from_list).len()) == 1
 
-	value_groups = 
+	value_groups =
 		(
 			card_values
 				.fold(
@@ -108,7 +108,7 @@ get_rank = |hand| {
 					},
 				)
 				.map_with_index(|counter, value| counter * 13 + value)
-				->sort_desc(),
+				|> sort_desc,
 		).map(|group_rank| { size: group_rank // 13, value: group_rank % 13 + 2 })
 			.drop_if(
 				|group| {
@@ -119,7 +119,7 @@ get_rank = |hand| {
 
 	group_sizes = value_groups.map(|g| g.size)
 
-	category = 
+	category =
 		if is_flush and is_straight {
 			8 # Straight flush
 		} else if group_sizes == [4, 1] {
@@ -140,7 +140,7 @@ get_rank = |hand| {
 			0 # High card
 		}
 
-	rank_within_category = 
+	rank_within_category =
 		if is_special_straight {
 			0 # the straight starting with an Ace is the smallest straight
 		} else {

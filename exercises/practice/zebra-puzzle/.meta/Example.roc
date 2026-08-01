@@ -39,13 +39,13 @@ solution = {
 			.fold_until(
 				Err(NotFound),
 				|state, value| {
-					updated_house = house->set_field(field_index, value)
+					updated_house = house |> set_field(field_index, value)
 					updated_houses = houses.append(updated_house)
-					if updated_houses->is_valid() {
+					if updated_houses |> is_valid {
 						if updated_houses.len() == num_houses and field_index == 4 {
 							Break(Ok(updated_houses))
 						} else {
-							(next_houses, next_house, next_field_index) = 
+							(next_houses, next_house, next_field_index) =
 								if field_index == 4 {
 									(updated_houses, init_house, 0)
 								} else {
@@ -117,7 +117,7 @@ same_house = |houses, (field1, value1), (field2, value2)| {
 # The Englishman lives in the red house.
 rule2 : List(House) -> Bool
 rule2 = |houses| {
-	houses->same_house((|h| h.person, 1), (|h| h.color, 1))
+	houses |> same_house((|h| h.person, 1), (|h| h.color, 1))
 }
 
 # The Spaniard owns the dog.
@@ -236,7 +236,7 @@ rule16 = |houses| {
 	[|h| h.activity, |h| h.animal, |h| h.color, |h| h.drink, |h| h.person]
 		.all(
 			|field| {
-				values = 
+				values =
 					houses
 						.map(field)
 						.keep_if(|value| value != 0)

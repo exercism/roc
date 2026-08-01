@@ -1,16 +1,16 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/etl/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import Etl exposing [transform]
 
 # single letter
 expect {
-	legacy = 
+	legacy =
 		Dict.from_list([
 			(1, ['A']),
 		])
-	expected = 
+	expected =
 		Dict.from_list([
 			('a', 1),
 		])
@@ -19,11 +19,11 @@ expect {
 
 # single score with multiple letters
 expect {
-	legacy = 
+	legacy =
 		Dict.from_list([
 			(1, ['A', 'E', 'I', 'O', 'U']),
 		])
-	expected = 
+	expected =
 		Dict.from_list([
 			('a', 1),
 			('e', 1),
@@ -36,12 +36,12 @@ expect {
 
 # multiple scores with multiple letters
 expect {
-	legacy = 
+	legacy =
 		Dict.from_list([
 			(1, ['A', 'E']),
 			(2, ['D', 'G']),
 		])
-	expected = 
+	expected =
 		Dict.from_list([
 			('a', 1),
 			('d', 2),
@@ -53,7 +53,7 @@ expect {
 
 # multiple scores with differing numbers of letters
 expect {
-	legacy = 
+	legacy =
 		Dict.from_list([
 			(1, ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T']),
 			(2, ['D', 'G']),
@@ -63,7 +63,7 @@ expect {
 			(8, ['J', 'X']),
 			(10, ['Q', 'Z']),
 		])
-	expected = 
+	expected =
 		Dict.from_list([
 			('a', 1),
 			('b', 3),

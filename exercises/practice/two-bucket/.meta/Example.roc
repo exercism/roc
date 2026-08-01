@@ -5,7 +5,7 @@ TwoBucket :: {}.{
 		if goal == 0 {
 			Ok({ moves: 0, goal_bucket: One, other_bucket: 0 })
 		} else {
-			start = 
+			start =
 				match start_bucket {
 					One => { volume_one: bucket_one, volume_two: 0 }
 					Two => { volume_one: 0, volume_two: bucket_two }
@@ -101,7 +101,7 @@ bfs = |{ start, neighbors, success }| {
 					Ok(path_back_to_start([], node).rev())
 				} else {
 					neighbor_nodes = neighbors(node)
-					updated_from = 
+					updated_from =
 						neighbor_nodes
 							.drop_if(|neighbor| visited.contains(neighbor))
 							.fold(from, |acc_from, neighbor| acc_from.insert(to_str(neighbor), node))

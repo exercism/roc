@@ -1,12 +1,12 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/ocr-numbers/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import OcrNumbers exposing [convert]
 
 # Recognizes 0
 expect {
-	grid = 
+	grid =
 		\\ _ 
 		\\| |
 		\\|_|
@@ -19,7 +19,7 @@ expect {
 
 # Recognizes 1
 expect {
-	grid = 
+	grid =
 		\\   
 		\\  |
 		\\  |
@@ -32,7 +32,7 @@ expect {
 
 # Unreadable but correctly sized inputs return ?
 expect {
-	grid = 
+	grid =
 		\\   
 		\\  _
 		\\  |
@@ -45,7 +45,7 @@ expect {
 
 # Input with a number of lines that is not a multiple of four raises an error
 expect {
-	grid = 
+	grid =
 		\\ _ 
 		\\| |
 		\\   
@@ -56,7 +56,7 @@ expect {
 
 # Input with a number of columns that is not a multiple of three raises an error
 expect {
-	grid = 
+	grid =
 		\\    
 		\\   |
 		\\   |
@@ -68,7 +68,7 @@ expect {
 
 # Recognizes 110101100
 expect {
-	grid = 
+	grid =
 		\\       _     _        _  _ 
 		\\  |  || |  || |  |  || || |
 		\\  |  ||_|  ||_|  |  ||_||_|
@@ -81,7 +81,7 @@ expect {
 
 # Garbled numbers in a string are replaced with ?
 expect {
-	grid = 
+	grid =
 		\\       _     _           _ 
 		\\  |  || |  || |     || || |
 		\\  |  | _|  ||_|  |  ||_||_|
@@ -94,7 +94,7 @@ expect {
 
 # Recognizes 2
 expect {
-	grid = 
+	grid =
 		\\ _ 
 		\\ _|
 		\\|_ 
@@ -107,7 +107,7 @@ expect {
 
 # Recognizes 3
 expect {
-	grid = 
+	grid =
 		\\ _ 
 		\\ _|
 		\\ _|
@@ -120,7 +120,7 @@ expect {
 
 # Recognizes 4
 expect {
-	grid = 
+	grid =
 		\\   
 		\\|_|
 		\\  |
@@ -133,7 +133,7 @@ expect {
 
 # Recognizes 5
 expect {
-	grid = 
+	grid =
 		\\ _ 
 		\\|_ 
 		\\ _|
@@ -146,7 +146,7 @@ expect {
 
 # Recognizes 6
 expect {
-	grid = 
+	grid =
 		\\ _ 
 		\\|_ 
 		\\|_|
@@ -159,7 +159,7 @@ expect {
 
 # Recognizes 7
 expect {
-	grid = 
+	grid =
 		\\ _ 
 		\\  |
 		\\  |
@@ -172,7 +172,7 @@ expect {
 
 # Recognizes 8
 expect {
-	grid = 
+	grid =
 		\\ _ 
 		\\|_|
 		\\|_|
@@ -185,7 +185,7 @@ expect {
 
 # Recognizes 9
 expect {
-	grid = 
+	grid =
 		\\ _ 
 		\\|_|
 		\\ _|
@@ -198,7 +198,7 @@ expect {
 
 # Recognizes string of decimal numbers
 expect {
-	grid = 
+	grid =
 		\\    _  _     _  _  _  _  _  _ 
 		\\  | _| _||_||_ |_   ||_||_|| |
 		\\  ||_  _|  | _||_|  ||_| _||_|
@@ -211,7 +211,7 @@ expect {
 
 # Numbers separated by empty lines are recognized. Lines are joined by commas.
 expect {
-	grid = 
+	grid =
 		\\    _  _ 
 		\\  | _| _|
 		\\  ||_  _|
