@@ -14,11 +14,11 @@ import {{ exercise | to_pascal }} exposing [encode, decode]
 expect {
     string = {{ case["input"]["string"] | to_roc }} 
     {%- if case["property"] == "consistency" %}
-    encoded = string -> encode()?
-    result = encoded -> decode()
+    encoded = string |> encode()?
+    result = encoded |> decode()
     result == Ok(string)
     {%- else %}
-    result = string -> {{ case["property"] | to_snake }}
+    result = string |> {{ case["property"] | to_snake }}
     expected = {{ case["expected"] | to_roc }} 
     result == Ok(expected)
     {%- endif %}

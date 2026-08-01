@@ -34,7 +34,7 @@ Say :: {}.{
 								}
 							},
 						)
-						|> Str.join_with(" "),
+						|> Str.join_with(" ")
 				).trim_end()
 			Ok(words)
 		} else {

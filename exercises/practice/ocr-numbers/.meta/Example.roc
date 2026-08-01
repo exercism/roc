@@ -9,7 +9,7 @@ OcrNumbers :: {}.{
 			digits_str =
 				(
 					grid_chars
-						|> chunks_of(4),
+						|> chunks_of(4)
 				).map(
 					|row_group| {
 						get_digit_grids(row_group, size.width)

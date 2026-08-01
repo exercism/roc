@@ -4,7 +4,7 @@ Pangram :: {}.{
 		(
 			sentence
 				.to_utf8()
-				|> Set.from_list,
+				|> Set.from_list
 		).map(
 			|c| if c >= 'a' and c <= 'z' {
 				c + 'A' - 'a'

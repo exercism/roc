@@ -26,7 +26,7 @@ get_char = |row_index, col_index, letter_index| {
 		(
 			(letter_index - row_index.abs()).to_u8_try() ?? {
 				crash "Unreachable"
-			},
+			}
 		) + 'A'
 	} else {
 		' '

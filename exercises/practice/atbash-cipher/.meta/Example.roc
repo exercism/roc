@@ -18,7 +18,7 @@ AtbashCipher :: {}.{
 					},
 				)
 				|> chunks_of(5)
-				|> intersperse([' ']),
+				|> intersperse([' '])
 		).join()
 			|> Str.from_utf8
 	}

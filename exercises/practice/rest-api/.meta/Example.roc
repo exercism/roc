@@ -13,7 +13,7 @@ RestApi :: {}.{
 	get : Database, { url : Str, payload : Str } -> Try(Str, [Http404(Str), Http422(Str)])
 	get = |database, { url, payload }| {
 		match url {
-			"/users" | "/users/" => (database->get_users(payload)).map_err(|_| Http422(payload))
+			"/users" | "/users/" => (database |> get_users(payload)).map_err(|_| Http422(payload))
 			bad_url => Err(Http404(bad_url))
 		}
 	}
@@ -27,8 +27,8 @@ RestApi :: {}.{
 			}
 		}
 		match url {
-			"/add" => (database->add_user(payload)).map_err(|_| InvalidJson).map_err(handle_error)
-			"/iou" => (database->add_loan(payload)).map_err(handle_error)
+			"/add" => (database |> add_user(payload)).map_err(|_| InvalidJson).map_err(handle_error)
+			"/iou" => (database |> add_loan(payload)).map_err(handle_error)
 			bad_url => Err(Http404(bad_url))
 		}
 	}
@@ -36,7 +36,7 @@ RestApi :: {}.{
 
 get_users : RestApi.Database, Str -> Try(Str, [InvalidJson])
 get_users = |database, payload| {
-	users = 
+	users =
 		if payload == "" {
 			database.users
 		} else {
@@ -61,7 +61,7 @@ get_user_names = |payload| {
 users_to_json : List(RestApi.User) -> Str
 users_to_json = |users| {
 	sorted_users = users.sort_with(|user1, user2| compare_strings(user1.name, user2.name))
-	{ users: sorted_users }->Json.to_str()
+	{ users: sorted_users } |> Json.to_str
 }
 
 parse_json_user : Str -> Try({ user : Str }, [InvalidJson])
@@ -78,37 +78,37 @@ add_user : RestApi.Database, Str -> Try(Str, [InvalidJson])
 add_user = |_database, payload| {
 	user_payload = parse_json_user(payload)?
 	new_user : RestApi.User
-	new_user = 
+	new_user =
 		{
 			name: user_payload.user,
 			owes: Dict.empty(),
 			owed_by: Dict.empty(),
 			balance: 0.0,
 		}
-	Ok(new_user->Json.to_str())
+	Ok(new_user |> Json.to_str)
 }
 
 add_loan : RestApi.Database, Str -> Try(Str, [NotFound, InvalidJson])
 add_loan = |database, payload| {
 	loan = parse_json_loan(payload)?
-	lender = database->get_user(loan.lender)?
-	borrower = database->get_user(loan.borrower)?
-	updated_lender = lender->update_lender(borrower.name, loan.amount)
-	updated_borrower = borrower->update_lender(lender.name, -loan.amount)
+	lender = database -> get_user(loan.lender)?
+	borrower = database -> get_user(loan.borrower)?
+	updated_lender = lender |> update_lender(borrower.name, loan.amount)
+	updated_borrower = borrower |> update_lender(lender.name, -loan.amount)
 	Ok(users_to_json([updated_lender, updated_borrower]))
 }
 
 update_lender : RestApi.User, Str, Dec -> RestApi.User
 update_lender = |lender, borrower_name, amount| {
-	(new_owes_dict, owes_amount) = lender.owes->pop_amount(borrower_name)
-	(new_owed_by_dict, owed_by_amount) = lender.owed_by->pop_amount(borrower_name)
+	(new_owes_dict, owes_amount) = lender.owes |> pop_amount(borrower_name)
+	(new_owed_by_dict, owed_by_amount) = lender.owed_by |> pop_amount(borrower_name)
 	total_lender_owes_to_borrower = owes_amount - owed_by_amount - amount
-	final_owes_dict = 
+	final_owes_dict =
 		if total_lender_owes_to_borrower > 0.0
 			new_owes_dict.insert(borrower_name, total_lender_owes_to_borrower)
 		else
 			new_owes_dict
-	final_owed_by_dict = 
+	final_owed_by_dict =
 		if total_lender_owes_to_borrower < 0.0
 			new_owed_by_dict.insert(borrower_name, -total_lender_owes_to_borrower)
 		else
@@ -141,9 +141,9 @@ compare_strings : Str, Str -> [LT, EQ, GT]
 compare_strings = |string1, string2| {
 	b1 = string1.to_utf8()
 	b2 = string2.to_utf8()
-	result = 
+	result =
 		b1.map2(b2, |c1, c2| c1.compare(c2))
-			->fold_try(
+			|> fold_try(
 				Ok(EQ),
 				|_state, cmp| {
 					match cmp {

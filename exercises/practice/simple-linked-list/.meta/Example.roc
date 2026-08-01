@@ -34,7 +34,7 @@ SimpleLinkedList :: [Nil, Cons(U64, SimpleLinkedList)].{
 		help = |result, rest| {
 			match rest {
 				SimpleLinkedList.Nil => result
-				Cons(head, tail) => help(result->push(head), tail)
+				Cons(head, tail) => help(result |> push(head), tail)
 			}
 		}
 		help(Nil, linked_list)

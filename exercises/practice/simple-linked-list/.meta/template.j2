@@ -23,20 +23,20 @@ expect {
                 {%- if loop.last %}
         .value
                 {%- else %}
-        ->expect_value({{ op["expected"] | to_roc }})?
+        |>expect_value({{ op["expected"] | to_roc }})?
                 {%- endif %}
             {%- endif %}
         {%- elif op["operation"] == "peek" %}
             {%- if loop.last %}
         .peek(){%- if not op["expected"] is mapping %}?{%- endif %}
             {%- else %}
-        ->expect_peek({{ op["expected"] | to_roc }})?
+        |>expect_peek({{ op["expected"] | to_roc }})?
             {%- endif %}
         {%- elif op["operation"] == "count" %}
             {%- if loop.last %}
         .len()
             {%- else %}
-        ->expect_len({{ op["expected"] | to_roc }})?
+        |>expect_len({{ op["expected"] | to_roc }})?
             {%- endif %}
         {%- elif op["operation"] == "toList" %}
         .to_list()

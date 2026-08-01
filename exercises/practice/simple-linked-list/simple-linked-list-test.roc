@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/simple-linked-list/canonical-data.json
-# File last updated on 2026-07-21
+# File last updated on 2026-08-01
 
 import SimpleLinkedList
 
@@ -10,7 +10,7 @@ import SimpleLinkedList
 
 # Empty list has length of zero
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([])
 			.len()
 
@@ -19,7 +19,7 @@ expect {
 
 # Singleton list has length of one
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1])
 			.len()
 
@@ -28,7 +28,7 @@ expect {
 
 # Non-empty list has correct length
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1, 2, 3])
 			.len()
 
@@ -41,7 +41,7 @@ expect {
 
 # Pop from empty list is an error
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([])
 			.pop()
 
@@ -50,7 +50,7 @@ expect {
 
 # Can pop from singleton list
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1])
 			.pop()?
 			.value
@@ -60,7 +60,7 @@ expect {
 
 # Can pop from non-empty list
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1, 2])
 			.pop()?
 			.value
@@ -70,10 +70,10 @@ expect {
 
 # Can pop multiple items
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1, 2])
 			.pop()?
-			->expect_value(2)?
+			-> expect_value(2)?
 			.pop()?
 			.value
 
@@ -82,14 +82,14 @@ expect {
 
 # Pop updates the count
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1, 2])
-			->expect_len(2)?
+			-> expect_len(2)?
 			.pop()?
-			->expect_value(2)?
-			->expect_len(1)?
+			-> expect_value(2)?
+			-> expect_len(1)?
 			.pop()?
-			->expect_value(1)?
+			-> expect_value(1)?
 			.len()
 
 	result == 0
@@ -101,7 +101,7 @@ expect {
 
 # Push updates count
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1, 2])
 			.push(3)
 			.len()
@@ -111,18 +111,18 @@ expect {
 
 # Push and pop
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([])
 			.push(1)
 			.push(2)
 			.pop()?
-			->expect_value(2)?
+			-> expect_value(2)?
 			.push(3)
-			->expect_len(2)?
+			-> expect_len(2)?
 			.pop()?
-			->expect_value(3)?
+			-> expect_value(3)?
 			.pop()?
-			->expect_value(1)?
+			-> expect_value(1)?
 			.len()
 
 	result == 0
@@ -134,7 +134,7 @@ expect {
 
 # Peek on empty list is an error
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([])
 			.peek()
 
@@ -143,7 +143,7 @@ expect {
 
 # Can peek on singleton list
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1])
 			.peek()?
 
@@ -152,7 +152,7 @@ expect {
 
 # Can peek on non-empty list
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1, 2])
 			.peek()?
 
@@ -161,9 +161,9 @@ expect {
 
 # Peek does not change the count
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1, 2])
-			->expect_peek(2)?
+			-> expect_peek(2)?
 			.len()
 
 	result == 2
@@ -171,14 +171,14 @@ expect {
 
 # Can peek after a pop and push
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([])
 			.push(1)
 			.push(2)
-			->expect_peek(2)?
+			-> expect_peek(2)?
 			.pop()?
-			->expect_value(2)?
-			->expect_peek(1)?
+			-> expect_value(2)?
+			-> expect_peek(1)?
 			.push(3)
 			.peek()?
 
@@ -191,7 +191,7 @@ expect {
 
 # Empty linked list to list is empty
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([])
 			.to_list()
 
@@ -200,7 +200,7 @@ expect {
 
 # To list with multiple values
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1, 2, 3])
 			.to_list()
 
@@ -209,13 +209,13 @@ expect {
 
 # To list after a pop
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([])
 			.push(1)
 			.push(2)
 			.push(3)
 			.pop()?
-			->expect_value(3)?
+			-> expect_value(3)?
 			.push(4)
 			.to_list()
 
@@ -228,7 +228,7 @@ expect {
 
 # Reversed empty list has same values
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([])
 			.reverse()
 			.to_list()
@@ -238,7 +238,7 @@ expect {
 
 # Reversed singleton list is same list
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1])
 			.reverse()
 			.to_list()
@@ -248,14 +248,14 @@ expect {
 
 # Reversed non-empty list is reversed
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1, 2, 3])
 			.reverse()
-			->expect_len(3)?
+			-> expect_len(3)?
 			.pop()?
-			->expect_value(1)?
+			-> expect_value(1)?
 			.pop()?
-			->expect_value(2)?
+			-> expect_value(2)?
 			.pop()?
 			.value
 
@@ -264,14 +264,14 @@ expect {
 
 # Double reverse
 expect {
-	result = 
+	result =
 		SimpleLinkedList.from_list([1, 2, 3])
 			.reverse()
 			.reverse()
 			.pop()?
-			->expect_value(3)?
+			-> expect_value(3)?
 			.pop()?
-			->expect_value(2)?
+			-> expect_value(2)?
 			.pop()?
 			.value
 

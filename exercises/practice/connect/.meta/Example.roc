@@ -117,12 +117,12 @@ has_north_south_path = |board, stone| {
 										nx = (
 											x.to_i64_try() ?? {
 												crash "Unreachable"
-											},
+											}
 										) + dx
 										ny = (
 											y.to_i64_try() ?? {
 												crash "Unreachable"
-											},
+											}
 										) + dy
 										if nx >= 0 and ny >= 0 {
 											[
@@ -154,7 +154,7 @@ has_north_south_path = |board, stone| {
 	north_stones = {
 		(
 			board
-				|> first_row,
+				|> first_row
 		).map_with_index(
 			|cell, x| {
 				match cell {

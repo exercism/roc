@@ -25,7 +25,7 @@ Alphametics :: {}.{
 						letters.first() ?? 0
 					},
 				)
-					|> Set.from_list,
+					|> Set.from_list
 			).insert(
 				sum.first() ?? 0,
 			)

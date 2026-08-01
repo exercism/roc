@@ -39,6 +39,6 @@ round = |value| {
 	(
 		(value * pow + 0.5).to_u64_try() ?? {
 			crash "Unreachable"
-		},
+		}
 	).to_dec() / pow
 }

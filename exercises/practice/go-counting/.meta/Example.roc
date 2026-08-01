@@ -128,7 +128,7 @@ search_territory = |board, intersection| {
 										x: (
 											if visiting.x > 0 {
 												visiting.x - 1
-											} else 0,
+											} else 0
 										),
 										y: visiting.y,
 									},
@@ -138,7 +138,7 @@ search_territory = |board, intersection| {
 										y: (
 											if visiting.y > 0 {
 												visiting.y - 1
-											} else 0,
+											} else 0
 										),
 									},
 									{ x: visiting.x, y: visiting.y + 1 },

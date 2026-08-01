@@ -44,12 +44,12 @@ count_neighbors = |rows, x, y| {
 					nx = dx + (
 						x.to_i64_try() ?? {
 							crash "Unreachable"
-						},
+						}
 					)
 					ny = dy + (
 						y.to_i64_try() ?? {
 							crash "Unreachable"
-						},
+						}
 					)
 					if is_flower(rows, nx, ny) 1 else 0
 				},

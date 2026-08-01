@@ -20,7 +20,7 @@ ErrorHandling :: {}.{
 	parse_user_id : Str -> Try(UserId, [InvalidUserId(Str), ..])
 	parse_user_id = |path| {
 		user_id_str = path.drop_prefix("/users/")
-		(user_id_str->U64.from_str()).map_err(|_| InvalidUserId(user_id_str))
+		(user_id_str |> U64.from_str).map_err(|_| InvalidUserId(user_id_str))
 	}
 
 	# # Takes a URL and returns the page content, or the appropriate error
@@ -32,7 +32,7 @@ ErrorHandling :: {}.{
 					"/" => Ok("Home page")
 					"/users/" => Ok("Users page")
 					user_path if user_path.starts_with("/users/") => {
-						user = user_path->parse_user_id()?->get_user()?
+						user = ((user_path |> parse_user_id)? |> get_user)?
 						Ok("${user.name}'s page")
 					}
 					unknown_path => Err(PageNotFound(unknown_path))

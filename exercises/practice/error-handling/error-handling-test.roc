@@ -155,35 +155,35 @@ expect {
 # which would be easy to handle because the error payload is machine-friendly
 expect {
 	page = get_page("http://example.com/users/789")
-	result = page.map_err(|e| e->error_message(English))
+	result = page.map_err(|e| e |> error_message(English))
 	result == Err("Insecure connection (non HTTPS): http://example.com/users/789")
 }
 
 # Error: invalid domain name
 expect {
 	page = get_page("https://google.com/wrong")
-	result = page.map_err(|e| e->error_message(English))
+	result = page.map_err(|e| e |> error_message(English))
 	result == Err("Invalid domain name: https://google.com/wrong")
 }
 
 # Error: page not found
 expect {
 	page = get_page("https://example.com/oops")
-	result = page.map_err(|e| e->error_message(English))
+	result = page.map_err(|e| e |> error_message(English))
 	result == Err("Page not found: /oops")
 }
 
 # Error: invalid user_id
 expect {
 	page = get_page("https://example.com/users/abc")
-	result = page.map_err(|e| e->error_message(English))
+	result = page.map_err(|e| e |> error_message(English))
 	result == Err("User ID is not a positive integer: abc")
 }
 
 # Error: user not found
 expect {
 	page = get_page("https://example.com/users/42")
-	result = page.map_err(|e| e->error_message(English))
+	result = page.map_err(|e| e |> error_message(English))
 	result == Err("User #42 was not found")
 }
 

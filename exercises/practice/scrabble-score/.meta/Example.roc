@@ -33,7 +33,7 @@ letter_value = |letter| {
 				|(letters, _)| {
 					(
 						letters
-							|> Str.to_utf8,
+							|> Str.to_utf8
 					).contains(to_upper(letter))
 				},
 			) ?? ("", 0)

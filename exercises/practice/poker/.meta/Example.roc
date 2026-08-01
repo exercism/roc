@@ -108,7 +108,7 @@ get_rank = |hand| {
 					},
 				)
 				.map_with_index(|counter, value| counter * 13 + value)
-				|> sort_desc,
+				|> sort_desc
 		).map(|group_rank| { size: group_rank // 13, value: group_rank % 13 + 2 })
 			.drop_if(
 				|group| {

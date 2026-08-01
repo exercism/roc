@@ -52,7 +52,7 @@ build_game_node = |node_props, alternatives| {
 }
 
 game_tree : P.Parser(List(U8), SgfParsing.GameTree)
-game_tree = 
+game_tree =
 	P.const(|node_props| |alternatives| build_game_node(node_props, alternatives))
 		.skip(S.codeunit('('))
 		.keep(node.one_or_more())
@@ -60,44 +60,44 @@ game_tree =
 		.skip(S.codeunit(')'))
 
 sub_tree : P.Parser(List(U8), SgfParsing.GameTree)
-sub_tree = 
+sub_tree =
 	P.const(|t| t)
 		.keep(
 			P.const(|t| t).keep(P.lazy(|_| game_tree)),
 		)
 
 node : P.Parser(List(U8), SgfParsing.NodeProperties)
-node = 
+node =
 	P.const(|s| s)
 		.skip(S.codeunit(';'))
 		.keep(P.many(property))
 		.map(|properties| Dict.from_list(properties))
 
 property : P.Parser(List(U8), (Str, List(Str)))
-property = 
+property =
 	P.map2(
 		prop_ident,
 		P.one_or_more(prop_value),
 		|id, values|
 			(
-				((id->Str.from_utf8()) ?? "<BadUTF8>"),
-				values.map(|value| ((value->Str.from_utf8()) ?? "<BadUTF8>")),
+				((id |> Str.from_utf8) ?? "<BadUTF8>"),
+				values.map(|value| ((value |> Str.from_utf8) ?? "<BadUTF8>")),
 			),
 	)
 
 prop_ident : P.Parser(List(U8), List(U8))
-prop_ident = 
+prop_ident =
 	P.one_or_more(uc_letter)
 
 prop_value : P.Parser(List(U8), List(U8))
-prop_value = 
+prop_value =
 	P.const(|value| value)
 		.skip(S.codeunit('['))
 		.keep(value_type) # in this exercise we don't support 'Compose'
 		.skip(S.codeunit(']'))
 
 value_type : P.Parser(List(U8), List(U8))
-value_type = 
+value_type =
 	P.build_primitive_parser(
 		|input| {
 			help = |result, chars| {
@@ -116,5 +116,5 @@ value_type =
 	)
 
 uc_letter : P.Parser(List(U8), U8)
-uc_letter = 
+uc_letter =
 	S.codeunit_satisfies(|b| b >= 'A' and b <= 'Z')

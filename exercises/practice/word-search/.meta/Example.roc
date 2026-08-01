@@ -13,7 +13,7 @@ WordSearch :: {}.{
 				width
 			} else {
 				height
-			},
+			}
 		).to_i64_try() ?? 0
 
 		# for all possible starting positions:
@@ -32,7 +32,7 @@ WordSearch :: {}.{
 											# for all possible lengths:
 											(
 												(0..<max_length)
-													|> List.from_iter,
+													|> List.from_iter
 											).fold_until(
 												{ found_words: [], chars: [] },
 												|state, index| {

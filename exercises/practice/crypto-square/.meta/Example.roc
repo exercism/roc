@@ -15,7 +15,7 @@ CryptoSquare :: {}.{
 								[]
 							}
 						},
-					),
+					)
 			).map(
 				|c| [c] |> Str.from_utf8 ?? {
 					crash "Unreachable"

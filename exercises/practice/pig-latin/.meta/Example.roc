@@ -49,7 +49,7 @@ translate_word = |word| {
 		(
 			word
 				.to_utf8()
-				|> pig_latin_swap,
+				|> pig_latin_swap
 		).concat(['a', 'y'])
 			|> Str.from_utf8
 	match maybe_result {

@@ -33,7 +33,7 @@ expect {
         {%- elif op["operation"] == "read" %}
         {%- if op["should_succeed"] %}
         .read()?
-        -> expect_value({{ op["expected"] }})
+        |> expect_value({{ op["expected"] }})
         {%- else %}
         .read()
     

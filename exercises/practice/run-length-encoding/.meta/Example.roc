@@ -27,16 +27,16 @@ RunLengthEncoding :: {}.{
 					}
 				},
 			)
-			->append_count_and_letter()
-			->Str.from_utf8()
+			|> append_count_and_letter
+			|> Str.from_utf8
 	}
 
 	decode : Str -> Try(Str, [BadUtf8(_), BadNumStr, ..])
 	decode = |string| {
-		state_to_str = |state| state.chars->Str.from_utf8()
+		state_to_str = |state| state.chars |> Str.from_utf8
 		string
 			.to_utf8()
-			->fold_try(
+			-> fold_try(
 				{ chars: [], digits: [] },
 				|state, char| {
 					if char >= '0' and char <= '9' {
@@ -46,14 +46,14 @@ RunLengthEncoding :: {}.{
 						chars = state.chars.append(char)
 						Ok({ ..state, chars })
 					} else {
-						count_str = state.digits->Str.from_utf8()?
-						count = count_str->U64.from_str()?
-						chars = state.chars.concat(char->List.repeat(count))
+						count_str = state.digits -> Str.from_utf8?
+						count = count_str -> U64.from_str?
+						chars = state.chars.concat(char |> List.repeat(count))
 						Ok({ chars, digits: [] })
 					}
 				},
 			)?
-			->state_to_str()
+			|> state_to_str
 
 	}
 }

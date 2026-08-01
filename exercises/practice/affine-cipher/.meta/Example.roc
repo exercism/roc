@@ -16,7 +16,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 						'a' + (
 							encoded_index.to_u8_try() ?? {
 								crash "Unreachable"
-							},
+							}
 						)
 					},
 				)
@@ -47,7 +47,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 							(
 								pair.decoded_index.to_u8_try() ?? {
 									crash "Unreachable"
-								},
+								}
 							) + 'a'
 						},
 					)
@@ -86,7 +86,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 					},
 				)
 				|> chunks_of(group_length)
-				|> intersperse([' ']),
+				|> intersperse([' '])
 		).join()
 			|> Str.from_utf8
 		match maybe_result {

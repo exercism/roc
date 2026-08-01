@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/run-length-encoding/canonical-data.json
-# File last updated on 2026-06-22
+# File last updated on 2026-08-01
 
 import RunLengthEncoding exposing [encode, decode]
 
@@ -11,7 +11,7 @@ import RunLengthEncoding exposing [encode, decode]
 # empty string
 expect {
 	string = ""
-	result = string->encode()
+	result = string |> encode
 	expected = ""
 	result == Ok(expected)
 }
@@ -19,7 +19,7 @@ expect {
 # single characters only are encoded without count
 expect {
 	string = "XYZ"
-	result = string->encode()
+	result = string |> encode
 	expected = "XYZ"
 	result == Ok(expected)
 }
@@ -27,7 +27,7 @@ expect {
 # string with no single characters
 expect {
 	string = "AABBBCCCC"
-	result = string->encode()
+	result = string |> encode
 	expected = "2A3B4C"
 	result == Ok(expected)
 }
@@ -35,7 +35,7 @@ expect {
 # single characters mixed with repeated characters
 expect {
 	string = "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB"
-	result = string->encode()
+	result = string |> encode
 	expected = "12WB12W3B24WB"
 	result == Ok(expected)
 }
@@ -43,7 +43,7 @@ expect {
 # multiple whitespace mixed in string
 expect {
 	string = "  hsqq qww  "
-	result = string->encode()
+	result = string |> encode
 	expected = "2 hs2q q2w2 "
 	result == Ok(expected)
 }
@@ -51,7 +51,7 @@ expect {
 # lowercase characters
 expect {
 	string = "aabbbcccc"
-	result = string->encode()
+	result = string |> encode
 	expected = "2a3b4c"
 	result == Ok(expected)
 }
@@ -63,7 +63,7 @@ expect {
 # empty string
 expect {
 	string = ""
-	result = string->decode()
+	result = string |> decode
 	expected = ""
 	result == Ok(expected)
 }
@@ -71,7 +71,7 @@ expect {
 # single characters only
 expect {
 	string = "XYZ"
-	result = string->decode()
+	result = string |> decode
 	expected = "XYZ"
 	result == Ok(expected)
 }
@@ -79,7 +79,7 @@ expect {
 # string with no single characters
 expect {
 	string = "2A3B4C"
-	result = string->decode()
+	result = string |> decode
 	expected = "AABBBCCCC"
 	result == Ok(expected)
 }
@@ -87,7 +87,7 @@ expect {
 # single characters with repeated characters
 expect {
 	string = "12WB12W3B24WB"
-	result = string->decode()
+	result = string |> decode
 	expected = "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB"
 	result == Ok(expected)
 }
@@ -95,7 +95,7 @@ expect {
 # multiple whitespace mixed in string
 expect {
 	string = "2 hs2q q2w2 "
-	result = string->decode()
+	result = string |> decode
 	expected = "  hsqq qww  "
 	result == Ok(expected)
 }
@@ -103,7 +103,7 @@ expect {
 # lowercase string
 expect {
 	string = "2a3b4c"
-	result = string->decode()
+	result = string |> decode
 	expected = "aabbbcccc"
 	result == Ok(expected)
 }
@@ -115,8 +115,8 @@ expect {
 # encode followed by decode gives original string
 expect {
 	string = "zzz ZZ  zZ"
-	encoded = string->encode()?
-	result = encoded->decode()
+	encoded = string -> encode()?
+	result = encoded |> decode
 	result == Ok(string)
 }
 
