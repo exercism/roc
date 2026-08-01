@@ -19,10 +19,10 @@ SaddlePoints :: {}.{
 									[]
 							},
 						)
-							|> join_map(|id| id) # TODO: replace with .join() when available
+						.join()
 					},
 				)
-				|> join_map(|id2| id2) # TODO: replace with .join() when available
+				.join()
 				|> Set.from_list
 		}
 
@@ -58,7 +58,7 @@ SaddlePoints :: {}.{
 	}
 }
 
-# The following functions should soon be available in Roc's builtins
+# The following function should soon be available in Roc's builtins
 join_map : i, (a -> j) -> List(b) where [i.iter : i -> Iter(a), j.iter : j -> Iter(b)]
 join_map = |list, func| {
 	var $state = []

@@ -168,13 +168,5 @@ has_north_south_path = |board, stone| {
 	has_path_to_south(north_stones, Set.empty())
 }
 
-# The following functions should soon be available in Roc's builtins
-join_map = |list, func| {
-	var $state = []
-	for item in list {
-		for subitem in func(item) {
-			$state = $state.append(subitem)
-		}
-	}
-	$state
-}
+# The following function should soon be available in Roc's builtins
+join_map = |list, func| list.map(func).join()

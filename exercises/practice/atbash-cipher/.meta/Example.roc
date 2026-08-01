@@ -73,15 +73,7 @@ intersperse = |list, sep| {
 	$res.drop_last(1)
 }
 
-join_map = |list, func| {
-	var $state = []
-	for item in list {
-		for subitem in func(item) {
-			$state = $state.append(subitem)
-		}
-	}
-	$state
-}
+join_map = |list, func| list.map(func).join()
 
 fold_try = |list, init, func| {
 	var $state = init

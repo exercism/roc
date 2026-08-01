@@ -158,15 +158,7 @@ get_rank = |hand| {
 }
 
 # The following functions should soon be available in Roc's builtins
-join_map = |iter, func| {
-	var $state = []
-	for item in iter {
-		for subitem in func(item) {
-			$state = $state.append(subitem)
-		}
-	}
-	$state
-}
+join_map = |list, func| list.map(func).join()
 
 sort_asc = |list| {
 	list.sort_with(|a, b| a.compare(b))

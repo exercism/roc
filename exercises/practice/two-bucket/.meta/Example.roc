@@ -93,7 +93,7 @@ bfs = |{ start, neighbors, success }| {
 				} else if success(node) {
 					path_back_to_start = |path, step| {
 						updated_path = path.append(step)
-						match from.get(to_str(step)) {
+						match from.get(step) {
 							Ok(previous) => path_back_to_start(updated_path, previous)
 							Err(KeyNotFound) => updated_path
 						}
@@ -104,7 +104,7 @@ bfs = |{ start, neighbors, success }| {
 					updated_from =
 						neighbor_nodes
 							.drop_if(|neighbor| visited.contains(neighbor))
-							.fold(from, |acc_from, neighbor| acc_from.insert(to_str(neighbor), node))
+							.fold(from, |acc_from, neighbor| acc_from.insert(neighbor, node))
 					updated_visited = visited.insert(node)
 					updated_to_visit = rest_to_visit.concat(neighbor_nodes)
 					help(updated_to_visit, updated_visited, updated_from)
@@ -113,9 +113,4 @@ bfs = |{ start, neighbors, success }| {
 		}
 	}
 	help([start], Set.empty(), Dict.empty())
-}
-
-# TODO: remove to_str once records have a to_hash method
-to_str = |{ volume_one, volume_two }| {
-	volume_one.to_str().concat(volume_two.to_str())
 }

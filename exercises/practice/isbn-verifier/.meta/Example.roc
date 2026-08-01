@@ -37,7 +37,7 @@ char_value = |char, index| {
 	}
 }
 
-# The following functions should soon be available in Roc's builtins
+# The following function should soon be available in Roc's builtins
 join_map : i, (a -> j) -> List(b) where [i.iter : i -> Iter(a), j.iter : j -> Iter(b)]
 join_map = |list, func| {
 	var $state = []
