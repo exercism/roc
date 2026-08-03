@@ -1,9 +1,11 @@
-module [encode, decode]
+AtbashCipher :: {}.{
+	encode : Str -> Try(Str, _)
+	encode = |phrase| {
+		crash "Please implement the 'encode' function"
+	}
 
-encode : Str -> Result Str _
-encode = |phrase|
-    crash("Please implement the 'encode' function")
-
-decode : Str -> Result Str _
-decode = |phrase|
-    crash("Please implement the 'decode' function")
+	decode : Str -> Try(Str, _)
+	decode = |phrase| {
+		crash "Please implement the 'decode' function"
+	}
+}

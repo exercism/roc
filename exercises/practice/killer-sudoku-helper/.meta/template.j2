@@ -5,10 +5,7 @@
 import {{ exercise | to_pascal }} exposing [combinations]
 
 {% macro to_cage(cage) -%}
-{ sum: {{ cage["sum"] }}, size: {{ cage["size"] }}
-{%- if cage["exclude"] != [] -%}
-, exclude: {{ cage["exclude"] | to_roc }}
-{%- endif %} }
+{ sum: {{ cage["sum"] }}, size: {{ cage["size"] }}, exclude: {{ cage["exclude"] | to_roc }} }
 {%- endmacro %}
 
 {% for supercase in cases %}
@@ -22,10 +19,12 @@ import {{ exercise | to_pascal }} exposing [combinations]
 {%- if case["description"] != supercase["description"] %}
 # {{ case["description"] }}
 {%- endif %}
-expect
+expect {
     result = {{ case["property"] }}({{ to_cage(case["input"]["cage"]) }})
     result == {{ case["expected"] | to_roc }}
+}
 
 {% endfor -%}
 {%- endfor %}
 
+{{ macros.footer() }}

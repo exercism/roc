@@ -4,7 +4,7 @@
   ],
   "files": {
     "solution": [
-      "QueenAttack.roc"
+      "ChessSquare.roc"
     ],
     "test": [
       "queen-attack-test.roc"

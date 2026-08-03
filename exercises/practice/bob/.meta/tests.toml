@@ -88,3 +88,6 @@ description = "non-question ending with whitespace"
 [2c7278ac-f955-4eb4-bf8f-e33eb4116a15]
 description = "multiple line question"
 reimplements = "66953780-165b-4e7e-8ce3-4bcb80b6385a"
+
+[3c954328-86fb-4c71-8961-e18d6a5e2517]
+description = "shouting a statement containing a question mark"

@@ -1,23 +1,21 @@
-module [add]
-
 import isodate.DateTime
 
-future_datetime : Str -> Result Str [InvalidDateTimeFormat]
-future_datetime = |moment|
-    Ok(
-        (
-            DateTime.from_iso_str(moment)?
-            |> DateTime.to_nanos_since_epoch
-            |> Num.div_trunc(1_000_000_000) # nanos to seconds
-            |> Num.add(1_000_000_000) # add a gigasecond
-            |> Num.mul(1_000_000_000) # back to nanos
-            |> DateTime.from_nanos_since_epoch
-            |> DateTime.to_iso_str
-        ),
-    )
+Gigasecond :: {}.{
+	add : Str -> Str
+	add = |moment| {
+		match future_datetime(moment) {
+			Ok(string) => string
+			Err(_) => "Unexpected error"
+		}
+	}
+}
 
-add : Str -> Str
-add = |moment|
-    when future_datetime(moment) is
-        Ok(string) -> string
-        Err(_) -> "Unexpected error"
+future_datetime : Str -> Try(Str, [InvalidDateTimeFormat, ..])
+future_datetime = |moment| {
+	nanos = DateTime.from_iso_str(moment)?.to_nanos_since_epoch()
+	new_nanos = nanos
+		.div_trunc_by(1_000_000_000.I128) # nanos to seconds
+		.plus(1_000_000_000.I128) # add a gigasecond
+		.times(1_000_000_000.I128) # back to nanos
+	DateTime.from_nanos_since_epoch(new_nanos).to_iso_str() |> Ok
+}

@@ -4,7 +4,7 @@
   ],
   "files": {
     "solution": [
-      "RationalNumbers.roc"
+      "Rational.roc"
     ],
     "test": [
       "rational-numbers-test.roc"

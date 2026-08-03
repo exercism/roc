@@ -1,5 +1,6 @@
-module [say]
-
-say : U64 -> Result Str [OutOfBounds]
-say = |number|
-    crash("Please implement the 'say' function")
+Say :: {}.{
+	say : U64 -> Try(Str, _)
+	say = |number| {
+		crash "Please implement the 'say' function"
+	}
+}

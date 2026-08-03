@@ -4,7 +4,7 @@
   ],
   "files": {
     "solution": [
-      "ComplexNumbers.roc"
+      "Complex.roc"
     ],
     "test": [
       "complex-numbers-test.roc"
