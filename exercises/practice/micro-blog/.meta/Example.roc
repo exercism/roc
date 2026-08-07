@@ -12,7 +12,8 @@ MicroBlog :: {}.{
 
 	truncate : Str -> Try(Str, GraphemeErrors)
 	truncate = |input| {
-		(input |> Grapheme.split)?
+		input
+			|> Grapheme.owned
 			.take_first(5)
 			|> Str.join_with("")
 			|> Ok
