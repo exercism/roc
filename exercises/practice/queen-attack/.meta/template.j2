@@ -1,0 +1,45 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import ChessSquare
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+{%- if case["property"] == "create" %}
+    {%- if case["expected"] == 0 %}
+expect {
+    square = ChessSquare.create("{{ plugins.to_square(case["input"]["queen"]) }}")?
+    result = square.rank()
+    result == {{ plugins.to_rank(case["input"]["queen"]["position"]["row"]) }}
+}
+
+expect {
+    square = ChessSquare.create("{{ plugins.to_square(case["input"]["queen"]) }}")?
+    result = square.file()
+    result == '{{ plugins.to_file(case["input"]["queen"]["position"]["column"]) }}'
+}
+    {%- else %}
+expect {
+    result = ChessSquare.create("{{ plugins.to_square(case["input"]["queen"]) }}")
+    result.is_err()
+}
+    {%- endif %}
+{%- elif case["property"] == "canAttack" %}
+expect {
+    square1 = ChessSquare.create("{{ plugins.to_square(case["input"]["white_queen"]) }}")?
+    square2 = ChessSquare.create("{{ plugins.to_square(case["input"]["black_queen"]) }}")?
+    result = square1.queen_can_attack(square2)
+    result == {{ case["expected"] | to_roc }}
+}
+{%- endif %}
+
+{% endfor %}
+{% endfor %}
+
+{{ macros.footer() }}

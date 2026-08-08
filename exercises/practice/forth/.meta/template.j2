@@ -7,12 +7,15 @@ import Forth exposing [evaluate]
 {% for case in cases -%}
 {% for innerCase in case["cases"] %}
 # {{ case["description"] }}: {{ innerCase["description"] }}
-expect
-    result = evaluate {{ innerCase["input"]["instructions"] | join('\n') | to_roc_multiline_string | indent(8) }}
+expect {
+    result = evaluate({{ innerCase["input"]["instructions"] | join('\n') | to_roc_multiline_string | indent(8) }})
     {%- if innerCase["expected"]["error"] %}
-    Result.isErr result
+    result.is_err()
     {%- else %}
-    result == Ok {{ innerCase["expected"] }}
+    result == Ok({{ innerCase["expected"] }})
     {%- endif %}
+}
 {% endfor %}
 {% endfor %}
+
+{{ macros.footer() }}

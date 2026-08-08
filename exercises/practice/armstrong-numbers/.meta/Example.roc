@@ -1,17 +1,25 @@
-module [isArmstrongNumber]
+ArmstrongNumbers :: {}.{
+	is_armstrong_number : U64 -> Bool
+	is_armstrong_number = |number| {
+		digits = list_digits(number)
+		len = digits.len()
+		candidate =
+			digits
+				.map(
+					|digit| {
+						digit.pow(len)
+					},
+				)
+				.sum()
+		candidate == number
+	}
+}
 
-listDigits = \number ->
-    if number < 10 then
-        [number]
-    else
-        (listDigits (number // 10)) |> List.append (number % 10)
-
-isArmstrongNumber : U64 -> Bool
-isArmstrongNumber = \number ->
-    digits = listDigits number
-    len = List.len digits
-    candidate =
-        digits
-        |> List.map (\digit -> digit |> Num.powInt len)
-        |> List.sum
-    candidate == number
+list_digits : U64 -> List(U64)
+list_digits = |number| {
+	if number < 10 {
+		[number]
+	} else {
+		list_digits((number // 10)).append((number % 10))
+	}
+}

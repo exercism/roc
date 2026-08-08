@@ -1,57 +1,64 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/hamming/canonical-data.json
-# File last updated on 2024-09-03
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
-}
-
-main =
-    Task.ok {}
+# File last updated on 2026-08-01
 
 import Hamming exposing [distance]
 
 # empty strands
-expect
-    result = distance "" ""
-    result == Ok 0
+expect {
+	result = distance("", "")
+	result == Ok(0)
+}
 
 # single letter identical strands
-expect
-    result = distance "A" "A"
-    result == Ok 0
+expect {
+	result = distance("A", "A")
+	result == Ok(0)
+}
 
 # single letter different strands
-expect
-    result = distance "G" "T"
-    result == Ok 1
+expect {
+	result = distance("G", "T")
+	result == Ok(1)
+}
 
 # long identical strands
-expect
-    result = distance "GGACTGAAATCTG" "GGACTGAAATCTG"
-    result == Ok 0
+expect {
+	result = distance("GGACTGAAATCTG", "GGACTGAAATCTG")
+	result == Ok(0)
+}
 
 # long different strands
-expect
-    result = distance "GGACGGATTCTG" "AGGACGGATTCT"
-    result == Ok 9
+expect {
+	result = distance("GGACGGATTCTG", "AGGACGGATTCT")
+	result == Ok(9)
+}
 
 # disallow first strand longer
-expect
-    result = distance "AATG" "AAA"
-    Result.isErr result
+expect {
+	result = distance("AATG", "AAA")
+	result.is_err()
+}
 
 # disallow second strand longer
-expect
-    result = distance "ATA" "AGTG"
-    Result.isErr result
+expect {
+	result = distance("ATA", "AGTG")
+	result.is_err()
+}
 
 # disallow empty first strand
-expect
-    result = distance "" "G"
-    Result.isErr result
+expect {
+	result = distance("", "G")
+	result.is_err()
+}
 
 # disallow empty second strand
-expect
-    result = distance "G" ""
-    Result.isErr result
+expect {
+	result = distance("G", "")
+	result.is_err()
+}
 
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}

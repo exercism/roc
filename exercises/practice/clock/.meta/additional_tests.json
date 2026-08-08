@@ -1,0 +1,62 @@
+{
+  "cases": [
+    {
+      "description": "Can create a clock with max I64 values",
+      "property": "create",
+      "input": {
+        "hour": 9223372036854775807,
+        "minute": 9223372036854775807
+      },
+      "expected": "01:07"
+    },
+    {
+      "description": "Can create a clock with min I64 values",
+      "property": "create",
+      "input": {
+        "hour": -9223372036854775808,
+        "minute": -9223372036854775808
+      },
+      "expected": "21:52"
+    },
+    {
+      "description": "Can add max I64 values to a clock",
+      "property": "add",
+      "input": {
+        "hour": 23,
+        "minute": 59,
+        "value": 9223372036854775807
+      },
+      "expected": "18:06"
+    },
+    {
+      "description": "Can add min I64 values to a clock",
+      "property": "add",
+      "input": {
+        "hour": 23,
+        "minute": 59,
+        "value": -9223372036854775808
+      },
+      "expected": "05:51"
+    },
+    {
+      "description": "Can subtract max I64 values from a clock",
+      "property": "subtract",
+      "input": {
+        "hour": 23,
+        "minute": 59,
+        "value": 9223372036854775807
+      },
+      "expected": "05:52"
+    },
+    {
+      "description": "Can subtract min I64 values from a clock",
+      "property": "subtract",
+      "input": {
+        "hour": 23,
+        "minute": 59,
+        "value": -9223372036854775808
+      },
+      "expected": "18:07"
+    }
+  ]
+}

@@ -1,24 +1,44 @@
-module [diamond]
+Diamond :: {}.{
+	diamond : U8 -> Str
+	diamond = |letter| {
+		letter_index = (letter - 'A').to_i8_try() ?? {
+			crash "Unreachable"
+		}
+		((-letter_index)..=letter_index)
+			.map(
+				|row_index| {
+					((-letter_index)..=letter_index)
+						.map(
+							|col_index| get_char(row_index, col_index, letter_index),
+						)
+						|> List.from_iter
+						|> unwrap_from_utf8
+				},
+			)
+			|> List.from_iter
+			|> Str.join_with("\n")
+	}
+}
 
-getChar : I8, I8, I8 -> U8
-getChar = \rowIndex, colIndex, letterIndex ->
-    if Num.abs rowIndex + Num.abs colIndex == letterIndex then
-        letterIndex - Num.abs rowIndex |> Num.toU8 |> Num.add 'A'
-    else
-        ' '
+get_char : I8, I8, I8 -> U8
+get_char = |row_index, col_index, letter_index| {
+	if row_index.abs() + col_index.abs() == letter_index {
+		(
+			(letter_index - row_index.abs()).to_u8_try() ?? {
+				crash "Unreachable"
+			}
+		) + 'A'
+	} else {
+		' '
+	}
+}
 
-unwrapFromUtf8 : List U8 -> Str
-unwrapFromUtf8 = \chars ->
-    when chars |> Str.fromUtf8 is
-        Ok result -> result
-        Err _ -> crash "Str.fromUtf8 should never fail here"
-
-diamond : U8 -> Str
-diamond = \letter ->
-    letterIndex = letter - 'A' |> Num.toI8
-    List.range { start: At -letterIndex, end: At letterIndex }
-    |> List.map \rowIndex ->
-        List.range { start: At -letterIndex, end: At letterIndex }
-        |> List.map \colIndex -> getChar rowIndex colIndex letterIndex
-        |> unwrapFromUtf8
-    |> Str.joinWith "\n"
+unwrap_from_utf8 : List(U8) -> Str
+unwrap_from_utf8 = |chars| {
+	match Str.from_utf8(chars) {
+		Ok(result) => result
+		Err(_) => {
+			crash "Str.from_utf8 should never fail here"
+		}
+	}
+}

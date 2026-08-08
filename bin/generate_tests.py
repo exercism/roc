@@ -67,7 +67,6 @@ logging.basicConfig()
 logger = logging.getLogger("generator")
 logger.setLevel(logging.WARN)
 
-
 def replace_all(string: str, chars: Union[str, List[str]], rep: str) -> str:
     """
     Replace any char in chars with rep, reduce runs and strip terminal ends.
@@ -158,18 +157,27 @@ def to_roc_multiline_string(lines: Union[str, List[str]]) -> str:
     elif len(lines) == 1:
         return to_roc_string(lines[0])
     else:
-        return "\n".join(
-            ["", '"""'] + [escape_roc_string_content(line) for line in lines] + ['"""']
-        ).replace("$(", "\\$(")
+        return "\n" + "\n".join(
+            [r'\\' + escape_roc_string_content(line) for line in lines]
+        ).replace("${", r"\${") + "\n"
 
 
 def to_roc_tuple(values: Any):
     list_content = ", ".join([to_roc(v) for v in tuple(values)])
     return f"({list_content})"
 
+def to_roc_record(obj: Dict[str, Any]):
+    items = []
+    for key, value in obj.items():
+        snake_key = to_snake(key)
+        roc_value = to_roc(value)
+        items.append(f"{snake_key}: {roc_value}")
+
+    return "{ " + ", ".join(items) + " }"
+
 
 def to_roc_bool(value: bool):
-    return "Bool.true" if value else "Bool.false"
+    return "Bool.True" if value else "Bool.False"
 
 
 def to_roc_list(values: Any):
@@ -179,7 +187,7 @@ def to_roc_list(values: Any):
 
 def to_roc_float(value: Union[int, float]):
     value = float(value)
-    return f"{value!r}f64".replace("+", "")
+    return f"{value!r}.F64".replace("+", "")
 
 
 def to_roc(value: Any) -> str:
@@ -193,6 +201,8 @@ def to_roc(value: Any) -> str:
         return to_roc_list(value)
     elif isinstance(value, tuple):
         return to_roc_tuple(value)
+    elif isinstance(value, dict):
+        return to_roc_record(value)
     elif value is None:
         return "{}"
     else:
@@ -367,9 +377,10 @@ def load_additional_tests(exercise: Path) -> List[TypeJSON]:
 
 def format_file(path: Path) -> NoReturn:
     """
-    Runs roc format on file at path
+    Runs roc fmt on file at path
     """
-    subprocess.check_call(["roc", "format", path])
+    subprocess.check_call(["roc", "fmt", path])
+    pass
 
 
 def drop_timestamp(lines):
@@ -481,7 +492,7 @@ def generate_exercise(
             logger.debug(f"{slug}: formatting tmp file {tmpfile}")
             format_file(tmpfile)
         except subprocess.CalledProcessError as e:
-            return False
+            pass
 
         if check:
             return check_template(slug, tests_path, tmpfile)
@@ -545,6 +556,7 @@ def generate(
     env.filters["to_roc_bool"] = to_roc_bool
     env.filters["to_roc_list"] = to_roc_list
     env.filters["to_roc_tuple"] = to_roc_tuple
+    env.filters["to_roc_record"] = to_roc_record
     env.filters["wrap_overlong"] = wrap_overlong
     env.filters["regex_replace"] = regex_replace
     env.filters["regex_find"] = regex_find
@@ -556,6 +568,8 @@ def generate(
     env.tests["error_case"] = error_case
     result = True
     for exercise in sorted(Path("exercises/practice").glob(exercise_glob)):
+        if not exercise.is_dir():
+            continue
         if not generate_exercise(env, spec_path, exercise, check):
             result = False
             if stop_on_failure:

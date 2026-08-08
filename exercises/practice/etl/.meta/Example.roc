@@ -1,16 +1,24 @@
-module [transform]
+Etl :: {}.{
+	transform : Dict(U64, List(U8)) -> Dict(U8, U64)
+	transform = |legacy| {
+		legacy
+			.join_map(
+				|score, letters| {
+					letters
+						.map(
+							|c| (to_lower(c), score),
+						)
+						|> Dict.from_list
+				},
+			)
+	}
+}
 
-toLower : U8 -> U8
-toLower = \char ->
-    if char >= 'A' && char <= 'Z' then
-        char - 'A' + 'a'
-    else
-        char
-
-transform : Dict U64 (List U8) -> Dict U8 U64
-transform = \legacy ->
-    legacy
-    |> Dict.joinMap \score, letters ->
-        letters
-        |> List.map \c -> (toLower c, score)
-        |> Dict.fromList
+to_lower : U8 -> U8
+to_lower = |char| {
+	if char >= 'A' and char <= 'Z' {
+		char - 'A' + 'a'
+	} else {
+		char
+	}
+}

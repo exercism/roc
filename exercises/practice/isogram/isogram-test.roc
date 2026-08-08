@@ -1,82 +1,94 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/isogram/canonical-data.json
-# File last updated on 2024-08-27
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
-}
+# File last updated on 2026-08-01
 
-main =
-    Task.ok {}
-
-import Isogram exposing [isIsogram]
+import Isogram exposing [is_isogram]
 
 # empty string
-expect
-    result = isIsogram ""
-    result == Bool.true
+expect {
+	result = is_isogram("")
+	result == Bool.True
+}
 
 # isogram with only lower case characters
-expect
-    result = isIsogram "isogram"
-    result == Bool.true
+expect {
+	result = is_isogram("isogram")
+	result == Bool.True
+}
 
 # word with one duplicated character
-expect
-    result = isIsogram "eleven"
-    result == Bool.false
+expect {
+	result = is_isogram("eleven")
+	result == Bool.False
+}
 
 # word with one duplicated character from the end of the alphabet
-expect
-    result = isIsogram "zzyzx"
-    result == Bool.false
+expect {
+	result = is_isogram("zzyzx")
+	result == Bool.False
+}
 
 # longest reported english isogram
-expect
-    result = isIsogram "subdermatoglyphic"
-    result == Bool.true
+expect {
+	result = is_isogram("subdermatoglyphic")
+	result == Bool.True
+}
 
 # word with duplicated character in mixed case
-expect
-    result = isIsogram "Alphabet"
-    result == Bool.false
+expect {
+	result = is_isogram("Alphabet")
+	result == Bool.False
+}
 
 # word with duplicated character in mixed case, lowercase first
-expect
-    result = isIsogram "alphAbet"
-    result == Bool.false
+expect {
+	result = is_isogram("alphAbet")
+	result == Bool.False
+}
 
 # hypothetical isogrammic word with hyphen
-expect
-    result = isIsogram "thumbscrew-japingly"
-    result == Bool.true
+expect {
+	result = is_isogram("thumbscrew-japingly")
+	result == Bool.True
+}
 
 # hypothetical word with duplicated character following hyphen
-expect
-    result = isIsogram "thumbscrew-jappingly"
-    result == Bool.false
+expect {
+	result = is_isogram("thumbscrew-jappingly")
+	result == Bool.False
+}
 
 # isogram with duplicated hyphen
-expect
-    result = isIsogram "six-year-old"
-    result == Bool.true
+expect {
+	result = is_isogram("six-year-old")
+	result == Bool.True
+}
 
 # made-up name that is an isogram
-expect
-    result = isIsogram "Emily Jung Schwartzkopf"
-    result == Bool.true
+expect {
+	result = is_isogram("Emily Jung Schwartzkopf")
+	result == Bool.True
+}
 
 # duplicated character in the middle
-expect
-    result = isIsogram "accentor"
-    result == Bool.false
+expect {
+	result = is_isogram("accentor")
+	result == Bool.False
+}
 
 # same first and last characters
-expect
-    result = isIsogram "angola"
-    result == Bool.false
+expect {
+	result = is_isogram("angola")
+	result == Bool.False
+}
 
 # word with duplicated character and with two hyphens
-expect
-    result = isIsogram "up-to-date"
-    result == Bool.false
+expect {
+	result = is_isogram("up-to-date")
+	result == Bool.False
+}
 
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}

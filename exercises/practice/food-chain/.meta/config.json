@@ -1,0 +1,19 @@
+{
+  "authors": [
+    "isaacvando"
+  ],
+  "files": {
+    "solution": [
+      "FoodChain.roc"
+    ],
+    "test": [
+      "food-chain-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Generate the lyrics of the song 'I Know an Old Lady Who Swallowed a Fly'.",
+  "source": "Wikipedia",
+  "source_url": "https://en.wikipedia.org/wiki/There_Was_an_Old_Lady_Who_Swallowed_a_Fly"
+}

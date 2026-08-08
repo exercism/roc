@@ -2,45 +2,53 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [create, read, write, overwrite, clear]
+import {{ exercise | to_pascal }}
+
+expect_value = |read_result, expected| {
+    expect read_result.value == expected
+    read_result.updated_buffer
+}
 
 {% for case in cases -%}
 # {{ case["description"] }}
-runOperations{{ loop.index }} =
-    result =
-        create { capacity: {{ case["input"]["capacity"] }} }
+expect {
+    {% if case["input"]["operations"][-1]["should_succeed"] -%}
+    _
+    {%- endif -%}
+    result = {{ exercise | to_pascal }}.create({ capacity: {{ case["input"]["capacity"] }} })
         {%- for op in case["input"]["operations"] -%}
         {%- if op["operation"] == "clear" %}
-        |> clear
+        .clear()
         {%- elif op["operation"] == "overwrite" %}
-        |> overwrite {{ op["item"] }}
+        .overwrite({{ op["item"] }})
         {%- elif op["operation"] == "write" %}
         {%- if op["should_succeed"] %}
-        |> write? {{ op["item"] }}
+        .write({{ op["item"] }})?
         {%- else %}
-        |> \bufferBeforeWrite ->
-            writeResult = bufferBeforeWrite |> write {{ op["item"] }}
-            expect writeResult == Err BufferFull
-            bufferBeforeWrite
+        .write({{ op["item"] }})
+    
+    result == Err(BufferFull)
+}
         {%- endif %}
         {%- elif op["operation"] == "read" %}
         {%- if op["should_succeed"] %}
-        |> read? |> \readResult ->
-            expect readResult.value == {{ op["expected"] }}
-            readResult.newBuffer
+        .read()?
+        |> expect_value({{ op["expected"] }})
         {%- else %}
-        |> \bufferBeforeRead ->
-            readResult = bufferBeforeRead |> read
-            expect readResult == Err BufferEmpty
-            bufferBeforeRead
+        .read()
+    
+    result == Err(BufferEmpty)
+}
         {%- endif %}
         {%- endif %}
         {%- endfor %}
-    Ok result
 
-expect
-    
-    result = runOperations{{ loop.index }}
-    result |> Result.isOk
+    {% if case["input"]["operations"][-1]["should_succeed"] -%}
+    Bool.True
+}
+
+    {% endif -%}
 
 {% endfor %}
+
+{{ macros.footer() }}

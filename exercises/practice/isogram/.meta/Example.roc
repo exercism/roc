@@ -1,12 +1,22 @@
-module [isIsogram]
+Isogram :: {}.{
+	is_isogram : Str -> Bool
+	is_isogram = |phrase| {
+		chars =
+			phrase
+				.to_utf8()
+				.drop_if(
+					|c| c == ' ' or c == '-',
+				)
+				.map(
+					|c| {
+						if c >= 'a' and c <= 'z' {
+							c + 'A' - 'a'
+						} else {
+							c
+						}
+					},
+				) # to uppercase
 
-isIsogram : Str -> Bool
-isIsogram = \phrase ->
-    chars =
-        phrase
-        |> Str.toUtf8
-        |> List.dropIf \c -> c == ' ' || c == '-'
-        |> List.map \c -> if c >= 'a' && c <= 'z' then c + 'A' - 'a' else c # to uppercase
-
-    (List.len chars) == Set.len (Set.fromList chars)
-
+		chars.len() == (chars |> Set.from_list).len()
+	}
+}

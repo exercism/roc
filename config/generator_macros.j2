@@ -17,23 +17,26 @@
 
 {% macro header(imports=[], ignore=[]) -%}
 
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br"
 {%- if imports -%}
+app [main!] {
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.21.0/4rAQg8kUYZ3Vksr4qMQHpaFYNiHSn9GgS7gVxghd1XYV.tar.zst"
 {%- for name in imports -%},
     {% if name == "unicode" -%}
-    unicode: "https://github.com/roc-lang/unicode/releases/download/0.1.2/vH5iqn04ShmqP-pNemgF773f86COePSqMWHzVGrAKNo.tar.br"
+    unicode: "https://github.com/roc-lang/unicode/releases/download/2.0.0/9ZvqNzsNkpqFmGTeATAY3BNBD7mP41jqZx2w2N19tBvh.tar.zst",
     {%- elif name == "isodate" -%}
-    isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.5.0/ptg0ElRLlIqsxMDZTTvQHgUSkNrUSymQaGwTfv0UEmk.tar.br"
-    {%- elif name == "json" -%}
-    json: "https://github.com/lukewilliamboswell/roc-json/releases/download/0.10.2/FH4N0Sw-JSFXJfG3j54VEDPtXOoN-6I9v_IA8S18IGk.tar.br"
+    isodate: "https://github.com/ageron/roc-isodate/releases/download/0.8.0/B2h6tefXQtEz9VG6QukLDBoGXhRtwGLj9sZHDEJaTHkS.tar.zst",
+    {%- elif name == "parser" -%}
+    parser: "https://github.com/lukewilliamboswell/roc-parser/releases/download/1.0.2/FrnJ4RGDKpQyoDyESNoBwFNviY4ZGbMVLnUjW9tvSRjk.tar.zst",
     {%- endif -%}
-{%- endfor -%}
-{%- endif %}
+{%- endfor %}
 }
 
-main =
-    Task.ok {}
-
+{%- endif %}
 {%- endmacro %}
 
+{% macro footer() -%}
+
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| { Ok({}) }
+
+{%- endmacro %}

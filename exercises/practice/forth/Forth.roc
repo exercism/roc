@@ -1,5 +1,8 @@
-module [evaluate]
+Forth :: {}.{
+	Stack : List(I16)
 
-evaluate : Str -> Result (List I16) _
-evaluate = \program ->
-    crash "Please implement 'evaluate'"
+	evaluate : Str -> Try(Stack, _)
+	evaluate = |program| {
+		crash "Please implement the 'evaluate' function"
+	}
+}

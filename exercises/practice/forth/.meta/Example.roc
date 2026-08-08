@@ -1,226 +1,295 @@
-module [evaluate]
+Forth :: {}.{
+	Stack : List(I16)
 
-# Types
-Defs : Dict Str (List Str)
-Stack : List I16
+	evaluate : Str -> Try(Stack, Str)
+	evaluate = |program| {
+		lower = to_lower(program)
+		match parse(lower) {
+			Ok(operations) => {
+				match interpret(operations) {
+					Ok(stack) => Ok(stack)
+					Err(err) => Err(handle_error(err))
+				}
+			}
+			Err(err) => Err(handle_error(err))
+		}
+	}
+}
+
+Defs : Dict(Str, List(Str))
+
 Op : [
-    Dup,
-    Drop,
-    Swap,
-    Over,
-    Add,
-    Subtract,
-    Multiply,
-    Divide,
-    Number I16,
+	Dup,
+	Drop,
+	Swap,
+	Over,
+	Add,
+	Subtract,
+	Multiply,
+	Divide,
+	Number(I16),
 ]
 
-# Evaluation
-evaluate : Str -> Result Stack Str
-evaluate = \program ->
-    result =
-        lower = toLower program
-        operations = parse? lower
-        interpret operations
+interpret : List(Op) -> Try(Stack, _)
+interpret = |program| {
+	help = |ops, stack| {
+		match ops {
+			[] => Ok(stack)
+			[op, .. as rest] => {
+				match step(stack, op) {
+					Ok(new_stack) => help(rest, new_stack)
+					Err(error) => Err(EvaluationError({ error, stack, op, ops }))
+				}
+			}
+		}
+	}
+	help(program, [])
+}
 
-    Result.mapErr result handleError
+step : Stack, Op -> Try(Stack, _)
+step = |stack, op| {
+	match op {
+		Number(x) => Ok(stack.append(x))
+		Dup => {
+			match stack {
+				[.., x] => Ok(stack.append(x))
+				_ => Err(Arity(1))
+			}
+		}
 
-interpret : List Op -> Result Stack _
-interpret = \program ->
-    help = \ops, stack ->
-        when ops is
-            [] -> Ok stack
-            [op, .. as rest] ->
-                when step stack op is
-                    Ok newStack -> help rest newStack
-                    Err error -> EvaluationError { error, stack, op, ops } |> Err
-    help program []
+		Drop => {
+			match stack {
+				[.. as rest, _] => Ok(rest)
+				_ => Err(Arity(1))
+			}
+		}
 
-step : Stack, Op -> Result Stack _
-step = \stack, op ->
-    when op is
-        Number x ->
-            List.append stack x |> Ok
+		Swap => {
+			match stack {
+				[.. as rest, x, y] => Ok(rest.append(y).append(x))
+				_ => Err(Arity(2))
+			}
+		}
 
-        Dup ->
-            when stack is
-                [.., x] ->
-                    List.append stack x |> Ok
+		Over => {
+			match stack {
+				[.. as rest, x, y] => Ok(rest.concat([x, y, x]))
+				_ => Err(Arity(2))
+			}
+		}
 
-                _ -> Err (Arity 1)
+		Add => {
+			match stack {
+				[.. as rest, x, y] => Ok(rest.append(x + y))
+				_ => Err(Arity(2))
+			}
+		}
 
-        Drop ->
-            when stack is
-                [.. as rest, _] -> Ok rest
-                _ -> Err (Arity 1)
+		Subtract => {
+			match stack {
+				[.. as rest, x, y] => Ok(rest.append(x - y))
+				_ => Err(Arity(2))
+			}
+		}
 
-        Swap ->
-            when stack is
-                [.. as rest, x, y] ->
-                    List.append rest y
-                    |> List.append x
-                    |> Ok
+		Multiply => {
+			match stack {
+				[.. as rest, x, y] => Ok(rest.append(x * y))
+				_ => Err(Arity(2))
+			}
+		}
 
-                _ -> Err (Arity 2)
+		Divide => {
+			match stack {
+				[.. as rest, x, y] => {
+					if y == 0 {
+						Err(DivByZero)
+					} else {
+						Ok(rest.append(x // y))
+					}
+				}
+				_ => Err(Arity(2))
+			}
+		}
+	}
+}
 
-        Over ->
-            when stack is
-                [.. as rest, x, y] ->
-                    List.concat rest [x, y, x] |> Ok
+parse : Str -> Try(List(Op), _)
+parse = |str| {
+	match Str.split_on(Str.trim(str), "\n") {
+		[.. as def_lines, program] => {
+			defs = parse_defs(def_lines)?
+			(
+				program.split_on(" ")
+					|> flatten_defs(defs)
+			).map_try(to_op)
+		}
+		[] => Ok([])
+	}
+}
 
-                _ -> Err (Arity 2)
+parse_defs : List(Str) -> Try(Defs, _)
+parse_defs = |lines| {
+	List.fold_until(
+		lines,
+		Ok(Dict.empty()),
+		|acc_res, line| {
+			match acc_res {
+				Ok(defs) => {
+					match line.split_on(" ") {
+						[":", name, .. as tokens, ";"] => {
+							match parse_def(tokens, defs) {
+								Ok(ops) => Continue(Ok(defs.insert(name, ops)))
+								Err(err) => Break(Err(err))
+							}
+						}
+						_ => Break(Err(UnableToParseDef(line)))
+					}
+				}
+				Err(err) => Break(Err(err))
+			}
+		},
+	)
+}
 
-        Add ->
-            when stack is
-                [.. as rest, x, y] ->
-                    List.append rest (x + y) |> Ok
+parse_def : List(Str), Defs -> Try(List(Str), _)
+parse_def = |tokens, defs| {
+	List.fold_until(
+		tokens,
+		Ok([]),
+		|acc_res, token| {
+			match acc_res {
+				Ok(ops) => {
+					match defs.get(token) {
+						Ok(body) => Continue(Ok(ops.concat(body)))
+						Err(KeyNotFound) => {
+							if is_builtin(token) {
+								Continue(Ok(ops.append(token)))
+							} else {
+								Break(Err(UnknownName(token)))
+							}
+						}
+					}
+				}
+				Err(err) => Break(Err(err))
+			}
+		},
+	)
+}
 
-                _ -> Err (Arity 2)
+is_builtin : Str -> Bool
+is_builtin = |token| {
+	builtins = ["dup", "drop", "swap", "over", "+", "-", "*", "/"]
+	builtins.contains(token) or (match I16.from_str(token) {
+		Ok(_) => Bool.True
+		Err(_) => Bool.False
+	})
+}
 
-        Subtract ->
-            when stack is
-                [.. as rest, x, y] ->
-                    List.append rest (x - y) |> Ok
+flatten_defs : List(Str), Defs -> List(Str)
+flatten_defs = |tokens, defs| {
+	tokens
+		|> join_map(
+			|token| {
+				match defs.get(token) {
+					Ok(body) => body
+					_ => [token]
+				}
+			},
+		)
+}
 
-                _ -> Err (Arity 2)
+to_op : Str -> Try(Op, _)
+to_op = |str| {
+	match str {
+		"dup" => Ok(Dup)
+		"drop" => Ok(Drop)
+		"swap" => Ok(Swap)
+		"over" => Ok(Over)
+		"+" => Ok(Add)
+		"-" => Ok(Subtract)
+		"*" => Ok(Multiply)
+		"/" => Ok(Divide)
+		_ => {
+			match I16.from_str(str) {
+				Ok(num) => Ok(Number(num))
+				Err(_) => Err(UnknownName(str))
+			}
+		}
+	}
+}
 
-        Multiply ->
-            when stack is
-                [.. as rest, x, y] ->
-                    List.append rest (x * y) |> Ok
+handle_error : _ -> Str
+handle_error = |err| {
+	match err {
+		UnknownName(key) => "Hmm, I don't know any operations called '${key}'. Maybe there's a typo?"
+		UnableToParseDef(line) => "This is supposed to be a definition, but I'm not sure how to parse it:\n${line}"
+		EvaluationError({ error, stack, op, ops }) => {
+			match error {
+				Arity(1) => "Oops! '${op_to_str(op)}' expected 1 argument, but the stack was empty.\n${show_execution(stack, ops)}"
+				Arity(n) => "Oops! '${op_to_str(op)}' expected ${n.to_str()} arguments, but there weren't enough on the stack.\n${show_execution(stack, ops)}"
+				DivByZero => "Sorry, division by zero is not allowed.\n${show_execution(stack, ops)}"
+			}
+		}
+	}
+}
 
-                _ -> Err (Arity 2)
+show_execution : Stack, List(Op) -> Str
+show_execution = |stack, ops| {
+	stack_str =
+		stack.map(|n| n.to_str())
+			|> Str.join_with(" ")
+	ops_str =
+		ops.map(op_to_str)
+			|> Str.join_with(" ")
+	"${stack_str} | ${ops_str}"
+}
 
-        Divide ->
-            when stack is
-                [.. as rest, x, y] ->
-                    quotient = Num.divTruncChecked? x y
-                    List.append rest quotient |> Ok
+op_to_str : Op -> Str
+op_to_str = |op| {
+	match op {
+		Dup => "dup"
+		Drop => "drop"
+		Swap => "swap"
+		Over => "over"
+		Add => "+"
+		Subtract => "-"
+		Multiply => "*"
+		Divide => "/"
+		Number(num) => num.to_str()
+	}
+}
 
-                _ -> Err (Arity 2)
+to_lower : Str -> Str
+to_lower = |str| {
+	result =
+		str.to_utf8()
+			.map(
+				|byte| {
+					if 'A' <= byte and byte <= 'Z' {
+						byte - 'A' + 'a'
+					} else {
+						byte
+					}
+				},
+			)
+			|> Str.from_utf8
+	match result {
+		Ok(s) => s
+		_ => {
+			crash "There was an unexpected error converting back to Str"
+		}
+	}
+}
 
-# Parsing
-parse : Str -> Result (List Op) _
-parse = \str ->
-    when Str.split (Str.trim str) "\n" is
-        [.. as defLines, program] ->
-            defs = parseDefs? defLines
-
-            Str.split program " "
-            |> flattenDefs defs
-            |> List.mapTry toOp
-
-        [] -> Ok [] # We'll let the empty program return the empty list
-
-parseDefs : List Str -> Result Defs _
-parseDefs = \lines ->
-    List.walkTry lines (Dict.empty {}) \defs, line ->
-        when Str.split line " " is
-            [":", name, .. as tokens, ";"] ->
-                ops = parseDef? tokens defs
-                Dict.insert defs name ops |> Ok
-
-            _ -> Err (UnableToParseDef line)
-
-parseDef : List Str, Defs -> Result (List Str) _
-parseDef = \tokens, defs ->
-    List.walkTry tokens [] \ops, token ->
-        when Dict.get defs token is
-            Ok body -> List.concat ops body |> Ok
-            _ if isBuiltin token -> List.append ops token |> Ok
-            _ -> Err (UnknownName token)
-
-isBuiltin : Str -> Bool
-isBuiltin = \token ->
-    builtins = ["dup", "drop", "swap", "over", "+", "-", "*", "/"]
-    (builtins |> List.contains token) || (Result.isOk (Str.toI16 token))
-
-flattenDefs : List Str, Defs -> List Str
-flattenDefs = \tokens, defs ->
-    List.joinMap tokens \token ->
-        when Dict.get defs token is
-            Ok body -> body
-            _ -> [token]
-
-toOp : Str -> Result Op _
-toOp = \str ->
-    when str is
-        "dup" -> Ok Dup
-        "drop" -> Ok Drop
-        "swap" -> Ok Swap
-        "over" -> Ok Over
-        "+" -> Ok Add
-        "-" -> Ok Subtract
-        "*" -> Ok Multiply
-        "/" -> Ok Divide
-        _ ->
-            when Str.toI16 str is
-                Ok num -> Ok (Number num)
-                Err _ -> Err (UnknownName str)
-# Display
-handleError : _ -> Str
-handleError = \err ->
-    when err is
-        UnknownName key -> "Hmm, I don't know any operations called '$(key)'. Maybe there's a typo?"
-        UnableToParseDef line ->
-            """
-            This is supposed to be a definition, but I'm not sure how to parse it:
-            $(line)
-            """
-
-        EvaluationError { error, stack, op, ops } ->
-            when error is
-                Arity 1 ->
-                    """
-                    Oops! '$(opToStr op)' expected 1 argument, but the stack was empty.
-                    $(showExecution stack ops)
-                    """
-
-                Arity n ->
-                    """
-                    Oops! '$(opToStr op)' expected $(Num.toStr n) arguments, but there weren't enough on the stack.
-                    $(showExecution stack ops)
-                    """
-
-                DivByZero ->
-                    """
-                    Sorry, division by zero is not allowed.
-                    $(showExecution stack ops)
-                    """
-
-showExecution : Stack, List Op -> Str
-showExecution = \stack, ops ->
-    stackStr =
-        List.map stack Num.toStr
-        |> Str.joinWith " "
-    opsStr =
-        List.map ops opToStr
-        |> Str.joinWith " "
-    "$(stackStr) | $(opsStr)"
-
-opToStr : Op -> Str
-opToStr = \op ->
-    when op is
-        Dup -> "dup"
-        Drop -> "drop"
-        Swap -> "swap"
-        Over -> "over"
-        Add -> "+"
-        Subtract -> "-"
-        Multiply -> "*"
-        Divide -> "/"
-        Number num -> Num.toStr num
-
-toLower : Str -> Str
-toLower = \str ->
-    result =
-        Str.toUtf8 str
-        |> List.map \byte ->
-            if 'A' <= byte && byte <= 'Z' then
-                byte - 'A' + 'a'
-            else
-                byte
-        |> Str.fromUtf8
-    when result is
-        Ok s -> s
-        _ -> crash "There was an unexpected error converting back to Str"
+# The following function should soon be available in Roc's builtins
+join_map : i, (a -> j) -> List(b) where [i.iter : i -> Iter(a), j.iter : j -> Iter(b)]
+join_map = |list, func| {
+	var $state = []
+	for item in list {
+		for subitem in func(item) {
+			$state = $state.append(subitem)
+		}
+	}
+	$state
+}

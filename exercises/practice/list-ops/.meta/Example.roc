@@ -1,60 +1,84 @@
-module [append, concat, filter, length, map, foldl, foldr, reverse]
+ListOps :: {}.{
+	concat : List(a), List(a) -> List(a)
+	concat = |list1, list2| {
+		match list2 {
+			[] => list1
+			[first, .. as rest] => concat(list1.append(first), rest)
+		}
+	}
 
-append : List a, List a -> List a
-append = \list1, list2 ->
-    # Cheating: list1 |> List.concat list2
-    when list1 is
-        [] -> list2
-        [first, .. as rest] -> (append rest list2) |> List.prepend first
+	join : List(List(a)) -> List(a)
+	join = |lists| {
+		match lists {
+			[] => []
+			[first, .. as rest] => first |> concat(join(rest))
+		}
+	}
 
-concat : List (List a) -> List a
-concat = \lists ->
-    when lists is
-        [] -> []
-        [sublist1, .. as rest] -> sublist1 |> append (concat rest)
+	filter : List(a), (a -> Bool) -> List(a)
+	filter = |list, function| {
+		loop = |l, acc| {
+			match l {
+				[] => acc
+				[first, .. as rest] => {
+					if function(first) {
+						loop(rest, acc.append(first))
+					} else {
+						loop(rest, acc)
+					}
+				}
+			}
+		}
 
-filter : List a, (a -> Bool) -> List a
-filter = \list, function ->
-    # Cheating: list |> List.keepIf function
-    when list is
-        [] -> []
-        [first, .. as rest] ->
-            if function first then
-                filter rest function |> List.prepend first
-            else
-                filter rest function
+		loop(list, [])
+	}
 
-length : List a -> U64
-length = \list ->
-    # Cheating: List.len list
-    when list is
-        [] -> 0
-        [_, .. as rest] -> 1 + length rest
+	len : List(a) -> U64
+	len = |list| {
+		loop = |l, acc| {
+			match l {
+				[] => acc
+				[_, .. as rest] => loop(rest, (acc + 1))
+			}
+		}
+		loop(list, 0)
+	}
 
-map : List a, (a -> b) -> List b
-map = \list, function ->
-    # Cheating: list |> List.map function
-    when list is
-        [] -> []
-        [first, .. as rest] -> map rest function |> List.prepend (function first)
+	map : List(a), (a -> b) -> List(b)
+	map = |list, function| {
+		loop = |l, acc| {
+			match l {
+				[] => acc
+				[first, .. as rest] => loop(rest, acc.append(function(first)))
+			}
+		}
+		loop(list, [])
+	}
 
-foldl : List a, b, (b, a -> b) -> b
-foldl = \list, initial, function ->
-    # Cheating: list |> List.walk initial function
-    when list is
-        [] -> initial
-        [first, .. as rest] -> foldl rest (function initial first) function
+	fold : List(a), b, (b, a -> b) -> b
+	fold = |list, initial, function| {
+		match list {
+			[] => initial
+			[first, .. as rest] => fold(rest, function(initial, first), function)
+		}
+	}
 
-foldr : List a, b, (b, a -> b) -> b
-foldr = \list, initial, function ->
-    # Cheating: list |> List.walkBackwards initial function
-    when list is
-        [] -> initial
-        [.. as rest, last] -> foldr rest (function initial last) function
+	fold_rev : List(a), b, (b, a -> b) -> b
+	fold_rev = |list, initial, function| {
+		match list {
+			[] => initial
+			[.. as rest, last] => fold_rev(rest, function(initial, last), function)
+		}
+	}
 
-reverse : List a -> List a
-reverse = \list ->
-    # Cheating: List.reverse list
-    when list is
-        [] -> []
-        [.. as rest, last] -> reverse rest |> List.prepend last
+	reverse : List(a) -> List(a)
+	reverse = |list| {
+		loop = |l, acc| {
+			match l {
+				[] => acc
+				[.. as rest, last] => loop(rest, acc.append(last))
+			}
+		}
+		loop(list, [])
+	}
+}

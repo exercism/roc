@@ -1,0 +1,65 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }}
+{%
+set property_map = {
+    "add": "insert",
+    "disjoint": "is_disjoint_with",
+    "empty": "is_empty",
+    "equal": "is_eq",
+    "subset": "is_subset_of",
+}
+%}
+
+{% for supercase in cases %}
+##
+## {{ supercase["description"] }}
+##
+
+{% for case in supercase["cases"] -%}
+# {{ case["description"] }}
+{% set property = property_map.get(case["property"], case["property"]) %}
+expect {
+    {%- if "set" in case["input"] %}
+    set = {{ exercise | to_pascal }}.from_list({{ case["input"]["set"] | to_roc }})
+    result = set.{{ property | to_snake }}({{(case["input"]["element"])}})
+    {%- else %}
+    set1 = {{ exercise | to_pascal }}.from_list({{ case["input"]["set1"] | to_roc }})
+    set2 = {{ exercise | to_pascal }}.from_list({{ case["input"]["set2"] | to_roc }})
+    result = set1.{{ property | to_snake }}(set2)
+    {%- endif %}
+    {%- if case["expected"] is iterable %}
+    expected = {{ case["expected"] | to_roc }} |> {{ exercise | to_pascal }}.from_list()
+    result.is_eq(expected)
+    {%- else %}
+    expected = {{ case["expected"] | to_roc }}
+    result == expected
+    {%- endif %}
+}
+
+{% endfor %}
+{% endfor %}
+
+##
+## A set can be converted to a list of items
+##
+
+{% for case in additional_cases -%}
+# {{ case["description"] }}
+expect {
+    set = {{ exercise | to_pascal }}.from_list({{ case["input"]["set"] | to_roc }})
+    result = set.to_list()|>sort_asc()
+    expected = {{ case["expected"] | to_roc }}
+    result == expected
+}
+
+{% endfor %}
+
+# The following function should soon be available in Roc's builtins
+sort_asc = |list| {
+	list.sort_with(|a, b| a.compare(b))
+}
+
+{{ macros.footer() }}

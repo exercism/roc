@@ -1,210 +1,188 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/minesweeper/canonical-data.json
-# File last updated on 2024-09-02
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
-}
-
-main =
-    Task.ok {}
+# File last updated on 2026-08-01
 
 import Minesweeper exposing [annotate]
 
 # no rows
-expect
-    minefield = "" |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected = "" |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield = ""
+	result = annotate(minefield)
+	expected = ""
+	result == expected
+}
 
 # no columns
-expect
-    minefield = "" |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected = "" |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield = ""
+	result = annotate(minefield)
+	expected = ""
+	result == expected
+}
 
 # no mines
-expect
-    minefield =
-        """
-        ···
-        ···
-        ···
-        """
-        |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected =
-        """
-        ···
-        ···
-        ···
-        """
-        |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield =
+		\\   
+		\\   
+		\\   
+
+	result = annotate(minefield)
+	expected =
+		\\   
+		\\   
+		\\   
+
+	result == expected
+}
 
 # minefield with only mines
-expect
-    minefield =
-        """
-        ***
-        ***
-        ***
-        """
-        |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected =
-        """
-        ***
-        ***
-        ***
-        """
-        |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield =
+		\\***
+		\\***
+		\\***
+
+	result = annotate(minefield)
+	expected =
+		\\***
+		\\***
+		\\***
+
+	result == expected
+}
 
 # mine surrounded by spaces
-expect
-    minefield =
-        """
-        ···
-        ·*·
-        ···
-        """
-        |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected =
-        """
-        111
-        1*1
-        111
-        """
-        |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield =
+		\\   
+		\\ * 
+		\\   
+
+	result = annotate(minefield)
+	expected =
+		\\111
+		\\1*1
+		\\111
+
+	result == expected
+}
 
 # space surrounded by mines
-expect
-    minefield =
-        """
-        ***
-        *·*
-        ***
-        """
-        |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected =
-        """
-        ***
-        *8*
-        ***
-        """
-        |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield =
+		\\***
+		\\* *
+		\\***
+
+	result = annotate(minefield)
+	expected =
+		\\***
+		\\*8*
+		\\***
+
+	result == expected
+}
 
 # horizontal line
-expect
-    minefield = "·*·*·" |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected = "1*2*1" |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield = " * * "
+	result = annotate(minefield)
+	expected = "1*2*1"
+	result == expected
+}
 
 # horizontal line, mines at edges
-expect
-    minefield = "*···*" |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected = "*1·1*" |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield = "*   *"
+	result = annotate(minefield)
+	expected = "*1 1*"
+	result == expected
+}
 
 # vertical line
-expect
-    minefield =
-        """
-        ·
-        *
-        ·
-        *
-        ·
-        """
-        |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected =
-        """
-        1
-        *
-        2
-        *
-        1
-        """
-        |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield =
+		\\ 
+		\\*
+		\\ 
+		\\*
+		\\ 
+
+	result = annotate(minefield)
+	expected =
+		\\1
+		\\*
+		\\2
+		\\*
+		\\1
+
+	result == expected
+}
 
 # vertical line, mines at edges
-expect
-    minefield =
-        """
-        *
-        ·
-        ·
-        ·
-        *
-        """
-        |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected =
-        """
-        *
-        1
-        ·
-        1
-        *
-        """
-        |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield =
+		\\*
+		\\ 
+		\\ 
+		\\ 
+		\\*
+
+	result = annotate(minefield)
+	expected =
+		\\*
+		\\1
+		\\ 
+		\\1
+		\\*
+
+	result == expected
+}
 
 # cross
-expect
-    minefield =
-        """
-        ··*··
-        ··*··
-        *****
-        ··*··
-        ··*··
-        """
-        |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected =
-        """
-        ·2*2·
-        25*52
-        *****
-        25*52
-        ·2*2·
-        """
-        |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield =
+		\\  *  
+		\\  *  
+		\\*****
+		\\  *  
+		\\  *  
+
+	result = annotate(minefield)
+	expected =
+		\\ 2*2 
+		\\25*52
+		\\*****
+		\\25*52
+		\\ 2*2 
+
+	result == expected
+}
 
 # large minefield
-expect
-    minefield =
-        """
-        ·*··*·
-        ··*···
-        ····*·
-        ···*·*
-        ·*··*·
-        ······
-        """
-        |> Str.replaceEach "·" " "
-    result = annotate minefield
-    expected =
-        """
-        1*22*1
-        12*322
-        ·123*2
-        112*4*
-        1*22*2
-        111111
-        """
-        |> Str.replaceEach "·" " "
-    result == expected
+expect {
+	minefield =
+		\\ *  * 
+		\\  *   
+		\\    * 
+		\\   * *
+		\\ *  * 
+		\\      
 
+	result = annotate(minefield)
+	expected =
+		\\1*22*1
+		\\12*322
+		\\ 123*2
+		\\112*4*
+		\\1*22*2
+		\\111111
+
+	result == expected
+}
+
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}

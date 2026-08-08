@@ -1,23 +1,32 @@
-module [transpose]
+Transpose :: {}.{
+	# # Transpose the input string. Input string must be ASCII.
+	transpose : Str -> Str
+	transpose = |string| {
+		chars = string.to_utf8().split_on('\n')
+		get_char = |row, col| {
+			chars.get(row)?.get(col)
+		}
+		max_width = chars.map(List.len).max() ?? 0
+		(0..<max_width)
+			.map(
+				|col| {
+					max_row =
+						chars
+							.find_last_index(
+								|row_chars| row_chars.len() > col,
+							)
+							?? 0
 
-## Transpose the input string. Input string must be ASCII.
-transpose : Str -> Str
-transpose = \string ->
-    chars =
-        string
-        |> Str.split "\n"
-        |> List.map \row -> row |> Str.toUtf8
-    getChar = \row, col ->
-        chars |> List.get? row |> List.get col
-    maxWidth = chars |> List.map List.len |> List.max |> Result.withDefault 0
-    List.range { start: At 0, end: Before maxWidth }
-    |> List.map \col ->
-        maxRow =
-            chars
-            |> List.findLastIndex \rowChars -> List.len rowChars > col
-            |> Result.withDefault 0
-        List.range { start: At 0, end: At maxRow }
-        |> List.map \row -> getChar row col |> Result.withDefault ' '
-        |> Str.fromUtf8
-        |> Result.withDefault "" # unreachable because string is ASCII
-    |> Str.joinWith "\n"
+					(0..=max_row)
+						.map(
+							|row| get_char(row, col) ?? ' ',
+						)
+						|> List.from_iter
+						|> Str.from_utf8
+						?? ""
+				},
+			)
+			|> List.from_iter
+			|> Str.join_with("\n")
+	}
+}

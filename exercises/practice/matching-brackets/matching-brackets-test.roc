@@ -1,112 +1,130 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/matching-brackets/canonical-data.json
-# File last updated on 2024-09-16
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
-}
+# File last updated on 2026-08-01
 
-main =
-    Task.ok {}
-
-import MatchingBrackets exposing [isPaired]
+import MatchingBrackets exposing [is_paired]
 
 # paired square brackets
-expect
-    result = "[]" |> isPaired
-    result == Bool.true
+expect {
+	result = "[]" |> is_paired
+	result == Bool.True
+}
 
 # empty string
-expect
-    result = "" |> isPaired
-    result == Bool.true
+expect {
+	result = "" |> is_paired
+	result == Bool.True
+}
 
 # unpaired brackets
-expect
-    result = "[[" |> isPaired
-    result == Bool.false
+expect {
+	result = "[[" |> is_paired
+	result == Bool.False
+}
 
 # wrong ordered brackets
-expect
-    result = "}{" |> isPaired
-    result == Bool.false
+expect {
+	result = "}{" |> is_paired
+	result == Bool.False
+}
 
 # wrong closing bracket
-expect
-    result = "{]" |> isPaired
-    result == Bool.false
+expect {
+	result = "{]" |> is_paired
+	result == Bool.False
+}
 
 # paired with whitespace
-expect
-    result = "{ }" |> isPaired
-    result == Bool.true
+expect {
+	result = "{ }" |> is_paired
+	result == Bool.True
+}
 
 # partially paired brackets
-expect
-    result = "{[])" |> isPaired
-    result == Bool.false
+expect {
+	result = "{[])" |> is_paired
+	result == Bool.False
+}
 
 # simple nested brackets
-expect
-    result = "{[]}" |> isPaired
-    result == Bool.true
+expect {
+	result = "{[]}" |> is_paired
+	result == Bool.True
+}
 
 # several paired brackets
-expect
-    result = "{}[]" |> isPaired
-    result == Bool.true
+expect {
+	result = "{}[]" |> is_paired
+	result == Bool.True
+}
 
 # paired and nested brackets
-expect
-    result = "([{}({}[])])" |> isPaired
-    result == Bool.true
+expect {
+	result = "([{}({}[])])" |> is_paired
+	result == Bool.True
+}
 
 # unopened closing brackets
-expect
-    result = "{[)][]}" |> isPaired
-    result == Bool.false
+expect {
+	result = "{[)][]}" |> is_paired
+	result == Bool.False
+}
 
 # unpaired and nested brackets
-expect
-    result = "([{])" |> isPaired
-    result == Bool.false
+expect {
+	result = "([{])" |> is_paired
+	result == Bool.False
+}
 
 # paired and wrong nested brackets
-expect
-    result = "[({]})" |> isPaired
-    result == Bool.false
+expect {
+	result = "[({]})" |> is_paired
+	result == Bool.False
+}
 
 # paired and wrong nested brackets but innermost are correct
-expect
-    result = "[({}])" |> isPaired
-    result == Bool.false
+expect {
+	result = "[({}])" |> is_paired
+	result == Bool.False
+}
 
 # paired and incomplete brackets
-expect
-    result = "{}[" |> isPaired
-    result == Bool.false
+expect {
+	result = "{}[" |> is_paired
+	result == Bool.False
+}
 
 # too many closing brackets
-expect
-    result = "[]]" |> isPaired
-    result == Bool.false
+expect {
+	result = "[]]" |> is_paired
+	result == Bool.False
+}
 
 # early unexpected brackets
-expect
-    result = ")()" |> isPaired
-    result == Bool.false
+expect {
+	result = ")()" |> is_paired
+	result == Bool.False
+}
 
 # early mismatched brackets
-expect
-    result = "{)()" |> isPaired
-    result == Bool.false
+expect {
+	result = "{)()" |> is_paired
+	result == Bool.False
+}
 
 # math expression
-expect
-    result = "(((185 + 223.85) * 15) - 543)/2" |> isPaired
-    result == Bool.true
+expect {
+	result = "(((185 + 223.85) * 15) - 543)/2" |> is_paired
+	result == Bool.True
+}
 
 # complex latex expression
-expect
-    result = "\\left(\\begin{array}{cc} \\frac{1}{3} & x\\\\ \\mathrm{e}^{x} &... x^2 \\end{array}\\right)" |> isPaired
-    result == Bool.true
+expect {
+	result = "\\left(\\begin{array}{cc} \\frac{1}{3} & x\\\\ \\mathrm{e}^{x} &... x^2 \\end{array}\\right)" |> is_paired
+	result == Bool.True
+}
 
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}
