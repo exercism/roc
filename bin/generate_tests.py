@@ -17,8 +17,7 @@ Usage:
 
 import sys
 
-_py = sys.version_info
-if _py.major < 3 or (_py.major == 3 and _py.minor < 7):
+if sys.version_info < (3, 7):
     print("Python version must be at least 3.7")
     sys.exit(1)
 
@@ -165,6 +164,7 @@ def to_roc_multiline_string(lines: Union[str, List[str]]) -> str:
 def to_roc_tuple(values: Any):
     list_content = ", ".join([to_roc(v) for v in tuple(values)])
     return f"({list_content})"
+
 
 def to_roc_record(obj: Dict[str, Any]):
     items = []
