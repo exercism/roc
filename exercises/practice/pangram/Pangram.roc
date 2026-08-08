@@ -1,5 +1,6 @@
-module [isPangram]
-
-isPangram : Str -> Bool
-isPangram = \sentence ->
-    crash "Please implement the 'isPangram' function"
+Pangram :: {}.{
+	is_pangram : Str -> Bool
+	is_pangram = |sentence| {
+		crash "Please implement the 'is_pangram' function"
+	}
+}

@@ -1,0 +1,28 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [keep, discard]
+
+{% set function_map = {
+    "fn(x) -> contains(x, 5)": "|x| x.contains(5)",
+    "fn(x) -> false": "|_| Bool.False",
+    "fn(x) -> starts_with(x, 'z')": "|x| x.starts_with(\"z\")",
+    "fn(x) -> true": "|_| Bool.True",
+    "fn(x) -> x % 2 == 0": "|x| x % 2 == 0",
+    "fn(x) -> x % 2 == 1": "|x| x % 2 == 1",
+}
+%}
+
+{% for case in cases -%}
+# {{ case["description"] }}
+expect {
+    list = {{ case["input"]["list"] | to_roc }}
+    result = list |> {{ case["property"] | to_snake }}({{ function_map[case["input"]["predicate"]] }})
+    expected = {{ case["expected"] | to_roc }}
+    result == expected
+}
+
+{% endfor %}
+
+{{ macros.footer() }}

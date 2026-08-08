@@ -1,4 +1,4 @@
-module [hello]
-
-hello : Str
-hello = "Goodbye, Mars!"
+HelloWorld :: {}.{
+	hello : Str
+	hello = "Goodbye, Mars!"
+}

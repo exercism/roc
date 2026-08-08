@@ -1,13 +1,15 @@
-app [main] { pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br" }
-import pf.Stdout
+print_remaining! = |todos|
+	todos
+		.keep_if(|todo| todo.status != Done)
+		.for_each!(|todo| echo!("- ${todo.name}\n"))
 
-factorial = \number ->
-    when number is
-        1 -> 1
-        n -> n * factorial (n - 1)
-
-expect factorial 5 == 1 * 2 * 3 * 4 * 5
-
-main =
-    result = factorial 20 |> Num.toStr
-    Stdout.line! "factorial 20 = $(result)"
+main! = |_args| {
+	todos = [
+		{ name: "Buy groceries", status: Done },
+		{ name: "Join Exercism", status: Done },
+		{ name: "Learn Roc",     status: InProgress },
+		{ name: "Call mom",      status: NotStarted },
+	]
+	print_remaining!(todos)
+	Ok({})
+}

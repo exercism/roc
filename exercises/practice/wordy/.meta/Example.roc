@@ -1,40 +1,45 @@
-module [answer]
+Wordy :: {}.{
+	answer : Str -> Try(I64, [QuestionArgHadAnUnknownOperation(Str), QuestionArgHadASyntaxError(Str)])
+	answer = |question| {
+		words = question.drop_suffix("?").split_on(" ")
+		match words {
+			["What", "is", number_string, .. as operations] => {
+				maybe_start_number = I64.from_str(number_string)
+				match maybe_start_number {
+					Ok(start_number) => {
+						match evaluate_expression(start_number, operations) {
+							Err(OperationsArgHadAnInvalidOperation(_)) => Err(QuestionArgHadAnUnknownOperation(question))
+							Err(OperationsArgHadASyntaxError(_)) => Err(QuestionArgHadASyntaxError(question))
+							Err(BadNumStr) => Err(QuestionArgHadASyntaxError(question))
+							Ok(result) => Ok(result)
+						}
+					}
+					Err(BadNumStr) => Err(QuestionArgHadASyntaxError(question))
+				}
+			}
+			[_, "is", _, ..] => Err(QuestionArgHadAnUnknownOperation(question))
+			[_, "are", ..] => Err(QuestionArgHadAnUnknownOperation(question))
+			_ => Err(QuestionArgHadASyntaxError(question))
+		}
+	}
+}
 
-evaluateExpression = \accumulator, operations ->
-    when operations is
-        [] -> Ok accumulator
-        ["plus", numberString, .. as rest] ->
-            evaluateExpression (accumulator + (Str.toI64? numberString)) rest
-
-        ["minus", numberString, .. as rest] ->
-            evaluateExpression (accumulator - (Str.toI64? numberString)) rest
-
-        ["multiplied", "by", numberString, .. as rest] ->
-            evaluateExpression (accumulator * (Str.toI64? numberString)) rest
-
-        ["divided", "by", numberString, .. as rest] ->
-            evaluateExpression (accumulator // (Str.toI64? numberString)) rest
-
-        ["cubed"] -> Err (OperationsArgHadAnInvalidOperation operations)
-        _ -> Err (OperationsArgHadASyntaxError operations)
-
-answer : Str -> Result I64 [QuestionArgHadAnUnknownOperation Str, QuestionArgHadASyntaxError Str]
-answer = \question ->
-    words = question |> Str.replaceEach "?" " ?" |> Str.split " "
-    when words is
-        ["What", "is", numberString, .. as operations, "?"] ->
-            maybeStartNumber = Str.toI64 numberString
-            when maybeStartNumber is
-                Ok startNumber ->
-                    when evaluateExpression startNumber operations is
-                        Err (OperationsArgHadAnInvalidOperation _) -> Err (QuestionArgHadAnUnknownOperation question)
-                        Err (OperationsArgHadASyntaxError _) -> Err (QuestionArgHadASyntaxError question)
-                        Err InvalidNumStr -> Err (QuestionArgHadASyntaxError question)
-                        Ok result -> Ok result
-
-                Err InvalidNumStr -> Err (QuestionArgHadASyntaxError question)
-
-        [_, "is", _, .., "?"] -> Err (QuestionArgHadAnUnknownOperation question)
-        [_, "are", .., "?"] -> Err (QuestionArgHadAnUnknownOperation question)
-        _ -> Err (QuestionArgHadASyntaxError question)
-
+evaluate_expression = |accumulator, operations| {
+	match operations {
+		[] => Ok(accumulator)
+		["plus", number_string, .. as rest] => {
+			evaluate_expression((accumulator + I64.from_str(number_string)?), rest)
+		}
+		["minus", number_string, .. as rest] => {
+			evaluate_expression((accumulator - I64.from_str(number_string)?), rest)
+		}
+		["multiplied", "by", number_string, .. as rest] => {
+			evaluate_expression((accumulator * I64.from_str(number_string)?), rest)
+		}
+		["divided", "by", number_string, .. as rest] => {
+			evaluate_expression((accumulator // I64.from_str(number_string)?), rest)
+		}
+		["cubed"] => Err(OperationsArgHadAnInvalidOperation(operations))
+		_ => Err(OperationsArgHadASyntaxError(operations))
+	}
+}

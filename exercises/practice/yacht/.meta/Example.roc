@@ -1,51 +1,84 @@
-module [score]
+Yacht :: {}.{
+	Category := [Ones, Twos, Threes, Fours, Fives, Sixes, FullHouse, FourOfAKind, LittleStraight, BigStraight, Choice, Yacht]
 
-Category : [Ones, Twos, Threes, Fours, Fives, Sixes, FullHouse, FourOfAKind, LittleStraight, BigStraight, Choice, Yacht]
+	score : List(U8), Category -> U8
+	score = |dice, category| {
+		if dice.len() != 5 or dice.any(|die| die < 1 or die > 6) {
+			0
+		} else {
+			match category {
+				Ones => score_ones_to_sixes(dice, 1)
+				Twos => score_ones_to_sixes(dice, 2)
+				Threes => score_ones_to_sixes(dice, 3)
+				Fours => score_ones_to_sixes(dice, 4)
+				Fives => score_ones_to_sixes(dice, 5)
+				Sixes => score_ones_to_sixes(dice, 6)
+				FullHouse => score_full_house(dice)
+				FourOfAKind => score_four_of_a_kind(dice)
+				LittleStraight => score_straight(dice, [1, 2, 3, 4, 5])
+				BigStraight => score_straight(dice, [2, 3, 4, 5, 6])
+				Choice => dice.sum()
+				Yacht => {
+					if Set.from_list(dice).len() == 1 {
+						50
+					} else {
+						0
+					}
+				}
+			}
+		}
+	}
+}
 
-scoreOnesToSixes : List U8, U8 -> U8
-scoreOnesToSixes = \dice, value ->
-    dice |> List.keepIf (\die -> die == value) |> List.sum
+score_ones_to_sixes : List(U8), U8 -> U8
+score_ones_to_sixes = |dice, value| {
+	dice.keep_if(|die| die == value).sum()
+}
 
-valueCounts : List U8 -> List U8
-valueCounts = \dice ->
-    dice
-    |> List.walk [0, 0, 0, 0, 0, 0] \counts, die ->
-        counts |> List.update (die - 1 |> Num.toU64) \x -> x + 1
+value_counts : List(U8) -> List(U8)
+value_counts = |dice| {
+	dice.fold(
+		[0, 0, 0, 0, 0, 0],
+		|counts, die| {
+			counts.update(U8.to_u64(die - 1), |x| x + 1) ?? counts
+		},
+	)
+}
 
-scoreFullHouse : List U8 -> U8
-scoreFullHouse = \dice ->
-    if dice |> valueCounts |> Set.fromList == Set.fromList [0, 2, 3] then
-        dice |> List.sum
-    else
-        0
+score_full_house : List(U8) -> U8
+score_full_house = |dice| {
+	if Set.from_list(value_counts(dice)) == Set.from_list([0, 2, 3]) {
+		dice.sum()
+	} else {
+		0
+	}
+}
 
-scoreFourOfAKind : List U8 -> U8
-scoreFourOfAKind = \dice ->
-    dice
-    |> valueCounts
-    |> List.walkWithIndexUntil 0 \_, count, index ->
-        if count < 4 then Continue 0 else (index + 1 |> Num.toU8) * 4 |> Break
+score_four_of_a_kind : List(U8) -> U8
+score_four_of_a_kind = |dice| {
+	value_counts(dice)
+		.fold_with_index_until(
+			0,
+			|_, count, index| {
+				if count < 4 {
+					Continue(0)
+				} else {
+					Break(((index + 1).to_u8_try() ?? 0) * 4)
+				}
+			},
+		)
+}
 
-scoreStraight : List U8, List U8 -> U8
-scoreStraight = \dice, target ->
-    if dice |> List.sortAsc == target then 30 else 0
+score_straight : List(U8), List(U8) -> U8
+score_straight = |dice, target| {
+	if sort_asc(dice) == target {
+		30
+	} else {
+		0
+	}
+}
 
-score : List U8, Category -> U8
-score = \dice, category ->
-    if dice |> List.len != 5 || dice |> List.any \die -> die < 1 || die > 6 then
-        0
-        else
-
-    when category is
-        Ones -> dice |> scoreOnesToSixes 1
-        Twos -> dice |> scoreOnesToSixes 2
-        Threes -> dice |> scoreOnesToSixes 3
-        Fours -> dice |> scoreOnesToSixes 4
-        Fives -> dice |> scoreOnesToSixes 5
-        Sixes -> dice |> scoreOnesToSixes 6
-        FullHouse -> dice |> scoreFullHouse
-        FourOfAKind -> dice |> scoreFourOfAKind
-        LittleStraight -> dice |> scoreStraight [1, 2, 3, 4, 5]
-        BigStraight -> dice |> scoreStraight [2, 3, 4, 5, 6]
-        Choice -> dice |> List.sum
-        Yacht -> if dice |> Set.fromList |> Set.len == 1 then 50 else 0
+# The following function should soon be available in Roc's builtins
+sort_asc = |list| {
+	list.sort_with(|a, b| a.compare(b))
+}

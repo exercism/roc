@@ -1,5 +1,6 @@
-module [twoFer]
-
-twoFer : [Name Str, Anonymous] -> Str
-twoFer = \name ->
-    crash "Please implement the 'twoFer' function"
+TwoFer :: {}.{
+	two_fer : [Name(Str), Anonymous] -> Str
+	two_fer = |name| {
+		crash "Please implement the 'two_fer' function"
+	}
+}

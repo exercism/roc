@@ -1,12 +1,13 @@
-module [grainsOnSquare, totalGrains]
+Grains :: {}.{
+	grains_on_square : U8 -> Try(U64, [SquareArgWasNotBetween1And64(U8)])
+	grains_on_square = |square| {
+		if square > 0 and square <= 64 {
+			Ok((2.U64).pow(square.to_u64() - 1))
+		} else {
+			Err(SquareArgWasNotBetween1And64(square))
+		}
+	}
 
-grainsOnSquare : U8 -> Result U64 [SquareArgWasNotBetween1And64 U8]
-grainsOnSquare = \square ->
-    if square > 0 && square <= 64 then
-        2u64 |> Num.powInt (Num.toU64 square - 1) |> Ok
-    else
-        Err (SquareArgWasNotBetween1And64 square)
-
-totalGrains : U64
-totalGrains =
-    Num.maxU64
+	total_grains : U64
+	total_grains = U64.highest
+}

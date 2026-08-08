@@ -49,18 +49,26 @@ fi
 ./bin/fetch-configlet
 ./bin/configlet create --practice-exercise "${slug}" --author "${author}" --difficulty "${difficulty}"
 
+if [ -e ".problem-specifications/exercises/${slug}/.deprecated" ]; then
+  echo ""
+  printf "\e[31mWARNING: this exercise is deprecated\e[0m\n"
+  echo "-------------------------------------"
+  cat .problem-specifications/exercises/${slug}/.deprecated 
+  echo "-------------------------------------"
+  echo ""
+else
 
 cat << END_TESTER > "exercises/practice/${slug}/.meta/template.j2"
 {%- import "generator_macros.j2" as macros with context -%}
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }}]
 
 {% for case in cases -%}
 # {{ case["description"] }}
 expect
-    result = {{ case["property"] | to_camel }} {{ case["input"]["myArg"] | to_roc }}
+    result = {{ case["property"] | to_snake }}({{ case["input"]["myArg"] | to_roc }})
     result == {{ case["expected"] | to_roc }}
 
 {% endfor %}
@@ -71,7 +79,7 @@ $(curl --silent "https://raw.githubusercontent.com/exercism/problem-specificatio
 END_TESTER
 
 slug_pascal=$(cd bin && python -c "from generate_tests import to_pascal; print(to_pascal('${slug}'))")
-slug_camel=$(cd bin && python -c "from generate_tests import to_camel; print(to_camel('${slug}'))")
+slug_camel=$(cd bin && python -c "from generate_tests import to_snake; print(to_snake('${slug}'))")
 
 cat << END_TEST > "exercises/practice/${slug}/${slug}-test.roc"
 # This file will be generated automatically
@@ -80,10 +88,11 @@ cat << END_TEST > "exercises/practice/${slug}/${slug}-test.roc"
 END_TEST
 
 cat << END_STUB > "exercises/practice/${slug}/${slug_pascal}.roc"
-module [${slug_camel}]
-
-${slug_camel} = \myArg ->
-    crash "Please implement the '${slug_camel}' function"
+${slug_pascal} :: {}.{
+    ${slug_camel} = |my_arg| {
+        crash "Please implement the '${slug_camel}' function"
+    }
+}
 END_STUB
 
 cp "exercises/practice/${slug}/${slug_pascal}.roc" "exercises/practice/${slug}/.meta/Example.roc"
@@ -99,7 +108,9 @@ Your next steps are:
 - Create the example solution in 'exercises/practice/${slug}/.meta/Example.roc'
 - Verify the example solution by running 'bin/verify-exercises ${slug}'
 - Edit the stub solution in 'exercises/practice/${slug}/${slug_pascal}.roc'
-- Format all your Roc code by running 'roc format' on each .roc file
+- Format all your Roc code by running 'roc fmt' on each .roc file
 - Update the 'difficulty' value for the exercise's entry in the 'config.json' file
 - Validate CI using 'bin/configlet lint' and 'bin/configlet fmt'
 NEXT_STEPS
+
+fi

@@ -1,5 +1,6 @@
-module [eggCount]
-
-eggCount : U64 -> U64
-eggCount = \number ->
-    crash "Please implement 'eggCount'"
+EliudsEggs :: {}.{
+	egg_count : U64 -> U64
+	egg_count = |number| {
+		crash "Please implement the 'egg_count' function"
+	}
+}

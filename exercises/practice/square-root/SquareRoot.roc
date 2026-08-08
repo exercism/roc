@@ -1,5 +1,6 @@
-module [squareRoot]
-
-squareRoot : U64 -> U64
-squareRoot = \radicand ->
-    crash "Please implement the 'squareRoot' function"
+SquareRoot :: {}.{
+	square_root : U64 -> U64
+	square_root = |radicand| {
+		crash "Please implement the 'square_root' function"
+	}
+}

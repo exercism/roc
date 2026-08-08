@@ -1,0 +1,20 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "contributors": [
+    "BNAndras"
+  ],
+  "files": {
+    "solution": [
+      "FlowerField.roc"
+    ],
+    "test": [
+      "flower-field-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Mark all the flowers in a garden."
+}

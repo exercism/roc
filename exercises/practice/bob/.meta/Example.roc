@@ -1,29 +1,36 @@
-module [response]
+Bob :: {}.{
+	response : Str -> Str
+	response = |hey_bob| {
+		trimmed = hey_bob.trim()
+		if trimmed == "" {
+			"Fine. Be that way!"
+		} else {
+			is_q = is_question(trimmed)
+			is_y = is_yelling(trimmed)
+			if is_q and is_y {
+				"Calm down, I know what I'm doing!"
+			} else if is_q {
+				"Sure."
+			} else if is_y {
+				"Whoa, chill out!"
+			} else {
+				"Whatever."
+			}
+		}
+	}
+}
 
-isQuestion = \heyBob ->
-    Str.endsWith heyBob "?"
+is_question = |hey_bob| {
+	hey_bob.ends_with("?")
+}
 
-isYelling = \heyBob ->
-    isLower = \c ->
-        c >= 'a' && c <= 'z'
-    isUpper = \c ->
-        c >= 'A' && c <= 'Z'
-    chars = Str.toUtf8 heyBob
-    (chars |> List.any isUpper) && !(chars |> List.any isLower)
-
-response : Str -> Str
-response = \heyBob ->
-    trimmed = Str.trim heyBob
-    if trimmed == "" then
-        "Fine. Be that way!"
-    else
-        isQ = isQuestion trimmed
-        isY = isYelling trimmed
-        if isQ && isY then
-            "Calm down, I know what I'm doing!"
-        else if isQ then
-            "Sure."
-        else if isY then
-            "Whoa, chill out!"
-        else
-            "Whatever."
+is_yelling = |hey_bob| {
+	is_lower = |c| {
+		c >= 'a' and c <= 'z'
+	}
+	is_upper = |c| {
+		c >= 'A' and c <= 'Z'
+	}
+	chars = hey_bob.to_utf8()
+	(chars.any(is_upper)) and !(chars.any(is_lower))
+}

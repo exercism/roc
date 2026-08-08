@@ -1,10 +1,20 @@
-module [truncate]
+import unicode.Grapheme
 
-import unicode.CodePoint
+MicroBlog :: {}.{
+	GraphemeErrors : [
+		CodepointTooLarge,
+		EncodesSurrogateHalf,
+		ExpectedContinuation,
+		InvalidUtf8,
+		ListWasEmpty,
+		OverlongEncoding,
+	]
 
-truncate : Str -> Result Str _
-truncate = \input ->
-    Str.toUtf8 input
-        |> CodePoint.parseUtf8?
-        |> List.takeFirst 5
-        |> CodePoint.toStr
+	truncate : Str -> Try(Str, GraphemeErrors)
+	truncate = |input| {
+		(input |> Grapheme.split)?
+			.take_first(5)
+			|> Str.join_with("")
+			|> Ok
+	}
+}

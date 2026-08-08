@@ -1,5 +1,6 @@
-module [isLeapYear]
-
-isLeapYear : I64 -> Bool
-isLeapYear = \year ->
-    crash "Please implement the `isLeapYear` function"
+Leap :: {}.{
+	is_leap_year : I64 -> Bool
+	is_leap_year = |year| {
+		crash "Please implement the 'is_leap_year' function"
+	}
+}

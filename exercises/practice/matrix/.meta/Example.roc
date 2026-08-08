@@ -1,34 +1,39 @@
-module [row, column]
+Matrix :: {}.{
+	column : Str, U64 -> Try(List(I64), [BadNumStr, OutOfBounds, ..])
+	column = |matrix_str, index| {
+		if index == 0 {
+			Err(OutOfBounds)
+		} else {
+			matrix = parse_matrix(matrix_str)?
+			matrix.map_try(|r| r.get(index - 1))
+		}
+	}
 
-parseRow : Str -> Result (List I64) [InvalidNumStr]
-parseRow = \rowStr ->
-    rowStr
-    |> Str.trim
-    |> Str.split " "
-    |> List.map Str.trim
-    |> List.dropIf Str.isEmpty
-    |> List.mapTry Str.toI64
+	row : Str, U64 -> Try(List(I64), [BadNumStr, OutOfBounds, ..])
+	row = |matrix_str, index| {
+		if index == 0 {
+			Err(OutOfBounds)
+		} else {
+			matrix = parse_matrix(matrix_str)?
+			result = matrix.get(index - 1)?
+			Ok(result)
+		}
+	}
+}
 
-parseMatrix : Str -> Result (List (List I64)) [InvalidNumStr]
-parseMatrix = \matrixStr ->
-    matrixStr
-    |> Str.trim
-    |> Str.split "\n"
-    |> List.mapTry parseRow
+parse_row : Str -> Try(List(I64), [BadNumStr, ..])
+parse_row = |row_str| {
+	row_str
+		.trim()
+		.split_on(" ")
+		.map(Str.trim)
+		.drop_if(Str.is_empty)
+		.map_try(I64.from_str)
+}
 
-column : Str, U64 -> Result (List I64) [InvalidNumStr, OutOfBounds]
-column = \matrixStr, index ->
-    if index == 0 then
-        Err OutOfBounds
-    else
-        matrix = parseMatrix? matrixStr
-        matrix |> List.mapTry \r -> r |> List.get (index - 1)
-
-row : Str, U64 -> Result (List I64) [InvalidNumStr, OutOfBounds]
-row = \matrixStr, index ->
-    if index == 0 then
-        Err OutOfBounds
-    else
-        matrix = parseMatrix? matrixStr
-        result = matrix |> List.get? (index - 1)
-        Ok result
+parse_matrix : Str -> Try(List(List(I64)), [BadNumStr, ..])
+parse_matrix = |matrix_str| {
+	matrix_str
+		.split_on("\n")
+		.map_try(parse_row)
+}

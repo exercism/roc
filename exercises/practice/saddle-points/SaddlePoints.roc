@@ -1,8 +1,9 @@
-module [saddlePoints]
+SaddlePoints :: {}.{
+	Forest : List(List(U8))
+	Position : { row : U64, column : U64 }
 
-Forest : List (List U8)
-Position : { row : U64, column : U64 }
-
-saddlePoints : Forest -> Set Position
-saddlePoints = \treeHeights ->
-    crash "Please implement the 'saddlePoints' function"
+	saddle_points : Forest -> Set(Position)
+	saddle_points = |tree_heights| {
+		crash "Please implement the 'saddle_points' function"
+	}
+}
