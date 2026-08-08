@@ -1,20 +1,21 @@
-module [fromPov, pathTo, isEquivalentTo]
+Pov :: {}.{
+	Tree := [Empty, Node({ label : Str, children : Set(Tree) })].{
 
-Tree : [Empty, Node { label : Str, children : List Tree }]
+		## Are two trees equal?
+		is_eq : _ # enable the default is_eq implementation for the Tree type
 
-## Are tree1 and tree2 identical, ignoring the order of the children?
-isEquivalentTo : Tree, Tree -> Bool
-isEquivalentTo = \tree1, tree2 ->
-    crash "Please implement the 'isEquivalentTo' function"
+		## Return the tree from the point of view of the node with the given label.
+		## Return Err(NotFound) if no such node is found.
+		from_pov : Tree, Str -> Try(Tree, [NotFound, ..])
+		from_pov = |tree, from| {
+			crash "Please implement the 'from_pov' function"
+		}
 
-## Return the tree from the point of view of the node with the given label.
-## Return Err NotFound if no such node is found.
-fromPov : Tree, Str -> Result Tree [NotFound]
-fromPov = \tree, from ->
-    crash "Please implement the 'fromPov' function"
-
-## Return the labels of the nodes between the two given nodes
-## If either of these nodes don't exist, return Err NotFound
-pathTo : Tree, Str, Str -> Result (List Str) [NotFound]
-pathTo = \tree, from, to ->
-    crash "Please implement the 'pathTo' function"
+		## Return the labels of the nodes between the two given nodes
+		## If either of these nodes don't exist, return Err(NotFound)
+		path_to : Tree, Str, Str -> Try(List(Str), [NotFound, ..])
+		path_to = |tree, from, to| {
+			crash "Please implement the 'path_to' function"
+		}
+	}
+}

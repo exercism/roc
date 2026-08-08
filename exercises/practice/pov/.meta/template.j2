@@ -2,23 +2,21 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [fromPov, pathTo]
-
-Tree : [Empty, Node { label : Str, children : Set Tree }]
+import {{ exercise | to_pascal }} exposing [Tree]
 
 {% macro roc_tree(tree) -%}
 {%- set children = tree["children"] or [] -%}
 {%- if children == [] -%}
-Node { label: {{ tree["label"] | to_roc }}, children: Set.empty {} }
+Node({ label: {{ tree["label"] | to_roc }}, children: Set.empty() })
 {%- else %}
-Node {
+Node({
     label: {{ tree["label"] | to_roc }},
-    children: Set.fromList [
+    children: Set.from_list([
 {%- for child in (tree["children"]) %}
       {{ roc_tree(child) }},
 {%- endfor %}
-    ]
-}
+    ])
+})
 {%- endif %}
 {%- endmacro %}
 
@@ -31,27 +29,31 @@ Node {
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
 {% if case["property"] == "fromPov" %}
-expect
-    tree = {{ roc_tree(case["input"]["tree"]) | indent(8) }}
-    result = tree |> {{ case["property"] | to_camel }} {{ case["input"]["from"] | to_roc }}
+expect {
+    tree = Tree.({{ roc_tree(case["input"]["tree"]) | indent(8) }})
+    result = tree.from_pov({{ case["input"]["from"] | to_roc }})
     {%- if case["expected"] %}
-    expected = {{ roc_tree(case["expected"]) | indent(8) }} |> Ok
+    expected = Ok({{ roc_tree(case["expected"]) | indent(8) }})
     result == expected
     {%- else %}
-    result == Err NotFound
+    result == Err(NotFound)
     {%- endif %}
+}
 {% elif case["property"] == "pathTo" %}
-expect
-    tree = {{ roc_tree(case["input"]["tree"]) | indent(8) }}
-    result = tree |> {{ case["property"] | to_camel }} {{ case["input"]["from"] | to_roc }} {{ case["input"]["to"] | to_roc }}
+expect {
+    tree = Tree.({{ roc_tree(case["input"]["tree"]) | indent(8) }})
+    result = tree.path_to({{ case["input"]["from"] | to_roc }}, {{ case["input"]["to"] | to_roc }})
     {%- if case["expected"] %}
-    expected = Ok {{ case["expected"] | to_roc }}
+    expected = Ok({{ case["expected"] | to_roc }})
     result == expected
     {%- else %}
-    result == Err NotFound
+    result == Err(NotFound)
     {%- endif %}
+}
 {% else %}
 # This test case is not supported yet: perhaps you can try implementing it?
 {% endif %}
 {% endfor %}
 {% endfor %}
+
+{{ macros.footer() }}
