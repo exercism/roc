@@ -893,6 +893,14 @@
         "difficulty": 8
       },
       {
+        "slug": "pov",
+        "name": "POV",
+        "uuid": "6cbdabf6-4a22-43ec-b2e4-6611ea253237",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
+      },
+      {
         "slug": "rest-api",
         "name": "REST API",
         "uuid": "1d4dbe7a-6737-49fa-ae74-a1155dcdab40",
