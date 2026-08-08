@@ -1,16 +1,25 @@
-module [primeFactors]
+PrimeFactors :: {}.{
+	prime_factors : U64 -> List(U64)
+	prime_factors = |value| {
+		find_prime_factors = |factors, n, p| {
+			if n < 2 {
+				factors
+			} else if n |> is_multiple_of(p) {
+				find_prime_factors(factors.append(p), (n // p), p)
+			} else if p * p < n {
+				next_p = if p == 2 {
+					3
+				} else {
+					p + 2
+				}
+				find_prime_factors(factors, n, next_p)
+			} else {
+				factors.append(n)
+			}
+		}
 
-primeFactors : U64 -> List U64
-primeFactors = \value ->
-    findPrimeFactors = \factors, n, p ->
-        if n < 2 then
-            factors
-        else if n |> Num.isMultipleOf p then
-            findPrimeFactors (List.append factors p) (n // p) p
-        else if p * p < n then
-            nextP = if p == 2 then 3 else p + 2
-            findPrimeFactors factors n nextP
-        else
-            List.append factors n
+		find_prime_factors([], value, 2)
+	}
+}
 
-    findPrimeFactors [] value 2
+is_multiple_of = |n, p| n % p == 0

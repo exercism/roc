@@ -1,7 +1,8 @@
-module [findChain]
+Dominoes :: {}.{
+	Domino : (U8, U8)
 
-Domino : (U8, U8)
-
-findChain : List Domino -> Result (List Domino) _
-findChain = \dominoes ->
-    crash "Please implement the 'findChain' function"
+	find_chain : List(Domino) -> Try(List(Domino), _)
+	find_chain = |dominoes| {
+		crash "Please implement the 'find_chain' function"
+	}
+}

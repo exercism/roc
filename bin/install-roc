@@ -3,17 +3,13 @@
 # Synopsis:
 # Install Roc
 
-# We currently install the nightly version as Roc does not have versioned releases yet.
-# Once it does, we will use that.
-
-function download_nightly() {
+function download_alpha_release() {
     local install_dir="${1}"
-    local install_file="${install_dir}/roc.tar.gz"
-    local release_url="https://github.com/roc-lang/roc/releases/download/nightly/roc_nightly-linux_x86_64-latest.tar.gz"
+    rm -rf "${install_dir}"
     mkdir -p "${install_dir}"
-    wget -q -O ${install_file} ${release_url}
-    tar -xzf "${install_file}" -C "${install_dir}" --strip-components 1
-    rm -f "${install_file}"
+    cd "${install_dir}"
+    wget --secure-protocol=TLSv1_2 -qO- https://roc-lang.org/install_roc.sh | ROC_CONTINUE_IF_STALE=y ROC_ADD_TO_PATH=n sh
+    ln -s roc_nightly*/roc roc
 }
 
 function update_shell {
@@ -28,7 +24,7 @@ function update_shell {
 
 install_dir="${HOME}/.roc/bin"
 
-download_nightly "${install_dir}"
+download_alpha_release "${install_dir}"
 
 if [[ -z "${GITHUB_ACTIONS}" ]]; then
     update_shell "${install_dir}" ".bashrc" 

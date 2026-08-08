@@ -1,28 +1,30 @@
-module [keep, discard]
+Strain :: {}.{
+	keep : List(a), (a -> Bool) -> List(a)
+	keep = |list, predicate| {
+		var $result = []
+		for item in list {
+			if predicate(item) {
+				$result = $result.append(item)
+			}
+		}
+		$result
+	}
 
-keep : List a, (a -> Bool) -> List a
-keep = \list, predicate ->
-    loop = \sublist, keptItems ->
-        when sublist is
-            [] -> keptItems
-            [first, .. as rest] ->
-                if predicate first then
-                    rest |> loop (List.append keptItems first)
-                else
-                    rest |> loop keptItems
+	discard : List(a), (a -> Bool) -> List(a)
+	discard = |list, predicate| {
+		loop = |sub_list, non_discarded_items| {
+			match sub_list {
+				[] => non_discarded_items
+				[first, .. as rest] => {
+					if predicate(first) {
+						rest |> loop(non_discarded_items)
+					} else {
+						rest |> loop(non_discarded_items.append(first))
+					}
+				}
+			}
+		}
 
-    loop list []
-
-discard : List a, (a -> Bool) -> List a
-discard = \list, predicate ->
-    loop = \sublist, nonDiscardedItems ->
-        when sublist is
-            [] -> nonDiscardedItems
-            [first, .. as rest] ->
-                if predicate first then
-                    rest |> loop nonDiscardedItems
-                else
-                    rest |> loop (List.append nonDiscardedItems first)
-
-    loop list []
-
+		loop(list, [])
+	}
+}

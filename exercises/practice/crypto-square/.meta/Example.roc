@@ -1,27 +1,74 @@
-module [ciphertext]
+CryptoSquare :: {}.{
+	ciphertext : Str -> Str
+	ciphertext = |text| {
+		chars = {
+			(
+				text
+					.to_utf8()
+					|> join_map(
+						|char| {
+							if (char >= 'a' and char <= 'z') or (char >= '0' and char <= '9') {
+								[char]
+							} else if char >= 'A' and char <= 'Z' {
+								[char - 'A' + 'a']
+							} else {
+								[]
+							}
+						},
+					)
+			).map(
+				|c| [c] |> Str.from_utf8 ?? {
+					crash "Unreachable"
+				},
+			)
+		}
+		length = chars.len()
+		width = length |> sqrt_ceiling # to_f64().sqrt().ceiling().to_u64()
+		rows = chars |> chunks_of(width)
 
-ciphertext : Str -> Result Str _
-ciphertext = \text ->
-    chars =
-        text
-        |> Str.toUtf8
-        |> List.joinMap \char ->
-            if (char >= 'a' && char <= 'z') || (char >= '0' && char <= '9') then
-                [char]
-            else if char >= 'A' && char <= 'Z' then
-                [char - 'A' + 'a']
-            else
-                []
+		if width == 0 {
+			""
+		} else {
+			(0..<width)
+				.map(
+					|column| {
+						rows.map(
+							|row| {
+								row.get(column) ?? " "
+							},
+						)
+							|> Str.join_with("")
+					},
+				)
+				|> List.from_iter
+				|> Str.join_with(" ")
+		}
+	}
+}
 
-    length = List.len chars
-    width = length |> Num.toF64 |> Num.sqrt |> Num.ceiling |> Num.toU64
-    rows = chars |> List.chunksOf width
+sqrt_ceiling = |n| {
+	var $i = 0
+	while $i * $i < n {
+		$i = $i + 1
+	}
+	$i
+}
 
-    List.range { start: At 0, end: Before width }
-    |> List.map \column ->
-        rows
-        |> List.map \row ->
-            row |> List.get column |> Result.withDefault ' '
-    |> List.intersperse [' ']
-    |> List.join
-    |> Str.fromUtf8
+# The following function should soon be available in Roc's builtins
+chunks_of = |list, size| {
+	var $state = []
+	var $chunk = []
+	for item in list {
+		$chunk = $chunk.append(item)
+		if $chunk.len() == size.to_u64() {
+			$state = $state.append($chunk)
+			$chunk = []
+		}
+	}
+	if $chunk.len() > 0 {
+		$state = $state.append($chunk)
+	}
+	$state
+}
+
+join_map = |list, func| list.map(func).join()

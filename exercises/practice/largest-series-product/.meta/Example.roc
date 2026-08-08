@@ -1,24 +1,37 @@
-module [largestProduct]
-
-largestProduct : Str, U64 -> Result U64 [SpanWasTooLarge, InvalidDigit]
-largestProduct = \digits, span ->
-    if span == 0 then
-        Ok 1
-        else
-
-    chars = digits |> Str.toUtf8
-    if List.len chars < span then
-        Err SpanWasTooLarge
-    else if chars |> List.any \char -> char < '0' || char > '9' then
-        Err InvalidDigit
-        else
-
-    List.range { start: At 0, end: At (List.len chars - span) }
-    |> List.map \startIndex ->
-        chars
-        |> List.sublist { start: startIndex, len: span }
-        |> List.walk 1 \product, char ->
-            product * (char - '0' |> Num.toU64)
-    |> List.max
-    |> Result.onErr \ListWasEmpty -> crash "Unreachable: the list cannot be empty here"
-
+LargestSeriesProduct :: {}.{
+	largest_product : Str, U64 -> Try(U64, [SpanWasTooLarge, InvalidDigit])
+	largest_product = |digits, span| {
+		if span == 0 {
+			Ok(1)
+		} else {
+			chars = digits.to_utf8()
+			if chars.len() < span {
+				Err(SpanWasTooLarge)
+			} else if chars.any(|char| char < '0' or char > '9') {
+				Err(InvalidDigit)
+			} else {
+				(0..=(chars.len() - span))
+					.map(
+						|start_index| {
+							chars
+								.sublist(
+									{ start: start_index, len: span },
+								)
+								.fold(
+									1,
+									|product, char| {
+										product * (char - '0').to_u64()
+									},
+								)
+						},
+					)
+					.max()
+					.map_err(
+						|_| {
+							crash "Unreachable: the list cannot be empty here"
+						},
+					)
+			}
+		}
+	}
+}

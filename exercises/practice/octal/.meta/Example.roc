@@ -1,22 +1,34 @@
-module [parse]
+Octal :: {}.{
+	parse : Str -> Try(U64, [InvalidNumStr])
+	parse = |string| {
+		if string == "" {
+			Err(InvalidNumStr)
+		} else {
+			digits = string.to_utf8().map_try(parse_octal_digit)?
+			digits.fold_until(
+				Ok(0),
+				|acc_res, octal_digit| {
+					match acc_res {
+						Ok(number) => {
+							if number > 0x1fffffffffffffff {
+								Break(Err(InvalidNumStr))
+							} else {
+								Continue(Ok(number.shl_wrap(3) + octal_digit))
+							}
+						}
+						Err(err) => Break(Err(err))
+					}
+				},
+			)
+		}
+	}
+}
 
-parseOctalDigit = \char ->
-    if char >= '0' && char <= '7' then
-        Ok (char - '0' |> Num.toU64)
-    else
-        Err InvalidNumStr
-
-parse : Str -> Result U64 _
-parse = \string ->
-    if string == "" then
-        Err InvalidNumStr
-        else
-
-    string
-        |> Str.toUtf8
-        |> List.walkTry 0 \number, char ->
-            octalDigit = parseOctalDigit? char
-            if number > 0x1fffffffffffffff then
-                Err InvalidNumStr
-            else
-                number |> Num.shiftLeftBy 3 |> Num.add octalDigit |> Ok
+parse_octal_digit : U8 -> Try(U64, [InvalidNumStr])
+parse_octal_digit = |char| {
+	if char >= '0' and char <= '7' {
+		Ok((char - '0').to_u64())
+	} else {
+		Err(InvalidNumStr)
+	}
+}

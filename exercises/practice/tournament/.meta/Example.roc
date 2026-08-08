@@ -1,108 +1,179 @@
-module [tally]
+Tournament :: {}.{
+	tally : Str -> Try(Str, [InvalidRow(Str), InvalidResult(Str)])
+	tally = |table| {
+		if table == "" {
+			Ok(header)
+		} else {
+			rows = table.split_on("\n")
+			parsed_rows =
+				rows.map_try(
+					|row| {
+						match row.split_on(";") {
+							[team1, team2, result_str] => {
+								result = parse_result(result_str)?
+								Ok((team1, team2, result))
+							}
+							_ => Err(InvalidRow(row))
+						}
+					},
+				)?
+			tally_dict = {
+				parsed_rows.fold(
+					Dict.empty(),
+					|tally_dict_acc, triple| {
+						(team1, team2, result) = triple
+						tally_dict_acc
+							|> update_tally_dict(team1, result)
+							|> update_tally_dict(team2, opposite_result(result))
+					},
+				)
+			}
+			Ok(tally_dict_to_table(tally_dict))
+		}
+	}
+}
 
 MatchResult : [Win, Loss, Draw]
+
 TeamTally : { mp : U64, w : U64, d : U64, l : U64, p : U64 }
 
-tally : Str -> Result Str [InvalidRow Str, InvalidResult Str]
-tally = \table ->
-    if table == "" then
-        Ok header
-        else
+parse_result : Str -> Try(MatchResult, [InvalidResult(Str), ..])
+parse_result = |result_str| {
+	match result_str {
+		"win" => Ok(Win)
+		"loss" => Ok(Loss)
+		"draw" => Ok(Draw)
+		_ => Err(InvalidResult(result_str))
+	}
+}
 
-    table
-        |> Str.split "\n"
-        |> List.mapTry? \row ->
-            when row |> Str.split ";" is
-                [team1, team2, resultStr] ->
-                    result = resultStr |> parseResult?
-                    Ok (team1, team2, result)
+opposite_result : MatchResult -> MatchResult
+opposite_result = |result| {
+	match result {
+		Win => Loss
+		Loss => Win
+		Draw => Draw
+	}
+}
 
-                _ -> Err (InvalidRow row)
-        |> List.walk (Dict.empty {}) \tallyDict, (team1, team2, result) ->
-            tallyDict
-            |> updateTallyDict team1 result
-            |> updateTallyDict team2 (oppositeResult result)
-        |> tallyDictToTable
-        |> Ok
+update_tally_dict : Dict(Str, TeamTally), Str, MatchResult -> Dict(Str, TeamTally)
+update_tally_dict = |tally_dict, team, result| {
+	tally_dict
+		.update(
+			team,
+			|maybe_team_tally| {
+				match maybe_team_tally {
+					Ok(team_tally) => Ok(update_team_tally(team_tally, result))
+					Err(Missing) => Ok(update_team_tally({ mp: 0, w: 0, d: 0, l: 0, p: 0 }, result))
+				}
+			},
+		)
+}
 
-parseResult : Str -> Result MatchResult [InvalidResult Str]
-parseResult = \resultStr ->
-    when resultStr is
-        "win" -> Ok Win
-        "loss" -> Ok Loss
-        "draw" -> Ok Draw
-        _ -> Err (InvalidResult resultStr)
+update_team_tally : TeamTally, MatchResult -> TeamTally
+update_team_tally = |team_tally, result| {
+	match result {
+		Win => { ..team_tally, mp: team_tally.mp + 1, w: team_tally.w + 1, p: team_tally.p + 3 }
+		Draw => { ..team_tally, mp: team_tally.mp + 1, d: team_tally.d + 1, p: team_tally.p + 1 }
+		Loss => { ..team_tally, mp: team_tally.mp + 1, l: team_tally.l + 1 }
+	}
+}
 
-oppositeResult : MatchResult -> MatchResult
-oppositeResult = \result ->
-    when result is
-        Win -> Loss
-        Loss -> Win
-        Draw -> Draw
-
-updateTallyDict : Dict Str TeamTally, Str, MatchResult -> Dict Str TeamTally
-updateTallyDict = \tallyDict, team, result ->
-    tallyDict
-    |> Dict.update team \maybeTeamTally ->
-        when maybeTeamTally is
-            Ok teamTally -> Ok (teamTally |> updateTeamTally result)
-            Err Missing -> Ok ({ mp: 0, w: 0, d: 0, l: 0, p: 0 } |> updateTeamTally result)
-
-updateTeamTally : TeamTally, MatchResult -> TeamTally
-updateTeamTally = \teamTally, result ->
-    when result is
-        Win -> { teamTally & mp: teamTally.mp + 1, w: teamTally.w + 1, p: teamTally.p + 3 }
-        Draw -> { teamTally & mp: teamTally.mp + 1, d: teamTally.d + 1, p: teamTally.p + 1 }
-        Loss -> { teamTally & mp: teamTally.mp + 1, l: teamTally.l + 1 }
-
-tallyDictToTable : Dict Str TeamTally -> Str
-tallyDictToTable = \tallyDict ->
-    tableContent =
-        tallyDict
-        |> Dict.toList
-        |> List.sortWith \(team1, teamTally1), (team2, teamTally2) ->
-            when Num.compare teamTally1.p teamTally2.p is
-                GT -> LT
-                LT -> GT
-                EQ -> compareStrings team1 team2
-        |> List.map \(team, teamTally) ->
-            tallyColumns =
-                [.mp, .w, .d, .l, .p]
-                |> List.map \field -> teamTally |> field |> alignRight
-                |> Str.joinWith " | "
-            "$(team |> padRight 30) | $(tallyColumns)"
-        |> Str.joinWith "\n"
-    "$(header)\n$(tableContent)"
+tally_dict_to_table : Dict(Str, TeamTally) -> Str
+tally_dict_to_table = |tally_dict| {
+	table_content =
+		tally_dict
+			.to_list()
+			.sort_with(
+				|pair1, pair2| {
+					(team1, team_tally1) = pair1
+					(team2, team_tally2) = pair2
+					p1 = team_tally1.p
+					p2 = team_tally2.p
+					if p1 < p2 {
+						GT
+					} else if p1 > p2 {
+						LT
+					} else {
+						compare_strings(team1, team2)
+					}
+				},
+			)
+			.map(
+				|pair| {
+					(team, team_tally) = pair
+					tally_columns =
+						[team_tally.mp, team_tally.w, team_tally.d, team_tally.l, team_tally.p]
+							.map(align_right)
+							|> Str.join_with(" | ")
+					"${pad_right(team, 30)} | ${tally_columns}"
+				},
+			)
+			|> Str.join_with("\n")
+	"${header}\n${table_content}"
+}
 
 header : Str
 header = "Team                           | MP |  W |  D |  L |  P"
 
-## Compare two strings, first by their UTF8 representations, then by length:
-## "" < "ABC" < "abc" < "abcdef"
-compareStrings : Str, Str -> [LT, EQ, GT]
-compareStrings = \string1, string2 ->
-    b1 = string1 |> Str.toUtf8
-    b2 = string2 |> Str.toUtf8
-    result =
-        List.map2 b1 b2 \c1, c2 -> Num.compare c1 c2
-        |> List.walkTry (Ok EQ) \_state, cmp ->
-            when cmp is
-                EQ -> Ok EQ
-                res -> Err res
-    when result is
-        Ok _cmp -> Num.compare (List.len b1) (List.len b2)
-        Err res -> res
+compare_strings : Str, Str -> [LT, EQ, GT]
+compare_strings = |string1, string2| {
+	b1 = string1.to_utf8()
+	b2 = string2.to_utf8()
+	cmp_result =
+		List.map2(
+			b1,
+			b2,
+			|c1, c2| if c1 < c2 {
+				LT
+			} else if c1 > c2 {
+				GT
+			} else {
+				EQ
+			},
+		)
+			.fold_until(
+				EQ,
+				|_, cmp| {
+					match cmp {
+						EQ => Continue(EQ)
+						res => Break(res)
+					}
+				},
+			)
+	match cmp_result {
+		EQ => {
+			len1 = List.len(b1)
+			len2 = List.len(b2)
+			if len1 < len2 {
+				LT
+			} else if len1 > len2 {
+				GT
+			} else {
+				EQ
+			}
+		}
+		res => res
+	}
+}
 
-## Pad a string with spaces on the right to reach a given width.
-## Warning: this function assumes that the input string is ASCII
-padRight : Str, U64 -> Str
-padRight = \string, width ->
-    chars = string |> Str.toUtf8
-    length = chars |> List.len
-    spaces = if length < width then List.repeat " " (width - length) |> Str.joinWith "" else ""
-    "$(string)$(spaces)"
+pad_right : Str, U64 -> Str
+pad_right = |string, width| {
+	chars = string.to_utf8()
+	length = chars.len()
+	spaces = if length < width {
+		List.repeat(" ", (width - length)) |> Str.join_with("")
+	} else {
+		""
+	}
+	"${string}${spaces}"
+}
 
-## Convert a number to a right-aligned string of width 2 or more
-alignRight : U64 -> Str
-alignRight = \number ->
-    if number < 10 then " $(number |> Num.toStr)" else "$(number |> Num.toStr)"
+align_right : U64 -> Str
+align_right = |number| {
+	if number < 10 {
+		" ${number.to_str()}"
+	} else {
+		"${number.to_str()}"
+	}
+}

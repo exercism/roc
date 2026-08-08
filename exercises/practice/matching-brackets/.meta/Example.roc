@@ -1,25 +1,39 @@
-module [isPaired]
+MatchingBrackets :: {}.{
+	is_paired : Str -> Bool
+	is_paired = |string| {
+		is_open = |c| {
+			c == '[' or c == '(' or c == '{'
+		}
+		is_close = |c| {
+			c == ']' or c == ')' or c == '}'
+		}
+		is_match = |pair| {
+			pair == ('[', ']') or pair == ('(', ')') or pair == ('{', '}')
+		}
+		help = |open_brackets, remaining_chars| {
+			match remaining_chars {
+				[] => open_brackets.is_empty()
+				[next_char, .. as rest_chars] => {
+					if is_open(next_char) {
+						help(open_brackets.append(next_char), rest_chars)
+					} else if is_close(next_char) {
+						match open_brackets {
+							[] => Bool.False
+							[.. as previous_opens, last_open] => {
+								if is_match((last_open, next_char)) {
+									help(previous_opens, rest_chars)
+								} else {
+									Bool.False
+								}
+							}
+						}
+					} else {
+						help(open_brackets, rest_chars)
+					}
+				}
+			}
+		}
 
-isPaired : Str -> Bool
-isPaired = \string ->
-    isOpen = \c -> c == '[' || c == '(' || c == '{'
-    isClose = \c -> c == ']' || c == ')' || c == '}'
-    isMatch = \pair -> pair == ('[', ']') || pair == ('(', ')') || pair == ('{', '}')
-    help = \openBrackets, remainingChars ->
-        when remainingChars is
-            [] -> List.isEmpty openBrackets # ok or missing closing bracket
-            [nextChar, .. as restChars] ->
-                if isOpen nextChar then
-                    help (openBrackets |> List.append nextChar) restChars
-                else if isClose nextChar then
-                    when openBrackets is
-                        [] -> Bool.false # missing opening bracket
-                        [.. as previousOpens, lastOpen] ->
-                            if isMatch (lastOpen, nextChar) then
-                                help previousOpens restChars
-                            else
-                                Bool.false # mismatching brackets
-                else
-                    help openBrackets restChars
-
-    help [] (string |> Str.toUtf8)
+		help([], string.to_utf8())
+	}
+}

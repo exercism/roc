@@ -1,5 +1,6 @@
-module [isIsogram]
-
-isIsogram : Str -> Bool
-isIsogram = \phrase ->
-    crash "Please implement the 'isIsogram' function"
+Isogram :: {}.{
+	is_isogram : Str -> Bool
+	is_isogram = |phrase| {
+		crash "Please implement the 'is_isogram' function"
+	}
+}

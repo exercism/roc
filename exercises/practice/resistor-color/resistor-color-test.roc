@@ -1,50 +1,51 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/resistor-color/canonical-data.json
-# File last updated on 2024-08-27
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
-}
+# File last updated on 2026-08-01
 
-main =
-    Task.ok {}
-
-import ResistorColor exposing [colorCode, colors]
+import ResistorColor exposing [color_code, colors]
 
 ##
 ## Color codes
 ##
 
 # Black
-expect
-    result = colorCode "black"
-    result == Ok 0
+expect {
+	result = color_code("black")
+	result == Ok(0)
+}
 
 # White
-expect
-    result = colorCode "white"
-    result == Ok 9
+expect {
+	result = color_code("white")
+	result == Ok(9)
+}
 
 # Orange
-expect
-    result = colorCode "orange"
-    result == Ok 3
+expect {
+	result = color_code("orange")
+	result == Ok(3)
+}
 
 ##
 ## Colors
 ##
 
-expect
-    result = colors
-    result
-    == [
-        "black",
-        "brown",
-        "red",
-        "orange",
-        "yellow",
-        "green",
-        "blue",
-        "violet",
-        "grey",
-        "white",
-    ]
+expect {
+	colors == [
+		"black",
+		"brown",
+		"red",
+		"orange",
+		"yellow",
+		"green",
+		"blue",
+		"violet",
+		"grey",
+		"white",
+	]
+}
+
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}

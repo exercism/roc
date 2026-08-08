@@ -1,5 +1,6 @@
-module [spiralMatrix]
-
-spiralMatrix : U64 -> List (List U64)
-spiralMatrix = \size ->
-    crash "Please implement the 'spiralMatrix' function"
+SpiralMatrix :: {}.{
+	spiral_matrix : U64 -> List(List(U64))
+	spiral_matrix = |size| {
+		crash "Please implement the 'spiral_matrix' function"
+	}
+}

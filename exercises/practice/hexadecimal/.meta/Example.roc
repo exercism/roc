@@ -1,26 +1,38 @@
-module [parse]
+Hexadecimal :: {}.{
+	parse : Str -> Try(U64, [InvalidNumStr])
+	parse = |string| {
+		if string == "" {
+			Err(InvalidNumStr)
+		} else {
+			digits = string.to_utf8().map_try(parse_nibble)?
+			digits.fold_until(
+				Ok(0),
+				|acc_res, nibble| {
+					match acc_res {
+						Ok(number) => {
+							if number > 0xfffffffffffffff {
+								Break(Err(InvalidNumStr))
+							} else {
+								Continue(Ok(number.shl_wrap(4) + nibble))
+							}
+						}
+						Err(err) => Break(Err(err))
+					}
+				},
+			)
+		}
+	}
+}
 
-parseNibble = \char ->
-    if char >= '0' && char <= '9' then
-        Ok (char - '0' |> Num.toU64)
-    else if char >= 'A' && char <= 'F' then
-        Ok (char - 'A' + 10 |> Num.toU64)
-    else if char >= 'a' && char <= 'f' then
-        Ok (char - 'a' + 10 |> Num.toU64)
-    else
-        Err InvalidNumStr
-
-parse : Str -> Result U64 _
-parse = \string ->
-    if string == "" then
-        Err InvalidNumStr
-        else
-
-    string
-        |> Str.toUtf8
-        |> List.walkTry 0 \number, char ->
-            nibble = parseNibble? char
-            if number > 0xfffffffffffffff then
-                Err InvalidNumStr
-            else
-                number |> Num.shiftLeftBy 4 |> Num.add nibble |> Ok
+parse_nibble : U8 -> Try(U64, _)
+parse_nibble = |char| {
+	if char >= '0' and char <= '9' {
+		Ok((char - '0').to_u64())
+	} else if char >= 'A' and char <= 'F' {
+		Ok((char - 'A' + 10).to_u64())
+	} else if char >= 'a' and char <= 'f' {
+		Ok((char - 'a' + 10).to_u64())
+	} else {
+		Err(InvalidNumStr)
+	}
+}

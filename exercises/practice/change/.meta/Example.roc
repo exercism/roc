@@ -1,32 +1,47 @@
-module [findFewestCoins]
+Change :: {}.{
+	find_fewest_coins : List(U64), U64 -> Try(List(U64), [NotFound])
+	find_fewest_coins = |coins, target| {
+		help = |sorted_coins, sub_target, max_length| {
+			if sub_target == 0 {
+				Ok([])
+			} else if max_length == 0 {
+				Err(NotFound)
+			} else {
+				match sorted_coins {
+					[] => Err(NotFound)
+					[largest_coin, .. as other_coins] => {
+						if largest_coin == sub_target {
+							Ok([largest_coin])
+						} else if largest_coin < sub_target {
+							match help(sorted_coins, (sub_target - largest_coin), (max_length - 1)) {
+								Ok(other_coins_with) => {
+									coins_with = other_coins_with.append(largest_coin)
+									match help(other_coins, sub_target, (coins_with.len() - 1)) {
+										Ok(coins_without) => Ok(coins_without)
+										Err(NotFound) => Ok(coins_with)
+									}
+								}
+								Err(NotFound) => help(other_coins, sub_target, max_length)
+							}
+						} else {
+							help(other_coins, sub_target, max_length)
+						}
+					}
+				}
+			}
+		}
 
-findFewestCoins : List U64, U64 -> Result (List U64) [NotFound]
-findFewestCoins = \coins, target ->
-    help = \sortedCoins, subTarget, maxLength ->
-        if subTarget == 0 then
-            Ok []
-        else if maxLength == 0 then
-            Err NotFound
-            else
+		help(coins |> sort_desc, target, U64.highest)?
+	}
+		|> sort_asc
+		|> Ok
+}
 
-        when sortedCoins is
-            [] -> Err NotFound
-            [largestCoin, .. as otherCoins] ->
-                if largestCoin == subTarget then
-                    Ok [largestCoin]
-                else if largestCoin < subTarget then
-                    when help sortedCoins (subTarget - largestCoin) (maxLength - 1) is
-                        Ok otherCoinsWith ->
-                            coinsWith = otherCoinsWith |> List.append largestCoin
-                            when help otherCoins subTarget (List.len coinsWith - 1) is
-                                Ok coinsWithout -> Ok coinsWithout
-                                Err NotFound -> Ok coinsWith
+# The following functions should soon be available in Roc's builtins
+sort_asc = |list| {
+	list.sort_with(|a, b| a.compare(b))
+}
 
-                        Err NotFound -> help otherCoins subTarget maxLength
-                else
-                    help otherCoins subTarget maxLength
-
-    help? (coins |> List.sortDesc) target Num.maxU64
-        |> List.sortAsc
-        |> Ok
-
+sort_desc = |list| {
+	list.sort_with(|a, b| b.compare(a))
+}

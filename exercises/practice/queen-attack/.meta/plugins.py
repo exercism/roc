@@ -5,7 +5,7 @@ def to_square(queen):
 
 
 def to_rank(row):
-    return 8 - row
+    return row + 1
 
 
 def to_file(column):

@@ -1,128 +1,174 @@
-module [territory, territories]
+GoCounting :: {}.{
+	territory : Str, Intersection -> Try(Territory, [OutOfBounds, BoardWasEmpty, BoardWasNotRectangular, InvalidChar(U8), ..])
+	territory = |board_str, intersection| {
+		board = parse(board_str)?
+		if intersection.x >= board.width or intersection.y >= board.height {
+			Err(OutOfBounds)
+		} else {
+			Ok(search_territory(board, intersection))
+		}
+	}
+
+	territories : Str -> Try(Territories, [BoardWasEmpty, BoardWasNotRectangular, InvalidChar(U8), ..])
+	territories = |board_str| {
+		board = parse(board_str)?
+		empty_intersections = {
+			board.rows
+				.map_with_index(
+					|row, y| {
+						row.map_with_index(
+							|stone, x| {
+								if stone == None [{ x, y }] else []
+							},
+						)
+							.join()
+					},
+				)
+				.join()
+		}
+		empty_intersections.fold(
+			{ black: Set.empty(), white: Set.empty(), none: Set.empty() },
+			|state, intersection| {
+				if state.black.contains(intersection) or state.white.contains(intersection) or state.none.contains(intersection) {
+					state
+				} else {
+					new_territory = search_territory(board, intersection)
+					match new_territory.owner {
+						Black => { ..state, black: state.black.union(new_territory.territory) }
+						White => { ..state, white: state.white.union(new_territory.territory) }
+						None => { ..state, none: state.none.union(new_territory.territory) }
+					}
+				}
+			},
+		)
+			|> Ok
+	}
+}
 
 Intersection : { x : U64, y : U64 }
 
 Stone : [White, Black, None]
 
 Territory : {
-    owner : Stone,
-    territory : Set Intersection,
+	owner : Stone,
+	territory : Set(Intersection),
 }
 
 Territories : {
-    black : Set Intersection,
-    white : Set Intersection,
-    none : Set Intersection,
+	black : Set(Intersection),
+	white : Set(Intersection),
+	none : Set(Intersection),
 }
 
 Board : {
-    rows : List (List Stone),
-    width : U64,
-    height : U64,
+	rows : List(List(Stone)),
+	width : U64,
+	height : U64,
 }
 
-parse : Str -> Result Board [BoardWasEmpty, BoardWasNotRectangular, InvalidChar U8]
-parse = \boardStr ->
-    if boardStr == "" then
-        Err BoardWasEmpty
-        else
+parse : Str -> Try(Board, [BoardWasEmpty, BoardWasNotRectangular, InvalidChar(U8), ..])
+parse = |board_str| {
+	if board_str == "" {
+		Err(BoardWasEmpty)
+	} else {
+		rows =
+			board_str
+				.to_utf8()
+				.split_on('\n')
+				.map_try(
+					|row| {
+						row.map_try(
+							|char| {
+								match char {
+									'B' => Ok(Black)
+									'W' => Ok(White)
+									' ' => Ok(None)
+									_ => Err(InvalidChar(char))
+								}
+							},
+						)
+					},
+				)?
+		row_widths = rows.map(List.len)
+		width = row_widths.max() ?? 0
+		if row_widths.any(|w| w != width) {
+			Err(BoardWasNotRectangular)
+		} else {
+			height = rows.len()
+			Ok({ rows, width, height })
+		}
+	}
+}
 
-    rows =
-        boardStr
-            |> Str.split "\n"
-            |> List.mapTry? \row ->
-                row
-                |> Str.toUtf8
-                |> List.mapTry \char ->
-                    when char is
-                        'B' -> Ok Black
-                        'W' -> Ok White
-                        ' ' -> Ok None
-                        _ -> Err (InvalidChar char)
-    rowWidths = rows |> List.map List.len
-    width = rowWidths |> List.max |> Result.withDefault 0
-    if rowWidths |> List.any \w -> w != width then
-        Err BoardWasNotRectangular
-    else
-        height = List.len rows
-        Ok { rows, width, height }
+get_stone : Board, Intersection -> Stone
+get_stone = |board, { x, y }| {
+	(board.rows.get(y) ?? []).get(x) ?? None
+}
 
-getStone : Board, Intersection -> Stone
-getStone = \board, { x, y } ->
-    board.rows |> List.get y |> Result.withDefault [] |> List.get x |> Result.withDefault None
+search_territory : Board, Intersection -> Territory
+search_territory = |board, intersection| {
+	help = |to_visit, visited, surrounding_stones| {
+		match to_visit {
+			[] => { visited, surrounding_stones }
+			[visiting, .. as rest_to_visit] => {
+				if visited.contains(visiting) {
+					help(rest_to_visit, visited, surrounding_stones)
+				} else {
+					stone = get_stone(board, visiting)
+					match stone {
+						Black | White => {
+							new_surrounding_stones = surrounding_stones.insert(stone)
+							help(rest_to_visit, visited, new_surrounding_stones)
+						}
 
-territory : Str, Intersection -> Result Territory [OutOfBounds, BoardWasEmpty, BoardWasNotRectangular, InvalidChar U8]
-territory = \boardStr, intersection ->
-    board = parse? boardStr
-    if intersection.x >= board.width || intersection.y >= board.height then
-        Err OutOfBounds
-        else
-
-    Ok (searchTerritory board intersection)
-
-searchTerritory : Board, Intersection -> Territory
-searchTerritory = \board, intersection ->
-    help = \toVisit, visited, surroundingStones ->
-        when toVisit is
-            [] -> { visited, surroundingStones }
-            [visiting, .. as restToVisit] ->
-                if visited |> Set.contains visiting then
-                    help restToVisit visited surroundingStones
-                    else
-
-                stone = board |> getStone visiting
-                when stone is
-                    Black | White ->
-                        newSurroundingStones = surroundingStones |> Set.insert stone
-                        help restToVisit visited newSurroundingStones
-
-                    None ->
-                        neighbors =
-                            [
-                                { x: visiting.x |> Num.subSaturated 1, y: visiting.y },
-                                { x: visiting.x + 1, y: visiting.y },
-                                { x: visiting.x, y: visiting.y |> Num.subSaturated 1 },
-                                { x: visiting.x, y: visiting.y + 1 },
-                            ]
-                            |> List.dropIf \neighbor ->
-                                neighbor.x >= board.width || neighbor.y >= board.height || neighbor == visiting
-                        newToVisit = restToVisit |> List.concat neighbors
-                        newVisited = visited |> Set.insert visiting
-                        help newToVisit newVisited surroundingStones
-    searchResult = help [intersection] (Set.empty {}) (Set.empty {})
-    if searchResult.visited |> Set.isEmpty then
-        { owner: None, territory: Set.empty {} }
-    else
-        owner =
-            if searchResult.surroundingStones == Set.single Black then
-                Black
-            else if searchResult.surroundingStones == Set.single White then
-                White
-            else
-                None
-        { owner, territory: searchResult.visited }
-
-territories : Str -> Result Territories [BoardWasEmpty, BoardWasNotRectangular, InvalidChar U8]
-territories = \boardStr ->
-    board = parse? boardStr
-    board.rows
-    |> List.mapWithIndex \row, y ->
-        row
-        |> List.mapWithIndex \stone, x ->
-            if stone == None then
-                [{ x, y }]
-            else
-                []
-        |> List.join
-    |> List.join
-    |> List.walk { black: Set.empty {}, white: Set.empty {}, none: Set.empty {} } \state, intersection ->
-        if state.black |> Set.contains intersection || state.white |> Set.contains intersection || state.none |> Set.contains intersection then
-            state
-        else
-            newTerritory = searchTerritory board intersection
-            when newTerritory.owner is
-                Black -> { black: state.black |> Set.union newTerritory.territory, white: state.white, none: state.none }
-                White -> { black: state.black, white: state.white |> Set.union newTerritory.territory, none: state.none }
-                None -> { black: state.black, white: state.white, none: state.none |> Set.union newTerritory.territory }
-    |> Ok
-
+						None => {
+							neighbors =
+								[
+									{
+										x: (
+											if visiting.x > 0 {
+												visiting.x - 1
+											} else 0
+										),
+										y: visiting.y,
+									},
+									{ x: visiting.x + 1, y: visiting.y },
+									{
+										x: visiting.x,
+										y: (
+											if visiting.y > 0 {
+												visiting.y - 1
+											} else 0
+										),
+									},
+									{ x: visiting.x, y: visiting.y + 1 },
+								]
+									.drop_if(
+										|neighbor| {
+											neighbor.x >= board.width or neighbor.y >= board.height or neighbor == visiting
+										},
+									)
+							new_to_visit = rest_to_visit.concat(neighbors)
+							new_visited = visited.insert(visiting)
+							help(new_to_visit, new_visited, surrounding_stones)
+						}
+					}
+				}
+			}
+		}
+	}
+	search_result = help([intersection], Set.empty(), Set.empty())
+	if search_result.visited.is_empty() {
+		{ owner: None, territory: Set.empty() }
+	} else {
+		owner =
+			if search_result.surrounding_stones == Set.from_list([Black]) {
+				Black
+			} else if search_result.surrounding_stones == Set.from_list([White]) {
+				White
+			} else {
+				None
+			}
+		{ owner, territory: search_result.visited }
+	}
+}

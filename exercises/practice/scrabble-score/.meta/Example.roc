@@ -1,31 +1,41 @@
-module [score]
+ScrabbleScore :: {}.{
+	score : Str -> U64
+	score = |word| {
+		word
+			.to_utf8()
+			.map(letter_value)
+			.sum()
+	}
+}
 
-score : Str -> U64
-score = \word ->
-    word
-    |> Str.toUtf8
-    |> List.map letterValue
-    |> List.sum
+to_upper : U8 -> U8
+to_upper = |letter| {
+	if letter >= 'a' and letter <= 'z' {
+		letter - 'a' + 'A'
+	} else {
+		letter
+	}
+}
 
-toUpper : U8 -> U8
-toUpper = \letter ->
-    if letter >= 'a' && letter <= 'z' then
-        letter - 'a' + 'A'
-    else
-        letter
-
-letterValue : U8 -> U64
-letterValue = \letter ->
-    [
-        ("AEIOULNRST", 1),
-        ("DG", 2),
-        ("BCMP", 3),
-        ("FHVWY", 4),
-        ("K", 5),
-        ("JX", 8),
-        ("QZ", 10),
-    ]
-    |> List.findFirst \(letters, _) ->
-        letters |> Str.toUtf8 |> List.contains (toUpper letter)
-    |> Result.withDefault ("", 0) # ignore invalid characters
-    |> .1
+letter_value : U8 -> U64
+letter_value = |letter| {
+	(_, val) =
+		[
+			("AEIOULNRST", 1),
+			("DG", 2),
+			("BCMP", 3),
+			("FHVWY", 4),
+			("K", 5),
+			("JX", 8),
+			("QZ", 10),
+		]
+			.find_first(
+				|(letters, _)| {
+					(
+						letters
+							|> Str.to_utf8
+					).contains(to_upper(letter))
+				},
+			) ?? ("", 0)
+	val
+}

@@ -500,6 +500,14 @@
         "difficulty": 3
       },
       {
+        "slug": "simple-linked-list",
+        "name": "Simple Linked List",
+        "uuid": "76693889-80b3-4d93-8fe1-68c3267a1f85",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "spiral-matrix",
         "name": "Spiral Matrix",
         "uuid": "7f8e880a-def6-463a-99b6-8864ef69177b",
@@ -548,9 +556,25 @@
         "difficulty": 3
       },
       {
+        "slug": "affine-cipher",
+        "name": "Affine Cipher",
+        "uuid": "54da632d-ab6a-4a6f-8a06-cb40b84e60fe",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "anagram",
         "name": "Anagram",
         "uuid": "40942be8-7c32-4da3-acff-a2365087cd5d",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
+        "slug": "binary-search-tree",
+        "name": "Binary Search Tree",
+        "uuid": "c0c96f3d-833e-4d15-b4ae-ccc711a0e165",
         "practices": [],
         "prerequisites": [],
         "difficulty": 4
@@ -692,6 +716,14 @@
         "difficulty": 5
       },
       {
+        "slug": "rail-fence-cipher",
+        "name": "Rail Fence Cipher",
+        "uuid": "d4569bd5-b6f3-4f2e-bdc0-0c6122540800",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "acronym",
         "name": "Acronym",
         "uuid": "5bc989a9-f7a8-489d-b9fc-6f65c2425fd7",
@@ -711,6 +743,14 @@
         "slug": "connect",
         "name": "Connect",
         "uuid": "93bcc6cd-07c3-435d-a789-255dc4e4e934",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
+        "slug": "flower-field",
+        "name": "Flower Field",
+        "uuid": "3d515ca6-aa26-4e4f-a92d-8381ef6d3809",
         "practices": [],
         "prerequisites": [],
         "difficulty": 6
@@ -753,7 +793,8 @@
         "uuid": "8d5ea690-9d52-4d0a-a59e-aeec1a03cac7",
         "practices": [],
         "prerequisites": [],
-        "difficulty": 6
+        "difficulty": 6,
+        "status": "deprecated"
       },
       {
         "slug": "palindrome-products",
@@ -823,6 +864,14 @@
         "slug": "wordy",
         "name": "Wordy",
         "uuid": "0aac3eb0-7e88-4d6e-a519-007ef317f6c9",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 7
+      },
+      {
+        "slug": "zebra-puzzle",
+        "name": "Zebra Puzzle",
+        "uuid": "6c290e69-0b1b-40df-bfa5-f0c8daacdaec",
         "practices": [],
         "prerequisites": [],
         "difficulty": 7

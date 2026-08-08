@@ -1,78 +1,78 @@
-module [
-    contains,
-    difference,
-    fromList,
-    insert,
-    intersection,
-    isDisjointWith,
-    isEmpty,
-    isEq,
-    isSubsetOf,
-    toList,
-    toList,
-    union,
-]
+CustomSet :: { items : List(U64) }.{
+	Item : U64
 
-Element : U64
+	contains : CustomSet, Item -> Bool
+	contains = |{ items }, item| items.contains(item)
 
-CustomSet := { items : List Element } implements [Eq]
+	difference : CustomSet, CustomSet -> CustomSet
+	difference = |{ items: items1 }, { items: items2 }| {
+		{ items: items1.drop_if(|item| items2.contains(item)) }
+	}
 
-contains : CustomSet, Element -> Bool
-contains = \@CustomSet { items }, element ->
-    items |> List.contains element
+	from_list : List(Item) -> CustomSet
+	from_list = |list| {
+		match sort_asc(list) {
+			[] => { items: [] }
+			[first, .. as rest] => {
+				state_res = rest.fold(
+					{ items: [first], previous: first },
+					|state, item| {
+						if item == state.previous {
+							state
+						} else {
+							{ items: state.items.append(item), previous: item }
+						}
+					},
+				)
+				{ items: state_res.items }
+			}
+		}
+	}
 
-difference : CustomSet, CustomSet -> CustomSet
-difference = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
-    items = items1 |> List.dropIf \item -> items2 |> List.contains item
-    @CustomSet { items }
+	insert : CustomSet, Item -> CustomSet
+	insert = |{ items }, item| {
+		if items.contains(item) {
+			{ items: items }
+		} else {
+			{ items: items.append(item) }
+		}
+	}
 
-fromList : List Element -> CustomSet
-fromList = \list ->
-    when list |> List.sortAsc is
-        [] -> @CustomSet { items: [] }
-        [first, .. as rest] ->
-            items =
-                rest
-                |> List.walk { items: [first], previous: first } \state, item ->
-                    if item == state.previous then
-                        state
-                    else
-                        { items: state.items |> List.append item, previous: item }
-                |> .items
-            @CustomSet { items }
+	intersection : CustomSet, CustomSet -> CustomSet
+	intersection = |{ items: items1 }, { items: items2 }| {
+		{ items: items1.keep_if(|item| items2.contains(item)) }
+	}
 
-insert : CustomSet, Element -> CustomSet
-insert = \@CustomSet { items }, element ->
-    if items |> List.contains element then
-        @CustomSet { items }
-    else
-        @CustomSet { items: items |> List.append element }
+	is_disjoint_with : CustomSet, CustomSet -> Bool
+	is_disjoint_with = |set1, set2| {
+		intersection(set1, set2).is_empty()
+	}
 
-intersection : CustomSet, CustomSet -> CustomSet
-intersection = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
-    items = items1 |> List.keepIf \item -> items2 |> List.contains item
-    @CustomSet { items }
+	is_empty : CustomSet -> Bool
+	is_empty = |{ items }| {
+		items.is_empty()
+	}
 
-isDisjointWith : CustomSet, CustomSet -> Bool
-isDisjointWith = \set1, set2 ->
-    set1 |> intersection set2 |> isEmpty
+	is_eq : CustomSet, CustomSet -> Bool
+	is_eq = |{ items: items1 }, { items: items2 }| {
+		sort_asc(items1) == sort_asc(items2)
+	}
 
-isEmpty : CustomSet -> Bool
-isEmpty = \@CustomSet { items } ->
-    items |> List.isEmpty
+	is_subset_of : CustomSet, CustomSet -> Bool
+	is_subset_of = |{ items: items1 }, { items: items2 }| {
+		items1.all(|item| items2.contains(item))
+	}
 
-isEq : CustomSet, CustomSet -> Bool
-isEq = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
-    items1 |> List.sortAsc == items2 |> List.sortAsc
+	to_list : CustomSet -> List(Item)
+	to_list = |{ items }| items
 
-isSubsetOf : CustomSet, CustomSet -> Bool
-isSubsetOf = \@CustomSet { items: items1 }, @CustomSet { items: items2 } ->
-    items1 |> List.all \item -> items2 |> List.contains item
+	union : CustomSet, CustomSet -> CustomSet
+	union = |set1, set2| {
+		set1.to_list().concat(set2.to_list()) |> from_list
+	}
+}
 
-toList : CustomSet -> List Element
-toList = \@CustomSet { items } ->
-    items
-
-union : CustomSet, CustomSet -> CustomSet
-union = \set1, set2 ->
-    set1 |> toList |> List.concat (set2 |> toList) |> fromList
+# The following function should soon be available in Roc's builtins
+sort_asc = |list| {
+	list.sort_with(|a, b| a.compare(b))
+}

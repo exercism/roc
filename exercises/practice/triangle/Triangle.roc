@@ -1,13 +1,16 @@
-module [isEquilateral, isIsosceles, isScalene]
+Triangle :: {}.{
+	is_equilateral : (F64, F64, F64) -> Bool
+	is_equilateral = |(a, b, c)| {
+		crash "Please implement the 'is_equilateral' function"
+	}
 
-isEquilateral : (F64, F64, F64) -> Bool
-isEquilateral = \(a, b, c) ->
-    crash "Please implement the 'isEquilateral' function"
+	is_isosceles : (F64, F64, F64) -> Bool
+	is_isosceles = |(a, b, c)| {
+		crash "Please implement the 'is_isosceles' function"
+	}
 
-isIsosceles : (F64, F64, F64) -> Bool
-isIsosceles = \(a, b, c) ->
-    crash "Please implement the 'isIsosceles' function"
-
-isScalene : (F64, F64, F64) -> Bool
-isScalene = \(a, b, c) ->
-    crash "Please implement the 'isScalene' function"
+	is_scalene : (F64, F64, F64) -> Bool
+	is_scalene = |(a, b, c)| {
+		crash "Please implement the 'is_scalene' function"
+	}
+}

@@ -66,7 +66,6 @@ logging.basicConfig()
 logger = logging.getLogger("generator")
 logger.setLevel(logging.WARN)
 
-
 def replace_all(string: str, chars: Union[str, List[str]], rep: str) -> str:
     """
     Replace any char in chars with rep, reduce runs and strip terminal ends.
@@ -157,9 +156,9 @@ def to_roc_multiline_string(lines: Union[str, List[str]]) -> str:
     elif len(lines) == 1:
         return to_roc_string(lines[0])
     else:
-        return "\n".join(
-            ["", '"""'] + [escape_roc_string_content(line) for line in lines] + ['"""']
-        ).replace("$(", "\\$(")
+        return "\n" + "\n".join(
+            [r'\\' + escape_roc_string_content(line) for line in lines]
+        ).replace("${", r"\${") + "\n"
 
 
 def to_roc_tuple(values: Any):
@@ -170,15 +169,15 @@ def to_roc_tuple(values: Any):
 def to_roc_record(obj: Dict[str, Any]):
     items = []
     for key, value in obj.items():
-        camel_key = to_camel(key)
+        snake_key = to_snake(key)
         roc_value = to_roc(value)
-        items.append(f"{camel_key}: {roc_value}")
+        items.append(f"{snake_key}: {roc_value}")
 
     return "{ " + ", ".join(items) + " }"
 
 
 def to_roc_bool(value: bool):
-    return "Bool.true" if value else "Bool.false"
+    return "Bool.True" if value else "Bool.False"
 
 
 def to_roc_list(values: Any):
@@ -188,7 +187,7 @@ def to_roc_list(values: Any):
 
 def to_roc_float(value: Union[int, float]):
     value = float(value)
-    return f"{value!r}f64".replace("+", "")
+    return f"{value!r}.F64".replace("+", "")
 
 
 def to_roc(value: Any) -> str:
@@ -378,9 +377,10 @@ def load_additional_tests(exercise: Path) -> List[TypeJSON]:
 
 def format_file(path: Path) -> NoReturn:
     """
-    Runs roc format on file at path
+    Runs roc fmt on file at path
     """
-    subprocess.check_call(["roc", "format", path])
+    subprocess.check_call(["roc", "fmt", path])
+    pass
 
 
 def drop_timestamp(lines):

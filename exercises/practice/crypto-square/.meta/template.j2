@@ -2,14 +2,17 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_camel }}]
+import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }}]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect
+expect {
     text = {{ case["input"]["plaintext"] | to_roc }}
-    result = {{ case["property"] | to_camel }} text
-    expected = Ok {{ case["expected"] | to_roc }}
+    result = {{ case["property"] | to_snake }}(text)
+    expected = {{ case["expected"] | to_roc }}
     result == expected
+}
 
 {% endfor %}
+
+{{ macros.footer() }}

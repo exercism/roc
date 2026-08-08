@@ -1,7 +1,8 @@
-module [maximumValue]
+Knapsack :: {}.{
+	Item : { weight : U64, value : U64 }
 
-Item : { weight : U64, value : U64 }
-
-maximumValue : { items : List Item, maximumWeight : U64 } -> U64
-maximumValue = \{ items, maximumWeight } ->
-    crash "Please implement the 'maximumValue' function"
+	maximum_value : { items : List(Item), maximum_weight : U64 } -> U64
+	maximum_value = |{ items, maximum_weight }| {
+		crash "Please implement the 'maximum_value' function"
+	}
+}

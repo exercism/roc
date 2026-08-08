@@ -1,21 +1,22 @@
-module [Game, create, roll, score]
+Bowling :: {
+	# TODO: change this opaque type however you need
+	todo1 : U64,
+	todo2 : U64,
+	todo3 : U64,
+	# etc.
+}.{
+	new : Bowling
+	new = {
+		crash "Please implement the 'new' constant"
+	}
 
-Game := {
-    # TODO: change this opaque type however you need
-    todo : U64,
-    todo2 : U64,
-    todo3 : U64,
-    # etc.
+	roll : Bowling, U64 -> Try(Bowling, _)
+	roll = |game, pins| {
+		crash "Please implement the 'roll' function"
+	}
+
+	score : Bowling -> Try(U64, _)
+	score = |game| {
+		crash "Please implement the 'score' function"
+	}
 }
-
-create : { previousRolls ? List U64 } -> Result Game _
-create = \{ previousRolls ? [] } ->
-    crash "Please implement the 'create' function"
-
-roll : Game, U64 -> Result Game _
-roll = \game, pins ->
-    crash "Please implement the 'roll' function"
-
-score : Game -> Result U64 _
-score = \finishedGame ->
-    crash "Please implement the 'score' function"

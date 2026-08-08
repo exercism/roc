@@ -1,5 +1,6 @@
-module [bestHands]
-
-bestHands : List Str -> Result (List Str) _
-bestHands = \hands ->
-    crash "Please implement the 'bestHands' function"
+Poker :: {}.{
+	best_hands : List(Str) -> Try(List(Str), _)
+	best_hands = |hands| {
+		crash "Please implement the 'best_hands' function"
+	}
+}

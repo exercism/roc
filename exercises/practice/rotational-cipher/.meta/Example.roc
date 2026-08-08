@@ -1,17 +1,22 @@
-module [rotate]
+RotationalCipher :: {}.{
+	rotate : Str, U8 -> Str
+	rotate = |text, shift_key| {
+		text
+			.to_utf8()
+			.map(
+				|c| shift_char(c, shift_key),
+			)
+			|> Str.from_utf8
+			?? "Unreachable"
+	}
+}
 
-shiftChar = \c, shiftKey ->
-    if c >= 'a' && c <= 'z' then
-        (c - 'a' + shiftKey) % 26 + 'a'
-    else if c >= 'A' && c <= 'Z' then
-        (c - 'A' + shiftKey) % 26 + 'A'
-    else
-        c
-
-rotate : Str, U8 -> Str
-rotate = \text, shiftKey ->
-    text
-    |> Str.toUtf8
-    |> List.map \c -> shiftChar c shiftKey
-    |> Str.fromUtf8
-    |> Result.withDefault "Unreachable"
+shift_char = |c, shift_key| {
+	if c >= 'a' and c <= 'z' {
+		(c - 'a' + shift_key) % 26 + 'a'
+	} else if c >= 'A' and c <= 'Z' {
+		(c - 'A' + shift_key) % 26 + 'A'
+	} else {
+		c
+	}
+}

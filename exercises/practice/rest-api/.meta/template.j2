@@ -1,17 +1,8 @@
 {%- import "generator_macros.j2" as macros with context -%}
 {{ macros.canonical_ref() }}
-{{ macros.header(imports=["json"]) }}
+{{ macros.header() }}
 
 import {{ exercise | to_pascal }} exposing [get, post]
-
-standardizeResult = \result ->
-    result |> Result.try \string ->
-        string
-        |> Str.replaceEach ".0," ","
-        |> Str.replaceEach ".0}" "}"
-        |> Str.toUtf8
-        |> List.dropIf \c -> [' ', '\t', '\n'] |> List.contains c
-        |> Str.fromUtf8
 
 {% for supercase in cases %}
 ##
@@ -20,35 +11,56 @@ standardizeResult = \result ->
 
 {% for case in supercase["cases"] -%}
 # {{ case["description"] }}
-expect
+expect {
     database = {
         users: [
             {%- for user in case["input"]["database"]["users"] %}
             {
                 name: {{ user["name"] | to_roc }},
-                owes: Dict.fromList [
+                owes: Dict.from_list([
                     {%- for (name, amount) in user["owes"].items() %}
                     ({{ name | to_roc }}, {{ amount }}),
                     {%- endfor -%}
-                ],
-                owedBy: Dict.fromList [
+                ]),
+                owed_by: Dict.from_list([
                     {%- for (name, amount) in user["owed_by"].items() %}
                     ({{ name | to_roc }}, {{ amount }}),
                     {%- endfor -%}
-                ],
+                ]),
                 balance: {{ user["balance"] }},
             },
             {%- endfor %}
         ]
     }
-    result = database |> {{ case["property"] | to_camel }} {
+    result_json = database |> {{ case["property"] | to_snake }}({
         url: {{ case["input"]["url"] | to_roc }},
     {%- if case["input"].get("payload", {}) != {} %}
         payload: {{ case["input"]["payload"] | tojson | to_roc }}
+    {%- else %}
+        payload: ""
     {%- endif %}
-    } |> standardizeResult
-    expected = Ok {{ case["expected"] | tojson | replace(".0,", ",") | replace(".0}", "}") | replace(" ", "") | to_roc }}
-    result == expected
+    })?
+    expected_json = {{ case["expected"] | tojson | to_roc }}
+    result_json|>is_equivalent_to(expected_json)?
+}
 
 {% endfor %}
 {% endfor %}
+
+is_equivalent_to = |result_json, expected_json| {
+    if expected_json.contains("\"users\"") {
+        expected : RestApi.Database
+        expected = Json.parse(expected_json)?
+        result : RestApi.Database
+        result = Json.parse(result_json)?
+        Ok(result == expected)
+    } else {
+        expected : RestApi.User
+        expected = Json.parse(expected_json)?
+        result : RestApi.User
+        result = Json.parse(result_json)?
+        Ok(result == expected)
+    }
+}
+
+{{ macros.footer() }}

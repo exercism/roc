@@ -7,8 +7,11 @@ import HelloWorld exposing [hello]
 
 {% for case in cases -%}
 # {{ case["description"] }}
-expect
+expect {
     result = {{ case["property"] }}
     result == {{ case ["expected"] | to_roc }}
 
 {% endfor %}
+}
+
+{{ macros.footer() }}
