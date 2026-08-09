@@ -29,11 +29,12 @@ copy_example_or_examplar_to_solution() {
 }
 
 run_tests() {
+    opts="--no-cache --opt=dev"
     module_file=`jq -r '.files.solution[]' .meta/config.json`
     example_file=`jq -r '.files.example[]' .meta/config.json`
     test_file=`jq -r '.files.test[]' .meta/config.json`
     cp "${example_file}" "${module_file}"
-    roc test "${test_file}"
+    FORCE_COLOR=1 roc test ${opts} "${test_file}"
 }
 
 verify_exercise() {

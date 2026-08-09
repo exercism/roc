@@ -1,162 +1,185 @@
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
-    rand: "https://github.com/lukewilliamboswell/roc-random/releases/download/0.3.0/hPlOciYUhWMU7BefqNzL89g84-30fTE6l2_6Y3cxIcE.tar.br",
+app [main!] {
+	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.21.0/4rAQg8kUYZ3Vksr4qMQHpaFYNiHSn9GgS7gVxghd1XYV.tar.zst",
+	random: "https://github.com/kili-ilo/roc-random/releases/download/0.9.0/CwDEAmyUMCsqW6dh4pxYnp7suUZAj5b5gpZuh7udtyE7.tar.zst",
 }
 
-main =
-    Task.ok {}
-
-import RobotName exposing [createFactory, createRobot, boot, reset, getName, getFactory]
+import RobotName exposing [Factory, Robot]
 
 ### Let's start by testing the basic robot workflow
 
 # A new robot must not have a name
-expect
-    factory = createFactory { seed: 0 }
-    robot = factory |> createRobot
-    result = robot |> getName
-    result |> Result.isErr
+expect {
+	factory = Factory.new({ seed: 0 })
+	robot = factory.build_robot()
+	result = robot.get_name()
+	result.is_err()
+}
 
 # After the first boot, a robot must have a name
-expect
-    factory = createFactory { seed: 0 }
-    robot = factory |> createRobot |> boot
-    result = robot |> getName
-    result |> Result.isOk
+expect {
+	factory = Factory.new({ seed: 0 })
+	robot = factory.build_robot().boot()
+	result = robot.get_name()
+	result.is_ok()
+}
 
 # Rebooting a robot should leave its name unchanged
-expect
-    factory = createFactory { seed: 0 }
-    robot = factory |> createRobot |> boot
-    name1 = robot |> getName
-    name2 = robot |> boot |> getName
-    name1 == name2
+expect {
+	factory = Factory.new({ seed: 0 })
+	robot = factory.build_robot().boot()
+	name1 = robot.get_name()
+	name2 = robot.boot().get_name()
+	name1 == name2
+}
 
-# After it is factory reset (which also reboots), a robot must have a  name
-expect
-    factory = createFactory { seed: 0 }
-    robot = factory |> createRobot |> boot |> reset
-    result = robot |> getName
-    result |> Result.isOk
+# After it is factory reset and booted, a robot must have a  name
+expect {
+	factory = Factory.new({ seed: 0 })
+	robot = factory.build_robot().boot().factory_reset().boot()
+	result = robot.get_name()
+	result.is_ok()
+}
 
-# After it is factory reset, a robot must have a new name. If by chance it
-# is the same (you should buy a lottery ticket today), we can try again to get
-# a new name. If it's the same again we can be pretty confident that there's a
-# problem.
-expect
-    factory = createFactory { seed: 0 }
-    robot = factory |> createRobot |> boot
-    name1 = robot |> getName
-    name2 = robot |> reset |> getName
-    name3 = robot |> reset |> reset |> getName
-    name1 != name2 || name1 != name3
+# After it is factory reset and booted, a robot must have a new name. If by
+# chance it is the same (you should buy a lottery ticket today), we can try
+# again to get a new name. If it's the same again we can be pretty confident
+# that there's a problem.
+expect {
+	factory = Factory.new({ seed: 0 })
+	robot = factory.build_robot().boot()
+	name1 = robot.get_name()
+	name2 = robot.factory_reset().boot().get_name()
+	name3 = robot.factory_reset().boot().factory_reset().boot().get_name()
+	name1 != name2 or name1 != name3
+}
 
-# If you factory reset a new robot, since this includes a boot, the robot
-# should have a name
-expect
-    factory = createFactory { seed: 0 }
-    robot = factory |> createRobot |> reset
-    result = robot |> getName
-    result |> Result.isOk
+# If you factory reset and boot a new robot it should have a name
+expect {
+	factory = Factory.new({ seed: 0 })
+	robot = factory.build_robot().factory_reset().boot()
+	result = robot.get_name()
+	result.is_ok()
+}
 
-# Once created, a robot's name must be 5 characters long
-expect
-    factory = createFactory { seed: 0 }
-    robot = factory |> createRobot |> boot
-    result = robot |> getName |> Result.try \n -> n |> Str.toUtf8 |> List.len |> Ok
-    result == Ok 5
+# Once created and booted, a robot's name must be 5 characters long
+expect {
+	factory = Factory.new({ seed: 0 })
+	robot = factory.build_robot().boot()
+	result = robot.get_name()?.to_utf8().len() |> Ok
+	result == Ok(5)
+}
 
 ### Next we will try to ensure that the random names are sufficiently diverse.
 ### For this, we will first create many robot names.
 
 ## Create many robots using a given random seed, and return their names
-## encoded using Str.toUtf8.
-## The default quantity is 1,000, which is enough to offer strong statistical
+## encoded using Str.to_utf8.
+## If the quantity is set to 1,000, it is enough to offer strong statistical
 ## guarantees in the tests below, for example the probability that any letter
 ## or digit is absent from all names is negligible.
-generateRobotNames : { seed : U32, quantity ? U64 } -> List (List U8)
-generateRobotNames = \{ seed, quantity ? 1000 } ->
-    factory = createFactory { seed }
-    List.range { start: At 0, end: Before quantity }
-    |> List.walk { names: [], factory } \state, _ ->
-        robot = state.factory |> createRobot |> boot
-        nameUtf8 =
-            when robot |> getName is
-                Ok name -> name |> Str.toUtf8
-                Err NoName -> crash "A robot must have a name after the first boot"
-        {
-            names: state.names |> List.append nameUtf8,
-            factory: robot |> getFactory,
-        }
-    |> .names
+generate_robot_names : { seed : U32, quantity : U64 } -> List(List(U8))
+generate_robot_names = |{ seed, quantity }| {
+	factory = Factory.new({ seed: seed })
+	(0..<quantity)
+		.fold(
+			{ names: [], factory },
+			|state, _| {
+				robot = state.factory.build_robot().boot()
+				name_utf8 =
+					match robot.get_name() {
+						Ok(name) => name.to_utf8()
+						Err(NoName) => {
+							crash "A robot must have a name after the first boot"
+						}
+					}
+				{
+					names: state.names.append(name_utf8),
+					factory: robot.get_factory(),
+				}
+			},
+		)
+		|> (|{ names, factory: _ }| names)
+}
 
 ## many random robot names based on seed 0
-manyNames0 : List (List U8)
-manyNames0 = generateRobotNames { seed: 0 }
+many_names_0 : List(List(U8))
+many_names_0 = generate_robot_names({ seed: 0, quantity: 1000 })
 
 ## many random robot names based on seed 1
-manyNames1 : List (List U8)
-manyNames1 = generateRobotNames { seed: 1 }
+many_names_1 : List(List(U8))
+many_names_1 = generate_robot_names({ seed: 1, quantity: 1000 })
 
 ## The set of letters from 'A' to 'Z'
-capitalLetters : Set U8
-capitalLetters = List.range { start: At 'A', end: At 'Z' } |> Set.fromList
+capital_letters : Set(U8)
+capital_letters = ('A'..='Z') |> List.from_iter |> Set.from_list
 
 # The first character of a robot's name must range from 'A' to 'Z'
-expect
-    result = manyNames0 |> List.mapTry \names -> names |> List.get 0
-    when result is
-        Ok chars -> Set.fromList chars == capitalLetters
-        Err OutOfBounds -> Bool.false
+expect {
+	result = many_names_0.map_try(List.first)
+	match result {
+		Ok(chars) => Set.from_list(chars) == capital_letters
+		Err(_) => Bool.False
+	}
+}
 
 # The second character must also range from 'A' to 'Z'
-expect
-    result = manyNames0 |> List.mapTry \names -> names |> List.get 1
-    when result is
-        Ok chars -> Set.fromList chars == capitalLetters
-        Err OutOfBounds -> Bool.false
+expect {
+	result = many_names_0.map_try(|name| name.get(1))
+	match result {
+		Ok(chars) => Set.from_list(chars) == capital_letters
+		Err(OutOfBounds) => Bool.False
+	}
+}
 
 ## The set of digits from '0' to '9'
-digits : Set U8
-digits = List.range { start: At '0', end: At '9' } |> Set.fromList
+digits : Set(U8)
+digits = ('0'..='9') |> List.from_iter |> Set.from_list
 
 # The third character must range from '0' to '9'
-expect
-    result = manyNames0 |> List.mapTry \names -> names |> List.get 2
-    when result is
-        Ok chars -> Set.fromList chars == digits
-        Err OutOfBounds -> Bool.false
+expect {
+	result = many_names_0.map_try(|name| name.get(2))
+	match result {
+		Ok(chars) => Set.from_list(chars) == digits
+		Err(OutOfBounds) => Bool.False
+	}
+}
 
 # The fourth character must range from '0' to '9'
-expect
-    result = manyNames0 |> List.mapTry \names -> names |> List.get 3
-    when result is
-        Ok chars -> Set.fromList chars == digits
-        Err OutOfBounds -> Bool.false
+expect {
+	result = many_names_0.map_try(|name| name.get(3))
+	match result {
+		Ok(chars) => Set.from_list(chars) == digits
+		Err(OutOfBounds) => Bool.False
+	}
+}
 
 # The fifth character must range from '0' to '9'
-expect
-    result = manyNames0 |> List.mapTry \names -> names |> List.get 4
-    when result is
-        Ok chars -> Set.fromList chars == digits
-        Err OutOfBounds -> Bool.false
+expect {
+	result = many_names_0.map_try(|name| name.get(4))
+	match result {
+		Ok(chars) => Set.from_list(chars) == digits
+		Err(OutOfBounds) => Bool.False
+	}
+}
 
 # The same seed must generate the same robot names
-expect
-    newNames0 = generateRobotNames { seed: 0 }
-    manyNames0 == newNames0
+expect {
+	new_names_0 = generate_robot_names({ seed: 0, quantity: 1000 })
+	many_names_0 == new_names_0
+}
 
 # Different seeds must generate different robot names (to be precise, it's
 # technically possible for the two lists to be identical, but the probability
 # is negligible when the lists are long enough).
-expect manyNames0 != manyNames1
+expect many_names_0 != many_names_1
 
 # All robot names coming from the same factory must be unique
-expect
-    uniqueNames = manyNames0 |> Set.fromList
-    numberOfNames = manyNames0 |> List.len
-    numberOfUniqueNames = uniqueNames |> Set.len
-    numberOfNames == numberOfUniqueNames
+expect {
+	unique_names = many_names_0 |> Set.from_list
+	number_of_names = many_names_0.len()
+	number_of_unique_names = unique_names.len()
+	number_of_names == number_of_unique_names
+}
 
 ### Finally, we will try to ensure that the characters are not linearly
 ### correlated within each name or across consecutive names. This does not
@@ -164,64 +187,81 @@ expect
 ### many types of non-random sequences (e.g., such as simply incrementing a
 ### counter).
 
-## Convert a list of integers to F64s
-toFloats : List (Num *) -> List F64
-toFloats = \numbers ->
-    numbers |> List.map Num.toF64
-
 ## The R² correlation coefficient, also known as the coefficient of determination,
 ## measures the degree of linear correlation between two lists of numbers.
 ## It ranges from -∞ to +1.0.
 ## When both lists are strongly linearly correlated, R² approaches +1.0.
 ## When both lists are long and independently drawn from the same random
 ## distribution, R² approaches -1.0.
-r2Coeff : List F64, List F64 -> F64
-r2Coeff = \numbers1, numbers2 ->
-    length = numbers1 |> List.len |> Num.toF64
-    mean = numbers1 |> List.sum |> Num.div length
-    subtractMean = \val -> val - mean
-    square = \val -> val * val
-    # Total sum of squares (TSS)
-    tss = numbers1 |> List.map subtractMean |> List.map square |> List.sum
-    # Residual sum of squares (RSS)
-    rss = numbers1 |> List.map2 numbers2 Num.sub |> List.map square |> List.sum
-    epsilon = 1e-10 # to avoid division by zero
-    1.0 - rss / (tss + epsilon)
+r2_coeff : List(F64), List(F64) -> F64
+r2_coeff = |numbers1, numbers2| {
+	length = numbers1.len().to_f64()
+	mean = numbers1.sum() / length
+	subtract_mean = |val| val - mean
+	square = |val| val * val
+	# Total sum of squares (TSS)
+	tss = numbers1.map(subtract_mean).map(square).sum()
+	# Residual sum of squares (RSS)
+	rss = numbers1.map2(numbers2, F64.minus).map(square).sum()
+	epsilon = 1e-10 # to avoid division by zero
+	1.0 - rss / (tss + epsilon)
+}
 
 # To speed up the correlation tests, we truncate the list of names
-correlationSampleSize = 200
+correlation_sample_size = 200
 
 # It's not impossible for the random characters to be correlated by chance,
 # but given 200 letters or digits, the probability that the correlation
 # coefficient ends up greater than this threshold is negligible
-r2Threshold = -0.25
+r2_threshold = -0.25
 
-seemsIndependentEnoughFrom = \maybeChars1, maybeChars2 ->
-    when (maybeChars1, maybeChars2) is
-        (Ok chars1, Ok chars2) ->
-            r2Coeff (chars1 |> toFloats) (chars2 |> toFloats) < r2Threshold
-
-        _ -> Bool.false # unreachable if names are 5 chars long
+seems_independent_enough_from : Try(List(U8), _), Try(List(U8), _) -> Bool
+seems_independent_enough_from = |maybe_chars_1, maybe_chars_2| {
+	match (maybe_chars_1, maybe_chars_2) {
+		(Ok(chars1), Ok(chars2)) =>
+			r2_coeff(chars1.map(U8.to_f64), chars2.map(U8.to_f64)) < r2_threshold
+		_ => Bool.False
+	}
+}
 
 # Characters within a name should not be correlated
-expect
-    truncatedNames0 = manyNames0 |> List.takeFirst correlationSampleSize
-    [0, 1, 2, 3, 4]
-    |> List.joinMap \index1 -> [0, 1, 2, 3, 4] |> List.map \index2 -> (index1, index2)
-    |> List.dropIf \(index1, index2) -> index1 == index2
-    |> List.all \(index1, index2) ->
-        maybeChars = truncatedNames0 |> List.dropLast 1 |> List.mapTry \chars -> chars |> List.get index1
-        maybeCharsNext = truncatedNames0 |> List.dropFirst 1 |> List.mapTry \chars -> chars |> List.get index2
-        maybeChars |> seemsIndependentEnoughFrom maybeCharsNext
+expect {
+	truncated_names_0 = many_names_0.take_first(correlation_sample_size)
+	[0.U64, 1, 2, 3].join_map(
+		|index1| {
+			[1, 2, 3, 4].map(|index2| (index1, index2))
+		},
+	)
+		.drop_if(|(index1, index2)| index1 >= index2)
+		.all(
+			|(index1, index2)| {
+				maybe_chars = truncated_names_0.drop_last(1).map_try(|chars| chars.get(index1))
+				maybe_chars_next = truncated_names_0.drop_first(1).map_try(|chars| chars.get(index2))
+				maybe_chars |> seems_independent_enough_from(maybe_chars_next)
+			},
+		)
+}
 
 # Characters in consecutive names should not be correlated
-expect
-    # we truncate the list to speed up the tests
-    truncatedNames0 = manyNames0 |> List.takeFirst correlationSampleSize
-    truncatedNames1 = manyNames0 |> List.dropFirst 1 |> List.takeFirst correlationSampleSize
-    [0, 1, 2, 3, 4]
-    |> List.joinMap \index1 -> [0, 1, 2, 3, 4] |> List.map \index2 -> (index1, index2)
-    |> List.all \(index1, index2) ->
-        maybeChars = truncatedNames0 |> List.mapTry \chars -> chars |> List.get index1
-        maybeCharsNext = truncatedNames1 |> List.mapTry \chars -> chars |> List.get index2
-        maybeChars |> seemsIndependentEnoughFrom maybeCharsNext
+expect {
+	# we truncate the list to speed up the tests
+	truncated_names_0 = many_names_0.take_first(correlation_sample_size)
+	truncated_names_1 = many_names_0.drop_first(1).take_first(correlation_sample_size)
+	[0.U64, 1, 2, 3, 4].join_map(
+		|index1| {
+			[0, 1, 2, 3, 4].map(|index2| (index1, index2))
+		},
+	)
+		.all(
+			|(index1, index2)| {
+				maybe_chars_ = truncated_names_0.map_try(|chars| chars.get(index1))
+				maybe_chars_next = truncated_names_1.map_try(|chars| chars.get(index2))
+				maybe_chars_ |> seems_independent_enough_from(maybe_chars_next)
+			},
+		)
+}
+
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}

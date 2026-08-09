@@ -1,47 +1,46 @@
-module [createFactory, createRobot, boot, reset, getName, getFactory]
+import random.Random
 
-import rand.Random
+RobotName :: {}.{
 
-## A factory is used to create robots, and hold state such as the existing robot
-## names and the current random state
-Factory := {
-    # TODO: change this opaque type however you need
-    todo1 : U64,
-    todo2 : U64,
-    todo3 : U64,
-    # etc.
+	## A factory is used to create robots, and holds state such as the existing
+	## robot names and the current random state
+	Factory :: {
+		# TODO: change this opaque type however you need
+	}.{
+		new : { seed : U32 } -> Factory
+		new = |{ seed }| {
+			crash "Please implement the 'Factory.create' function"
+		}
+
+		build_robot : Factory -> Robot
+		build_robot = |factory| {
+			crash "Please implement the 'Factory.build_robot' function"
+		}
+	}
+
+	## A robot must either have no name or a name composed of two letters
+	## followed by three digits
+	Robot :: {
+		# TODO: change this opaque type however you need
+	}.{
+		boot : Robot -> Robot
+		boot = |robot| {
+			crash "Please implement the 'boot' function"
+		}
+
+		factory_reset : Robot -> Robot
+		factory_reset = |robot| {
+			crash "Please implement the 'factory_reset' function"
+		}
+
+		get_name : Robot -> Try(Str, _)
+		get_name = |robot| {
+			crash "Please implement the 'get_name' function"
+		}
+
+		get_factory : Robot -> Factory
+		get_factory = |robot| {
+			crash "Please implement the 'get_factory' function"
+		}
+	}
 }
-
-## A robot must either have no name or a name composed of two letters followed
-## by three digits
-Robot := {
-    # TODO: change this opaque type however you need
-    todo4 : U64,
-    todo5 : U64,
-    todo6 : U64,
-    # etc.
-}
-
-createFactory : { seed : U32 } -> Factory
-createFactory = \{ seed } ->
-    crash "Please implement the 'createFactory' function"
-
-createRobot : Factory -> Robot
-createRobot = \factory ->
-    crash "Please implement the 'createRobot' function"
-
-boot : Robot -> Robot
-boot = \robot ->
-    crash "Please implement the 'boot' function"
-
-reset : Robot -> Robot
-reset = \robot ->
-    crash "Please implement the 'reset' function"
-
-getName : Robot -> Result Str _
-getName = \robot ->
-    crash "Please implement the 'getName' function"
-
-getFactory : Robot -> Factory
-getFactory = \robot ->
-    crash "Please implement the 'getFactory' function"

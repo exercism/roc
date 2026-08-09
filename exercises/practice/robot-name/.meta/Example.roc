@@ -1,89 +1,99 @@
-module [createFactory, createRobot, boot, reset, getName, getFactory]
+import random.Random
 
-import rand.Random
+RobotName :: {}.{
 
-## A factory is used to create robots, and hold state such as the existing robot
-## names and the current random state
-Factory := {
-    existingNames : Set Str,
-    state : Random.State,
+	## A factory is used to create robots, and holds state such as the existing
+	## robot names and the current random state
+	Factory :: {
+		existing_names : Set(Str),
+		random_state : Random.State,
+	}.{
+		new : { seed : U32 } -> Factory
+		new = |{ seed }| {
+			{ random_state: Random.seed(seed), existing_names: Set.empty() }
+		}
+
+		build_robot : Factory -> Robot
+		build_robot = |factory| {
+			{ maybe_name: Err(NoName), factory }
+		}
+	}
+
+	## A robot must either have no name or a name composed of two letters
+	## followed by three digits
+	Robot :: {
+		maybe_name : Try(Str, [NoName]),
+		factory : Factory,
+	}.{
+		boot : Robot -> Robot
+		boot = |robot| {
+			match robot.maybe_name {
+				Ok(_) => robot
+				Err(NoName) => robot |> generate_random_name
+			}
+		}
+
+		factory_reset : Robot -> Robot
+		factory_reset = |robot| {
+			match robot.maybe_name {
+				Err(NoName) => robot
+				Ok(name_to_remove) => {
+					factory = robot.get_factory() |> remove_name(name_to_remove)
+					{ maybe_name: Err(NoName), factory }
+				}
+			}
+		}
+
+		get_name : Robot -> Try(Str, [NoName, ..])
+		get_name = |robot| {
+			robot.maybe_name.map_err(|NoName| NoName)
+		}
+
+		get_factory : Robot -> Factory
+		get_factory = |robot| {
+			robot.factory
+		}
+	}
 }
 
-## A robot must either have no name or a name composed of two letters followed
-## by three digits
-Robot := {
-    maybeName : Result Str [NoName],
-    factory : Factory,
+generate_random_name : Robot -> Robot
+generate_random_name = |Robot.({ maybe_name, factory })| {
+	letter_generator = Random.bounded_u8('A', 'Z')
+	digit_generator = Random.bounded_u8('0', '9')
+	robot_name_generator = {
+		letters_gen = Random.list(letter_generator, 2)
+		digits_gen = Random.list(digit_generator, 3)
+		Random.map2(
+			letters_gen,
+			digits_gen,
+			|letters, digits| {
+				List.concat(letters, digits) |> Str.from_utf8 ?? {
+					crash "Unreachable: ASCII is always valid UTF-8"
+				}
+			},
+		)
+	}
+	{ value: possible_name, state: updated_state } = Random.step(factory.random_state, robot_name_generator)
+
+	if factory.existing_names.contains(possible_name) {
+		number_of_possible_names = 26 * 26 * 10 * 10 * 10
+		if factory.existing_names.len() == number_of_possible_names {
+			# better crash than run into an infinite loop
+			crash "Too many robots, we have run out of possible names!"
+		} else {
+			updated_factory = { existing_names: factory.existing_names, random_state: updated_state }
+			generate_random_name({ maybe_name, factory: updated_factory })
+		}
+	} else {
+		updated_factory = {
+			existing_names: factory.existing_names.insert(possible_name),
+			random_state: updated_state,
+		}
+		{ maybe_name: Ok(possible_name), factory: updated_factory }
+	}
 }
 
-createFactory : { seed : U32 } -> Factory
-createFactory = \{ seed } ->
-    @Factory { state: Random.seed seed, existingNames: Set.empty {} }
-
-createRobot : Factory -> Robot
-createRobot = \factory ->
-    @Robot { maybeName: Err NoName, factory }
-
-boot : Robot -> Robot
-boot = \robot ->
-    when robot |> getName is
-        Ok _ -> robot
-        Err NoName -> robot |> generateRandomName
-
-reset : Robot -> Robot
-reset = \robot ->
-    resetRobot =
-        when robot |> getName is
-            Err NoName -> robot
-            Ok nameToRemove ->
-                factory = robot |> getFactory |> removeName nameToRemove
-                @Robot { maybeName: Err NoName, factory }
-
-    resetRobot |> boot
-
-getName : Robot -> Result Str [NoName]
-getName = \@Robot { maybeName } ->
-    maybeName
-
-getFactory : Robot -> Factory
-getFactory = \@Robot { factory } ->
-    factory
-
-generateRandomName : Robot -> Robot
-generateRandomName = \@Robot { maybeName, factory } ->
-    (@Factory { state, existingNames }) = factory
-    { updatedState, string: twoLetters } = randomString { state, generator: Random.boundedU32 'A' 'Z', length: 2 }
-    { updatedState: updatedState2, string: threeDigits } = randomString { state: updatedState, generator: Random.boundedU32 '0' '9', length: 3 }
-    possibleName = "$(twoLetters)$(threeDigits)"
-
-    if existingNames |> Set.contains possibleName then
-        numberOfPossibleNames = 26 * 26 * 10 * 10 * 10
-        if existingNames |> Set.len == numberOfPossibleNames then
-            # better crash than run into an infinite loop
-            crash "Too many robots, we have run out of possible names!"
-        else
-            updatedFactory = @Factory { existingNames, state: updatedState2 }
-            generateRandomName (@Robot { maybeName, factory: updatedFactory })
-    else
-        updatedFactory = @Factory {
-            existingNames: existingNames |> Set.insert possibleName,
-            state: updatedState2,
-        }
-        @Robot { maybeName: Ok possibleName, factory: updatedFactory }
-
-removeName : Factory, Str -> Factory
-removeName = \@Factory { state, existingNames }, robotName ->
-    @Factory { state, existingNames: existingNames |> Set.remove robotName }
-
-randomString : { state : Random.State, generator : Random.Generator U32, length : U64 } -> { updatedState : Random.State, string : Str }
-randomString = \{ state, generator, length } ->
-    List.range { start: At 0, end: Before length }
-    |> List.walk { state, characters: [] } \walk, _ ->
-        random = generator walk.state
-        updatedState = random.state
-        characters = walk.characters |> List.append (random.value |> Num.toU8)
-        { state: updatedState, characters }
-    |> \{ state: updatedState, characters } ->
-        when characters |> Str.fromUtf8 is
-            Ok string -> { updatedState, string }
-            Err (BadUtf8 _ _) -> crash "Unreachable: characters are all ASCII"
+remove_name : Factory, Str -> Factory
+remove_name = |Factory.{ random_state, existing_names }, robot_name| {
+	{ random_state, existing_names: existing_names.remove(robot_name) }
+}
