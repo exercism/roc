@@ -65,7 +65,7 @@ expect {
 expect {
 	factory = Factory.new({ seed: 0 })
 	robot = factory.build_robot().boot()
-	result = match robot.get_name() {
+	match robot.get_name() {
 		Name(name) => name.to_utf8().len() == 5
 		NoName => Bool.False
 	}
