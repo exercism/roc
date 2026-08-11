@@ -33,7 +33,7 @@ RobotName :: {}.{
 			crash "Please implement the 'factory_reset' function"
 		}
 
-		get_name : Robot -> Try(Str, _)
+		get_name : Robot -> [Name(Str), NoName]
 		get_name = |robot| {
 			crash "Please implement the 'get_name' function"
 		}

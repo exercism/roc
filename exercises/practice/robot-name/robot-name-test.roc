@@ -12,7 +12,7 @@ expect {
 	factory = Factory.new({ seed: 0 })
 	robot = factory.build_robot()
 	result = robot.get_name()
-	result.is_err()
+	result == NoName
 }
 
 # After the first boot, a robot must have a name
@@ -20,7 +20,7 @@ expect {
 	factory = Factory.new({ seed: 0 })
 	robot = factory.build_robot().boot()
 	result = robot.get_name()
-	result.is_ok()
+	result != NoName
 }
 
 # Rebooting a robot should leave its name unchanged
@@ -37,7 +37,7 @@ expect {
 	factory = Factory.new({ seed: 0 })
 	robot = factory.build_robot().boot().factory_reset().boot()
 	result = robot.get_name()
-	result.is_ok()
+	result != NoName
 }
 
 # After it is factory reset and booted, a robot must have a new name. If by
@@ -58,15 +58,17 @@ expect {
 	factory = Factory.new({ seed: 0 })
 	robot = factory.build_robot().factory_reset().boot()
 	result = robot.get_name()
-	result.is_ok()
+	result != NoName
 }
 
 # Once created and booted, a robot's name must be 5 characters long
 expect {
 	factory = Factory.new({ seed: 0 })
 	robot = factory.build_robot().boot()
-	result = robot.get_name()?.to_utf8().len() |> Ok
-	result == Ok(5)
+	result = match robot.get_name() {
+		Name(name) => name.to_utf8().len() == 5
+		NoName => Bool.False
+	}
 }
 
 ### Next we will try to ensure that the random names are sufficiently diverse.
@@ -87,8 +89,8 @@ generate_robot_names = |{ seed, quantity }| {
 				robot = state.factory.build_robot().boot()
 				name_utf8 =
 					match robot.get_name() {
-						Ok(name) => name.to_utf8()
-						Err(NoName) => {
+						Name(name) => name.to_utf8()
+						NoName => {
 							crash "A robot must have a name after the first boot"
 						}
 					}

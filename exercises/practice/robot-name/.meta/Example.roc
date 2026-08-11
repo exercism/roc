@@ -15,38 +15,38 @@ RobotName :: {}.{
 
 		build_robot : Factory -> Robot
 		build_robot = |factory| {
-			{ maybe_name: Err(NoName), factory }
+			{ maybe_name: NoName, factory }
 		}
 	}
 
 	## A robot must either have no name or a name composed of two letters
 	## followed by three digits
 	Robot :: {
-		maybe_name : Try(Str, [NoName]),
+		maybe_name : [Name(Str), NoName],
 		factory : Factory,
 	}.{
 		boot : Robot -> Robot
 		boot = |robot| {
 			match robot.maybe_name {
-				Ok(_) => robot
-				Err(NoName) => robot |> generate_random_name
+				Name(_) => robot
+				NoName => robot |> generate_random_name
 			}
 		}
 
 		factory_reset : Robot -> Robot
 		factory_reset = |robot| {
 			match robot.maybe_name {
-				Err(NoName) => robot
-				Ok(name_to_remove) => {
+				NoName => robot
+				Name(name_to_remove) => {
 					factory = robot.get_factory() |> remove_name(name_to_remove)
-					{ maybe_name: Err(NoName), factory }
+					{ maybe_name: NoName, factory }
 				}
 			}
 		}
 
-		get_name : Robot -> Try(Str, [NoName, ..])
+		get_name : Robot -> [Name(Str), NoName]
 		get_name = |robot| {
-			robot.maybe_name.map_err(|NoName| NoName)
+			robot.maybe_name
 		}
 
 		get_factory : Robot -> Factory
@@ -89,7 +89,7 @@ generate_random_name = |Robot.({ maybe_name, factory })| {
 			existing_names: factory.existing_names.insert(possible_name),
 			random_state: updated_state,
 		}
-		{ maybe_name: Ok(possible_name), factory: updated_factory }
+		{ maybe_name: Name(possible_name), factory: updated_factory }
 	}
 }
 
