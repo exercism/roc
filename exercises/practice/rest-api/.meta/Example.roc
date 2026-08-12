@@ -91,8 +91,8 @@ add_user = |_database, payload| {
 add_loan : RestApi.Database, Str -> Try(Str, [NotFound, InvalidJson])
 add_loan = |database, payload| {
 	loan = parse_json_loan(payload)?
-	lender = database -> get_user(loan.lender)?
-	borrower = database -> get_user(loan.borrower)?
+	lender = database |> get_user(loan.lender)?
+	borrower = database |> get_user(loan.borrower)?
 	updated_lender = lender |> update_lender(borrower.name, loan.amount)
 	updated_borrower = borrower |> update_lender(lender.name, -loan.amount)
 	Ok(users_to_json([updated_lender, updated_borrower]))

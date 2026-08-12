@@ -115,7 +115,7 @@ expect {
 # encode followed by decode gives original string
 expect {
 	string = "zzz ZZ  zZ"
-	encoded = string -> encode()?
+	encoded = string |> encode()?
 	result = encoded |> decode
 	result == Ok(string)
 }

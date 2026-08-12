@@ -1,0 +1,15 @@
+{
+  "authors": [],
+  "files": {
+    "solution": [
+      "SaveTheCow.roc"
+    ],
+    "test": [
+      "save-the-cow-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Implement a word-guessing game."
+}

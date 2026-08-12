@@ -1,0 +1,30 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ properties | map("to_snake") | join(", ") }}]
+
+{% macro render_cases(cases) %}
+{%- for case in cases %}
+{%- if "cases" in case %}
+{{ render_cases(case["cases"]) }}
+{%- else %}
+# {{ case["description"] }}
+expect {
+    result = {{ case["property"] | to_snake }}(
+    {%- for key, value in case["input"].items() -%}
+        {{ value | to_roc }}{% if not loop.last %}, {% endif %}
+    {%- endfor -%}
+    )
+{%- if case["expected"] is mapping and "error" in case["expected"] %}
+    result.is_err()
+{%- else %}
+    result == {{ case["expected"] | to_roc }}
+{%- endif %}
+}
+{%- endif %}
+{%- endfor %}
+{% endmacro %}
+
+{{ render_cases(cases) }}
+{{ macros.footer() }}

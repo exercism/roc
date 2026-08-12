@@ -1,0 +1,52 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header(imports=["random"]) }}
+
+import DndCharacter
+import random.Random
+
+{% macro render_cases(cases) %}
+{%- for case in cases %}
+{%- if "cases" in case %}
+{{ render_cases(case["cases"]) }}
+{%- else %}
+# {{ case["description"] }}
+expect {
+    {%- if case["property"] == "modifier" %}
+    result = DndCharacter.{{ case["property"] | to_snake }}(
+        {%- for key, value in case["input"].items() -%}
+            {{ value | to_roc }}{% if not loop.last %}, {% endif %}
+        {%- endfor -%}
+    )
+    result == {{ case["expected"] | to_roc }}
+    {%- elif case["property"] == "ability" %}
+    random_state = Random.seed(0)
+    { value: score, state: _updated_random_state } = DndCharacter.ability(random_state)
+        {%- if case["expected"] == "score >= 3 && score <= 18" %}
+    score >= 3 and score <= 18
+        {%- else %}
+    ERROR: TEST NOT IMPLEMENTED
+        {%- endif %}
+    {%- elif case["property"] == "character" %}
+    random_state = Random.seed(0)
+    { value: character, state: _updated_random_state } = DndCharacter.generate(random_state)
+        {%- if case["expected"] == { "strength": "strength >= 3 && strength <= 18", "dexterity": "dexterity >= 3 && dexterity <= 18", "constitution": "constitution >= 3 && constitution <= 18", "intelligence": "intelligence >= 3 && intelligence <= 18", "wisdom": "wisdom >= 3 && wisdom <= 18", "charisma": "charisma >= 3 && charisma <= 18", "hitpoints": "hitpoints == 10 + modifier(constitution)" } %}
+    character.strength >= 3 and character.strength <= 18
+    and character.dexterity >= 3 and character.dexterity <= 18
+    and character.constitution >= 3 and character.constitution <= 18
+    and character.intelligence >= 3 and character.intelligence <= 18
+    and character.wisdom >= 3 and character.wisdom <= 18
+    and character.charisma >= 3 and character.charisma <= 18
+    and character.hitpoints == (10.I8 + DndCharacter.modifier(character.constitution)).to_u8_try() ?? 1 # minimum HP = 1
+        {%- else %}
+    ERROR: TEST NOT IMPLEMENTED
+        {%- endif %}
+    {%- endif %}
+}
+{%- endif %}
+
+{% endfor %}
+{% endmacro %}
+
+{{ render_cases(cases) }}
+{{ macros.footer() }}

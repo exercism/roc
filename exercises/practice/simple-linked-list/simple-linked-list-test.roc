@@ -73,7 +73,7 @@ expect {
 	result =
 		SimpleLinkedList.from_list([1, 2])
 			.pop()?
-			-> expect_value(2)?
+			|> expect_value(2)?
 			.pop()?
 			.value
 
@@ -84,12 +84,12 @@ expect {
 expect {
 	result =
 		SimpleLinkedList.from_list([1, 2])
-			-> expect_len(2)?
+			|> expect_len(2)?
 			.pop()?
-			-> expect_value(2)?
-			-> expect_len(1)?
+			|> expect_value(2)?
+			|> expect_len(1)?
 			.pop()?
-			-> expect_value(1)?
+			|> expect_value(1)?
 			.len()
 
 	result == 0
@@ -116,13 +116,13 @@ expect {
 			.push(1)
 			.push(2)
 			.pop()?
-			-> expect_value(2)?
+			|> expect_value(2)?
 			.push(3)
-			-> expect_len(2)?
+			|> expect_len(2)?
 			.pop()?
-			-> expect_value(3)?
+			|> expect_value(3)?
 			.pop()?
-			-> expect_value(1)?
+			|> expect_value(1)?
 			.len()
 
 	result == 0
@@ -163,7 +163,7 @@ expect {
 expect {
 	result =
 		SimpleLinkedList.from_list([1, 2])
-			-> expect_peek(2)?
+			|> expect_peek(2)?
 			.len()
 
 	result == 2
@@ -175,10 +175,10 @@ expect {
 		SimpleLinkedList.from_list([])
 			.push(1)
 			.push(2)
-			-> expect_peek(2)?
+			|> expect_peek(2)?
 			.pop()?
-			-> expect_value(2)?
-			-> expect_peek(1)?
+			|> expect_value(2)?
+			|> expect_peek(1)?
 			.push(3)
 			.peek()?
 
@@ -215,7 +215,7 @@ expect {
 			.push(2)
 			.push(3)
 			.pop()?
-			-> expect_value(3)?
+			|> expect_value(3)?
 			.push(4)
 			.to_list()
 
@@ -251,11 +251,11 @@ expect {
 	result =
 		SimpleLinkedList.from_list([1, 2, 3])
 			.reverse()
-			-> expect_len(3)?
+			|> expect_len(3)?
 			.pop()?
-			-> expect_value(1)?
+			|> expect_value(1)?
 			.pop()?
-			-> expect_value(2)?
+			|> expect_value(2)?
 			.pop()?
 			.value
 
@@ -269,9 +269,9 @@ expect {
 			.reverse()
 			.reverse()
 			.pop()?
-			-> expect_value(3)?
+			|> expect_value(3)?
 			.pop()?
-			-> expect_value(2)?
+			|> expect_value(2)?
 			.pop()?
 			.value
 
