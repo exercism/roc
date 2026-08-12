@@ -56,6 +56,14 @@
         "difficulty": 1
       },
       {
+        "slug": "line-up",
+        "name": "Line Up",
+        "uuid": "f7ab5511-8436-43b3-a804-6dc2d625e3e4",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1
+      },
+      {
         "slug": "raindrops",
         "name": "Raindrops",
         "uuid": "0299b320-36e0-4908-a71d-d2677a1f216b",
@@ -96,6 +104,14 @@
         "prerequisites": [],
         "difficulty": 2,
         "status": "deprecated"
+      },
+      {
+        "slug": "bottle-song",
+        "name": "Bottle Song",
+        "uuid": "ec751487-6801-4a8e-a4e3-513419aef901",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
       },
       {
         "slug": "collatz-conjecture",
@@ -204,6 +220,14 @@
         "difficulty": 2
       },
       {
+        "slug": "resistor-color-trio",
+        "name": "Resistor Color Trio",
+        "uuid": "e7e4af93-ace3-4ff1-8309-6d6bbaa41368",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
         "slug": "rna-transcription",
         "name": "RNA Transcription",
         "uuid": "602814f7-dc7b-490e-9242-aad924c81ae4",
@@ -279,6 +303,14 @@
         "slug": "triangle",
         "name": "Triangle",
         "uuid": "2fd79a25-ef01-497f-91e2-5a7eaf6104d2",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 2
+      },
+      {
+        "slug": "twelve-days",
+        "name": "Twelve Days",
+        "uuid": "4f14f4f5-ea9f-4604-b773-a1e0e750357e",
         "practices": [],
         "prerequisites": [],
         "difficulty": 2
@@ -484,6 +516,14 @@
         "difficulty": 3
       },
       {
+        "slug": "save-the-cow",
+        "name": "Save the Cow",
+        "uuid": "f1aa17d2-dca6-4b1b-8e02-4c62dc322f59",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "say",
         "name": "Say",
         "uuid": "23345ef2-4b3c-4c67-91d0-58bc472fc22b",
@@ -604,6 +644,14 @@
         "difficulty": 4
       },
       {
+        "slug": "grade-school",
+        "name": "Grade School",
+        "uuid": "17c90f99-9cb8-4856-b89e-3732ef5d7575",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "house",
         "name": "House",
         "uuid": "3e832749-3036-432b-a4a4-3aab4e599377",
@@ -652,6 +700,14 @@
         "difficulty": 4
       },
       {
+        "slug": "simple-cipher",
+        "name": "Simple Cipher",
+        "uuid": "0396ed11-d589-4165-8ce7-62ecc2a66721",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "variable-length-quantity",
         "name": "Variable Length Quantity",
         "uuid": "3d6cb550-b77f-44f3-a617-1243a4a52dcb",
@@ -671,6 +727,14 @@
         "slug": "circular-buffer",
         "name": "Circular Buffer",
         "uuid": "521c505e-edb6-4a9c-82e8-44eed527e9ff",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
+        "slug": "dnd-character",
+        "name": "D&D Character",
+        "uuid": "972316c8-0f5d-4d32-b461-4240ba40924c",
         "practices": [],
         "prerequisites": [],
         "difficulty": 5
