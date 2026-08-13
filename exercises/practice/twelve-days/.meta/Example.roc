@@ -40,8 +40,8 @@ present = |number| {
 presents : U8 -> Try(Str, [InvalidVerseNumber, ..])
 presents = |day| {
 	(1..=day)
-		.rev()
 		|> List.from_iter
+		.rev()
 		.map_try(present)?
 		|> Str.join_with(", ")
 		|> (|str| if day > 1 {

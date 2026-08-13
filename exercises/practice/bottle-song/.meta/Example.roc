@@ -5,8 +5,8 @@ BottleSong :: {}.{
 			Err(InvalidVerseNumber)
 		} else {
 			((starting_number - number_of_verses + 1)..=starting_number)
-				.rev()
 				|> List.from_iter
+				.rev()
 				.map_try(verse)?
 				|> Str.join_with("\n\n")
 				|> Ok
