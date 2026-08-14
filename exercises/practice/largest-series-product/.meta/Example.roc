@@ -11,6 +11,7 @@ LargestSeriesProduct :: {}.{
 				Err(InvalidDigit)
 			} else {
 				(0..=(chars.len() - span))
+					.iter()
 					.map(
 						|start_index| {
 							chars

@@ -3,7 +3,7 @@
 # File last updated on 2026-08-01
 app [main!] {
 	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.21.0/4rAQg8kUYZ3Vksr4qMQHpaFYNiHSn9GgS7gVxghd1XYV.tar.zst",
-	isodate: "https://github.com/ageron/roc-isodate/releases/download/0.8.0/B2h6tefXQtEz9VG6QukLDBoGXhRtwGLj9sZHDEJaTHkS.tar.zst",
+	isodate: "https://github.com/ageron/roc-isodate/releases/download/0.8.1/DZNmAcoruJkepH2QNAzb6SAebPLKy8Nmru8oR4UZHAcr.tar.zst",
 }
 
 import Gigasecond exposing [add]

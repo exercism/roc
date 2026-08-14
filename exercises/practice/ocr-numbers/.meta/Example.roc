@@ -58,6 +58,7 @@ get_digit_grids = |row_group, full_grid_width| {
 	chunked_rows = row_group.map(|row| row |> chunks_of(3))
 	num_horizontal_chunks = full_grid_width // 3
 	(0..<num_horizontal_chunks)
+		.iter()
 		.map(
 			|chunk_index| {
 				chunked_rows

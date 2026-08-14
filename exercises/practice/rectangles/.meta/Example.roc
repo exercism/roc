@@ -12,11 +12,11 @@ Rectangles :: {}.{
 					row
 						.map_with_index(
 							|_char, x1| {
-								y2s = ((y1 + 1)..<height).fold([], |acc, y| acc.append(y))
+								y2s = ((y1 + 1)..<height).iter().fold([], |acc, y| acc.append(y))
 								y2s
 									.map(
 										|y2| {
-											x2s = ((x1 + 1)..<row.len()).fold([], |acc, x| acc.append(x))
+											x2s = ((x1 + 1)..<row.len()).iter().fold([], |acc, x| acc.append(x))
 											x2s
 												.map(
 													|x2| {
@@ -58,12 +58,12 @@ is_rectangle = |{ grid, x1, y1, x2, y2 }| {
 	}
 
 	has_horizontal_border = |y| {
-		xs = (x1..=x2).fold([], |acc, x| acc.append(x))
+		xs = (x1..=x2).iter().fold([], |acc, x| acc.append(x))
 		xs.all(|x| is_horizontal((x, y)))
 	}
 
 	has_vertical_border = |x| {
-		ys = (y1..=y2).fold([], |acc, y| acc.append(y))
+		ys = (y1..=y2).iter().fold([], |acc, y| acc.append(y))
 		ys.all(|y| is_vertical((x, y)))
 	}
 
