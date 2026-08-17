@@ -8,12 +8,12 @@ RestApi :: {}.{
 
 	Database : { users : List(User) }
 
-	get : Database, { url : Str, payload : Str } -> Try(Str, _)
+	get : Database, { url : Str, payload ?: Str } -> Try(Str, _)
 	get = |database, { url, payload }| {
 		crash "Please implement the 'get' function"
 	}
 
-	post : Database, { url : Str, payload : Str } -> Try(Str, _)
+	post : Database, { url : Str, payload ?: Str } -> Try(Str, _)
 	post = |database, { url, payload }| {
 		crash "Please implement the 'post' function"
 	}

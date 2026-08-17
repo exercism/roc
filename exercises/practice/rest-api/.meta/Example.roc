@@ -10,25 +10,42 @@ RestApi :: {}.{
 
 	Loan : { lender : Str, borrower : Str, amount : Dec }
 
-	get : Database, { url : Str, payload : Str } -> Try(Str, [Http404(Str), Http422(Str)])
+	get : Database, { url : Str, payload ?: Str } -> Try(Str, [Http404(Str), Http422(Str)])
 	get = |database, { url, payload }| {
 		match url {
-			"/users" | "/users/" => (database |> get_users(payload)).map_err(|_| Http422(payload))
+			"/users" | "/users/" => {
+				match payload {
+					Ok(request_payload) => (database |> get_users(request_payload)).map_err(|_| Http422(request_payload))
+					Err(MissingField) => Ok(users_to_json(database.users))
+				}
+			}
 			bad_url => Err(Http404(bad_url))
 		}
 	}
 
-	post : Database, { url : Str, payload : Str } -> Try(Str, [Http404(Str), Http422(Str)])
+	post : Database, { url : Str, payload ?: Str } -> Try(Str, [Http404(Str), Http422(Str), MissingField])
 	post = |database, { url, payload }| {
-		handle_error = |err| {
-			match err {
-				InvalidJson => Http422(payload)
-				NotFound => Http404(payload)
-			}
-		}
 		match url {
-			"/add" => (database |> add_user(payload)).map_err(|_| InvalidJson).map_err(handle_error)
-			"/iou" => (database |> add_loan(payload)).map_err(handle_error)
+			"/add" => {
+				match payload {
+					Ok(request_payload) => (database |> add_user(request_payload)).map_err(|_| Http422(request_payload))
+					Err(MissingField) => Err(MissingField)
+				}
+			}
+			"/iou" => {
+				match payload {
+					Ok(request_payload) => {
+						handle_error = |err| {
+							match err {
+								InvalidJson => Http422(request_payload)
+								NotFound => Http404(request_payload)
+							}
+						}
+						(database |> add_loan(request_payload)).map_err(handle_error)
+					}
+					Err(MissingField) => Err(MissingField)
+				}
+			}
 			bad_url => Err(Http404(bad_url))
 		}
 	}
@@ -36,14 +53,8 @@ RestApi :: {}.{
 
 get_users : RestApi.Database, Str -> Try(Str, [InvalidJson])
 get_users = |database, payload| {
-	users =
-		if payload == "" {
-			database.users
-		} else {
-			names = get_user_names(payload)?
-			database.users
-				.keep_if(|user| names.contains(user.name))
-		}
+	names = get_user_names(payload)?
+	users = database.users.keep_if(|user| names.contains(user.name))
 	Ok(users_to_json(users))
 }
 
@@ -91,8 +102,8 @@ add_user = |_database, payload| {
 add_loan : RestApi.Database, Str -> Try(Str, [NotFound, InvalidJson])
 add_loan = |database, payload| {
 	loan = parse_json_loan(payload)?
-	lender = database -> get_user(loan.lender)?
-	borrower = database -> get_user(loan.borrower)?
+	lender = database |> get_user(loan.lender)?
+	borrower = database |> get_user(loan.borrower)?
 	updated_lender = lender |> update_lender(borrower.name, loan.amount)
 	updated_borrower = borrower |> update_lender(lender.name, -loan.amount)
 	Ok(users_to_json([updated_lender, updated_borrower]))

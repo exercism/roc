@@ -33,11 +33,9 @@ expect {
         ]
     }
     result_json = database |> {{ case["property"] | to_snake }}({
-        url: {{ case["input"]["url"] | to_roc }},
+        url: {{ case["input"]["url"] | to_roc }}
     {%- if case["input"].get("payload", {}) != {} %}
-        payload: {{ case["input"]["payload"] | tojson | to_roc }}
-    {%- else %}
-        payload: ""
+        , payload: {{ case["input"]["payload"] | tojson | to_roc }}
     {%- endif %}
     })?
     expected_json = {{ case["expected"] | tojson | to_roc }}
