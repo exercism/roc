@@ -148,4 +148,7 @@ expect {
 	result == { x: 11, y: 5, direction: North }
 }
 
-# Note: this program is only used for tests so it doesn't require a main! function.
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}
