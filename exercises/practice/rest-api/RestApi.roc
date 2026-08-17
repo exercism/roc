@@ -13,7 +13,7 @@ RestApi :: {}.{
 		crash "Please implement the 'get' function"
 	}
 
-	post : Database, { url : Str, payload ?: Str } -> Try(Str, _)
+	post : Database, { url : Str, payload : Str } -> Try(Str, _)
 	post = |database, { url, payload }| {
 		crash "Please implement the 'post' function"
 	}
