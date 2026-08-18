@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rest-api/canonical-data.json
-# File last updated on 2026-08-17
+# File last updated on 2026-08-18
 
 import RestApi exposing [get, post]
 
@@ -246,4 +246,7 @@ is_equivalent_to = |result_json, expected_json| {
 	}
 }
 
-# Note: this program is only used for tests so it doesn't require a main! function.
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}
