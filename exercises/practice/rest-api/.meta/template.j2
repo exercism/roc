@@ -47,20 +47,21 @@ expect {
 {% endfor %}
 {% endfor %}
 
+is_equivalent_to : Str, Str -> Try(Bool, _)
 is_equivalent_to = |result_json, expected_json| {
-    if expected_json.contains("\"users\"") {
-        expected : RestApi.Database
-        expected = Json.parse(expected_json)?
-        result : RestApi.Database
-        result = Json.parse(result_json)?
-        Ok(result == expected)
-    } else {
-        expected : RestApi.User
-        expected = Json.parse(expected_json)?
-        result : RestApi.User
-        result = Json.parse(result_json)?
-        Ok(result == expected)
-    }
+	if expected_json.contains("\"users\"") {
+		expected : RestApi.Database
+		expected = Json.parse(expected_json)?
+		result : RestApi.Database
+		result = Json.parse(result_json)?
+		Ok(result == expected)
+	} else {
+		expected : RestApi.User
+		expected = Json.parse(expected_json)?
+		result : RestApi.User
+		result = Json.parse(result_json)?
+		Ok(result == expected)
+	}
 }
 
 {{ macros.footer() }}
