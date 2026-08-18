@@ -5,6 +5,7 @@ TwelveDays :: {}.{
 			Err(InvalidVerseNumber)
 		} else {
 			(first_verse..=last_verse)
+				.iter()
 				|> List.from_iter
 				.map_try(verse)?
 				|> Str.join_with("\n")
@@ -40,6 +41,7 @@ present = |number| {
 presents : U8 -> Try(Str, [InvalidVerseNumber, ..])
 presents = |day| {
 	(1..=day)
+		.iter()
 		|> List.from_iter
 		.rev()
 		.map_try(present)?
