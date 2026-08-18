@@ -3,6 +3,7 @@ SpiralMatrix :: {}.{
 	spiral_matrix = |size| {
 		zero_matrix = List.repeat(List.repeat(0, size), size)
 		(1..=(size * size))
+			.iter()
 			.fold(
 				{ x: -1, y: 0, dx: 1, dy: 0, matrix: zero_matrix },
 				|state, index| {

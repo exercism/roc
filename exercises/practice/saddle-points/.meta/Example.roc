@@ -32,6 +32,7 @@ SaddlePoints :: {}.{
 		smallest_trees_north_south : Set(Position)
 		smallest_trees_north_south =
 			(0..<num_columns)
+				.iter()
 				|> join_map(
 					|column_index| {
 						column : List({ height : U8, row_index : U64 })

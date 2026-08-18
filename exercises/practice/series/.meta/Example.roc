@@ -9,6 +9,7 @@ Series :: {}.{
 			maybe_list =
 				(
 					(0..=(len - slice_length))
+						.iter()
 						|> List.from_iter
 				).map_try(
 					|start_index| {
