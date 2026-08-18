@@ -11,7 +11,7 @@ Sieve :: {}.{
 						help_sieve(rest, found_primes)
 					}
 					[prime, .. as rest] => {
-						((prime * 2)..=limit).step_by(prime)
+						((prime * 2)..=limit).step_by(prime).iter()
 							.fold(
 								rest,
 								|filtered_candidates, multiple_of_prime| {
@@ -28,7 +28,7 @@ Sieve :: {}.{
 				}
 			}
 
-			initial_candidates = List.from_iter(2..=limit)
+			initial_candidates = List.from_iter((2..=limit).iter())
 			help_sieve(initial_candidates, [])
 		}
 	}

@@ -20,6 +20,7 @@ aliquot_sum = |number| {
 		Ok(0)
 	} else {
 		(1..=(number // 2))
+			.iter()
 			.fold(
 				0,
 				|acc, d| if number % d == 0 {

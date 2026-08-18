@@ -21,6 +21,7 @@ Pangram :: {}.{
 
 alphabet =
 	('A'..='Z')
+		.iter()
 		.fold(
 			Set.empty(),
 			|set, c| set.insert(c),

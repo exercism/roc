@@ -8,6 +8,7 @@ Transpose :: {}.{
 		}
 		max_width = chars.map(List.len).max() ?? 0
 		(0..<max_width)
+			.iter()
 			.map(
 				|col| {
 					max_row =
@@ -18,6 +19,7 @@ Transpose :: {}.{
 							?? 0
 
 					(0..=max_row)
+						.iter()
 						.map(
 							|row| get_char(row, col) ?? ' ',
 						)

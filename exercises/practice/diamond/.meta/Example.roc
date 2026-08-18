@@ -5,9 +5,11 @@ Diamond :: {}.{
 			crash "Unreachable"
 		}
 		((-letter_index)..=letter_index)
+			.iter()
 			.map(
 				|row_index| {
 					((-letter_index)..=letter_index)
+						.iter()
 						.map(
 							|col_index| get_char(row_index, col_index, letter_index),
 						)

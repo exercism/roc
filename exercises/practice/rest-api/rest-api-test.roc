@@ -230,6 +230,7 @@ expect {
 	result_json |> is_equivalent_to(expected_json)?
 }
 
+is_equivalent_to : Str, Str -> Try(Bool, _)
 is_equivalent_to = |result_json, expected_json| {
 	if expected_json.contains("\"users\"") {
 		expected : RestApi.Database

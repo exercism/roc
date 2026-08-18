@@ -30,6 +30,7 @@ CryptoSquare :: {}.{
 			""
 		} else {
 			(0..<width)
+				.iter()
 				.map(
 					|column| {
 						rows.map(
