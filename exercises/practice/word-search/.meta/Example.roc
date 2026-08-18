@@ -18,9 +18,11 @@ WordSearch :: {}.{
 
 		# for all possible starting positions:
 		(0..<width)
+			.iter()
 			|> join_map(
 				|column_index| {
 					(0..<height)
+						.iter()
 						|> join_map(
 							|row_index| {
 								# for all possible directions:
@@ -32,6 +34,7 @@ WordSearch :: {}.{
 											# for all possible lengths:
 											(
 												(0..<max_length)
+													.iter()
 													|> List.from_iter
 											).fold_until(
 												{ found_words: [], chars: [] },

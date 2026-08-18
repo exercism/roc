@@ -2,9 +2,11 @@ PascalsTriangle :: {}.{
 	pascals_triangle : U64 -> List(List(U64))
 	pascals_triangle = |count| {
 		(0..<count)
+			.iter()
 			.map(
 				|row| {
 					(0..=row)
+						.iter()
 						.map(
 							|column| binomial_coefficient(row, column),
 						)
@@ -22,12 +24,14 @@ binomial_coefficient = |n, k| {
 	} else {
 		numerator =
 			((n + 1 - k)..=n)
+				.iter()
 				.fold(
 					1,
 					|product, value| product * value,
 				)
 		denominator =
 			(1..=k)
+				.iter()
 				.fold(
 					1,
 					|product, value| product * value,

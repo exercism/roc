@@ -63,9 +63,11 @@ transpose : Board -> Board
 transpose = |board| {
 	width = (board |> first_row).len()
 	(0..<width)
+		.iter()
 		.map(
 			|x| {
 				(0..<board.len())
+					.iter()
 					.map(
 						|y| {
 							match board |> get_cell({ x, y }) {
