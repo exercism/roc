@@ -64,7 +64,7 @@ compare_graphemes = |g1, g2| {
 }
 
 sorted_graphemes = |word| {
-	graphemes = Grapheme.split(word)?
+	graphemes = Grapheme.owned(word)
 	graphemes.sort_with(compare_graphemes) |> Ok
 }
 

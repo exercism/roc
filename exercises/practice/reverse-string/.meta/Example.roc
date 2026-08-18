@@ -1,6 +1,7 @@
 
 
 import unicode.Grapheme
+
 ReverseString :: {}.{
 
 	## This function reverses the input string, e.g., "café" -> "éfac".
@@ -14,12 +15,7 @@ ReverseString :: {}.{
 	## Luckily, we've added it for you in reverse-string-test.roc. Take a look!
 	reverse : Str -> Str
 	reverse = |string| {
-		match Grapheme.split(string) {
-			Ok(graphemes) => graphemes.rev() |> Str.join_with("")
-			Err(_) => {
-				crash "Unexpected error: could not split the string into graphemes"
-			}
-		}
+		Grapheme.owned(string).rev() |> Str.join_with("")
 	}
 
 	## This function reverses the input string, e.g., "hello" -> "olleh". It is

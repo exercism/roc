@@ -4,7 +4,7 @@ SumOfMultiples :: {}.{
 		(
 			factors
 				.keep_if(|factor| factor > 0)
-				|> join_map(|factor| (factor..<limit).step_by(factor) |> List.from_iter)
+				|> join_map(|factor| (factor..<limit).step_by(factor).iter() |> List.from_iter)
 				|> Set.from_list
 		).to_list()
 			.sum()
