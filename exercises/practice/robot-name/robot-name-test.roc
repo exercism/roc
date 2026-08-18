@@ -1,6 +1,6 @@
 app [main!] {
-	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.21.0/4rAQg8kUYZ3Vksr4qMQHpaFYNiHSn9GgS7gVxghd1XYV.tar.zst",
-	random: "https://github.com/kili-ilo/roc-random/releases/download/0.9.1/4y2ZUECKuLohLfnxRmukt3wHCBMDYwkKDc2jLSmYz8NM.tar.zst",
+	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.0/F1JVZPYfWP71s8vk6tHcV1Qx1Ef6CZkwswGoCn8VHZmL.tar.zst",
+	random: "https://github.com/kili-ilo/roc-random/releases/download/0.9.2/2ZXLX8WRqrosGu1V3VL5aXqgtfTRvJmjFPx8a26ecVmc.tar.zst",
 }
 
 import RobotName exposing [Factory, Robot]
@@ -83,6 +83,7 @@ generate_robot_names : { seed : U32, quantity : U64 } -> List(List(U8))
 generate_robot_names = |{ seed, quantity }| {
 	factory = Factory.new({ seed: seed })
 	(0..<quantity)
+		.iter()
 		.fold(
 			{ names: [], factory },
 			|state, _| {
@@ -113,7 +114,7 @@ many_names_1 = generate_robot_names({ seed: 1, quantity: 1000 })
 
 ## The set of letters from 'A' to 'Z'
 capital_letters : Set(U8)
-capital_letters = ('A'..='Z') |> List.from_iter |> Set.from_list
+capital_letters = ('A'..='Z').iter() |> List.from_iter |> Set.from_list
 
 # The first character of a robot's name must range from 'A' to 'Z'
 expect {
@@ -135,7 +136,7 @@ expect {
 
 ## The set of digits from '0' to '9'
 digits : Set(U8)
-digits = ('0'..='9') |> List.from_iter |> Set.from_list
+digits = ('0'..='9').iter() |> List.from_iter |> Set.from_list
 
 # The third character must range from '0' to '9'
 expect {

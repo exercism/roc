@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rest-api/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-15
 
 import RestApi exposing [get, post]
 
@@ -230,6 +230,7 @@ expect {
 	result_json |> is_equivalent_to(expected_json)?
 }
 
+is_equivalent_to : Str, Str -> Try(Bool, _)
 is_equivalent_to = |result_json, expected_json| {
 	if expected_json.contains("\"users\"") {
 		expected : RestApi.Database
