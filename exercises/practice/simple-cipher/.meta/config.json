@@ -1,0 +1,17 @@
+{
+  "authors": [],
+  "files": {
+    "solution": [
+      "SimpleCipher.roc"
+    ],
+    "test": [
+      "simple-cipher-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Implement the Vigenère cipher, a simple substitution cipher.",
+  "source": "Substitution Cipher at Wikipedia",
+  "source_url": "https://en.wikipedia.org/wiki/Substitution_cipher"
+}

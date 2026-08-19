@@ -1,0 +1,17 @@
+{
+  "authors": [],
+  "files": {
+    "solution": [
+      "TwelveDays.roc"
+    ],
+    "test": [
+      "twelve-days-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Output the lyrics to 'The Twelve Days of Christmas'.",
+  "source": "Wikipedia",
+  "source_url": "https://en.wikipedia.org/wiki/The_Twelve_Days_of_Christmas_(song)"
+}

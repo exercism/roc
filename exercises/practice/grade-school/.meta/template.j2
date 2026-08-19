@@ -1,0 +1,50 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import {{ exercise | to_pascal }} exposing [{{ properties | map("to_snake") | join(", ") }}]
+
+{%- macro student_grade(name, grade) -%}
+{ name: {{ name | to_roc }}, grade: {{ grade }} }
+{%- endmacro %}
+
+{% macro render_cases(cases) %}
+{%- for case in cases %}
+{%- if "cases" in case %}
+{{ render_cases(case["cases"]) }}
+{%- else %}
+# {{ case["description"] }}
+expect {
+    {%- if case["input"]["students"] %}
+    new_school = GradeSchool.empty
+    { results{% if case["property"] != "add" %}: _{% endif %}, updated_school: {% if case["property"] == "add" %}_{% else %}grade_school{% endif %} } = new_school.add([
+        {%- for name, grade in case["input"]["students"] -%}
+        {{ student_grade(name, grade) }},
+        {%- endfor -%}
+    ])
+    {%- else %}
+    grade_school = GradeSchool.empty
+    {%- endif %}
+    {%- if case["property"] == "roster" %}
+    result = grade_school.roster()
+    result == {{ case["expected"] | to_roc }}
+    {%- elif case["property"] == "grade" %}
+    result = grade_school.grade({{ case["input"]["desiredGrade"] }})
+    result == {{ case["expected"] | to_roc }}
+    {%- elif case["property"] == "add" %}
+    results == [
+        {%- for is_ok in case["expected"] -%}
+        {% if is_ok %}Accepted{% else %}Rejected{% endif %},
+        {%- endfor -%}
+    ]
+    {%- else %}
+    ERROR: TEST NOT IMPLEMENTED
+    {%- endif %}
+}
+
+{% endif %}
+{%- endfor %}
+{% endmacro %}
+
+{{ render_cases(cases) }}
+{{ macros.footer() }}

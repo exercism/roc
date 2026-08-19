@@ -22,7 +22,7 @@ expect {
 	_result = CircularBuffer.create({ capacity: 1 })
 		.write(1)?
 		.read()?
-		-> expect_value(1)
+		|> expect_value(1)
 
 	Bool.True
 }
@@ -32,7 +32,7 @@ expect {
 	result = CircularBuffer.create({ capacity: 1 })
 		.write(1)?
 		.read()?
-		-> expect_value(1)
+		|> expect_value(1)
 		.read()
 
 	result == Err(BufferEmpty)
@@ -44,9 +44,9 @@ expect {
 		.write(1)?
 		.write(2)?
 		.read()?
-		-> expect_value(1)
+		|> expect_value(1)
 		.read()?
-		-> expect_value(2)
+		|> expect_value(2)
 
 	Bool.True
 }
@@ -65,10 +65,10 @@ expect {
 	_result = CircularBuffer.create({ capacity: 1 })
 		.write(1)?
 		.read()?
-		-> expect_value(1)
+		|> expect_value(1)
 		.write(2)?
 		.read()?
-		-> expect_value(2)
+		|> expect_value(2)
 
 	Bool.True
 }
@@ -79,12 +79,12 @@ expect {
 		.write(1)?
 		.write(2)?
 		.read()?
-		-> expect_value(1)
+		|> expect_value(1)
 		.write(3)?
 		.read()?
-		-> expect_value(2)
+		|> expect_value(2)
 		.read()?
-		-> expect_value(3)
+		|> expect_value(3)
 
 	Bool.True
 }
@@ -106,7 +106,7 @@ expect {
 		.clear()
 		.write(2)?
 		.read()?
-		-> expect_value(2)
+		|> expect_value(2)
 
 	Bool.True
 }
@@ -117,7 +117,7 @@ expect {
 		.clear()
 		.write(1)?
 		.read()?
-		-> expect_value(1)
+		|> expect_value(1)
 
 	Bool.True
 }
@@ -128,9 +128,9 @@ expect {
 		.write(1)?
 		.overwrite(2)
 		.read()?
-		-> expect_value(1)
+		|> expect_value(1)
 		.read()?
-		-> expect_value(2)
+		|> expect_value(2)
 
 	Bool.True
 }
@@ -142,9 +142,9 @@ expect {
 		.write(2)?
 		.overwrite(3)
 		.read()?
-		-> expect_value(2)
+		|> expect_value(2)
 		.read()?
-		-> expect_value(3)
+		|> expect_value(3)
 
 	Bool.True
 }
@@ -156,15 +156,15 @@ expect {
 		.write(2)?
 		.write(3)?
 		.read()?
-		-> expect_value(1)
+		|> expect_value(1)
 		.write(4)?
 		.overwrite(5)
 		.read()?
-		-> expect_value(3)
+		|> expect_value(3)
 		.read()?
-		-> expect_value(4)
+		|> expect_value(4)
 		.read()?
-		-> expect_value(5)
+		|> expect_value(5)
 
 	Bool.True
 }
@@ -178,9 +178,9 @@ expect {
 		.overwrite(3)
 		.overwrite(4)
 		.read()?
-		-> expect_value(3)
+		|> expect_value(3)
 		.read()?
-		-> expect_value(4)
+		|> expect_value(4)
 		.read()
 
 	result == Err(BufferEmpty)
