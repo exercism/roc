@@ -10,10 +10,15 @@ RestApi :: {}.{
 
 	Loan : { lender : Str, borrower : Str, amount : Dec }
 
-	get : Database, { url : Str, payload : Str } -> Try(Str, [Http404(Str), Http422(Str)])
+	get : Database, { url : Str, payload ?: Str } -> Try(Str, [Http404(Str), Http422(Str)])
 	get = |database, { url, payload }| {
 		match url {
-			"/users" | "/users/" => (database |> get_users(payload)).map_err(|_| Http422(payload))
+			"/users" | "/users/" => {
+				match payload {
+					Ok(request_payload) => (database |> get_users(request_payload)).map_err(|_| Http422(request_payload))
+					Err(MissingField) => Ok(users_to_json(database.users))
+				}
+			}
 			bad_url => Err(Http404(bad_url))
 		}
 	}
@@ -36,14 +41,8 @@ RestApi :: {}.{
 
 get_users : RestApi.Database, Str -> Try(Str, [InvalidJson])
 get_users = |database, payload| {
-	users =
-		if payload == "" {
-			database.users
-		} else {
-			names = get_user_names(payload)?
-			database.users
-				.keep_if(|user| names.contains(user.name))
-		}
+	names = get_user_names(payload)?
+	users = database.users.keep_if(|user| names.contains(user.name))
 	Ok(users_to_json(users))
 }
 

@@ -1,5 +1,5 @@
 Clock :: { hour : U8, minute : U8 }.{
-	create : { hour : I64, minute : I64 } -> Clock
+	create : { hour : I64 ?? 0, minute : I64 ?? 0 } -> Clock
 	create = |{ hour, minute }| {
 		crash "Please implement the 'create' function"
 	}
@@ -9,12 +9,12 @@ Clock :: { hour : U8, minute : U8 }.{
 		crash "Please implement the 'to_str' function"
 	}
 
-	add : Clock, { hour : I64, minute : I64 } -> Clock
+	add : Clock, { hour : I64 ?? 0, minute : I64 ?? 0 } -> Clock
 	add = |clock, { hour, minute }| {
 		crash "Please implement the 'add' function"
 	}
 
-	subtract : Clock, { hour : I64, minute : I64 } -> Clock
+	subtract : Clock, { hour : I64 ?? 0, minute : I64 ?? 0 } -> Clock
 	subtract = |clock, { hour, minute }| {
 		crash "Please implement the 'subtract' function"
 	}

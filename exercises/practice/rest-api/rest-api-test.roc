@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rest-api/canonical-data.json
-# File last updated on 2026-08-15
+# File last updated on 2026-08-18
 
 import RestApi exposing [get, post]
 
@@ -12,7 +12,7 @@ import RestApi exposing [get, post]
 expect {
 	database = { users: [] }
 	result_json = database
-		|> get({ url: "/users", payload: "" })?
+		|> get({ url: "/users" })?
 	expected_json = "{\"users\": []}"
 	result_json |> is_equivalent_to(expected_json)?
 }
