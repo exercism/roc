@@ -142,7 +142,7 @@ compare_strings = |string1, string2| {
 	b2 = string2.to_utf8()
 	result =
 		b1.map2(b2, |c1, c2| c1.compare(c2))
-			|> fold_try(
+			.fold_try(
 				Ok(EQ),
 				|_state, cmp| {
 					match cmp {
@@ -155,13 +155,4 @@ compare_strings = |string1, string2| {
 		Ok(_cmp) => b1.len().compare(b2.len())
 		Err(res) => res
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-fold_try = |list, init, func| {
-	var $state = init
-	for item in list {
-		$state = func($state, item)?
-	}
-	Ok($state)
 }

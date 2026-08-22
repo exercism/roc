@@ -120,40 +120,20 @@ compare_strings : Str, Str -> [LT, EQ, GT]
 compare_strings = |string1, string2| {
 	b1 = string1.to_utf8()
 	b2 = string2.to_utf8()
-	cmp_result =
-		List.map2(
-			b1,
-			b2,
-			|c1, c2| if c1 < c2 {
-				LT
-			} else if c1 > c2 {
-				GT
-			} else {
-				EQ
-			},
-		)
-			.fold_until(
-				EQ,
-				|_, cmp| {
+	result =
+		b1.map2(b2, |c1, c2| c1.compare(c2))
+			.fold_try(
+				Ok(EQ),
+				|_state, cmp| {
 					match cmp {
-						EQ => Continue(EQ)
-						res => Break(res)
+						EQ => Ok(EQ)
+						res => Err(res)
 					}
 				},
 			)
-	match cmp_result {
-		EQ => {
-			len1 = List.len(b1)
-			len2 = List.len(b2)
-			if len1 < len2 {
-				LT
-			} else if len1 > len2 {
-				GT
-			} else {
-				EQ
-			}
-		}
-		res => res
+	match result {
+		Ok(_cmp) => b1.len().compare(b2.len())
+		Err(res) => res
 	}
 }
 
