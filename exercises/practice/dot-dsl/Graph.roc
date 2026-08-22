@@ -1,4 +1,16 @@
-Graph :: { title : Str, color : Graph.Color, custom_attributes : Dict(Str, Graph.CustomAttributeValue), nodes : Dict(Str, Graph.Attributes), edges : Dict((Str, Str), Dict(Str, Graph.Attributes)) }.{
+Graph := {
+	title ?: Str,
+	color ?: Graph.Color,
+	custom_attributes : Dict(Str, Graph.CustomAttributeValue),
+	nodes : Dict(Str, Graph.Attributes),
+	edges : Dict(Graph.EdgeId, Graph.Attributes),
+}.{
+	is_eq : _
+
+	Color : [Blue, Green]
+
+	Style : [Solid, Dotted]
+
 	CustomAttributeValue : [
 		Text(Str),
 		Int(I64),
@@ -6,18 +18,20 @@ Graph :: { title : Str, color : Graph.Color, custom_attributes : Dict(Str, Graph
 		False,
 	]
 
-	Color : [Blue, Green]
-
-	Style : [Solid, Dotted]
-
 	Attributes : {
-		color : Color,
-		style : Style,
-		label : Str,
+		color ?: Color,
+		style ?: Style,
+		label ?: Str,
 		custom_attributes : Dict(Str, CustomAttributeValue),
 	}
 
+	EdgeId : (Str, Str) # these two node IDs must be ordered alphabetically
+
+	###
+	#
 	# TODO: Define your DSL here then use it to build the graphs below
+	#
+	###
 
 	## empty graph
 	empty_graph : Graph
