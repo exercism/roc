@@ -1,0 +1,22 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import Graph
+
+{% for case in cases -%}
+# {{ case["description"] }}:
+{%- for line in case["input"]["text"] %}
+#     {{ line }}
+{%- endfor %}
+expect {
+    result : Graph
+    result = Graph.{{ plugins.description_to_def(case["description"]) }}
+    expected : Graph
+    expected = {{ plugins.expected_graph(case["expected"]) | to_roc }}
+    result == expected
+}
+
+{% endfor %}
+
+{{ macros.footer() }}

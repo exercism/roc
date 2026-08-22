@@ -1,131 +1,162 @@
-# File last updated on 2024-10-21
-app [main] {
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.15.0/SlwdbJ-3GR7uBWQo6zlmYWNYOxnvo8r6YABXD-45UOw.tar.br",
+# These tests are auto-generated with test data from:
+# https://github.com/exercism/problem-specifications/tree/main/exercises/dot-dsl/canonical-data.json
+# File last updated on 2026-08-21
+
+import Graph
+
+# empty graph:
+#     graph {
+#     }
+expect {
+	result : Graph
+	result = Graph.empty_graph
+	expected : Graph
+	expected = { nodes: Dict.empty(), edges: Dict.empty(), custom_attributes: Dict.empty() }
+	result == expected
 }
 
-main =
-    Task.ok {}
+# graph with one node:
+#     graph {
+#         a;
+#     }
+expect {
+	result : Graph
+	result = Graph.graph_with_one_node
+	expected : Graph
+	expected = { nodes: Dict.single("a", { custom_attributes: Dict.empty() }), edges: Dict.empty(), custom_attributes: Dict.empty() }
+	result == expected
+}
 
-import DotDsl exposing [
-    buildGraph,
-    dslForRedBgColor,
-    dslForYellowBgColorAndColoredNodesABC,
-    dslForGreenTriangleBCD,
-    dslForDottedRedEdgeBC,
-]
+# graph with one node with attribute:
+#     graph {
+#         a [color=green];
+#     }
+expect {
+	result : Graph
+	result = Graph.graph_with_one_node_with_attribute
+	expected : Graph
+	expected = { nodes: Dict.single("a", { custom_attributes: Dict.empty(), color: Green }), edges: Dict.empty(), custom_attributes: Dict.empty() }
+	result == expected
+}
 
-## The following function is a temporary workaround for Roc issue #7144:
-## comparing records containing dicts may return the wrong result depending on
-## the internal order of the dict data, so we have to extract the dicts and
-## compare them directly.
-isEq = \graph1, graph2 ->
-    (graph1.bgColor == graph2.bgColor)
-    && (graph1.nodes == graph2.nodes)
-    && (graph1.edges == graph2.edges)
+# graph with one edge:
+#     graph {
+#         a -- b;
+#     }
+expect {
+	result : Graph
+	result = Graph.graph_with_one_edge
+	expected : Graph
+	expected = {
+		nodes: Dict.from_list([
+			("a", id({ custom_attributes: Dict.empty() })),
+			("b", id({ custom_attributes: Dict.empty() })),
+		]),
+		edges: Dict.single(("a", "b"), { custom_attributes: Dict.empty() }),
+		custom_attributes: Dict.empty(),
+	}
+	result == expected
+}
 
-# Can create an empty graph
-expect
-    result = buildGraph []
-    expected = {
-        bgColor: Black,
-        nodes: Dict.empty {},
-        edges: Dict.empty {},
-    }
-    result |> isEq expected
+# graph with one attribute:
+#     graph {
+#         [foo=1];
+#     }
+expect {
+	result : Graph
+	result = Graph.graph_with_one_attribute
+	expected : Graph
+	expected = { nodes: Dict.empty(), edges: Dict.empty(), custom_attributes: Dict.single("foo", Int(1)) }
+	result == expected
+}
 
-# can set the background color
-expect
-    result = buildGraph dslForRedBgColor
-    expected = {
-        bgColor: Red,
-        nodes: Dict.empty {},
-        edges: Dict.empty {},
-    }
-    result |> isEq expected
+# graph with nodes, edges, and attributes:
+#     graph {
+#         [foo=1];
+#         [title="Testing Attrs"];
+#         a [color=green];
+#         b [label="Beta!"];
+#         b -- c;
+#         a -- b [color=blue];
+#         [bar=true];
+#     }
+expect {
+	result : Graph
+	result = Graph.graph_with_nodes_edges_and_attributes
+	expected : Graph
+	expected = {
+		nodes: Dict.from_list([
+			("a", id({ custom_attributes: Dict.empty(), color: Green })),
+			("b", id({ custom_attributes: Dict.empty(), label: "Beta!" })),
+			("c", id({ custom_attributes: Dict.empty() })),
+		]),
+		edges: Dict.from_list([
+			(("a", "b"), id({ custom_attributes: Dict.empty(), color: Blue })),
+			(("b", "c"), id({ custom_attributes: Dict.empty() })),
+		]),
+		title: "Testing Attrs",
+		custom_attributes: Dict.from_list([
+			("foo", id_val(Int(1))),
+			("bar", id_val(True)),
+		]),
+	}
+	result == expected
+}
 
-# can create a graph with yellow background and three separate nodes of various colors
-expect
-    result = buildGraph dslForYellowBgColorAndColoredNodesABC
-    expected = {
-        bgColor: Yellow,
-        nodes: Dict.fromList [
-            ("a", { color: Red }),
-            ("b", { color: Green }),
-            ("c", { color: Blue }),
-        ],
-        edges: Dict.empty {},
-    }
-    result |> isEq expected
+# multiple edges on one line:
+#     graph {
+#         a -- b -- c -- d [style=dotted];
+#     }
+expect {
+	result : Graph
+	result = Graph.multiple_edges_on_one_line
+	expected : Graph
+	expected = {
+		nodes: Dict.from_list([
+			("a", id({ custom_attributes: Dict.empty() })),
+			("b", id({ custom_attributes: Dict.empty() })),
+			("c", id({ custom_attributes: Dict.empty() })),
+			("d", id({ custom_attributes: Dict.empty() })),
+		]),
+		edges: Dict.from_list([
+			(("a", "b"), id({ custom_attributes: Dict.empty(), style: Dotted })),
+			(("b", "c"), id({ custom_attributes: Dict.empty(), style: Dotted })),
+			(("c", "d"), id({ custom_attributes: Dict.empty(), style: Dotted })),
+		]),
+		custom_attributes: Dict.empty(),
+	}
+	result == expected
+}
 
-# can create a graph of a triangle BCD with green nodes and edges (and with the default black background)
-expect
-    result = buildGraph dslForGreenTriangleBCD
-    expected = {
-        bgColor: Black,
-        nodes: Dict.fromList [("b", { color: Green }), ("c", { color: Green }), ("d", { color: Green })],
-        edges: Dict.fromList [
-            (("b", "c"), { color: Green, style: Solid }),
-            (("b", "d"), { color: Green, style: Solid }),
-            (("c", "d"), { color: Green, style: Solid }),
-        ],
-    }
-    result |> isEq expected
+# only 1 edge between nodes:
+#     graph {
+#         a -- b;
+#         a -- b;
+#         b -- a [color=blue];
+#     }
+expect {
+	result : Graph
+	result = Graph.only_1_edge_between_nodes
+	expected : Graph
+	expected = {
+		nodes: Dict.from_list([
+			("a", id({ custom_attributes: Dict.empty() })),
+			("b", id({ custom_attributes: Dict.empty() })),
+		]),
+		edges: Dict.single(("a", "b"), { custom_attributes: Dict.empty(), color: Blue }),
+		custom_attributes: Dict.empty(),
+	}
+	result == expected
+}
 
-# creating an edge automatically creates the connected nodes if needed, black by default
-expect
-    result = buildGraph dslForDottedRedEdgeBC
-    expected = {
-        bgColor: Black,
-        # default to black background
-        nodes: Dict.fromList [("b", { color: Black }), ("c", { color: Black })],
-        edges: Dict.fromList [(("b", "c"), { color: Red, style: Dotted })],
-    }
-    result |> isEq expected
+# This is a temporary workaround for https://github.com/roc-lang/roc/issues/10886
+id : Graph.Attributes -> Graph.Attributes
+id = |x| x
 
-# DSL commands can be chained, and existing nodes and edges get updated in the given order
-expect
-    allCommands =
-        dslForYellowBgColorAndColoredNodesABC
-        |> List.concat dslForGreenTriangleBCD
-        |> List.concat dslForDottedRedEdgeBC
-        |> List.concat dslForRedBgColor
-    result = buildGraph allCommands
-    expected = {
-        bgColor: Red,
-        nodes: Dict.fromList [
-            ("a", { color: Red }),
-            ("b", { color: Green }),
-            ("c", { color: Green }),
-            ("d", { color: Green }),
-        ],
-        edges: Dict.fromList [
-            (("b", "c"), { color: Red, style: Dotted }),
-            (("b", "d"), { color: Green, style: Solid }),
-            (("c", "d"), { color: Green, style: Solid }),
-        ],
-    }
-    result |> isEq expected
+id_val : Graph.CustomAttributeValue -> Graph.CustomAttributeValue
+id_val = |x| x
 
-# Running the same DSL commands in a different order changes the result
-expect
-    allCommands =
-        dslForDottedRedEdgeBC
-        |> List.concat dslForRedBgColor
-        |> List.concat dslForGreenTriangleBCD
-        |> List.concat dslForYellowBgColorAndColoredNodesABC
-    result = buildGraph allCommands
-    expected = {
-        bgColor: Yellow,
-        nodes: Dict.fromList [
-            ("a", { color: Red }),
-            ("b", { color: Green }),
-            ("c", { color: Blue }),
-            ("d", { color: Green }),
-        ],
-        edges: Dict.fromList [
-            (("b", "c"), { color: Green, style: Solid }),
-            (("b", "d"), { color: Green, style: Solid }),
-            (("c", "d"), { color: Green, style: Solid }),
-        ],
-    }
-    result |> isEq expected
+# This program is only used to run tests with `roc test`, so main! does nothing.
+main! = |_args| {
+	Ok({})
+}
