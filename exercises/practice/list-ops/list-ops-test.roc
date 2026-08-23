@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/list-ops/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-23
 
 import ListOps exposing [concat, join, filter, len, map, fold, fold_rev, reverse]
 
@@ -120,7 +120,7 @@ expect {
 
 # direction dependent function applied to non-empty list
 expect {
-	result = [1, 2, 3, 4] |> fold(24, |acc, el| el / acc) |> round
+	result = [1, 2, 3, 4] |> fold(24, |acc, el| el / acc) |> round({ step: 0.001 })
 	result == 64
 }
 
@@ -142,7 +142,7 @@ expect {
 
 # direction dependent function applied to non-empty list
 expect {
-	result = [1, 2, 3, 4] |> fold_rev(24, |acc, el| el / acc) |> round
+	result = [1, 2, 3, 4] |> fold_rev(24, |acc, el| el / acc) |> round({ step: 0.001 })
 	result == 9
 }
 
@@ -168,14 +168,9 @@ expect {
 	result == [[4, 5, 6], [], [3], [1, 2]]
 }
 
-round : Dec -> Dec
-round = |value| {
-	pow = 1000.0
-	(
-		(value * pow + 0.5).to_u64_try() ?? {
-			crash "Unreachable"
-		}
-	).to_dec() / pow
+round : Dec, { step : Dec ?? 1.0 } -> Dec
+round = |value, { step }| {
+	((value / step).round_to_i128().to_dec_try() ?? crash "Unreachable") * step
 }
 
 # This program is only used to run tests with `roc test`, so main! does nothing.

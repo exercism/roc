@@ -15,7 +15,7 @@ SpaceAge :: {}.{
 		period_in_earth_years = orbital_period_in_earth_years(planet)
 		period_in_seconds = period_in_earth_years * 365.25 * 24 * 60 * 60
 		planet_years = seconds / period_in_seconds
-		round(planet_years)
+		round(planet_years, { step: 0.01 })
 	}
 }
 
@@ -33,12 +33,7 @@ orbital_period_in_earth_years = |planet| {
 }
 
 # The following function will soon be available in Roc's builtins
-round : Dec -> Dec
-round = |value| {
-	pow = 100.0
-	(
-		(value * pow + 0.5).to_u64_try() ?? {
-			crash "Unreachable"
-		}
-	).to_dec() / pow
+round : Dec, { step: Dec ?? 1.0 } -> Dec
+round = |value, { step }| {
+    ((value / step).round_to_i128().to_dec_try() ?? crash "Unreachable") * step
 }
