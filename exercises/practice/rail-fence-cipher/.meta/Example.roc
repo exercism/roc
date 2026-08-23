@@ -13,13 +13,12 @@ RailFenceCipher :: {}.{
 encoded_indices : U64, U64 -> List(U64)
 encoded_indices = |len, rails| {
 	indices = (0..<len).iter() |> List.from_iter
-	(0..<rails)
-		.iter()
-		|> join_map(
+	List.from_iter((0..<rails).iter())
+		.join_map(
 			|rail| {
 				period = 2 * (rails - 1)
 				indices
-					|> join_map(
+					.join_map(
 						|index| {
 							to_rail = index % period
 							if to_rail == rail or to_rail == period - rail {
@@ -68,16 +67,4 @@ reorder_with = |message, get_indices, rails| {
 			}
 		}
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-join_map : i, (a -> j) -> List(b) where [i.iter : i -> Iter(a), j.iter : j -> Iter(b)]
-join_map = |list, func| {
-	var $state = []
-	for item in list {
-		for subitem in func(item) {
-			$state = $state.append(subitem)
-		}
-	}
-	$state
 }

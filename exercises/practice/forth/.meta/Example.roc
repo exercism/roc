@@ -189,7 +189,7 @@ is_builtin = |token| {
 flatten_defs : List(Str), Defs -> List(Str)
 flatten_defs = |tokens, defs| {
 	tokens
-		|> join_map(
+		.join_map(
 			|token| {
 				match defs.get(token) {
 					Ok(body) => body
@@ -280,16 +280,4 @@ to_lower = |str| {
 			crash "There was an unexpected error converting back to Str"
 		}
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-join_map : i, (a -> j) -> List(b) where [i.iter : i -> Iter(a), j.iter : j -> Iter(b)]
-join_map = |list, func| {
-	var $state = []
-	for item in list {
-		for subitem in func(item) {
-			$state = $state.append(subitem)
-		}
-	}
-	$state
 }

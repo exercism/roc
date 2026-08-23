@@ -31,9 +31,8 @@ SaddlePoints :: {}.{
 
 		smallest_trees_north_south : Set(Position)
 		smallest_trees_north_south =
-			(0..<num_columns)
-				.iter()
-				|> join_map(
+			List.from_iter((0..<num_columns).iter())
+				.join_map(
 					|column_index| {
 						column : List({ height : U8, row_index : U64 })
 						column =
@@ -57,16 +56,4 @@ SaddlePoints :: {}.{
 
 		tallest_trees_east_west.intersection(smallest_trees_north_south)
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-join_map : i, (a -> j) -> List(b) where [i.iter : i -> Iter(a), j.iter : j -> Iter(b)]
-join_map = |list, func| {
-	var $state = []
-	for item in list {
-		for subitem in func(item) {
-			$state = $state.append(subitem)
-		}
-	}
-	$state
 }

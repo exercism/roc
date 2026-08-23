@@ -114,7 +114,7 @@ has_north_south_path = |board, stone| {
 					} else {
 						neighbors = {
 							[(-1, 0), (1, 0), (0, -1), (1, -1), (-1, 1), (0, 1)]
-								|> join_map(
+								.join_map(
 									|(dx, dy)| {
 										nx = (
 											x.to_i64_try() ?? {
@@ -169,6 +169,3 @@ has_north_south_path = |board, stone| {
 	}
 	has_path_to_south(north_stones, Set.empty())
 }
-
-# The following function should soon be available in Roc's builtins
-join_map = |list, func| list.map(func).join()

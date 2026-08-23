@@ -36,7 +36,7 @@ RunLengthEncoding :: {}.{
 		state_to_str = |state| state.chars |> Str.from_utf8
 		string
 			.to_utf8()
-			|> fold_try(
+			.fold_try(
 				{ chars: [], digits: [] },
 				|state, char| {
 					if char >= '0' and char <= '9' {
@@ -56,14 +56,4 @@ RunLengthEncoding :: {}.{
 			|> state_to_str
 
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-fold_try : i, b, (b, a -> Try(b, err)) -> Try(b, err) where [i.iter : i -> Iter(a)]
-fold_try = |list, init, func| {
-	var $state = init
-	for item in list {
-		$state = func($state, item)?
-	}
-	Ok($state)
 }

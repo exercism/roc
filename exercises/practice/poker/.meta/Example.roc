@@ -14,7 +14,7 @@ Poker :: {}.{
 			},
 		)
 		List.map2(hands, ranks, |hand, rank| { hand, rank })
-			|> join_map(
+			.join_map(
 				|res| {
 					{ hand, rank } = res
 					if rank == top_rank {
@@ -158,8 +158,6 @@ get_rank = |hand| {
 }
 
 # The following functions should soon be available in Roc's builtins
-join_map = |list, func| list.map(func).join()
-
 sort_asc = |list| {
 	list.sort_with(|a, b| a.compare(b))
 }

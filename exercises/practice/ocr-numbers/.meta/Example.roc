@@ -9,7 +9,7 @@ OcrNumbers :: {}.{
 			digits_str =
 				(
 					grid_chars
-						|> chunks_of(4)
+						.chunks_of(4)
 				).map(
 					|row_group| {
 						get_digit_grids(row_group, size.width)
@@ -55,7 +55,7 @@ check_size = |grid_chars| {
 ## Given four rows from the full grid, return the 3x4 grid for each digit
 get_digit_grids : List(List(U8)), U64 -> List(List(List(U8)))
 get_digit_grids = |row_group, full_grid_width| {
-	chunked_rows = row_group.map(|row| row |> chunks_of(3))
+	chunked_rows = row_group.map(|row| row.chunks_of(3))
 	num_horizontal_chunks = full_grid_width // 3
 	(0..<num_horizontal_chunks)
 		.iter()
@@ -92,23 +92,4 @@ identify_digit = |digit_grid| {
 		[[' ', '_', ' '], ['|', '_', '|'], [' ', '_', '|'], [' ', ' ', ' ']] => "9"
 		_ => "?"
 	}
-}
-
-# The following functions should soon be available in Roc's builtins
-chunks_of : i, b -> List(List(a))
-	where [i.iter : i -> Iter(a), b.to_u64 : b -> U64]
-chunks_of = |list, size| {
-	var $state = []
-	var $chunk = []
-	for item in list {
-		$chunk = $chunk.append(item)
-		if $chunk.len() == size.to_u64() {
-			$state = $state.append($chunk)
-			$chunk = []
-		}
-	}
-	if $chunk.len() > 0 {
-		$state = $state.append($chunk)
-	}
-	$state
 }

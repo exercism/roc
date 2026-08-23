@@ -36,10 +36,10 @@ expect {
     result = {{ case["input"]["list"] | to_roc }}|>map({{ function_map[case["input"]["function"]] }})
     result == {{ case["expected"] }}
 {%- elif case["property"] == "foldl" %}
-    result = {{ case["input"]["list"] | to_roc }}|>fold({{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %} |> round(){% endif %}
+    result = {{ case["input"]["list"] | to_roc }}|>fold({{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %} |> round({}){% endif %}
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "foldr" %}
-    result = {{ case["input"]["list"] | to_roc }}|>fold_rev({{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %} |> round(){% endif %}
+    result = {{ case["input"]["list"] | to_roc }}|>fold_rev({{ case["input"]["initial"] }}, {{ function_map[case["input"]["function"]] }}){% if "/" in function_map[case["input"]["function"]] %} |> round({}){% endif %}
     result == {{ case["expected"] | to_roc }}
 {%- elif case["property"] == "reverse" %}
     result = {{ case["input"]["list"] | to_roc }}|>reverse()
@@ -52,15 +52,9 @@ expect {
 {% endfor -%}
 {% endfor -%}
 
-# The following function will soon be available in Roc's builtins
-round : Dec -> Dec
-round = |value| {
-	pow = 1000.0
-	(
-		(value * pow + 0.5).to_u64_try() ?? {
-			crash "Unreachable"
-		}
-	).to_dec() / pow
+round : Dec, { step: Dec ?? 0.001 } -> Dec
+round = |value, { step }| {
+    ((value / step).round_to_i128().to_dec_try() ?? crash "Unreachable") * step
 }
 
 {{ macros.footer() }}

@@ -62,7 +62,7 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 		maybe_result = (
 			phrase
 				.to_utf8()
-				|> join_map(
+				.join_map(
 					|char| {
 						if char >= '0' and char <= '9' {
 							[char]
@@ -86,8 +86,8 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 						}
 					},
 				)
-				|> chunks_of(group_length)
-				|> intersperse([' '])
+				.chunks_of(group_length)
+				.intersperse([' '])
 		).join()
 			|> Str.from_utf8
 		match maybe_result {
@@ -125,30 +125,3 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 			|> Str.from_utf8
 	}
 }
-
-# The following functions should soon be available in Roc's builtins
-chunks_of = |list, size| {
-	var $state = []
-	var $chunk = []
-	for item in list {
-		$chunk = $chunk.append(item)
-		if $chunk.len() == size.to_u64() {
-			$state = $state.append($chunk)
-			$chunk = []
-		}
-	}
-	if $chunk.len() > 0 {
-		$state = $state.append($chunk)
-	}
-	$state
-}
-
-intersperse = |list, sep| {
-	var $res = []
-	for item in list {
-		$res = $res.concat([item, sep])
-	}
-	$res.drop_last(1)
-}
-
-join_map = |list, func| list.map(func).join()

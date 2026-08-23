@@ -5,7 +5,7 @@ CryptoSquare :: {}.{
 			(
 				text
 					.to_utf8()
-					|> join_map(
+					.join_map(
 						|char| {
 							if (char >= 'a' and char <= 'z') or (char >= '0' and char <= '9') {
 								[char]
@@ -24,7 +24,7 @@ CryptoSquare :: {}.{
 		}
 		length = chars.len()
 		width = length |> sqrt_ceiling # to_f64().sqrt().ceiling().to_u64()
-		rows = chars |> chunks_of(width)
+		rows = chars.chunks_of(width)
 
 		if width == 0 {
 			""
@@ -54,22 +54,3 @@ sqrt_ceiling = |n| {
 	}
 	$i
 }
-
-# The following function should soon be available in Roc's builtins
-chunks_of = |list, size| {
-	var $state = []
-	var $chunk = []
-	for item in list {
-		$chunk = $chunk.append(item)
-		if $chunk.len() == size.to_u64() {
-			$state = $state.append($chunk)
-			$chunk = []
-		}
-	}
-	if $chunk.len() > 0 {
-		$state = $state.append($chunk)
-	}
-	$state
-}
-
-join_map = |list, func| list.map(func).join()

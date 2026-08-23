@@ -172,12 +172,3 @@ total_pins = |frame| {
 		Strike => 10
 	}
 }
-
-# The following function should soon be available in Roc's builtins
-fold_try = |list, init, func| {
-	var $state = init
-	for item in list {
-		$state = func($state, item)?
-	}
-	Ok($state)
-}

@@ -17,7 +17,7 @@ ProteinTranslation :: {}.{
 				}
 			}
 		}
-		help([], rna.to_utf8() |> chunks_of(3))
+		help([], rna.to_utf8().chunks_of(3))
 	}
 }
 
@@ -43,23 +43,4 @@ to_instruction = |codon| {
 		['U', 'G', 'A'] => Ok(Stop)
 		_ => Err(InvalidCodon(codon))
 	}
-}
-
-# The following functions should soon be available in Roc's builtins
-chunks_of : i, b -> List(List(a))
-	where [i.iter : i -> Iter(a), b.to_u64 : b -> U64]
-chunks_of = |list, size| {
-	var $state = []
-	var $chunk = []
-	for item in list {
-		$chunk = $chunk.append(item)
-		if $chunk.len() == size.to_u64() {
-			$state = $state.append($chunk)
-			$chunk = []
-		}
-	}
-	if $chunk.len() > 0 {
-		$state = $state.append($chunk)
-	}
-	$state
 }

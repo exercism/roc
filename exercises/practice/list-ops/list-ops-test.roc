@@ -168,7 +168,6 @@ expect {
 	result == [[4, 5, 6], [], [3], [1, 2]]
 }
 
-# The following function will soon be available in Roc's builtins
 round : Dec -> Dec
 round = |value| {
 	pow = 1000.0

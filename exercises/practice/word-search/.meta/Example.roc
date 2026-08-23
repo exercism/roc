@@ -17,17 +17,15 @@ WordSearch :: {}.{
 		).to_i64_try() ?? 0
 
 		# for all possible starting positions:
-		(0..<width)
-			.iter()
-			|> join_map(
+		List.from_iter((0..<width).iter())
+			.join_map(
 				|column_index| {
-					(0..<height)
-						.iter()
-						|> join_map(
+					List.from_iter((0..<height).iter())
+						.join_map(
 							|row_index| {
 								# for all possible directions:
 								[(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
-									|> join_map(
+									.join_map(
 										|dir| {
 											(dir_column, dir_row) = dir
 											start = { column: column_index + 1, row: row_index + 1 }
@@ -92,16 +90,4 @@ get_char : List(List(U8)), U64, U64 -> U8
 get_char = |grid, column_index, row_index| {
 	row = grid.get(row_index) ?? []
 	row.get(column_index) ?? ' '
-}
-
-# The following function should soon be available in Roc's builtins
-join_map : i, (a -> j) -> List(b) where [i.iter : i -> Iter(a), j.iter : j -> Iter(b)]
-join_map = |list, func| {
-	var $state = []
-	for item in list {
-		for subitem in func(item) {
-			$state = $state.append(subitem)
-		}
-	}
-	$state
 }
