@@ -116,14 +116,7 @@ def format_file(path: Path) -> NoReturn:
 
 
 def drop_timestamp(lines):
-    def drop(line):
-        try:
-            index = line.index(GENERATED_ON_PREFIX)
-            return line[:index].rstrip()
-        except ValueError:
-            return line
-
-    return [drop(line) for line in lines]
+    return [line for line in lines if not line.startswith(GENERATED_ON_PREFIX)]
 
 
 def check_template(slug: str, tests_path: Path, tmpfile: Path):
@@ -229,9 +222,22 @@ def generate_exercise(
         if check:
             return check_template(slug, tests_path, tmpfile)
         else:
-            logger.debug(f"{slug}: moving tmp file {tmpfile}->{tests_path}")
-            shutil.move(tmpfile, tests_path)
-            print(f"{slug} generated at {tests_path}")
+            needs_update = True
+            if tests_path.is_file():
+                with tests_path.open() as f:
+                    current_lines = drop_timestamp(f.readlines())
+                with tmpfile.open() as f:
+                    rendered_lines = drop_timestamp(f.readlines())
+                if current_lines == rendered_lines:
+                    needs_update = False
+
+            if needs_update:
+                logger.debug(f"{slug}: moving tmp file {tmpfile}->{tests_path}")
+                shutil.move(tmpfile, tests_path)
+                print(f"{slug} generated at {tests_path}")
+            else:
+                logger.debug(f"{slug}: no changes; skipping update")
+                tmpfile.unlink()
     except (TypeError, UndefinedError, SyntaxError) as e:
         logger.debug(str(e))
         logger.error(f"{slug}: generation failed")
