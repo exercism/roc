@@ -2,7 +2,7 @@ Sublist :: {}.{
 	sublist : List(U8), List(U8) -> [Equal, Sublist, Superlist, Unequal]
 	sublist = |list1, list2| {
 		match list1.len().compare(list2.len()) {
-			GT => {
+			SecondBeforeFirst => {
 				match sublist(list2, list1) {
 					Sublist => Superlist
 					Unequal => Unequal
@@ -15,7 +15,7 @@ Sublist :: {}.{
 				}
 			}
 
-			EQ => {
+			Equivalent => {
 				if list1 == list2 {
 					Equal
 				} else {
@@ -23,7 +23,7 @@ Sublist :: {}.{
 				}
 			}
 
-			LT => {
+			FirstBeforeSecond => {
 				length_diff = list2.len() - list1.len()
 				maybe_equal_index =
 					(0..=length_diff)

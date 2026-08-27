@@ -155,19 +155,19 @@ expect {
 }
 
 # # Compare two dominoes in lexicographical order, for example (3, 1) > (2, 5)
-compare_dominoes : (U8, U8), (U8, U8) -> [LT, GT, EQ]
+compare_dominoes : (U8, U8), (U8, U8) -> [FirstBeforeSecond, SecondBeforeFirst, Equivalent]
 compare_dominoes = |a, b| {
 	if a.0 < b.0 {
-		LT
+		FirstBeforeSecond
 	} else if a.0 > b.0 {
-		GT
+		SecondBeforeFirst
 	} else
 		if a.1 < b.1 {
-			LT
+			FirstBeforeSecond
 		} else if a.1 > b.1 {
-			GT
+			SecondBeforeFirst
 		} else {
-			EQ
+			Equivalent
 		}
 }
 

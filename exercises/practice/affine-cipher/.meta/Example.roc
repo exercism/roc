@@ -35,11 +35,11 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 					.sort_with(
 						|{ encoded: encoded1, decoded_index: _ }, { encoded: encoded2, decoded_index: _ }| {
 							if encoded1 < encoded2 {
-								LT
+								FirstBeforeSecond
 							} else if encoded1 > encoded2 {
-								GT
+								SecondBeforeFirst
 							} else {
-								EQ
+								Equivalent
 							}
 						},
 					)

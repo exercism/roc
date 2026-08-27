@@ -141,17 +141,17 @@ Graph := {
 	}
 }
 
-compare_strings : Str, Str -> [LT, EQ, GT]
+compare_strings : Str, Str -> [FirstBeforeSecond, Equivalent, SecondBeforeFirst]
 compare_strings = |string1, string2| {
 	b1 = string1.to_utf8()
 	b2 = string2.to_utf8()
 	result =
 		b1.map2(b2, |c1, c2| c1.compare(c2))
 			.fold_try(
-				Ok(EQ),
+				Ok(Equivalent),
 				|_state, cmp| {
 					match cmp {
-						EQ => Ok(EQ)
+						Equivalent => Ok(Equivalent)
 						res => Err(res)
 					}
 				},
