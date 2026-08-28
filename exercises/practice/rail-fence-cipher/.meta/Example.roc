@@ -39,11 +39,11 @@ decoded_indices = |len, rails| {
 		.sort_with(
 			|{ encoded: encoded1, decoded: _ }, { encoded: encoded2, decoded: _ }| {
 				if encoded1 < encoded2 {
-					FirstBeforeSecond
+					Before
 				} else if encoded1 > encoded2 {
-					SecondBeforeFirst
+					After
 				} else {
-					Equivalent
+					Same
 				}
 			},
 		)

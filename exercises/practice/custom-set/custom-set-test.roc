@@ -462,7 +462,7 @@ expect {
 
 # The following function should soon be available in Roc's builtins
 sort_asc = |list| {
-	list.sort_with(|a, b| a.compare(b))
+	list.sort_with(|a, b| a.order_relative_to(b))
 }
 
 # This program is only used to run tests with `roc test`, so main! does nothing.

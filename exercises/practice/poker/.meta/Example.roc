@@ -159,11 +159,11 @@ get_rank = |hand| {
 
 # The following functions should soon be available in Roc's builtins
 sort_asc = |list| {
-	list.sort_with(|a, b| a.compare(b))
+	list.sort_with(|a, b| a.order_relative_to(b))
 }
 
 sort_desc = |list| {
-	list.sort_with(|a, b| b.compare(a))
+	list.sort_with(|a, b| b.order_relative_to(a))
 }
 
 take_last = |list, n| {

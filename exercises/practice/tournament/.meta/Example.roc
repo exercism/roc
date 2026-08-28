@@ -91,9 +91,9 @@ tally_dict_to_table = |tally_dict| {
 					p1 = team_tally1.p
 					p2 = team_tally2.p
 					if p1 < p2 {
-						SecondBeforeFirst
+						After
 					} else if p1 > p2 {
-						FirstBeforeSecond
+						Before
 					} else {
 						compare_strings(team1, team2)
 					}
@@ -116,23 +116,23 @@ tally_dict_to_table = |tally_dict| {
 header : Str
 header = "Team                           | MP |  W |  D |  L |  P"
 
-compare_strings : Str, Str -> [FirstBeforeSecond, Equivalent, SecondBeforeFirst]
+compare_strings : Str, Str -> [Before, Same, After]
 compare_strings = |string1, string2| {
 	b1 = string1.to_utf8()
 	b2 = string2.to_utf8()
 	result =
-		b1.map2(b2, |c1, c2| c1.compare(c2))
+		b1.map2(b2, |c1, c2| c1.order_relative_to(c2))
 			.fold_try(
-				Ok(Equivalent),
+				Ok(Same),
 				|_state, cmp| {
 					match cmp {
-						Equivalent => Ok(Equivalent)
+						Same => Ok(Same)
 						res => Err(res)
 					}
 				},
 			)
 	match result {
-		Ok(_cmp) => b1.len().compare(b2.len())
+		Ok(_cmp) => b1.len().order_relative_to(b2.len())
 		Err(res) => res
 	}
 }

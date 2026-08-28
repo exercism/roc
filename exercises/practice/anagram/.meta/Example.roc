@@ -45,19 +45,19 @@ compare_graphemes = |g1, g2| {
 			},
 		)
 			.fold_until(
-				Equivalent,
+				Same,
 				|_, (b1, b2)| {
 					if b1 == b2 {
-						Continue(Equivalent)
+						Continue(Same)
 					} else if b1 < b2 {
-						Break(FirstBeforeSecond)
+						Break(Before)
 					} else {
-						Break(SecondBeforeFirst)
+						Break(After)
 					}
 				},
 			)
-	if cmp == Equivalent {
-		s1.len().compare(s2.len())
+	if cmp == Same {
+		s1.len().order_relative_to(s2.len())
 	} else {
 		cmp
 	}

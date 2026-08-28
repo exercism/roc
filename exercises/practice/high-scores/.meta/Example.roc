@@ -17,5 +17,5 @@ HighScores :: {}.{
 
 # The following functions should soon be available in Roc's builtins
 sort_desc = |list| {
-	list.sort_with(|a, b| b.compare(a))
+	list.sort_with(|a, b| b.order_relative_to(a))
 }

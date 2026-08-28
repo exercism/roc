@@ -40,31 +40,31 @@ add_student = |state, student| {
 	}
 }
 
-compare_strings : Str, Str -> [FirstBeforeSecond, Equivalent, SecondBeforeFirst]
+compare_strings : Str, Str -> [Before, Same, After]
 compare_strings = |string1, string2| {
 	b1 = string1.to_utf8()
 	b2 = string2.to_utf8()
 	result =
-		b1.map2(b2, |c1, c2| c1.compare(c2))
+		b1.map2(b2, |c1, c2| c1.order_relative_to(c2))
 			.fold_try(
-				Ok(Equivalent),
+				Ok(Same),
 				|_state, cmp| {
 					match cmp {
-						Equivalent => Ok(Equivalent)
+						Same => Ok(Same)
 						res => Err(res)
 					}
 				},
 			)
 	match result {
-		Ok(_cmp) => b1.len().compare(b2.len())
+		Ok(_cmp) => b1.len().order_relative_to(b2.len())
 		Err(res) => res
 	}
 }
 
 compare_students = |student1, student2| {
-	compare_grades = student1.grade.compare(student2.grade)
+	compare_grades = student1.grade.order_relative_to(student2.grade)
 	match compare_grades {
-		FirstBeforeSecond | SecondBeforeFirst => compare_grades
-		Equivalent => compare_strings(student1.name, student2.name)
+		Before | After => compare_grades
+		Same => compare_strings(student1.name, student2.name)
 	}
 }
