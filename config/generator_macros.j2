@@ -23,6 +23,8 @@ app [main!] {
 {%- for name in imports -%},
     {% if name == "unicode" -%}
     unicode: "https://github.com/roc-lang/unicode/releases/download/4.0.0/3DGC3M4b2pxaRLg4i8cmxWkm2E2WbCPCLntQzf2mkbUV.tar.zst",
+    {%- elif name == "ascii" -%}
+    ascii: "https://github.com/ageron/roc-ascii/releases/download/v0.4.2/3D6JMydSyRWk3oRzG92KaZ6cdqhocn7pvSYehjpuPSvz.tar.zst",
     {%- elif name == "isodate" -%}
     isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.3/9SypUHT4Tn18tJyHyvtt929ByTx15djH3UaKkagRxGwA.tar.zst",
     {%- elif name == "parser" -%}
