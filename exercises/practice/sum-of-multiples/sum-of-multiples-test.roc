@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/sum-of-multiples/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import SumOfMultiples exposing [sum_of_multiples]
 
@@ -98,9 +98,4 @@ expect {
 expect {
 	result = [2, 3, 5, 7, 11] |> sum_of_multiples(10000)
 	result == 39614537
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

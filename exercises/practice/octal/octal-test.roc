@@ -1,4 +1,4 @@
-# File last updated on 2026-06-13
+# File last updated on 2026-08-30
 
 import Octal exposing [parse]
 
@@ -253,9 +253,4 @@ expect {
 expect {
 	result = parse("2000000000000000000000")
 	result.is_err()
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

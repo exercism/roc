@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/two-fer/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import TwoFer exposing [two_fer]
 
@@ -20,9 +20,4 @@ expect {
 expect {
 	result = two_fer((Name("Bob")))
 	result == "One for Bob, one for me."
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

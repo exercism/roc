@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/clock/canonical-data.json
-# File last updated on 2026-08-18
+# File last updated on 2026-08-29
 
 import Clock exposing [create, add, subtract, to_str]
 
@@ -470,9 +470,4 @@ expect {
 	result = clock.subtract({ minute: -9223372036854775808 }).to_str()
 	expected = "18:07"
 	result == expected
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

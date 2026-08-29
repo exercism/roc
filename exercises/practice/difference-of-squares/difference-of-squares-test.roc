@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/difference-of-squares/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import DifferenceOfSquares exposing [square_of_sum, sum_of_squares, difference_of_squares]
 
@@ -68,9 +68,4 @@ expect {
 expect {
 	result = difference_of_squares(100)
 	result == 25164150
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

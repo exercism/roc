@@ -1,8 +1,7 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/sgf-parsing/canonical-data.json
-# File last updated on 2026-08-01
-app [main!] {
-	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.0/F1JVZPYfWP71s8vk6tHcV1Qx1Ef6CZkwswGoCn8VHZmL.tar.zst",
+# File last updated on 2026-08-29
+app [] {
 	parser: "https://github.com/lukewilliamboswell/roc-parser/releases/download/1.1.0/AcowGJvjA8U2gCEf7E8QYNUePBdw7dzdRqSvERKaJZ53.tar.zst",
 }
 
@@ -312,9 +311,4 @@ expect {
 		children: [],
 	}
 	result == Ok(expected)
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

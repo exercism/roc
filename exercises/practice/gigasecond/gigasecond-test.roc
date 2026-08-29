@@ -1,8 +1,7 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/gigasecond/canonical-data.json
-# File last updated on 2026-08-01
-app [main!] {
-	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.0/F1JVZPYfWP71s8vk6tHcV1Qx1Ef6CZkwswGoCn8VHZmL.tar.zst",
+# File last updated on 2026-08-29
+app [] {
 	isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.3/9SypUHT4Tn18tJyHyvtt929ByTx15djH3UaKkagRxGwA.tar.zst",
 }
 
@@ -36,9 +35,4 @@ expect {
 expect {
 	result = add("2015-01-24T23:59:59")
 	result == "2046-10-03T01:46:39"
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

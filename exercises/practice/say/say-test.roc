@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/say/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import Say exposing [say]
 
@@ -127,9 +127,4 @@ expect {
 expect {
 	result = say(1000000000000)
 	result.is_err()
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

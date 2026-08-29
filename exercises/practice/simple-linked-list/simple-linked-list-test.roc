@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/simple-linked-list/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import SimpleLinkedList
 
@@ -295,9 +295,4 @@ expect_peek = |list, expected_peek| {
 		Ok(actual_peek) => if actual_peek == expected_peek Ok(list) else Err(UnexpectedPeek(actual_peek))
 		Err(LinkedListWasEmpty) => Err(LinkedListWasEmpty)
 	}
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

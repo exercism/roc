@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/strain/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import Strain exposing [keep, discard]
 
@@ -114,9 +114,4 @@ expect {
 	result = list |> discard(|x| x.contains(5))
 	expected = [[1, 2, 3], [2, 1, 2], [2, 2, 1]]
 	result == expected
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

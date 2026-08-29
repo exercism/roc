@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/variable-length-quantity/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import VariableLengthQuantity exposing [encode, decode]
 
@@ -256,9 +256,4 @@ expect {
 	result = decode(bytes)
 	expected = Ok([8192, 1193046, 268435455, 0, 16383, 16384])
 	result == expected
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

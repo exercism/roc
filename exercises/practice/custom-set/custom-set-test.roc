@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/custom-set/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import CustomSet
 
@@ -463,9 +463,4 @@ expect {
 # The following function should soon be available in Roc's builtins
 sort_asc = |list| {
 	list.sort_with(|a, b| a.order_relative_to(b))
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

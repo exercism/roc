@@ -1,8 +1,7 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/dnd-character/canonical-data.json
-# File last updated on 2026-08-18
-app [main!] {
-	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.0/F1JVZPYfWP71s8vk6tHcV1Qx1Ef6CZkwswGoCn8VHZmL.tar.zst",
+# File last updated on 2026-08-29
+app [] {
 	random: "https://github.com/kili-ilo/roc-random/releases/download/0.9.2/2ZXLX8WRqrosGu1V3VL5aXqgtfTRvJmjFPx8a26ecVmc.tar.zst",
 }
 
@@ -123,9 +122,4 @@ expect {
 					and character.wisdom >= 3 and character.wisdom <= 18
 						and character.charisma >= 3 and character.charisma <= 18
 							and character.hitpoints == (10.I8 + DndCharacter.modifier(character.constitution)).to_u8_try() ?? 1 # minimum HP = 1
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

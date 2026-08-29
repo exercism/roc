@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/phone-number/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import PhoneNumber exposing [clean]
 
@@ -115,9 +115,4 @@ expect {
 expect {
 	result = clean("1 (223) 156-7890")
 	result.is_err()
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

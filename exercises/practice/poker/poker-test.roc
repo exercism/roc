@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/poker/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import Poker exposing [best_hands]
 
@@ -261,9 +261,4 @@ expect {
 	hands = ["2H 3H 4H 5H 6H", "4D AD 3D 2D 5D"]
 	result = best_hands(hands)
 	result == Ok(["2H 3H 4H 5H 6H"])
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

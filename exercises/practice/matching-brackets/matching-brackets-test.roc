@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/matching-brackets/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import MatchingBrackets exposing [is_paired]
 
@@ -122,9 +122,4 @@ expect {
 expect {
 	result = "\\left(\\begin{array}{cc} \\frac{1}{3} & x\\\\ \\mathrm{e}^{x} &... x^2 \\end{array}\\right)" |> is_paired
 	result == Bool.True
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

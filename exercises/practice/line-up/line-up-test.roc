@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/line-up/canonical-data.json
-# File last updated on 2026-08-18
+# File last updated on 2026-08-29
 
 import LineUp exposing [format]
 
@@ -128,9 +128,4 @@ expect {
 expect {
 	result = format("Elias", 972)
 	result == "Elias, you are the 972nd customer we serve today. Thank you!"
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

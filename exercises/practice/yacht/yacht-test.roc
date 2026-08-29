@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/yacht/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import Yacht exposing [score]
 
@@ -176,9 +176,4 @@ expect {
 expect {
 	result = [2, 2, 2, 2, 2] |> score(Choice)
 	result == 10
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

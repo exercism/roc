@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/largest-series-product/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import LargestSeriesProduct exposing [largest_product]
 
@@ -111,9 +111,4 @@ expect {
 	digits = "1234a5"
 	result = digits |> largest_product(2)
 	result.is_err()
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

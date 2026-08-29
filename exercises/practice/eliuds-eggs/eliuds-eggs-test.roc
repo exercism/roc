@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/eliuds-eggs/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import EliudsEggs exposing [egg_count]
 
@@ -26,9 +26,4 @@ expect {
 expect {
 	result = egg_count(2000000000)
 	result == 13
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

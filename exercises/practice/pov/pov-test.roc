@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/pov/canonical-data.json
-# File last updated on 2026-08-08
+# File last updated on 2026-08-29
 
 import Pov exposing [Tree]
 
@@ -441,9 +441,4 @@ expect {
 	)
 	result = tree.path_to("nonexistent", "x")
 	result == Err(NotFound)
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

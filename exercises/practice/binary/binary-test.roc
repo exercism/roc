@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/binary/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import Binary exposing [decimal]
 
@@ -92,9 +92,4 @@ expect {
 expect {
 	result = decimal("001 nope")
 	result.is_err()
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

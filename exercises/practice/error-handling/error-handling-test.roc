@@ -1,4 +1,4 @@
-# File last updated on 2026-06-13
+# File last updated on 2026-08-30
 
 import ErrorHandling exposing [get_user, parse_user_id, get_page, error_message]
 
@@ -185,9 +185,4 @@ expect {
 	page = get_page("https://example.com/users/42")
 	result = page.map_err(|e| e |> error_message(English))
 	result == Err("User #42 was not found")
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

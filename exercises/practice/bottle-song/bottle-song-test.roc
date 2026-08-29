@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/bottle-song/canonical-data.json
-# File last updated on 2026-08-18
+# File last updated on 2026-08-29
 
 import BottleSong exposing [recite]
 
@@ -134,9 +134,4 @@ expect {
 		\\And if one green bottle should accidentally fall,
 		\\There'll be no green bottles hanging on the wall.
 
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

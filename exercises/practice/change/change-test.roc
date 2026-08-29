@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/change/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import Change exposing [find_fewest_coins]
 
@@ -86,9 +86,4 @@ expect {
 	coins = [5, 10]
 	result = find_fewest_coins(coins, 94)
 	result.is_err()
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

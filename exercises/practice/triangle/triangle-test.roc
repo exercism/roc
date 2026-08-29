@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/triangle/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import Triangle exposing [is_equilateral, is_isosceles, is_scalene]
 
@@ -110,9 +110,4 @@ expect {
 expect {
 	result = is_scalene((0.5.F64, 0.4.F64, 0.6.F64))
 	result == Bool.True
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

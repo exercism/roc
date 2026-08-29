@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/crypto-square/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import CryptoSquare exposing [ciphertext]
 
@@ -66,9 +66,4 @@ expect {
 	result = ciphertext(text)
 	expected = "imtgdvs fearwer mayoogo anouuio ntnnlvt wttddes aohghn  sseoau "
 	result == expected
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

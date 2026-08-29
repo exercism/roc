@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/proverb/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import Proverb exposing [recite]
 
@@ -64,9 +64,4 @@ expect {
 		\\And all for the want of a pin.
 
 	result == expected
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

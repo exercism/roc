@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rail-fence-cipher/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import RailFenceCipher exposing [encode, decode]
 
@@ -58,9 +58,4 @@ expect {
 	result = message |> decode(6)
 	expected = Ok("112358132134558914423337761098715972584418167651094617711286")
 	result == expected
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

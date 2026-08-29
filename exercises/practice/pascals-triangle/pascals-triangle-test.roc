@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/pascals-triangle/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import PascalsTriangle exposing [pascals_triangle]
 
@@ -96,9 +96,4 @@ expect {
 		[1, 9, 36, 84, 126, 126, 84, 36, 9, 1],
 	]
 	result == expected
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

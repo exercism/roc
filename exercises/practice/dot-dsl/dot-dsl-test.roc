@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/dot-dsl/canonical-data.json
-# File last updated on 2026-08-21
+# File last updated on 2026-08-30
 
 import Graph
 
@@ -155,8 +155,3 @@ id = |x| x
 
 id_val : Graph.CustomAttributeValue -> Graph.CustomAttributeValue
 id_val = |x| x
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
-}

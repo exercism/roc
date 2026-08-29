@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/complex-numbers/canonical-data.json
-# File last updated on 2026-08-01
+# File last updated on 2026-08-29
 
 import Complex
 
@@ -378,9 +378,4 @@ is_approx_eq = |x1, x2| {
 		crash "Unreachable"
 	}
 	i1 == i2
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }

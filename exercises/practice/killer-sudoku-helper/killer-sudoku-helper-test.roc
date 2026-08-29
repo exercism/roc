@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/killer-sudoku-helper/canonical-data.json
-# File last updated on 2026-08-18
+# File last updated on 2026-08-29
 
 import KillerSudokuHelper exposing [combinations]
 
@@ -81,9 +81,4 @@ expect {
 expect {
 	result = combinations({ sum: 10, size: 2, exclude: [1, 4] })
 	result == [[2, 8], [3, 7]]
-}
-
-# This program is only used to run tests with `roc test`, so main! does nothing.
-main! = |_args| {
-	Ok({})
 }
