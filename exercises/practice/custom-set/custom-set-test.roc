@@ -439,7 +439,7 @@ expect {
 # an empty set has an empty list of items
 expect {
 	set = CustomSet.from_list([])
-	result = set.to_list() |> sort_asc
+	result = set.to_list().sort()
 	expected = []
 	result == expected
 }
@@ -447,7 +447,7 @@ expect {
 # a set can provide the list of its items
 expect {
 	set = CustomSet.from_list([1, 2, 3, 4])
-	result = set.to_list() |> sort_asc
+	result = set.to_list().sort()
 	expected = [1, 2, 3, 4]
 	result == expected
 }
@@ -455,12 +455,7 @@ expect {
 # duplicate items must be removed
 expect {
 	set = CustomSet.from_list([1, 2, 2, 3, 3, 3, 4, 4, 4, 4])
-	result = set.to_list() |> sort_asc
+	result = set.to_list().sort()
 	expected = [1, 2, 3, 4]
 	result == expected
-}
-
-# The following function should soon be available in Roc's builtins
-sort_asc = |list| {
-	list.sort_with(|a, b| a.order_relative_to(b))
 }

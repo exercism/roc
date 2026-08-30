@@ -71,14 +71,9 @@ score_four_of_a_kind = |dice| {
 
 score_straight : List(U8), List(U8) -> U8
 score_straight = |dice, target| {
-	if sort_asc(dice) == target {
+	if dice.sort() == target {
 		30
 	} else {
 		0
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-sort_asc = |list| {
-	list.sort_with(|a, b| a.order_relative_to(b))
 }

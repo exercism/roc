@@ -50,16 +50,11 @@ expect {
 # {{ case["description"] }}
 expect {
     set = {{ exercise | to_pascal }}.from_list({{ case["input"]["set"] | to_roc }})
-    result = set.to_list()|>sort_asc()
+    result = set.to_list().sort()
     expected = {{ case["expected"] | to_roc }}
     result == expected
 }
 
 {% endfor %}
-
-# The following function should soon be available in Roc's builtins
-sort_asc = |list| {
-	list.sort_with(|a, b| a.order_relative_to(b))
-}
 
 {{ macros.footer() }}

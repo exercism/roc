@@ -11,7 +11,7 @@ CustomSet :: { items : List(U64) }.{
 
 	from_list : List(Item) -> CustomSet
 	from_list = |list| {
-		match sort_asc(list) {
+		match list.sort() {
 			[] => { items: [] }
 			[first, .. as rest] => {
 				state_res = rest.fold(
@@ -55,7 +55,7 @@ CustomSet :: { items : List(U64) }.{
 
 	is_eq : CustomSet, CustomSet -> Bool
 	is_eq = |{ items: items1 }, { items: items2 }| {
-		sort_asc(items1) == sort_asc(items2)
+		items1.sort() == items2.sort()
 	}
 
 	is_subset_of : CustomSet, CustomSet -> Bool
@@ -70,9 +70,4 @@ CustomSet :: { items : List(U64) }.{
 	union = |set1, set2| {
 		set1.to_list().concat(set2.to_list()) |> from_list
 	}
-}
-
-# The following function should soon be available in Roc's builtins
-sort_asc = |list| {
-	list.sort_with(|a, b| a.order_relative_to(b))
 }

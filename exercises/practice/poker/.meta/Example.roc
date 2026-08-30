@@ -85,9 +85,9 @@ parse_suit = |char| {
 
 get_rank : Hand -> U64
 get_rank = |hand| {
-	card_values = sort_asc(hand.map(|c| U8.to_u64(c.value)))
+	card_values = hand.map(|c| U8.to_u64(c.value)).sort()
 	is_consecutive =
-		List.map2(card_values, take_last(card_values, 4), |card1, card2| (card1, card2))
+		List.map2(card_values, card_values.take_last(4), |card1, card2| (card1, card2))
 			.all(
 				|pair| {
 					(card1, card2) = pair
@@ -108,7 +108,7 @@ get_rank = |hand| {
 					},
 				)
 				.map_with_index(|counter, value| counter * 13 + value)
-				|> sort_desc
+				.sort_reversed()
 		).map(|group_rank| { size: group_rank // 13, value: group_rank % 13 + 2 })
 			.drop_if(
 				|group| {
@@ -155,17 +155,4 @@ get_rank = |hand| {
 		}
 
 	category * (13.U64).pow(5) + rank_within_category
-}
-
-# The following functions should soon be available in Roc's builtins
-sort_asc = |list| {
-	list.sort_with(|a, b| a.order_relative_to(b))
-}
-
-sort_desc = |list| {
-	list.sort_with(|a, b| b.order_relative_to(a))
-}
-
-take_last = |list, n| {
-	list.sublist({ start: list.len() - n, len: n })
 }
