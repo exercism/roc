@@ -1,8 +1,8 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/clock/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-08-31
 
-import Clock exposing [create, add, subtract, to_str]
+import Clock
 
 ##
 ## Create a new clock with an initial time
@@ -10,7 +10,7 @@ import Clock exposing [create, add, subtract, to_str]
 
 # on the hour
 expect {
-	clock = create({ hour: 8 })
+	clock = Clock.create({ hour: 8 })
 	result = clock.to_str()
 	expected = "08:00"
 	result == expected
@@ -18,7 +18,7 @@ expect {
 
 # past the hour
 expect {
-	clock = create({ hour: 11, minute: 9 })
+	clock = Clock.create({ hour: 11, minute: 9 })
 	result = clock.to_str()
 	expected = "11:09"
 	result == expected
@@ -26,7 +26,7 @@ expect {
 
 # midnight is zero hours
 expect {
-	clock = create({ hour: 24 })
+	clock = Clock.create({ hour: 24 })
 	result = clock.to_str()
 	expected = "00:00"
 	result == expected
@@ -34,7 +34,7 @@ expect {
 
 # hour rolls over
 expect {
-	clock = create({ hour: 25 })
+	clock = Clock.create({ hour: 25 })
 	result = clock.to_str()
 	expected = "01:00"
 	result == expected
@@ -42,7 +42,7 @@ expect {
 
 # hour rolls over continuously
 expect {
-	clock = create({ hour: 100 })
+	clock = Clock.create({ hour: 100 })
 	result = clock.to_str()
 	expected = "04:00"
 	result == expected
@@ -50,7 +50,7 @@ expect {
 
 # sixty minutes is next hour
 expect {
-	clock = create({ hour: 1, minute: 60 })
+	clock = Clock.create({ hour: 1, minute: 60 })
 	result = clock.to_str()
 	expected = "02:00"
 	result == expected
@@ -58,7 +58,7 @@ expect {
 
 # minutes roll over
 expect {
-	clock = create({ minute: 160 })
+	clock = Clock.create({ minute: 160 })
 	result = clock.to_str()
 	expected = "02:40"
 	result == expected
@@ -66,7 +66,7 @@ expect {
 
 # minutes roll over continuously
 expect {
-	clock = create({ minute: 1723 })
+	clock = Clock.create({ minute: 1723 })
 	result = clock.to_str()
 	expected = "04:43"
 	result == expected
@@ -74,7 +74,7 @@ expect {
 
 # hour and minutes roll over
 expect {
-	clock = create({ hour: 25, minute: 160 })
+	clock = Clock.create({ hour: 25, minute: 160 })
 	result = clock.to_str()
 	expected = "03:40"
 	result == expected
@@ -82,7 +82,7 @@ expect {
 
 # hour and minutes roll over continuously
 expect {
-	clock = create({ hour: 201, minute: 3001 })
+	clock = Clock.create({ hour: 201, minute: 3001 })
 	result = clock.to_str()
 	expected = "11:01"
 	result == expected
@@ -90,7 +90,7 @@ expect {
 
 # hour and minutes roll over to exactly midnight
 expect {
-	clock = create({ hour: 72, minute: 8640 })
+	clock = Clock.create({ hour: 72, minute: 8640 })
 	result = clock.to_str()
 	expected = "00:00"
 	result == expected
@@ -98,7 +98,7 @@ expect {
 
 # negative hour
 expect {
-	clock = create({ hour: -1, minute: 15 })
+	clock = Clock.create({ hour: -1, minute: 15 })
 	result = clock.to_str()
 	expected = "23:15"
 	result == expected
@@ -106,7 +106,7 @@ expect {
 
 # negative hour rolls over
 expect {
-	clock = create({ hour: -25 })
+	clock = Clock.create({ hour: -25 })
 	result = clock.to_str()
 	expected = "23:00"
 	result == expected
@@ -114,7 +114,7 @@ expect {
 
 # negative hour rolls over continuously
 expect {
-	clock = create({ hour: -91 })
+	clock = Clock.create({ hour: -91 })
 	result = clock.to_str()
 	expected = "05:00"
 	result == expected
@@ -122,7 +122,7 @@ expect {
 
 # negative minutes
 expect {
-	clock = create({ hour: 1, minute: -40 })
+	clock = Clock.create({ hour: 1, minute: -40 })
 	result = clock.to_str()
 	expected = "00:20"
 	result == expected
@@ -130,7 +130,7 @@ expect {
 
 # negative minutes roll over
 expect {
-	clock = create({ hour: 1, minute: -160 })
+	clock = Clock.create({ hour: 1, minute: -160 })
 	result = clock.to_str()
 	expected = "22:20"
 	result == expected
@@ -138,7 +138,7 @@ expect {
 
 # negative minutes roll over continuously
 expect {
-	clock = create({ hour: 1, minute: -4820 })
+	clock = Clock.create({ hour: 1, minute: -4820 })
 	result = clock.to_str()
 	expected = "16:40"
 	result == expected
@@ -146,7 +146,7 @@ expect {
 
 # negative sixty minutes is previous hour
 expect {
-	clock = create({ hour: 2, minute: -60 })
+	clock = Clock.create({ hour: 2, minute: -60 })
 	result = clock.to_str()
 	expected = "01:00"
 	result == expected
@@ -154,7 +154,7 @@ expect {
 
 # negative hour and minutes both roll over
 expect {
-	clock = create({ hour: -25, minute: -160 })
+	clock = Clock.create({ hour: -25, minute: -160 })
 	result = clock.to_str()
 	expected = "20:20"
 	result == expected
@@ -162,7 +162,7 @@ expect {
 
 # negative hour and minutes both roll over continuously
 expect {
-	clock = create({ hour: -121, minute: -5810 })
+	clock = Clock.create({ hour: -121, minute: -5810 })
 	result = clock.to_str()
 	expected = "22:10"
 	result == expected
@@ -174,7 +174,7 @@ expect {
 
 # add minutes
 expect {
-	clock = create({ hour: 10 })
+	clock = Clock.create({ hour: 10 })
 	result = clock.add({ minute: 3 }).to_str()
 	expected = "10:03"
 	result == expected
@@ -182,7 +182,7 @@ expect {
 
 # add no minutes
 expect {
-	clock = create({ hour: 6, minute: 41 })
+	clock = Clock.create({ hour: 6, minute: 41 })
 	result = clock.add({ minute: 0 }).to_str()
 	expected = "06:41"
 	result == expected
@@ -190,7 +190,7 @@ expect {
 
 # add to next hour
 expect {
-	clock = create({ minute: 45 })
+	clock = Clock.create({ minute: 45 })
 	result = clock.add({ minute: 40 }).to_str()
 	expected = "01:25"
 	result == expected
@@ -198,7 +198,7 @@ expect {
 
 # add more than one hour
 expect {
-	clock = create({ hour: 10 })
+	clock = Clock.create({ hour: 10 })
 	result = clock.add({ minute: 61 }).to_str()
 	expected = "11:01"
 	result == expected
@@ -206,7 +206,7 @@ expect {
 
 # add more than two hours with carry
 expect {
-	clock = create({ minute: 45 })
+	clock = Clock.create({ minute: 45 })
 	result = clock.add({ minute: 160 }).to_str()
 	expected = "03:25"
 	result == expected
@@ -214,7 +214,7 @@ expect {
 
 # add across midnight
 expect {
-	clock = create({ hour: 23, minute: 59 })
+	clock = Clock.create({ hour: 23, minute: 59 })
 	result = clock.add({ minute: 2 }).to_str()
 	expected = "00:01"
 	result == expected
@@ -222,7 +222,7 @@ expect {
 
 # add more than one day (1500 min = 25 hrs)
 expect {
-	clock = create({ hour: 5, minute: 32 })
+	clock = Clock.create({ hour: 5, minute: 32 })
 	result = clock.add({ minute: 1500 }).to_str()
 	expected = "06:32"
 	result == expected
@@ -230,7 +230,7 @@ expect {
 
 # add more than two days
 expect {
-	clock = create({ hour: 1, minute: 1 })
+	clock = Clock.create({ hour: 1, minute: 1 })
 	result = clock.add({ minute: 3500 }).to_str()
 	expected = "11:21"
 	result == expected
@@ -242,7 +242,7 @@ expect {
 
 # subtract minutes
 expect {
-	clock = create({ hour: 10, minute: 3 })
+	clock = Clock.create({ hour: 10, minute: 3 })
 	result = clock.subtract({ minute: 3 }).to_str()
 	expected = "10:00"
 	result == expected
@@ -250,7 +250,7 @@ expect {
 
 # subtract to previous hour
 expect {
-	clock = create({ hour: 10, minute: 3 })
+	clock = Clock.create({ hour: 10, minute: 3 })
 	result = clock.subtract({ minute: 30 }).to_str()
 	expected = "09:33"
 	result == expected
@@ -258,7 +258,7 @@ expect {
 
 # subtract more than an hour
 expect {
-	clock = create({ hour: 10, minute: 3 })
+	clock = Clock.create({ hour: 10, minute: 3 })
 	result = clock.subtract({ minute: 70 }).to_str()
 	expected = "08:53"
 	result == expected
@@ -266,7 +266,7 @@ expect {
 
 # subtract across midnight
 expect {
-	clock = create({ minute: 3 })
+	clock = Clock.create({ minute: 3 })
 	result = clock.subtract({ minute: 4 }).to_str()
 	expected = "23:59"
 	result == expected
@@ -274,7 +274,7 @@ expect {
 
 # subtract more than two hours
 expect {
-	clock = create({})
+	clock = Clock.create(Clock.OptionalHourMinute.({}))
 	result = clock.subtract({ minute: 160 }).to_str()
 	expected = "21:20"
 	result == expected
@@ -282,7 +282,7 @@ expect {
 
 # subtract more than two hours with borrow
 expect {
-	clock = create({ hour: 6, minute: 15 })
+	clock = Clock.create({ hour: 6, minute: 15 })
 	result = clock.subtract({ minute: 160 }).to_str()
 	expected = "03:35"
 	result == expected
@@ -290,7 +290,7 @@ expect {
 
 # subtract more than one day (1500 min = 25 hrs)
 expect {
-	clock = create({ hour: 5, minute: 32 })
+	clock = Clock.create({ hour: 5, minute: 32 })
 	result = clock.subtract({ minute: 1500 }).to_str()
 	expected = "04:32"
 	result == expected
@@ -298,7 +298,7 @@ expect {
 
 # subtract more than two days
 expect {
-	clock = create({ hour: 2, minute: 20 })
+	clock = Clock.create({ hour: 2, minute: 20 })
 	result = clock.subtract({ minute: 3000 }).to_str()
 	expected = "00:20"
 	result == expected
@@ -310,113 +310,113 @@ expect {
 
 # clocks with same time
 expect {
-	clock1 = create({ hour: 15, minute: 37 })
-	clock2 = create({ hour: 15, minute: 37 })
+	clock1 = Clock.create({ hour: 15, minute: 37 })
+	clock2 = Clock.create({ hour: 15, minute: 37 })
 	clock1 == clock2
 }
 
 # clocks a minute apart
 expect {
-	clock1 = create({ hour: 15, minute: 36 })
-	clock2 = create({ hour: 15, minute: 37 })
+	clock1 = Clock.create({ hour: 15, minute: 36 })
+	clock2 = Clock.create({ hour: 15, minute: 37 })
 	clock1 != clock2
 }
 
 # clocks an hour apart
 expect {
-	clock1 = create({ hour: 14, minute: 37 })
-	clock2 = create({ hour: 15, minute: 37 })
+	clock1 = Clock.create({ hour: 14, minute: 37 })
+	clock2 = Clock.create({ hour: 15, minute: 37 })
 	clock1 != clock2
 }
 
 # clocks with hour overflow
 expect {
-	clock1 = create({ hour: 10, minute: 37 })
-	clock2 = create({ hour: 34, minute: 37 })
+	clock1 = Clock.create({ hour: 10, minute: 37 })
+	clock2 = Clock.create({ hour: 34, minute: 37 })
 	clock1 == clock2
 }
 
 # clocks with hour overflow by several days
 expect {
-	clock1 = create({ hour: 3, minute: 11 })
-	clock2 = create({ hour: 99, minute: 11 })
+	clock1 = Clock.create({ hour: 3, minute: 11 })
+	clock2 = Clock.create({ hour: 99, minute: 11 })
 	clock1 == clock2
 }
 
 # clocks with negative hour
 expect {
-	clock1 = create({ hour: 22, minute: 40 })
-	clock2 = create({ hour: -2, minute: 40 })
+	clock1 = Clock.create({ hour: 22, minute: 40 })
+	clock2 = Clock.create({ hour: -2, minute: 40 })
 	clock1 == clock2
 }
 
 # clocks with negative hour that wraps
 expect {
-	clock1 = create({ hour: 17, minute: 3 })
-	clock2 = create({ hour: -31, minute: 3 })
+	clock1 = Clock.create({ hour: 17, minute: 3 })
+	clock2 = Clock.create({ hour: -31, minute: 3 })
 	clock1 == clock2
 }
 
 # clocks with negative hour that wraps multiple times
 expect {
-	clock1 = create({ hour: 13, minute: 49 })
-	clock2 = create({ hour: -83, minute: 49 })
+	clock1 = Clock.create({ hour: 13, minute: 49 })
+	clock2 = Clock.create({ hour: -83, minute: 49 })
 	clock1 == clock2
 }
 
 # clocks with minute overflow
 expect {
-	clock1 = create({ minute: 1 })
-	clock2 = create({ minute: 1441 })
+	clock1 = Clock.create({ minute: 1 })
+	clock2 = Clock.create({ minute: 1441 })
 	clock1 == clock2
 }
 
 # clocks with minute overflow by several days
 expect {
-	clock1 = create({ hour: 2, minute: 2 })
-	clock2 = create({ hour: 2, minute: 4322 })
+	clock1 = Clock.create({ hour: 2, minute: 2 })
+	clock2 = Clock.create({ hour: 2, minute: 4322 })
 	clock1 == clock2
 }
 
 # clocks with negative minute
 expect {
-	clock1 = create({ hour: 2, minute: 40 })
-	clock2 = create({ hour: 3, minute: -20 })
+	clock1 = Clock.create({ hour: 2, minute: 40 })
+	clock2 = Clock.create({ hour: 3, minute: -20 })
 	clock1 == clock2
 }
 
 # clocks with negative minute that wraps
 expect {
-	clock1 = create({ hour: 4, minute: 10 })
-	clock2 = create({ hour: 5, minute: -1490 })
+	clock1 = Clock.create({ hour: 4, minute: 10 })
+	clock2 = Clock.create({ hour: 5, minute: -1490 })
 	clock1 == clock2
 }
 
 # clocks with negative minute that wraps multiple times
 expect {
-	clock1 = create({ hour: 6, minute: 15 })
-	clock2 = create({ hour: 6, minute: -4305 })
+	clock1 = Clock.create({ hour: 6, minute: 15 })
+	clock2 = Clock.create({ hour: 6, minute: -4305 })
 	clock1 == clock2
 }
 
 # clocks with negative hours and minutes
 expect {
-	clock1 = create({ hour: 7, minute: 32 })
-	clock2 = create({ hour: -12, minute: -268 })
+	clock1 = Clock.create({ hour: 7, minute: 32 })
+	clock2 = Clock.create({ hour: -12, minute: -268 })
 	clock1 == clock2
 }
 
 # clocks with negative hours and minutes that wrap
 expect {
-	clock1 = create({ hour: 18, minute: 7 })
-	clock2 = create({ hour: -54, minute: -11513 })
+	clock1 = Clock.create({ hour: 18, minute: 7 })
+	clock2 = Clock.create({ hour: -54, minute: -11513 })
 	clock1 == clock2
 }
 
 # full clock and zeroed clock
 expect {
-	clock1 = create({ hour: 24 })
-	clock2 = create({})
+	clock1 = Clock.create({ hour: 24 })
+	clock2 = Clock.create(Clock.OptionalHourMinute.({}))
 	clock1 == clock2
 }
 
@@ -426,7 +426,7 @@ expect {
 
 # Can create a clock with max I64 values
 expect {
-	clock = create({ hour: 9223372036854775807, minute: 9223372036854775807 })
+	clock = Clock.create({ hour: 9223372036854775807, minute: 9223372036854775807 })
 	result = clock.to_str()
 	expected = "01:07"
 	result == expected
@@ -434,7 +434,7 @@ expect {
 
 # Can create a clock with min I64 values
 expect {
-	clock = create({ hour: -9223372036854775808, minute: -9223372036854775808 })
+	clock = Clock.create({ hour: -9223372036854775808, minute: -9223372036854775808 })
 	result = clock.to_str()
 	expected = "21:52"
 	result == expected
@@ -442,7 +442,7 @@ expect {
 
 # Can add max I64 values to a clock
 expect {
-	clock = create({ hour: 23, minute: 59 })
+	clock = Clock.create({ hour: 23, minute: 59 })
 	result = clock.add({ minute: 9223372036854775807 }).to_str()
 	expected = "18:06"
 	result == expected
@@ -450,7 +450,7 @@ expect {
 
 # Can add min I64 values to a clock
 expect {
-	clock = create({ hour: 23, minute: 59 })
+	clock = Clock.create({ hour: 23, minute: 59 })
 	result = clock.add({ minute: -9223372036854775808 }).to_str()
 	expected = "05:51"
 	result == expected
@@ -458,7 +458,7 @@ expect {
 
 # Can subtract max I64 values from a clock
 expect {
-	clock = create({ hour: 23, minute: 59 })
+	clock = Clock.create({ hour: 23, minute: 59 })
 	result = clock.subtract({ minute: 9223372036854775807 }).to_str()
 	expected = "05:52"
 	result == expected
@@ -466,7 +466,7 @@ expect {
 
 # Can subtract min I64 values from a clock
 expect {
-	clock = create({ hour: 23, minute: 59 })
+	clock = Clock.create({ hour: 23, minute: 59 })
 	result = clock.subtract({ minute: -9223372036854775808 }).to_str()
 	expected = "18:07"
 	result == expected

@@ -1,5 +1,7 @@
 Clock :: { hour : U8, minute : U8 }.{
-	create : { hour : I64 ?? 0, minute : I64 ?? 0 } -> Clock
+	OptionalHourMinute := { hour : I64 ?? 0, minute : I64 ?? 0 }
+
+	create : OptionalHourMinute -> Clock
 	create = |{ hour, minute }| {
 		hour24 = (hour % 24 + minute // 60) % 24
 		minute60 = minute % 60
@@ -20,14 +22,14 @@ Clock :: { hour : U8, minute : U8 }.{
 		"${zero_padded(hour)}:${zero_padded(minute)}"
 	}
 
-	add : Clock, { hour : I64 ?? 0, minute : I64 ?? 0 } -> Clock
+	add : Clock, OptionalHourMinute -> Clock
 	add = |clock, { hour, minute }| {
 		total_hour = clock.hour.to_i64() + (hour % 24 + minute // 60)
 		total_minute = clock.minute.to_i64() + minute % 60
 		create({ hour: total_hour, minute: total_minute })
 	}
 
-	subtract : Clock, { hour : I64 ?? 0, minute : I64 ?? 0 } -> Clock
+	subtract : Clock, OptionalHourMinute -> Clock
 	subtract = |clock, { hour, minute }| {
 		clock.add({ hour: -(hour % 24 + minute // 60), minute: -(minute % 60) })
 	}
