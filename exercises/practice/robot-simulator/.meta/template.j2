@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [create, move]
+import Robot
 
 {% for supercase in cases %}
 ##
@@ -13,10 +13,10 @@ import {{ exercise | to_pascal }} exposing [create, move]
 # {{ case["description"] }}
 expect {
   {%- if case["input"]["instructions"] %}
-    robot = create({{ plugins.to_robot(case["input"], with_defaults=True) }})
-    result = robot |> move({{ case["input"]["instructions"] | to_roc }})
+    robot = Robot.create({{ plugins.to_robot(case["input"], with_defaults=True) }})
+    result = robot.move({{ case["input"]["instructions"] | to_roc }})
   {%- else %}
-    result = create({{ plugins.to_robot(case["input"], with_defaults=True) }})
+    result = Robot.create({{ plugins.to_robot(case["input"], with_defaults=True) }})
   {%- endif %}
     result == {{ plugins.to_robot(case["expected"], with_defaults=False) }}
 }

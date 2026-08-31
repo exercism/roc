@@ -4,7 +4,7 @@
   ],
   "files": {
     "solution": [
-      "RobotSimulator.roc"
+      "Robot.roc"
     ],
     "test": [
       "robot-simulator-test.roc"

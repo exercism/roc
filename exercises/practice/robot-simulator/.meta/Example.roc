@@ -1,8 +1,9 @@
-RobotSimulator :: {}.{
+Robot := { x : I64, y : I64, direction : Direction }.{
 	Direction : [North, East, South, West]
-	Robot : { x : I64, y : I64, direction : Direction }
 
-	create : { x : I64 ?? 0, y : I64 ?? 0, direction : Direction ?? North } -> Robot
+	InitState := { x : I64 ?? 0, y : I64 ?? 0, direction : Direction ?? North }
+
+	create : InitState -> Robot
 	create = |{ x, y, direction }| {
 		{ x, y, direction }
 	}
@@ -47,4 +48,6 @@ RobotSimulator :: {}.{
 				},
 			)
 	}
+
+	is_eq : _
 }

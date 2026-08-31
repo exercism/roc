@@ -52,7 +52,7 @@ expect {
 {% endfor -%}
 {% endfor -%}
 
-round : Dec, { step: Dec ?? 1.0 } -> Dec
+round : Dec, { step: Dec } -> Dec
 round = |value, { step }| {
     ((value / step).round_to_i128().to_dec_try() ?? crash "Unreachable") * step
 }
