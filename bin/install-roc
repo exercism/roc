@@ -5,10 +5,62 @@
 
 function download_alpha_release() {
     local install_dir="${1}"
+
+    local os platform
+    os=$(uname -s)
+    case "$os" in
+        Linux*)  platform="linux" ;;
+        Darwin*) platform="macos" ;;
+        *) echo "Unsupported OS: $os" >&2; exit 1 ;;
+    esac
+
+    local arch arch_name
+    arch=$(uname -m)
+    case "$arch" in
+        x86_64) arch_name="x86_64" ;;
+        arm64|aarch64)
+            if [[ "$platform" == "macos" ]]; then
+                arch_name="apple_silicon"
+            else
+                arch_name="arm64"
+            fi
+            ;;
+        *) echo "Unsupported architecture: $arch" >&2; exit 1 ;;
+    esac
+
+    echo "Fetching latest Roc version info from exercism/roc-test-runner..."
+    local dockerfile
+    if command -v curl >/dev/null 2>&1; then
+        dockerfile=$(curl -sL https://raw.githubusercontent.com/exercism/roc-test-runner/main/Dockerfile)
+    else
+        dockerfile=$(wget -qO- https://raw.githubusercontent.com/exercism/roc-test-runner/main/Dockerfile)
+    fi
+
+    local roc_version_date roc_build_id
+    roc_version_date=$(echo "$dockerfile" | grep -o 'ARG ROC_VERSION_DATE="[^"]*"' | cut -d'"' -f2 | head -n1)
+    roc_build_id=$(echo "$dockerfile" | grep -o 'ARG ROC_BUILD_ID="[^"]*"' | cut -d'"' -f2 | head -n1)
+
+    if [[ -z "$roc_version_date" || -z "$roc_build_id" ]]; then
+        echo "Failed to parse ROC_VERSION_DATE or ROC_BUILD_ID from roc-test-runner Dockerfile" >&2
+        exit 1
+    fi
+
+    local file_name="roc_nightly-${platform}_${arch_name}-${roc_version_date}-${roc_build_id}.tar.gz"
+    local download_url="https://github.com/roc-lang/nightlies/releases/download/nightly-${roc_version_date}-${roc_build_id}/${file_name}"
+
     rm -rf "${install_dir}"
     mkdir -p "${install_dir}"
     cd "${install_dir}"
-    wget --secure-protocol=TLSv1_2 -qO- https://roc-lang.org/install_roc.sh | ROC_CONTINUE_IF_STALE=y ROC_ADD_TO_PATH=n sh
+
+    echo "Downloading ${download_url}..."
+    if command -v curl >/dev/null 2>&1; then
+        curl -fL -o "${file_name}" "${download_url}"
+    else
+        wget -qO "${file_name}" "${download_url}"
+    fi
+    echo "Extracting ${file_name}..."
+    tar -xzf "${file_name}"
+    rm "${file_name}"
     ln -s roc_nightly*/roc roc
 }
 
