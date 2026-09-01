@@ -298,7 +298,7 @@ def generate(
     env.filters["to_roc_bool"] = roc_utils.to_roc_bool
     env.filters["to_roc_dict"] = roc_utils.to_roc_dict
     env.filters["to_roc_dict"] = roc_utils.to_roc_dict
-    env.filters["to_roc_float"] = roc_utils.to_roc_float
+    env.filters["to_roc_real"] = roc_utils.to_roc_real
     env.filters["to_roc_multiline_string"] = roc_utils.to_roc_multiline_string
     env.filters["to_roc_record"] = roc_utils.to_roc_record
     env.filters["to_roc_string"] = roc_utils.to_roc_string

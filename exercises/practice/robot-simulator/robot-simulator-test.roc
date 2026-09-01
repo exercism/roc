@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/robot-simulator/canonical-data.json
-# File last updated on 2026-08-31
+# File last updated on 2026-09-01
 
 import Robot
 
@@ -10,7 +10,7 @@ import Robot
 
 # at origin facing north
 expect {
-	result = Robot.create({ x: 0, y: 0 })
+	result = Robot.create({ x: 0 })  # workaround https://github.com/roc-lang/roc/issues/11024
 	result == { x: 0, y: 0, direction: North }
 }
 
@@ -26,7 +26,7 @@ expect {
 
 # changes north to east
 expect {
-	robot = Robot.create({ x: 0, y: 0 })
+	robot = Robot.create({ x: 0 })  # workaround https://github.com/roc-lang/roc/issues/11024
 	result = robot.move("R")
 	result == { x: 0, y: 0, direction: East }
 }
@@ -58,7 +58,7 @@ expect {
 
 # changes north to west
 expect {
-	robot = Robot.create({ x: 0, y: 0 })
+	robot = Robot.create({ x: 0 })  # workaround https://github.com/roc-lang/roc/issues/11024
 	result = robot.move("L")
 	result == { x: 0, y: 0, direction: West }
 }
@@ -90,7 +90,7 @@ expect {
 
 # facing north increments Y
 expect {
-	robot = Robot.create({ x: 0, y: 0 })
+	robot = Robot.create({ x: 0 })  # workaround https://github.com/roc-lang/roc/issues/11024
 	result = robot.move("A")
 	result == { x: 0, y: 1, direction: North }
 }
@@ -129,7 +129,7 @@ expect {
 
 # moving west and north
 expect {
-	robot = Robot.create({ x: 0, y: 0 })
+	robot = Robot.create({ x: 0 })  # workaround https://github.com/roc-lang/roc/issues/11024
 	result = robot.move("LAAARALA")
 	result == { x: -4, y: 1, direction: West }
 }

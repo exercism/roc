@@ -173,16 +173,16 @@ def to_roc_tag(value: Union[RocTag, str]):
         return repr(value)
 
 
-def to_roc_float(value: Union[int, float]):
+def to_roc_real(value: Union[int, float]):
     value = float(value)
-    return f"{value!r}.F64".replace("+", "")
+    return f"{value!r}".replace("+", "")
 
 
 def to_roc(value: Any) -> str:
     if isinstance(value, str):
         return to_roc_string(value)
     elif isinstance(value, float):
-        return to_roc_float(value)
+        return to_roc_real(value)
     elif isinstance(value, bool):
         return to_roc_bool(value)
     elif isinstance(value, list):

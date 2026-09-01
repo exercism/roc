@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/triangle/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-09-01
 
 import Triangle exposing [is_equilateral, is_isosceles, is_scalene]
 
@@ -28,7 +28,7 @@ expect {
 
 # sides may be floats
 expect {
-	result = is_equilateral((0.5.F64, 0.5.F64, 0.5.F64))
+	result = is_equilateral((0.5, 0.5, 0.5))
 	result == Bool.True
 }
 
@@ -68,7 +68,7 @@ expect {
 
 # sides may be floats
 expect {
-	result = is_isosceles((0.5.F64, 0.4.F64, 0.5.F64))
+	result = is_isosceles((0.5, 0.4, 0.5))
 	result == Bool.True
 }
 
@@ -108,6 +108,6 @@ expect {
 
 # sides may be floats
 expect {
-	result = is_scalene((0.5.F64, 0.4.F64, 0.6.F64))
+	result = is_scalene((0.5, 0.4, 0.6))
 	result == Bool.True
 }
