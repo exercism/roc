@@ -1,6 +1,7 @@
 # Exercism Roc Track
 
-[![configlet](https://github.com/exercism/roc/workflows/configlet/badge.svg)](https://github.com/exercism/roc/actions?query=workflow%3Aconfiglet) [![tests](https://github.com/exercism/roc/workflows/test/badge.svg)](https://github.com/exercism/roc/actions?query=workflow%3Atest)
+[![Configlet Status][configlet-workflow-badge]][configlet-workflow]
+[![Exercise Test Status][tests-workflow-badge]][tests-workflow]
 
 Exercism exercises in Roc.
 
