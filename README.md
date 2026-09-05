@@ -42,3 +42,8 @@ Basic linting finished successfully:
 - Required track docs are present
 - Required shared exercise docs are present
 ```
+
+[configlet-workflow-badge]: https://github.com/exercism/roc/actions/workflows/configlet.yml/badge.svg
+[configlet-workflow]: https://github.com/exercism/roc/actions/workflows/configlet.yml
+[tests-workflow-badge]: https://github.com/exercism/roc/actions/workflows/test.yml/badge.svg
+[tests-workflow]: https://github.com/exercism/roc/actions/workflows/test.yml
