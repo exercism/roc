@@ -2,21 +2,21 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [Tree]
+import Tree
 
 {% macro roc_tree(tree) -%}
 {%- set children = tree["children"] or [] -%}
 {%- if children == [] -%}
-Node({ label: {{ tree["label"] | to_roc }}, children: Set.empty() })
-{%- else %}
-Node({
+{ label: {{ tree["label"] | to_roc }}, children: Set.empty() }
+{%- else -%}
+{
     label: {{ tree["label"] | to_roc }},
     children: Set.from_list([
 {%- for child in (tree["children"]) %}
       {{ roc_tree(child) }},
 {%- endfor %}
     ])
-})
+}
 {%- endif %}
 {%- endmacro %}
 
@@ -30,7 +30,8 @@ Node({
 # {{ case["description"] }}
 {% if case["property"] == "fromPov" %}
 expect {
-    tree = Tree.({{ roc_tree(case["input"]["tree"]) | indent(8) }})
+    tree : Tree
+    tree = {{ roc_tree(case["input"]["tree"]) | indent(8) }}
     result = tree.from_pov({{ case["input"]["from"] | to_roc }})
     {%- if case["expected"] %}
     expected = Ok({{ roc_tree(case["expected"]) | indent(8) }})
@@ -41,7 +42,8 @@ expect {
 }
 {% elif case["property"] == "pathTo" %}
 expect {
-    tree = Tree.({{ roc_tree(case["input"]["tree"]) | indent(8) }})
+    tree : Tree
+    tree = {{ roc_tree(case["input"]["tree"]) | indent(8) }}
     result = tree.path_to({{ case["input"]["from"] | to_roc }}, {{ case["input"]["to"] | to_roc }})
     {%- if case["expected"] %}
     expected = Ok({{ case["expected"] | to_roc }})

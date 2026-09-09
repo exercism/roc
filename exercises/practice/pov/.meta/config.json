@@ -4,7 +4,7 @@
   ],
   "files": {
     "solution": [
-      "Pov.roc"
+      "Tree.roc"
     ],
     "test": [
       "pov-test.roc"
