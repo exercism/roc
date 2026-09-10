@@ -1,0 +1,29 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import TicTacToe
+
+{% macro render_cases(cases) %}
+{%- for case in cases %}
+{%- if "cases" in case %}
+{{ render_cases(case["cases"]) }}
+{%- else %}
+# {{ case["description"] }}
+expect {
+    game = TicTacToe.create(
+        {{ plugins.to_rows(case["input"]["board"]) }}
+    )
+{%- if case["expected"] is mapping and "error" in case["expected"] %}
+    game.is_err()
+{%- else %}?
+    game.state() == {{ case["expected"] | to_pascal }}
+{%- endif %}
+}
+{%- endif %}
+
+{% endfor %}
+{% endmacro %}
+
+{{ render_cases(cases) }}
+{{ macros.footer() }}
