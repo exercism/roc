@@ -925,6 +925,14 @@
         "difficulty": 7
       },
       {
+        "slug": "piecing-it-together",
+        "name": "Piecing It Together",
+        "uuid": "f5128a60-d7b5-4bcf-88bc-eefd332ee6f4",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 7
+      },
+      {
         "slug": "pig-latin",
         "name": "Pig Latin",
         "uuid": "8beb7c89-bf06-4eb1-b97f-36f2d9750dad",
