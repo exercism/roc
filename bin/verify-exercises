@@ -26,6 +26,33 @@ required_tool() {
 
 required_tool jq
 
+format_duration() {
+    local elapsed_seconds="${1/,/.}"
+    local fractional_seconds
+    local milliseconds
+    local tenths
+    local whole_seconds
+
+    if [[ "${elapsed_seconds}" == *.* ]]; then
+        whole_seconds=${elapsed_seconds%%.*}
+        fractional_seconds=${elapsed_seconds#*.}
+    else
+        whole_seconds=${elapsed_seconds}
+        fractional_seconds=0
+    fi
+
+    fractional_seconds="${fractional_seconds}000"
+    fractional_seconds=${fractional_seconds:0:3}
+    milliseconds=$((10#${whole_seconds} * 1000 + 10#${fractional_seconds}))
+
+    if ((milliseconds < 1000)); then
+        printf '%dms' "${milliseconds}"
+    else
+        tenths=$(((milliseconds + 50) / 100))
+        printf '%d.%ds' "$((tenths / 10))" "$((tenths % 10))"
+    fi
+}
+
 copy_example_or_examplar_to_solution() {
     jq -c '[.files.solution, .files.exemplar // .files.example] | transpose | map({src: .[1], dst: .[0]}) | .[]' .meta/config.json \
     | while read -r src_and_dst; do
@@ -115,40 +142,72 @@ verify_exercise() {
 
 verify_exercises() {
     local count=0
+    local elapsed_seconds
     local exercise_dir
     local exercise_slug
     local exercise_status
+    local failed_count
     local failed_exercises=()
+    local interrupted_status=0
+    local passed_count
+    local timing_file
+    local TIMEFORMAT='%3R'
+    local total_time
 
     if (($# == 0)); then
         set -- '*'
     fi
 
-    shopt -s nullglob
-    for exercise_slug in "$@"; do
-        for exercise_dir in ./exercises/{concept,practice}/${exercise_slug}/; do
-            if [[ -d "${exercise_dir}" ]]; then
-                if verify_exercise "${exercise_dir}"; then
-                    exercise_status=0
-                else
-                    exercise_status=$?
-                fi
+    timing_file=$(mktemp -t 'exercism-verify-time-XXXXX')
+    {
+        time {
+            shopt -s nullglob
+            for exercise_slug in "$@"; do
+                for exercise_dir in ./exercises/{concept,practice}/${exercise_slug}/; do
+                    if [[ -d "${exercise_dir}" ]]; then
+                        if verify_exercise "${exercise_dir}"; then
+                            exercise_status=0
+                        else
+                            exercise_status=$?
+                        fi
 
-                if ((exercise_status == 130 || exercise_status == 143)); then
-                    return "${exercise_status}"
-                elif ((exercise_status != 0)); then
-                    failed_exercises+=("$(basename "${exercise_dir}")")
-                fi
-                ((++count))
-            fi
-        done
-    done
+                        if ((exercise_status == 130 || exercise_status == 143)); then
+                            interrupted_status=${exercise_status}
+                            break 2
+                        elif ((exercise_status != 0)); then
+                            failed_exercises+=("$(basename "${exercise_dir}")")
+                        fi
+                        ((++count))
+                    fi
+                done
+            done
+        } 2>&3
+    } 3>&2 2>"${timing_file}"
+
+    elapsed_seconds=$(<"${timing_file}")
+    rm "${timing_file}"
+
+    if ((interrupted_status != 0)); then
+        return "${interrupted_status}"
+    fi
+
     ((count > 0)) || die 'no matching exercises found!'
 
-    if ((${#failed_exercises[@]} > 0)); then
+    failed_count=${#failed_exercises[@]}
+    if ((count > 1)); then
+        passed_count=$((count - failed_count))
+        total_time=$(format_duration "${elapsed_seconds}")
         echo
-        echo "Failed exercises (${#failed_exercises[@]}):"
-        printf '  %s\n' "${failed_exercises[@]}"
+        if ((failed_count > 0)); then
+            echo "Failed exercises (${failed_count}):"
+            printf '  %s\n' "${failed_exercises[@]}"
+            echo
+        fi
+
+        echo "Passed: ${passed_count}, failed: ${failed_count}, total time: ${total_time}"
+    fi
+
+    if ((failed_count > 0)); then
         return 1
     fi
 }
