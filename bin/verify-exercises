@@ -2,7 +2,7 @@
 
 # Synopsis:
 # Verify that each exercise's example/exemplar solution passes the tests.
-# You can either verify all exercises or a single exercise.
+# You can verify all exercises or select exercises with any number of globs.
 
 # Example: verify all exercises
 # bin/verify-exercises
@@ -10,7 +10,12 @@
 # Example: verify single exercise
 # bin/verify-exercises two-fer
 
+# Example: verify several exercises
+# bin/verify-exercises pov two-fer "ac*"
+
 set -eo pipefail
+
+readonly TEST_TIMEOUT_SECONDS=30
 
 die() { echo "$*" >&2; exit 1; }
 
@@ -28,13 +33,63 @@ copy_example_or_examplar_to_solution() {
     done
 }
 
+stop_test() {
+    local roc_pid="${1}"
+    local timeout_pid="${2}"
+
+    [[ -z "${roc_pid}" ]] || kill -KILL "${roc_pid}" 2>/dev/null || true
+    [[ -z "${timeout_pid}" ]] || kill "${timeout_pid}" 2>/dev/null || true
+    [[ -z "${roc_pid}" ]] || wait "${roc_pid}" 2>/dev/null || true
+    [[ -z "${timeout_pid}" ]] || wait "${timeout_pid}" 2>/dev/null || true
+}
+
 run_tests() {
+    local example_file
+    local module_file
+    local opts
+    local roc_pid
+    local roc_status
+    local test_file
+    local timeout_pid
+
     opts="--no-cache --opt=dev"
     module_file=`jq -r '.files.solution[]' .meta/config.json`
     example_file=`jq -r '.files.example[]' .meta/config.json`
     test_file=`jq -r '.files.test[]' .meta/config.json`
     cp "${example_file}" "${module_file}"
-    FORCE_COLOR=1 roc test ${opts} "${test_file}"
+
+    roc_pid=''
+    timeout_pid=''
+    trap 'stop_test "${roc_pid}" "${timeout_pid}"; exit 130' INT
+    trap 'stop_test "${roc_pid}" "${timeout_pid}"; exit 143' TERM
+
+    FORCE_COLOR=1 roc test ${opts} "${test_file}" &
+    roc_pid=$!
+    (
+        sleep_pid=''
+        trap '[[ -z "${sleep_pid}" ]] || kill "${sleep_pid}" 2>/dev/null; exit 1' TERM
+        sleep "${TEST_TIMEOUT_SECONDS}" &
+        sleep_pid=$!
+        wait "${sleep_pid}"
+        trap '' TERM
+        kill -KILL "${roc_pid}" 2>/dev/null
+    ) &
+    timeout_pid=$!
+
+    if wait "${roc_pid}"; then
+        roc_status=0
+    else
+        roc_status=$?
+    fi
+
+    kill "${timeout_pid}" 2>/dev/null || true
+    if wait "${timeout_pid}" 2>/dev/null; then
+        echo "roc test timed out after ${TEST_TIMEOUT_SECONDS} seconds." >&2
+        return 124
+    fi
+
+    trap - INT TERM
+    return "${roc_status}"
 }
 
 verify_exercise() {
@@ -59,20 +114,43 @@ verify_exercise() {
 }
 
 verify_exercises() {
+    local count=0
+    local exercise_dir
     local exercise_slug
+    local exercise_status
+    local failed_exercises=()
 
-    exercise_slug="${1}"
+    if (($# == 0)); then
+        set -- '*'
+    fi
 
     shopt -s nullglob
-    count=0
-    for exercise_dir in ./exercises/{concept,practice}/${exercise_slug}/; do
-        if [[ -d "${exercise_dir}" ]]; then
-            verify_exercise "${exercise_dir}"
-            ((++count))
-        fi
+    for exercise_slug in "$@"; do
+        for exercise_dir in ./exercises/{concept,practice}/${exercise_slug}/; do
+            if [[ -d "${exercise_dir}" ]]; then
+                if verify_exercise "${exercise_dir}"; then
+                    exercise_status=0
+                else
+                    exercise_status=$?
+                fi
+
+                if ((exercise_status == 130 || exercise_status == 143)); then
+                    return "${exercise_status}"
+                elif ((exercise_status != 0)); then
+                    failed_exercises+=("$(basename "${exercise_dir}")")
+                fi
+                ((++count))
+            fi
+        done
     done
     ((count > 0)) || die 'no matching exercises found!'
+
+    if ((${#failed_exercises[@]} > 0)); then
+        echo
+        echo "Failed exercises (${#failed_exercises[@]}):"
+        printf '  %s\n' "${failed_exercises[@]}"
+        return 1
+    fi
 }
 
-exercise_slug="${1:-*}"
-verify_exercises "${exercise_slug}"
+verify_exercises "$@"
