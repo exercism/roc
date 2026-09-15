@@ -25,6 +25,7 @@ required_tool() {
 }
 
 required_tool jq
+required_tool roc
 
 format_duration() {
     local elapsed_seconds="${1/,/.}"
@@ -56,7 +57,7 @@ format_duration() {
 copy_example_or_examplar_to_solution() {
     jq -c '[.files.solution, .files.exemplar // .files.example] | transpose | map({src: .[1], dst: .[0]}) | .[]' .meta/config.json \
     | while read -r src_and_dst; do
-        cp "$(jq -r '.src' <<< "${src_and_dst}")" "$(jq -r '.dst' <<< "${src_and_dst}")"
+        cp "$(jq -r '.src' <<< "${src_and_dst}")" "$(jq -r '.dst' <<< "${src_and_dst}")" || exit 1
     done
 }
 
@@ -64,7 +65,7 @@ stop_test() {
     local roc_pid="${1}"
     local timeout_pid="${2}"
 
-    [[ -z "${roc_pid}" ]] || kill -KILL "${roc_pid}" 2>/dev/null || true
+    [[ -z "${roc_pid}" ]] || kill -KILL -- "-${roc_pid}" 2>/dev/null || true
     [[ -z "${timeout_pid}" ]] || kill "${timeout_pid}" 2>/dev/null || true
     [[ -z "${roc_pid}" ]] || wait "${roc_pid}" 2>/dev/null || true
     [[ -z "${timeout_pid}" ]] || wait "${timeout_pid}" 2>/dev/null || true
@@ -80,18 +81,20 @@ run_tests() {
     local timeout_pid
 
     opts="--no-cache --opt=dev"
-    module_file=`jq -r '.files.solution[]' .meta/config.json`
-    example_file=`jq -r '.files.example[]' .meta/config.json`
-    test_file=`jq -r '.files.test[]' .meta/config.json`
-    cp "${example_file}" "${module_file}"
+    module_file=$(jq -r '.files.solution[]' .meta/config.json) || return 1
+    example_file=$(jq -r '.files.example[]' .meta/config.json) || return 1
+    test_file=$(jq -r '.files.test[]' .meta/config.json) || return 1
+    cp "${example_file}" "${module_file}" || return 1
 
     roc_pid=''
     timeout_pid=''
     trap 'stop_test "${roc_pid}" "${timeout_pid}"; exit 130' INT
     trap 'stop_test "${roc_pid}" "${timeout_pid}"; exit 143' TERM
 
+    set -m
     FORCE_COLOR=1 roc test ${opts} "${test_file}" &
     roc_pid=$!
+    set +m
     (
         sleep_pid=''
         trap '[[ -z "${sleep_pid}" ]] || kill "${sleep_pid}" 2>/dev/null; exit 1' TERM
@@ -99,7 +102,7 @@ run_tests() {
         sleep_pid=$!
         wait "${sleep_pid}"
         trap '' TERM
-        kill -KILL "${roc_pid}" 2>/dev/null
+        kill -KILL -- "-${roc_pid}" 2>/dev/null
     ) &
     timeout_pid=$!
 
@@ -124,18 +127,18 @@ verify_exercise() {
     local slug
     local tmp_dir
 
-    dir=$(realpath "${1}")
-    slug=$(basename "${dir}")
-    tmp_dir=$(mktemp -d -t "exercism-verify-${slug}-XXXXX")
+    dir=$(realpath "${1}") || return 1
+    slug=$(basename "${dir}") || return 1
+    tmp_dir=$(mktemp -d -t "exercism-verify-${slug}-XXXXX") || return 1
 
     echo "Verifying ${slug} exercise..."
 
     (
         trap 'rm -rf "$tmp_dir"' EXIT    # remove tempdir when subshell ends
-        cp -r "${dir}/." "${tmp_dir}"
-        cd "${tmp_dir}"
+        cp -r "${dir}/." "${tmp_dir}" || exit 1
+        cd "${tmp_dir}" || exit 1
 
-        copy_example_or_examplar_to_solution
+        copy_example_or_examplar_to_solution || exit 1
         run_tests "${slug}"
     )
 }
