@@ -2,9 +2,9 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/zipper/canonical-data.json
 # File last updated on 2026-09-16
 
-import Tree
+import Zipper
 
-default_tree : Tree
+default_tree : Zipper.Tree
 default_tree = { value: 1, left: { value: 2, right: { value: 3 } }, right: { value: 4 } }
 
 # data is retained

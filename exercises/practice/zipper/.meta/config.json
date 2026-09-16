@@ -2,7 +2,7 @@
   "authors": [],
   "files": {
     "solution": [
-      "Tree.roc"
+      "Zipper.roc"
     ],
     "test": [
       "zipper-test.roc"

@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import Tree
+import Zipper
 
 {% set default_tree = cases[0]["input"]["initialTree"] %}
 {% macro tree_ref(tree) -%}
@@ -39,7 +39,7 @@ expect {
 }
 {% endmacro %}
 
-default_tree : Tree
+default_tree : Zipper.Tree
 default_tree = {{ plugins.to_roc_tree(default_tree) }}
 
 {% macro render_cases(cases) -%}
