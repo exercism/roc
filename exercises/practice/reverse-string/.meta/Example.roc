@@ -15,7 +15,7 @@ ReverseString :: {}.{
 	## Luckily, we've added it for you in reverse-string-test.roc. Take a look!
 	reverse : Str -> Str
 	reverse = |string| {
-		Grapheme.owned(string).rev() |> Str.join_with("")
+		Grapheme.split(string).rev() |> Str.join_with("")
 	}
 
 	## This function reverses the input string, e.g., "hello" -> "olleh". It is
