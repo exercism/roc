@@ -1,0 +1,57 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import Tree
+
+{% set default_tree = cases[0]["input"]["initialTree"] %}
+{% macro tree_ref(tree) -%}
+{%- if tree == default_tree -%}
+default_tree
+{%- else -%}
+{{ plugins.to_roc_tree(tree) }}
+{%- endif -%}
+{%- endmacro %}
+
+{% macro operation_chain(operations, propagate_final_error=true) -%}
+{{ plugins.operation_chain(operations, propagate_final_error) }}
+{%- endmacro %}
+
+{% macro render_case(case) -%}
+# {{ plugins.description(case) }}
+expect {
+{%- if case["property"] == "sameResultFromOperations" %}
+    zipper = {{ tree_ref(case["input"]["initialTree"]) }}.to_zipper()
+    result1 = zipper{{ operation_chain(case["input"]["operations"]) }}
+    result2 = {% if case["expected"]["initialTree"] == case["input"]["initialTree"] %}zipper{% else %}{{ tree_ref(case["expected"]["initialTree"]) }}.to_zipper(){% endif %}{{ operation_chain(case["expected"]["operations"]) }}
+    result1 == result2
+{%- else %}
+    zipper = {{ tree_ref(case["input"]["initialTree"]) }}.to_zipper()
+    result = zipper{{ operation_chain(case["input"]["operations"], not plugins.is_error_expected(case["expected"])) }}
+{%- if plugins.is_error_expected(case["expected"]) %}
+    result.is_err()
+{%- elif case["expected"]["type"] == "tree" %}
+    result == {{ tree_ref(case["expected"]["value"]) }}
+{%- else %}
+    result == {{ case["expected"]["value"] | to_roc }}
+{%- endif %}
+{%- endif %}
+}
+{% endmacro %}
+
+default_tree : Tree
+default_tree = {{ plugins.to_roc_tree(default_tree) }}
+
+{% macro render_cases(cases) -%}
+{%- for case in cases %}
+{%- if "cases" in case %}
+{{ render_cases(case["cases"]) }}
+{%- else %}
+{{ render_case(case) }}
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}
+
+{{ render_cases(cases) }}
+{{ render_cases(additional_cases) }}
+{{ macros.footer() }}
