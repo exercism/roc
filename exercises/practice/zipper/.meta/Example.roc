@@ -3,6 +3,7 @@ Zipper :: {
 	focus : Tree,
 	crumbs : List(Zipper.Crumb),
 }.{
+
 	## A binary tree structure where each node holds an integer
 	Tree := { value : U64, left ?: Tree, right ?: Tree }.{
 		# The following line enables the default `is_eq` implementation
@@ -16,10 +17,7 @@ Zipper :: {
 	}
 
 	## A Crumb stores the parent's value and the unvisited sibling subtree
-	Crumb : [
-		Left({ value : U64, right : Try(Tree, [MissingField]) }),
-		Right({ value : U64, left : Try(Tree, [MissingField]) }),
-	]
+	Crumb : [Left(Tree), Right(Tree)]
 
 	# The following line enables the default `is_eq` implementation
 	is_eq : _
@@ -28,8 +26,8 @@ Zipper :: {
 	to_tree : Zipper -> Tree
 	to_tree = |zipper| {
 		match zipper.up() {
-			Err(FocusWasOnRoot) => zipper.focus
 			Ok(upper_zipper) => upper_zipper.to_tree()
+			Err(FocusWasOnRoot) => zipper.focus
 		}
 	}
 
@@ -43,7 +41,7 @@ Zipper :: {
 	left : Zipper -> Try(Zipper, [ChildDidNotExist])
 	left = |zipper| {
 		left_child = zipper.focus.?left ? |MissingField| ChildDidNotExist
-		crumbs = zipper.crumbs.append(Left({ value: zipper.focus.value, right: zipper.focus.?right }))
+		crumbs = zipper.crumbs.append(Left({ ..zipper.focus, left: _ }))
 		Ok({ focus: left_child, crumbs })
 	}
 
@@ -51,7 +49,7 @@ Zipper :: {
 	right : Zipper -> Try(Zipper, [ChildDidNotExist])
 	right = |zipper| {
 		right_child = zipper.focus.?right ? |MissingField| ChildDidNotExist
-		crumbs = zipper.crumbs.append(Right({ value: zipper.focus.value, left: zipper.focus.?left }))
+		crumbs = zipper.crumbs.append(Right({ ..zipper.focus, right: _ }))
 		Ok({ focus: right_child, crumbs })
 	}
 
@@ -63,18 +61,8 @@ Zipper :: {
 			[.. as rest, last] => {
 				focus : Tree
 				focus = match last {
-					Left(parent) => {
-						match parent.right {
-							Ok(parent_right) => { value: parent.value, left: zipper.focus, right: parent_right }
-							Err(MissingField) => { value: parent.value, left: zipper.focus }
-						}
-					}
-					Right(parent) => {
-						match parent.left {
-							Ok(parent_left) => { value: parent.value, left: parent_left, right: zipper.focus }
-							Err(MissingField) => { value: parent.value, right: zipper.focus }
-						}
-					}
+					Left(parent) => { ..parent, left: zipper.focus }
+					Right(parent) => { ..parent, right: zipper.focus }
 				}
 				Ok({ focus, crumbs: rest })
 			}
