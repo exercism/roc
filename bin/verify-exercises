@@ -2,7 +2,7 @@
 
 # Synopsis:
 # Verify that each exercise's example/exemplar solution passes the tests.
-# You can either verify all exercises or a single exercise.
+# You can verify all exercises or select exercises with any number of globs.
 
 # Example: verify all exercises
 # bin/verify-exercises
@@ -10,7 +10,12 @@
 # Example: verify single exercise
 # bin/verify-exercises two-fer
 
+# Example: verify several exercises
+# bin/verify-exercises pov two-fer "ac*"
+
 set -eo pipefail
+
+readonly TEST_TIMEOUT_SECONDS=30
 
 die() { echo "$*" >&2; exit 1; }
 
@@ -20,21 +25,101 @@ required_tool() {
 }
 
 required_tool jq
+required_tool roc
+
+format_duration() {
+    local elapsed_seconds="${1/,/.}"
+    local fractional_seconds
+    local milliseconds
+    local tenths
+    local whole_seconds
+
+    if [[ "${elapsed_seconds}" == *.* ]]; then
+        whole_seconds=${elapsed_seconds%%.*}
+        fractional_seconds=${elapsed_seconds#*.}
+    else
+        whole_seconds=${elapsed_seconds}
+        fractional_seconds=0
+    fi
+
+    fractional_seconds="${fractional_seconds}000"
+    fractional_seconds=${fractional_seconds:0:3}
+    milliseconds=$((10#${whole_seconds} * 1000 + 10#${fractional_seconds}))
+
+    if ((milliseconds < 1000)); then
+        printf '%dms' "${milliseconds}"
+    else
+        tenths=$(((milliseconds + 50) / 100))
+        printf '%d.%ds' "$((tenths / 10))" "$((tenths % 10))"
+    fi
+}
 
 copy_example_or_examplar_to_solution() {
     jq -c '[.files.solution, .files.exemplar // .files.example] | transpose | map({src: .[1], dst: .[0]}) | .[]' .meta/config.json \
     | while read -r src_and_dst; do
-        cp "$(jq -r '.src' <<< "${src_and_dst}")" "$(jq -r '.dst' <<< "${src_and_dst}")"
+        cp "$(jq -r '.src' <<< "${src_and_dst}")" "$(jq -r '.dst' <<< "${src_and_dst}")" || exit 1
     done
 }
 
+stop_test() {
+    local roc_pid="${1}"
+    local timeout_pid="${2}"
+
+    [[ -z "${roc_pid}" ]] || kill -KILL -- "-${roc_pid}" 2>/dev/null || true
+    [[ -z "${timeout_pid}" ]] || kill "${timeout_pid}" 2>/dev/null || true
+    [[ -z "${roc_pid}" ]] || wait "${roc_pid}" 2>/dev/null || true
+    [[ -z "${timeout_pid}" ]] || wait "${timeout_pid}" 2>/dev/null || true
+}
+
 run_tests() {
+    local example_file
+    local module_file
+    local opts
+    local roc_pid
+    local roc_status
+    local test_file
+    local timeout_pid
+
     opts="--no-cache --opt=dev"
-    module_file=`jq -r '.files.solution[]' .meta/config.json`
-    example_file=`jq -r '.files.example[]' .meta/config.json`
-    test_file=`jq -r '.files.test[]' .meta/config.json`
-    cp "${example_file}" "${module_file}"
-    FORCE_COLOR=1 roc test ${opts} "${test_file}"
+    module_file=$(jq -r '.files.solution[]' .meta/config.json) || return 1
+    example_file=$(jq -r '.files.example[]' .meta/config.json) || return 1
+    test_file=$(jq -r '.files.test[]' .meta/config.json) || return 1
+    cp "${example_file}" "${module_file}" || return 1
+
+    roc_pid=''
+    timeout_pid=''
+    trap 'stop_test "${roc_pid}" "${timeout_pid}"; exit 130' INT
+    trap 'stop_test "${roc_pid}" "${timeout_pid}"; exit 143' TERM
+
+    set -m
+    FORCE_COLOR=1 roc test ${opts} "${test_file}" &
+    roc_pid=$!
+    set +m
+    (
+        sleep_pid=''
+        trap '[[ -z "${sleep_pid}" ]] || kill "${sleep_pid}" 2>/dev/null; exit 1' TERM
+        sleep "${TEST_TIMEOUT_SECONDS}" &
+        sleep_pid=$!
+        wait "${sleep_pid}"
+        trap '' TERM
+        kill -KILL -- "-${roc_pid}" 2>/dev/null
+    ) &
+    timeout_pid=$!
+
+    if wait "${roc_pid}"; then
+        roc_status=0
+    else
+        roc_status=$?
+    fi
+
+    kill "${timeout_pid}" 2>/dev/null || true
+    if wait "${timeout_pid}" 2>/dev/null; then
+        echo "roc test timed out after ${TEST_TIMEOUT_SECONDS} seconds." >&2
+        return 124
+    fi
+
+    trap - INT TERM
+    return "${roc_status}"
 }
 
 verify_exercise() {
@@ -42,37 +127,92 @@ verify_exercise() {
     local slug
     local tmp_dir
 
-    dir=$(realpath "${1}")
-    slug=$(basename "${dir}")
-    tmp_dir=$(mktemp -d -t "exercism-verify-${slug}-XXXXX")
+    dir=$(realpath "${1}") || return 1
+    slug=$(basename "${dir}") || return 1
+    tmp_dir=$(mktemp -d -t "exercism-verify-${slug}-XXXXX") || return 1
 
     echo "Verifying ${slug} exercise..."
 
     (
         trap 'rm -rf "$tmp_dir"' EXIT    # remove tempdir when subshell ends
-        cp -r "${dir}/." "${tmp_dir}"
-        cd "${tmp_dir}"
+        cp -r "${dir}/." "${tmp_dir}" || exit 1
+        cd "${tmp_dir}" || exit 1
 
-        copy_example_or_examplar_to_solution
+        copy_example_or_examplar_to_solution || exit 1
         run_tests "${slug}"
     )
 }
 
 verify_exercises() {
+    local count=0
+    local elapsed_seconds
+    local exercise_dir
     local exercise_slug
+    local exercise_status
+    local failed_count
+    local failed_exercises=()
+    local interrupted_status=0
+    local passed_count
+    local timing_file
+    local TIMEFORMAT='%3R'
+    local total_time
 
-    exercise_slug="${1}"
+    if (($# == 0)); then
+        set -- '*'
+    fi
 
-    shopt -s nullglob
-    count=0
-    for exercise_dir in ./exercises/{concept,practice}/${exercise_slug}/; do
-        if [[ -d "${exercise_dir}" ]]; then
-            verify_exercise "${exercise_dir}"
-            ((++count))
-        fi
-    done
+    timing_file=$(mktemp -t 'exercism-verify-time-XXXXX')
+    {
+        time {
+            shopt -s nullglob
+            for exercise_slug in "$@"; do
+                for exercise_dir in ./exercises/{concept,practice}/${exercise_slug}/; do
+                    if [[ -d "${exercise_dir}" ]]; then
+                        if verify_exercise "${exercise_dir}"; then
+                            exercise_status=0
+                        else
+                            exercise_status=$?
+                        fi
+
+                        if ((exercise_status == 130 || exercise_status == 143)); then
+                            interrupted_status=${exercise_status}
+                            break 2
+                        elif ((exercise_status != 0)); then
+                            failed_exercises+=("$(basename "${exercise_dir}")")
+                        fi
+                        ((++count))
+                    fi
+                done
+            done
+        } 2>&3
+    } 3>&2 2>"${timing_file}"
+
+    elapsed_seconds=$(<"${timing_file}")
+    rm "${timing_file}"
+
+    if ((interrupted_status != 0)); then
+        return "${interrupted_status}"
+    fi
+
     ((count > 0)) || die 'no matching exercises found!'
+
+    failed_count=${#failed_exercises[@]}
+    if ((count > 1)); then
+        passed_count=$((count - failed_count))
+        total_time=$(format_duration "${elapsed_seconds}")
+        echo
+        if ((failed_count > 0)); then
+            echo "Failed exercises (${failed_count}):"
+            printf '  %s\n' "${failed_exercises[@]}"
+            echo
+        fi
+
+        echo "Passed: ${passed_count}, failed: ${failed_count}, total time: ${total_time}"
+    fi
+
+    if ((failed_count > 0)); then
+        return 1
+    fi
 }
 
-exercise_slug="${1:-*}"
-verify_exercises "${exercise_slug}"
+verify_exercises "$@"
