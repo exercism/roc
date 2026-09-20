@@ -1,0 +1,15 @@
+{
+  "authors": [],
+  "files": {
+    "solution": [
+      "Tree.roc"
+    ],
+    "test": [
+      "tree-building-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Refactor a tree building algorithm."
+}
