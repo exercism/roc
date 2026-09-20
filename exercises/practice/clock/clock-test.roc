@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/clock/canonical-data.json
-# File last updated on 2026-09-01
+# File last updated on 2026-09-19
 
 import Clock
 
@@ -274,7 +274,7 @@ expect {
 
 # subtract more than two hours
 expect {
-	clock = Clock.create({ minute: 0 }) # workaround for https://github.com/roc-lang/roc/issues/11024
+	clock = Clock.create({})
 	result = clock.subtract({ minute: 160 }).to_str()
 	expected = "21:20"
 	result == expected
@@ -416,7 +416,7 @@ expect {
 # full clock and zeroed clock
 expect {
 	clock1 = Clock.create({ hour: 24 })
-	clock2 = Clock.create({ minute: 0 }) # workaround for https://github.com/roc-lang/roc/issues/11024
+	clock2 = Clock.create({})
 	clock1 == clock2
 }
 
