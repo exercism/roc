@@ -28,35 +28,42 @@ IntergalacticTransmission :: {}.{
 
 	decode_message : List(U8) -> Try(List(U8), [WrongParity, ..])
 	decode_message = |message| {
-		var $result = []
-		var $next_byte = 0.U8
-		var $num_bits = 0
-		for byte in message {
-			if set_parity_bit(byte) != byte {
-				return Err(WrongParity)
-			}
-			for offset in 0..<7 {
-				bit = byte.shr_wrap(7 - offset).bitwise_and(1)
-				$next_byte = $next_byte.shl_wrap(1).bitwise_or(bit)
-				$num_bits = $num_bits + 1
-				if $num_bits == 8 {
-					$result = $result.append($next_byte)
-					$next_byte = 0
-					$num_bits = 0
+		decoded = message.fold(
+			Ok({ result: [], next_byte: 0.U8, num_bits: 0 }),
+			|acc, byte| {
+				state = acc?
+				if set_parity_bit(byte) != byte {
+					Err(WrongParity)
+				} else {
+					Ok(
+						[7, 6, 5, 4, 3, 2, 1].fold(
+							state,
+							|bits, shift| {
+								bit = byte.shr_wrap(shift).bitwise_and(1)
+								next_byte = bits.next_byte.shl_wrap(1).bitwise_or(bit)
+								num_bits = bits.num_bits + 1
+								if num_bits == 8 {
+									{ result: bits.result.append(next_byte), next_byte: 0, num_bits: 0 }
+								} else {
+									{ result: bits.result, next_byte, num_bits }
+								}
+							},
+						),
+					)
 				}
-			}
-		}
-		Ok($result)
+			},
+		)?
+		Ok(decoded.result)
 	}
 }
 
 set_parity_bit : U8 -> U8
 set_parity_bit = |byte| {
-	var $res = byte
-	var $sum = 0
-	for _ in 1..=7 {
-		$res = $res.shr_wrap(1)
-		$sum = $sum + $res.bitwise_and(1)
-	}
-	byte.bitwise_and(0b11111110).bitwise_or($sum.bitwise_and(1))
+	sum = [1, 2, 3, 4, 5, 6, 7].fold(
+		0,
+		|count, shift| {
+			count + byte.shr_wrap(shift).bitwise_and(1)
+		},
+	)
+	byte.bitwise_and(0b11111110).bitwise_or(sum.bitwise_and(1))
 }
