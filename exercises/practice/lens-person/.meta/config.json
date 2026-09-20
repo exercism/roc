@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "Person.roc"
+    ],
+    "test": [
+      "lens-person-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Use lenses to update nested records (specific to languages with immutable data)."
+}

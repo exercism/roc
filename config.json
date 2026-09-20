@@ -860,6 +860,14 @@
         "difficulty": 6
       },
       {
+        "slug": "lens-person",
+        "name": "Lens Person",
+        "uuid": "159e4736-17bb-4e36-9c8b-04492c715764",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "list-ops",
         "name": "List Ops",
         "uuid": "e1b4ef33-1788-46b2-b264-70b1d1f3f85e",
