@@ -1,0 +1,15 @@
+{
+  "authors": [],
+  "files": {
+    "solution": [
+      "Zipper.roc"
+    ],
+    "test": [
+      "zipper-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Creating a zipper for a binary tree."
+}
