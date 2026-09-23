@@ -1,6 +1,6 @@
 Luhn :: {}.{
 	valid : Str -> Bool
-	valid = |digits| {
+	valid = |number| {
 		crash "Please implement the 'valid' function"
 	}
 }

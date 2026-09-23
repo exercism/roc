@@ -87,18 +87,6 @@ Graph := {
 			\\}
 	}
 
-	## graph with comments
-	graph_with_comments : Graph
-	graph_with_comments = {
-		crash
-			\\Please use your DSL to build this graph:
-			\\
-			\\graph {
-			\\    # a shell-like comment
-			\\    [foo=1];
-			\\}
-	}
-
 	## graph with nodes, edges, and attributes
 	graph_with_nodes_edges_and_attributes : Graph
 	graph_with_nodes_edges_and_attributes = {
