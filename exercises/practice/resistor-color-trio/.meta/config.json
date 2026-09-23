@@ -8,7 +8,7 @@
       "resistor-color-trio-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/ResistorColorTrio.roc"
     ]
   },
   "blurb": "Convert color codes, as used on resistors, to a human-readable label.",

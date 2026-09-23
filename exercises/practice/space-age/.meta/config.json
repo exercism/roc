@@ -10,7 +10,7 @@
       "space-age-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/SpaceAge.roc"
     ]
   },
   "blurb": "Given an age in seconds, calculate how old someone is in terms of a given planet's solar years.",

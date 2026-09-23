@@ -10,7 +10,7 @@
       "pig-latin-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/PigLatin.roc"
     ]
   },
   "blurb": "Implement a program that translates from English to Pig Latin.",

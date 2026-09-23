@@ -8,7 +8,7 @@
       "dnd-character-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/DndCharacter.roc"
     ]
   },
   "blurb": "Randomly generate Dungeons & Dragons characters.",
