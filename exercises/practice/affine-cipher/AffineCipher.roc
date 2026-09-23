@@ -10,12 +10,12 @@ AffineCipher :: { a : U64, b : U64 }.{
 		crash "Please implement the 'new' method"
 	}
 
-	encode : Str, AffineCipher -> Try(Str, _)
+	encode : AffineCipher, Str -> Str
 	encode = |affine_cipher, phrase| {
 		crash "Please implement the 'encode' method"
 	}
 
-	decode : Str, AffineCipher -> Try(Str, _)
+	decode : AffineCipher, Str -> Try(Str, _)
 	decode = |affine_cipher, phrase| {
 		crash "Please implement the 'decode' method"
 	}
