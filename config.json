@@ -780,6 +780,14 @@
         "difficulty": 5
       },
       {
+        "slug": "intergalactic-transmission",
+        "name": "Intergalactic Transmission",
+        "uuid": "ce549a25-50b3-43b6-a6c2-26e32b96ef33",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "killer-sudoku-helper",
         "name": "Killer Sudoku Helper",
         "uuid": "e12846f9-8905-406d-8b3d-b5e0fa4e3c0a",
