@@ -1,0 +1,93 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import Deque
+
+{% set methods = {"push": "append", "unshift": "prepend", "pop": "pop_last", "shift": "pop_first", "delete": "remove_value"} %}
+
+{# Replace longer forms first so "unshift" and "popping" are not partially renamed. #}
+{% macro describe(description) -%}
+{%- set text = namespace(value=description) -%}
+{%- for old, new in [
+    ("popping", "removing from the end"),
+    ("shifting", "removing from the start"),
+    ("unshift", "prepend"),
+    ("pop", "pop_last"),
+    ("shift", "pop_first"),
+    ("push", "append"),
+    ("count an", "len of an"),
+    ("count a", "len of a"),
+    ("count", "len"),
+    ("deletes", "remove_value removes"),
+    ("delete", "remove_value"),
+] -%}
+{%- set text.value = text.value | replace(old, new) -%}
+{%- endfor -%}
+{{ text.value }}
+{%- endmacro %}
+
+{% macro render_cases(cases) %}
+{%- for case in cases %}
+{%- if "cases" in case %}
+{{ render_cases(case["cases"]) }}
+{%- else %}
+{%- set state = namespace(items=[]) %}
+# {{ describe(case["description"]) }}
+expect {
+    deque = Deque.empty()
+{%- for op in case["input"]["operations"] %}
+{%- set operation = op["operation"] %}
+{%- if operation in ["push", "unshift", "delete"] %}
+        .{{ methods[operation] }}({{ op["value"] | to_roc }})
+{%- if operation == "push" %}
+{%- set state.items = state.items + [op["value"]] %}
+{%- elif operation == "unshift" %}
+{%- set state.items = [op["value"]] + state.items %}
+{%- elif op["value"] in state.items %}
+{%- set index = state.items.index(op["value"]) %}
+{%- set state.items = state.items[:index] + state.items[index + 1:] %}
+{%- endif %}
+{%- elif operation in ["pop", "shift"] %}
+{%- if "expected" in op %}
+        .{{ methods[operation] }}()? |> expected_value({{ op["expected"] | to_roc }})?
+{%- else %}
+        .{{ methods[operation] }}()?.deque
+{%- endif %}
+{%- if operation == "pop" %}
+{%- set state.items = state.items[:-1] %}
+{%- else %}
+{%- set state.items = state.items[1:] %}
+{%- endif %}
+{%- elif operation == "count" and not loop.last %}
+        |> expected_len({{ op["expected"] | to_roc }})?
+{%- endif %}
+{%- endfor %}
+
+{%- set last = case["input"]["operations"][-1] %}
+    deque.len() == {{ last["expected"] | to_roc if last["operation"] == "count" else state.items | length }}
+}
+{%- endif %}
+
+{% endfor %}
+{% endmacro %}
+
+{{ render_cases(cases) }}
+
+expected_value = |result, value| {
+    if result.value == value {
+        Ok(result.deque)
+    } else {
+        Err(UnexpectedValue)
+    }
+}
+
+expected_len = |deque, length| {
+    if deque.len() == length {
+        Ok(deque)
+    } else {
+        Err(UnexpectedLength)
+    }
+}
+
+{{ macros.footer() }}
