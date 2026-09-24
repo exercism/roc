@@ -70,14 +70,14 @@ Zipper :: {
 	}
 
 	## remove the left child, returns a new zipper
-	remove_left : Zipper, Tree -> Zipper
-	remove_left = |zipper, tree| {
+	remove_left : Zipper -> Zipper
+	remove_left = |zipper| {
 		crash "Please implement the 'remove_left' function"
 	}
 
 	## remove the right child, returns a new zipper
-	remove_right : Zipper, Tree -> Zipper
-	remove_right = |zipper, tree| {
+	remove_right : Zipper -> Zipper
+	remove_right = |zipper| {
 		crash "Please implement the 'remove_right' function"
 	}
 }
