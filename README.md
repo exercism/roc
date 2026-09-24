@@ -43,6 +43,16 @@ Basic linting finished successfully:
 - Required shared exercise docs are present
 ```
 
+Practice exercises in the root `config.json` must be sorted by difficulty, then
+alphabetically by slug. `bin/add-exercise` sorts them automatically. After changing
+an exercise's difficulty, run:
+
+```shell
+bin/sort_exercises.py
+```
+
+CI checks this order with `bin/sort_exercises.py --check`, which does not modify files.
+
 [configlet-workflow-badge]: https://github.com/exercism/roc/actions/workflows/configlet.yml/badge.svg
 [configlet-workflow]: https://github.com/exercism/roc/actions/workflows/configlet.yml
 [tests-workflow-badge]: https://github.com/exercism/roc/actions/workflows/test.yml/badge.svg
