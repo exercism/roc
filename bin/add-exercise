@@ -98,7 +98,7 @@ expect {
 
 # TODO: DELETE EVERYTHING BELOW ONCE YOU HAVE PREPARED THIS TEMPLATE
 # ${slug}/canonical-data.json
-$(curl --silent "https://raw.githubusercontent.com/exercism/problem-specifications/main/exercises/anagram/canonical-data.json" | sed -e 's/^/#/g')
+$(curl --silent "https://raw.githubusercontent.com/exercism/problem-specifications/main/exercises/${slug}/canonical-data.json" | sed -e 's/^/#/g')
 END_TESTER
 
 cat << END_TEST > "exercises/practice/${slug}/${slug}-test.roc"
