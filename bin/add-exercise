@@ -122,9 +122,9 @@ cat << END_STUB > "exercises/practice/${slug}/.meta/${slug_pascal}.roc"
 ##
 
 ${slug_pascal} :: {}.{
-    ${slug_snake} : U64 -> Try(U64, _)
+    ${slug_snake} : U64 -> Try(U64, [SomeError, AnotherError, ..])
     ${slug_snake} = |my_arg| {
-        # <actually implement a solution here>
+        crash "Please implement the '${slug_snake}' function"
     }
 }
 END_STUB
