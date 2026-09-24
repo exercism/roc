@@ -1,5 +1,7 @@
 {
-  "authors": [],
+  "authors": [
+    "ageron"
+  ],
   "files": {
     "solution": [
       "JigsawData.roc"
