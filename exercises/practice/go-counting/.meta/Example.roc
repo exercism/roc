@@ -1,4 +1,19 @@
 GoCounting :: {}.{
+	Intersection : { x : U64, y : U64 }
+
+	Stone : [White, Black, None]
+
+	Territory : {
+		owner : Stone,
+		territory : Set(Intersection),
+	}
+
+	Territories : {
+		black : Set(Intersection),
+		white : Set(Intersection),
+		none : Set(Intersection),
+	}
+
 	territory : Str, Intersection -> Try(Territory, [OutOfBounds, BoardWasEmpty, BoardWasNotRectangular, InvalidChar(U8), ..])
 	territory = |board_str, intersection| {
 		board = parse(board_str)?
@@ -43,21 +58,6 @@ GoCounting :: {}.{
 		)
 			|> Ok
 	}
-}
-
-Intersection : { x : U64, y : U64 }
-
-Stone : [White, Black, None]
-
-Territory : {
-	owner : Stone,
-	territory : Set(Intersection),
-}
-
-Territories : {
-	black : Set(Intersection),
-	white : Set(Intersection),
-	none : Set(Intersection),
 }
 
 Board : {

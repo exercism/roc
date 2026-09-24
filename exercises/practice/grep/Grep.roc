@@ -4,7 +4,7 @@ import "paradise-lost.txt" as paradise_lost : Str
 
 Grep :: {}.{
 	grep : Str, List(Str), List(Str) -> Try(Str, _)
-	grep = |pattern, flags, files| {
+	grep = |pattern, flags, file_names| {
 		crash "Please implement the 'grep' function"
 	}
 }

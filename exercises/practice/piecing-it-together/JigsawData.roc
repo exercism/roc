@@ -4,7 +4,7 @@ JigsawData := { pieces : U64, border : U64, inside : U64, rows : U64, columns : 
 	PartialJigsawData := { pieces ?: U64, border ?: U64, inside ?: U64, rows ?: U64, columns ?: U64, aspect_ratio ?: Dec, format ?: Format }
 
 	create : PartialJigsawData -> Try(JigsawData, _)
-	create = |partial_jigsaw_data| {
+	create = |data| {
 		crash "Please implement the 'create' function"
 	}
 
