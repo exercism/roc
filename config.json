@@ -812,6 +812,14 @@
         "difficulty": 5
       },
       {
+        "slug": "satellite",
+        "name": "Satellite",
+        "uuid": "32abecd3-962e-4836-aa37-59a8af09ff95",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "acronym",
         "name": "Acronym",
         "uuid": "5bc989a9-f7a8-489d-b9fc-6f65c2425fd7",

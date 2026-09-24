@@ -1,0 +1,30 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import Tree
+
+{% macro render_cases(cases) %}
+{%- for case in cases %}
+{%- if "cases" in case %}
+{{ render_cases(case["cases"]) }}
+{%- else %}
+# {{ case["description"] }}
+expect {
+    result = Tree.from_traversals({
+        pre_order: {{ plugins.to_roc_char_list(case["input"]["preorder"]) }},
+        in_order: {{ plugins.to_roc_char_list(case["input"]["inorder"]) }},
+    })
+{%- if case["expected"] is mapping and "error" in case["expected"] %}
+    result.is_err()
+{%- else %}
+    result == Ok({{ plugins.to_roc_tree(case["expected"]) }})
+{%- endif %}
+}
+{%- endif %}
+
+{% endfor %}
+{% endmacro %}
+
+{{ render_cases(cases) }}
+{{ macros.footer() }}

@@ -1,0 +1,15 @@
+{
+  "authors": [],
+  "files": {
+    "solution": [
+      "Tree.roc"
+    ],
+    "test": [
+      "satellite-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Rebuild binary trees from pre-order and in-order traversals."
+}
