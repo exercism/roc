@@ -628,6 +628,14 @@
         "difficulty": 4
       },
       {
+        "slug": "book-store",
+        "name": "Book Store",
+        "uuid": "51e6bbfa-4ca3-493f-b049-ad0f8e227786",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "custom-set",
         "name": "Custom Set",
         "uuid": "cad7b3db-6fdc-4df0-90da-3799d4a0e440",
