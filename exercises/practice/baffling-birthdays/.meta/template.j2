@@ -1,0 +1,82 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header(imports=["random"]) }}
+
+import DateOfBirth exposing [{{ properties | map("to_snake") | join(", ") }}]
+import random.Random
+
+num_groups = 50_000
+num_dates = 50_000
+many_random_birthdates = random_birthdates({ random_state: Random.seed(0), num_dates })
+
+{% macro render_cases(cases) %}
+{%- for case in cases %}
+{%- if "cases" in case %}
+{{ render_cases(case["cases"]) }}
+{%- else %}
+# {{ case["description"] }}
+expect {
+    {%- if case["property"] == "sharedBirthday" %}
+        {%- if not case["expected"] %}!{% endif -%}
+    shared_birthday({{ case["input"]["birthdates"] | to_roc }})
+    {%- elif case["property"] == "randomBirthdates" %}
+        {%- if case["expected"] == "length == groupsize" %}
+    many_random_birthdates.len() == num_dates
+        {%- elif case["expected"] == {"years": {"leapYear": False}} %}
+    is_not_leap = |year| year % 4 != 0 or (year % 400 != 0 and year % 100 == 0)
+    many_random_birthdates.all(|date| is_not_leap(date.year))
+        {%- elif case["expected"] == {"days": {"random": True}} %}
+    # Number of days before each month in a non-leap year.
+    month_offsets = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]
+    days_of_year = many_random_birthdates.map_try(|date| {
+        offset = month_offsets.get(date.month.to_u64() - 1)?
+        Ok(offset + date.day.to_u16())
+    })?
+    is_uniformly_distributed(days_of_year, 1, 365)
+        {%- else %}
+    # This test case is not supported
+        {%- endif %}
+    {%- elif case["property"] == "estimatedProbabilityOfSharedBirthday" %}
+    result = estimated_probability_of_shared_birthday({
+        random_state: Random.seed(0),
+        num_groups,
+        group_size: {{ case["input"]["groupSize"] }}
+    })
+        {%- if case["input"]["groupSize"] == 1 %}
+    result == 0
+        {%- else %}
+    result |> is_approx_eq({{ case["expected"] }}, { abs: 0.5 })
+        {%- endif %}
+    {%- else %}
+    # This test case is not supported
+    {%- endif %}
+}
+{%- endif %}
+
+{% endfor %}
+{% endmacro %}
+
+{{ render_cases(cases) }}
+
+# Check that every value is in range and occurs roughly equally often.
+# Allow sampling noise (five standard deviations), rather than exact counts.
+is_uniformly_distributed : List(U16), U16, U16 -> Bool
+is_uniformly_distributed = |values, low, high| {
+    if values.is_empty() { return False }
+    if !values.all(|value| value >= low and value <= high) { return False }
+    expected = values.len().to_f64() / (high - low + 1).to_f64()
+    tolerance = 5 * expected.sqrt()
+    for value in low..=high {
+        count = values.keep_if(|item| item == value).len().to_f64()
+        if (count - expected).abs() > tolerance { return False }
+    }
+    True
+}
+
+# The following function should soon be available in Roc's builtins
+is_approx_eq : F64, F64, { abs: F64 } -> Bool
+is_approx_eq = |x, y, {abs}| {
+    (x - y).abs() < abs
+}
+
+{{ macros.footer() }}
