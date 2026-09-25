@@ -1,0 +1,16 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import BookStore exposing [total]
+
+{% for case in cases %}
+## {{ case["description"] }}
+expect {
+    result = total({{ case["input"]["basket"] | to_roc }})
+    result == {{ "%.2f" | format(case["expected"] / 100) }}
+}
+
+{% endfor %}
+
+{{ macros.footer() }}
