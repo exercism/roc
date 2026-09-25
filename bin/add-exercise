@@ -68,16 +68,19 @@ cat << END_TESTER > "exercises/practice/${slug}/.meta/template.j2"
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }}
+import {{ exercise | to_pascal }} exposing [{{ properties | map("to_snake") | join(", ") }}]
 
 {% macro render_cases(cases) %}
 {%- for case in cases %}
 {%- if "cases" in case %}
+##
+## {{ case["description"] }}
+##
 {{ render_cases(case["cases"]) }}
 {%- else %}
 # {{ case["description"] }}
 expect {
-    result = {{ exercise | to_pascal }}.{{ case["property"] | to_snake }}(
+    result = {{ case["property"] | to_snake }}(
     {%- for key, value in case["input"].items() -%}
         {{ value | to_roc }}{% if not loop.last %}, {% endif %}
     {%- endfor -%}
