@@ -73,12 +73,12 @@ import {{ exercise | to_pascal }} exposing [{{ properties | map("to_snake") | jo
 {% macro render_cases(cases) %}
 {%- for case in cases %}
 {%- if "cases" in case %}
-##
-## {{ case["description"] }}
-##
+###
+### {{ case["description"] }}
+###
 {{ render_cases(case["cases"]) }}
 {%- else %}
-# {{ case["description"] }}
+## {{ case["description"] }}
 expect {
     result = {{ case["property"] | to_snake }}(
     {%- for key, value in case["input"].items() -%}
