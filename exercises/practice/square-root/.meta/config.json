@@ -10,7 +10,7 @@
       "square-root-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/SquareRoot.roc"
     ]
   },
   "blurb": "Given a natural radicand, return its square root.",

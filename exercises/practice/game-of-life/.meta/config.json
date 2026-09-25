@@ -1,5 +1,7 @@
 {
-  "authors": [],
+  "authors": [
+    "ageron"
+  ],
   "files": {
     "solution": [
       "GameOfLife.roc"
@@ -8,7 +10,7 @@
       "game-of-life-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/GameOfLife.roc"
     ]
   },
   "blurb": "Implement Conway's Game of Life.",

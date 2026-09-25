@@ -10,7 +10,7 @@
       "all-your-base-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/AllYourBase.roc"
     ]
   },
   "blurb": "Convert a number, represented as a sequence of digits in one base, to any other base."

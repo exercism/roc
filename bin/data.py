@@ -201,11 +201,7 @@ class ExerciseInfo:
     @property
     def solution_stub(self):
         return next(
-            (
-                p
-                for p in self.path.glob("*.roc")
-                if not p.name.endswith("-test.roc") and p.name != "Example.roc"
-            ),
+            (p for p in self.path.glob("*.roc") if not p.name.endswith("-test.roc")),
             None,
         )
 
@@ -223,9 +219,7 @@ class ExerciseInfo:
 
     @property
     def exemplar_file(self):
-        if self.type == "concept":
-            return self.meta_dir / "Exemplar.roc"
-        return self.meta_dir / "Example.roc"
+        return next(self.path.glob(".meta/*.roc"), None)
 
     @property
     def template_path(self):

@@ -10,7 +10,7 @@
       "isogram-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/Isogram.roc"
     ]
   },
   "blurb": "Determine whether a phrase is an isogram, a word with no repeated letters.",

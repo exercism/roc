@@ -10,7 +10,7 @@
       "bob-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/Bob.roc"
     ]
   },
   "blurb": "Bob is a lackadaisical teenager. In conversation, his responses are very limited.",

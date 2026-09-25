@@ -1,5 +1,7 @@
 {
-  "authors": [],
+  "authors": [
+    "ageron"
+  ],
   "files": {
     "solution": [
       "BottleSong.roc"
@@ -8,7 +10,7 @@
       "bottle-song-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/BottleSong.roc"
     ]
   },
   "blurb": "Produce the lyrics to the popular children's repetitive song: Ten Green Bottles.",

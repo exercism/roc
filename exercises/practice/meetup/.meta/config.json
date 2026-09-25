@@ -10,7 +10,7 @@
       "meetup-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/Meetup.roc"
     ]
   },
   "blurb": "Calculate the date of meetups.",

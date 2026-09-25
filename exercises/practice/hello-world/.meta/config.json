@@ -13,7 +13,7 @@
       "hello-world-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/HelloWorld.roc"
     ]
   },
   "blurb": "Exercism's classic introductory exercise. Just say \"Hello, World!\".",
