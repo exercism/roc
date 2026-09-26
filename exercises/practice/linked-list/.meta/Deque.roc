@@ -1,3 +1,7 @@
+##
+## Example solution
+##
+
 # Logical order is front.rev() followed by back; both ends use list append/remove-last.
 Deque :: { front : List(U64), back : List(U64) }.{
 
