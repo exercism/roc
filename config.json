@@ -724,6 +724,14 @@
         "difficulty": 4
       },
       {
+        "slug": "split-second-stopwatch",
+        "name": "Split-Second Stopwatch",
+        "uuid": "dee2d2a1-bc27-4e58-a82a-b86b609bb135",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "state-of-tic-tac-toe",
         "name": "State of Tic-Tac-Toe",
         "uuid": "dddb79e4-6d62-46b8-b75f-f41753b32308",
