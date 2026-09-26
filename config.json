@@ -732,6 +732,14 @@
         "difficulty": 4
       },
       {
+        "slug": "swift-scheduling",
+        "name": "Swift Scheduling",
+        "uuid": "efc8eba1-6d6e-4ff3-ba51-b770de428019",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "variable-length-quantity",
         "name": "Variable Length Quantity",
         "uuid": "3d6cb550-b77f-44f3-a617-1243a4a52dcb",
