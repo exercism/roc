@@ -1,3 +1,7 @@
+##
+## Example solution
+##
+
 Tree := [Empty, Node(Node)].{
 	Node := { value : U8, left : Tree ?? Empty, right : Tree ?? Empty }.{
 		is_eq : _
