@@ -1,5 +1,7 @@
 {
-  "authors": [],
+  "authors": [
+    "ageron"
+  ],
   "files": {
     "solution": [
       "TwelveDays.roc"
@@ -8,7 +10,7 @@
       "twelve-days-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/TwelveDays.roc"
     ]
   },
   "blurb": "Output the lyrics to 'The Twelve Days of Christmas'.",

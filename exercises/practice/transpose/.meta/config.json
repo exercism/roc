@@ -10,7 +10,7 @@
       "transpose-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/Transpose.roc"
     ]
   },
   "blurb": "Take input text and output it transposed.",

@@ -1,5 +1,7 @@
 {
-  "authors": [],
+  "authors": [
+    "ageron"
+  ],
   "files": {
     "solution": [
       "TicTacToe.roc"
@@ -8,7 +10,7 @@
       "state-of-tic-tac-toe-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/TicTacToe.roc"
     ]
   },
   "blurb": "Determine the game state of a match of Tic-Tac-Toe.",

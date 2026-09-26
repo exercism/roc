@@ -1,0 +1,45 @@
+##
+## Example solution
+##
+
+PascalsTriangle :: {}.{
+	pascals_triangle : U64 -> List(List(U64))
+	pascals_triangle = |count| {
+		(0..<count)
+			.iter()
+			.map(
+				|row| {
+					(0..=row)
+						.iter()
+						.map(
+							|column| binomial_coefficient(row, column),
+						)
+						|> List.from_iter
+				},
+			)
+			|> List.from_iter
+	}
+}
+
+binomial_coefficient : U64, U64 -> U64
+binomial_coefficient = |n, k| {
+	if k == 0 or k == n {
+		1
+	} else {
+		numerator =
+			((n + 1 - k)..=n)
+				.iter()
+				.fold(
+					1,
+					|product, value| product * value,
+				)
+		denominator =
+			(1..=k)
+				.iter()
+				.fold(
+					1,
+					|product, value| product * value,
+				)
+		numerator // denominator
+	}
+}

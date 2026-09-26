@@ -10,7 +10,7 @@
       "sum-of-multiples-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/SumOfMultiples.roc"
     ]
   },
   "blurb": "Given a number, find the sum of all the multiples of particular numbers up to but not including that number.",

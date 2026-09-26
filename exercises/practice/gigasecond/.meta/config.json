@@ -10,7 +10,7 @@
       "gigasecond-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/Gigasecond.roc"
     ]
   },
   "blurb": "Given a moment, determine the moment that would be after a gigasecond has passed.",

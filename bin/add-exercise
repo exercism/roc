@@ -24,6 +24,7 @@ required_tool() {
 
 required_tool jq
 required_tool curl
+required_tool python3
 
 [[ -f ./bin/fetch-configlet ]] || die "run this script from the repo's root directory."
 
@@ -48,6 +49,7 @@ fi
 # Create entry for exercise in config.json and exercise files
 ./bin/fetch-configlet
 ./bin/configlet create --practice-exercise "${slug}" --author "${author}" --difficulty "${difficulty}"
+./bin/sort_exercises.py
 
 if [ -e ".problem-specifications/exercises/${slug}/.deprecated" ]; then
   echo ""
@@ -58,28 +60,49 @@ if [ -e ".problem-specifications/exercises/${slug}/.deprecated" ]; then
   echo ""
 else
 
+slug_pascal=$(cd bin && python3 -c "from roc_utils import to_pascal; print(to_pascal('${slug}'))")
+slug_snake=$(cd bin && python3 -c "from roc_utils import to_snake; print(to_snake('${slug}'))")
+
 cat << END_TESTER > "exercises/practice/${slug}/.meta/template.j2"
 {%- import "generator_macros.j2" as macros with context -%}
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import {{ exercise | to_pascal }} exposing [{{ cases[0]["property"] | to_snake }}]
+import {{ exercise | to_pascal }} exposing [{{ properties | map("to_snake") | join(", ") }}]
 
-{% for case in cases -%}
-# {{ case["description"] }}
-expect
-    result = {{ case["property"] | to_snake }}({{ case["input"]["myArg"] | to_roc }})
+{% macro render_cases(cases) %}
+{%- for case in cases %}
+{%- if "cases" in case %}
+###
+### {{ case["description"] }}
+###
+{{ render_cases(case["cases"]) }}
+{%- else %}
+## {{ case["description"] }}
+expect {
+    result = {{ case["property"] | to_snake }}(
+    {%- for key, value in case["input"].items() -%}
+        {{ value | to_roc }}{% if not loop.last %}, {% endif %}
+    {%- endfor -%}
+    )
+{%- if case["expected"] is mapping and "error" in case["expected"] %}
+    result.is_err()
+{%- else %}
     result == {{ case["expected"] | to_roc }}
+{%- endif %}
+}
+{%- endif %}
 
 {% endfor %}
+{% endmacro %}
+
+{{ render_cases(cases) }}
+{{ macros.footer() }}
 
 # TODO: DELETE EVERYTHING BELOW ONCE YOU HAVE PREPARED THIS TEMPLATE
 # ${slug}/canonical-data.json
-$(curl --silent "https://raw.githubusercontent.com/exercism/problem-specifications/main/exercises/${slug}/canonical-data.json")
+$(curl --silent "https://raw.githubusercontent.com/exercism/problem-specifications/main/exercises/${slug}/canonical-data.json" | sed -e 's/^/#/g')
 END_TESTER
-
-slug_pascal=$(cd bin && python -c "from generate_tests import to_pascal; print(to_pascal('${slug}'))")
-slug_camel=$(cd bin && python -c "from generate_tests import to_snake; print(to_snake('${slug}'))")
 
 cat << END_TEST > "exercises/practice/${slug}/${slug}-test.roc"
 # This file will be generated automatically
@@ -89,13 +112,25 @@ END_TEST
 
 cat << END_STUB > "exercises/practice/${slug}/${slug_pascal}.roc"
 ${slug_pascal} :: {}.{
-    ${slug_camel} = |my_arg| {
-        crash "Please implement the '${slug_camel}' function"
+    ${slug_snake} : U64 -> Try(U64, _)
+    ${slug_snake} = |my_arg| {
+        crash "Please implement the '${slug_snake}' function"
     }
 }
 END_STUB
 
-cp "exercises/practice/${slug}/${slug_pascal}.roc" "exercises/practice/${slug}/.meta/Example.roc"
+cat << END_STUB > "exercises/practice/${slug}/.meta/${slug_pascal}.roc"
+##
+## Example solution
+##
+
+${slug_pascal} :: {}.{
+    ${slug_snake} : U64 -> Try(U64, [SomeError, AnotherError, ..])
+    ${slug_snake} = |my_arg| {
+        crash "Please implement the '${slug_snake}' function"
+    }
+}
+END_STUB
 
 cat << NEXT_STEPS
 
@@ -105,11 +140,13 @@ Your next steps are:
   the template for your convenience, please delete it once you're done.
   - Any test cases you don't implement, mark them in 'exercises/practice/${slug}/.meta/tests.toml' with "include = false"
 - Generate the test suite by running: bin/generate_tests.py ${slug}
-- Create the example solution in 'exercises/practice/${slug}/.meta/Example.roc'
+- Create the example solution in 'exercises/practice/${slug}/.meta/${slug_pascal}.roc'
 - Verify the example solution by running 'bin/verify-exercises ${slug}'
 - Edit the stub solution in 'exercises/practice/${slug}/${slug_pascal}.roc'
-- Format all your Roc code by running 'roc fmt' on each .roc file
+- Check that the stub aligns with the solution by running 'bin/check_stubs.py'
+- Format all your Roc code by running 'roc fmt exercises/practice/${slug}'
 - Update the 'difficulty' value for the exercise's entry in the 'config.json' file
+- Run 'bin/sort_exercises.py' to sort 'config.json' by difficulty first, then by slug.
 - Validate CI using 'bin/configlet lint' and 'bin/configlet fmt'
 NEXT_STEPS
 

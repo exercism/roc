@@ -10,7 +10,7 @@
       "high-scores-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/HighScores.roc"
     ]
   },
   "blurb": "Manage a player's High Score list.",

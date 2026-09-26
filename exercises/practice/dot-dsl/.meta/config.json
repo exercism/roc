@@ -10,7 +10,7 @@
       "dot-dsl-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/Graph.roc"
     ]
   },
   "blurb": "Write a Domain Specific Language similar to the Graphviz dot language.",

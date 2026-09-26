@@ -10,7 +10,7 @@
       "prime-factors-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/PrimeFactors.roc"
     ]
   },
   "blurb": "Compute the prime factors of a given natural number.",

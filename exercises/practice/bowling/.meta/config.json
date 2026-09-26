@@ -10,7 +10,7 @@
       "bowling-test.roc"
     ],
     "example": [
-      ".meta/Example.roc"
+      ".meta/Bowling.roc"
     ]
   },
   "blurb": "Score a bowling game.",
