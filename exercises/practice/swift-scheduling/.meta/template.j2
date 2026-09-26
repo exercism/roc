@@ -1,0 +1,28 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header(imports=["isodate"]) }}
+
+import SwiftScheduling exposing [delivery_date]
+
+{% macro delivery_tag(description) -%}
+{%- if description.endswith("M") -%}
+Month({{ description[:-1] }})
+{%- elif description.startswith("Q") -%}
+Quarter({{ description[1:] }})
+{%- else -%}
+{{ {"NOW": "Now", "ASAP": "Asap", "EOW": "Eow"}[description] }}
+{%- endif -%}
+{%- endmacro %}
+
+{% for case in cases -%}
+## {{ case["description"] }}
+expect {
+    result = {{ case["property"] | to_snake }}({
+        meeting_start: {{ case["input"]["meetingStart"] | to_roc }},
+        delivery: {{ delivery_tag(case["input"]["description"]) }},
+    })?
+    result == {{ case["expected"] | to_roc }}
+}
+
+{% endfor %}
+{{ macros.footer() }}
