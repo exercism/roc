@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "React.roc"
+    ],
+    "test": [
+      "react-test.roc"
+    ],
+    "example": [
+      ".meta/Example.roc"
+    ]
+  },
+  "blurb": "Implement a basic reactive system."
+}
