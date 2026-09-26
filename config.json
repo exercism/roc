@@ -1029,6 +1029,14 @@
         "difficulty": 9
       },
       {
+        "slug": "react",
+        "name": "React",
+        "uuid": "cfce7bb0-5875-4177-a62d-250480cedcdf",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 9
+      },
+      {
         "slug": "sgf-parsing",
         "name": "SGF Parsing",
         "uuid": "21064949-0320-425e-b2f5-ba67908c1db1",
