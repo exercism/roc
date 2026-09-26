@@ -4,6 +4,8 @@
 
 Camicia :: {}.{
 	Card :: U64.{
+
+		## This function parses a Str to a Card at compile time
 		from_quote : Str -> Try(Card, [BadQuotedBytes(Str)])
 		from_quote = |card_str| {
 			match card_str {
