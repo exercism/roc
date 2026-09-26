@@ -1,3 +1,7 @@
+##
+## Example solution
+##
+
 Ledger :: {}.{
 	Currency : [Usd, Eur]
 	Locale : [EnUs, NlNl]
