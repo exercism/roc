@@ -1,3 +1,7 @@
+##
+## Example solution
+##
+
 Tree := { id : U64, children : List(Tree) ?? [] }.{
 	is_eq : _
 
