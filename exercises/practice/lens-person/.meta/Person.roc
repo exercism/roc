@@ -1,3 +1,7 @@
+##
+## Example solution
+##
+
 Person := { name : Name, birth : Birth, address : Address }.{
 	Name : { forenames : Str, surname : Str }
 
