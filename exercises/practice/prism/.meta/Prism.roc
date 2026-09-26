@@ -1,3 +1,7 @@
+##
+## Example solution
+##
+
 Prism := { id : U64, x : Dec, y : Dec, angle : Dec }.{
 	Ray : { x : Dec, y : Dec, angle : Dec }
 
