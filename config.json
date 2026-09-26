@@ -708,6 +708,14 @@
         "difficulty": 4
       },
       {
+        "slug": "relative-distance",
+        "name": "Relative Distance",
+        "uuid": "87729f0e-eb90-426f-a1e9-7286aff643b7",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "run-length-encoding",
         "name": "Run-Length Encoding",
         "uuid": "d6b8a979-8ce8-4f46-a6cd-35cd44b19701",
