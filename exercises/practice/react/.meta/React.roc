@@ -1,3 +1,7 @@
+##
+## Example solution
+##
+
 React :: {
 	values : Dict(Str, CellValue),
 	inputs : Set(Str),
