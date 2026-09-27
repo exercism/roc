@@ -989,6 +989,14 @@
         "difficulty": 8
       },
       {
+        "slug": "baffling-birthdays",
+        "name": "Baffling Birthdays",
+        "uuid": "ecb4f644-ff49-4be1-a471-184a3b7e6038",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
+      },
+      {
         "slug": "dominoes",
         "name": "Dominoes",
         "uuid": "baeabe4e-6d9b-4fa5-b8a7-22b1977d840e",
