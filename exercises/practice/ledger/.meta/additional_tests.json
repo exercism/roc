@@ -1,0 +1,208 @@
+{
+  "cases": [
+    {
+      "uuid": "b698ba20-1721-4222-b88a-dbb2726b120e",
+      "description": "empty Dutch ledger",
+      "property": "formatEntries",
+      "input": {
+        "currency": "EUR",
+        "locale": "nl_NL",
+        "entries": []
+      },
+      "expected": [
+        "Datum      | Omschrijving              | Verandering  "
+      ]
+    },
+    {
+      "uuid": "a921f507-f46a-4340-9fff-17eccc3464b3",
+      "description": "dates sort across year boundaries",
+      "property": "formatEntries",
+      "input": {
+        "currency": "USD",
+        "locale": "en_US",
+        "entries": [
+          {
+            "date": "2025-01-01",
+            "description": "New year",
+            "amountInCents": 100
+          },
+          {
+            "date": "2024-12-31",
+            "description": "Year end",
+            "amountInCents": -100
+          }
+        ]
+      },
+      "expected": [
+        "Date       | Description               | Change       ",
+        "12/31/2024 | Year end                  |       ($1.00)",
+        "01/01/2025 | New year                  |        $1.00 "
+      ]
+    },
+    {
+      "uuid": "1c1370d9-516c-462b-ba0a-f7818ab48613",
+      "description": "descriptions of exactly 25 characters are not truncated",
+      "property": "formatEntries",
+      "input": {
+        "currency": "USD",
+        "locale": "en_US",
+        "entries": [
+          {
+            "date": "2025-01-01",
+            "description": "1234567890123456789012345",
+            "amountInCents": 0
+          }
+        ]
+      },
+      "expected": [
+        "Date       | Description               | Change       ",
+        "01/01/2025 | 1234567890123456789012345 |        $0.00 "
+      ]
+    },
+    {
+      "uuid": "02da12a9-6850-4d05-a331-62a55d10aa86",
+      "description": "descriptions of 26 characters are truncated",
+      "property": "formatEntries",
+      "input": {
+        "currency": "USD",
+        "locale": "en_US",
+        "entries": [
+          {
+            "date": "2025-01-01",
+            "description": "12345678901234567890123456",
+            "amountInCents": 0
+          }
+        ]
+      },
+      "expected": [
+        "Date       | Description               | Change       ",
+        "01/01/2025 | 1234567890123456789012... |        $0.00 "
+      ]
+    },
+    {
+      "uuid": "3cedc48d-12b5-4a91-8f04-7b3441b0d251",
+      "description": "Unicode descriptions are padded by character count",
+      "property": "formatEntries",
+      "input": {
+        "currency": "EUR",
+        "locale": "nl_NL",
+        "entries": [
+          {
+            "date": "2025-01-01",
+            "description": "Café",
+            "amountInCents": -101
+          }
+        ]
+      },
+      "expected": [
+        "Datum      | Omschrijving              | Verandering  ",
+        "01-01-2025 | Café                      |      € -1,01 "
+      ]
+    },
+    {
+      "uuid": "3bac8e1b-c236-4a62-96cc-eb35c4d632d0",
+      "description": "truncation preserves complete Unicode characters",
+      "property": "formatEntries",
+      "input": {
+        "currency": "EUR",
+        "locale": "en_US",
+        "entries": [
+          {
+            "date": "2025-01-01",
+            "description": "éééééééééééééééééééééééééé",
+            "amountInCents": 101
+          }
+        ]
+      },
+      "expected": [
+        "Date       | Description               | Change       ",
+        "01/01/2025 | éééééééééééééééééééééé... |        €1.01 "
+      ]
+    },
+    {
+      "uuid": "0b849f2f-f342-46d9-896b-463af3572bd6",
+      "description": "full descriptions determine order before truncation",
+      "property": "formatEntries",
+      "input": {
+        "currency": "USD",
+        "locale": "en_US",
+        "entries": [
+          {
+            "date": "2025-01-01",
+            "description": "AAAAAAAAAAAAAAAAAAAAAAAAAz",
+            "amountInCents": -100
+          },
+          {
+            "date": "2025-01-01",
+            "description": "AAAAAAAAAAAAAAAAAAAAAAAAAa",
+            "amountInCents": 100
+          }
+        ]
+      },
+      "expected": [
+        "Date       | Description               | Change       ",
+        "01/01/2025 | AAAAAAAAAAAAAAAAAAAAAA... |        $1.00 ",
+        "01/01/2025 | AAAAAAAAAAAAAAAAAAAAAA... |       ($1.00)"
+      ]
+    },
+    {
+      "uuid": "8e536c3d-efb7-4746-bd4e-09d9cb5d2a76",
+      "description": "large amounts use repeated grouping and expand the column",
+      "property": "formatEntries",
+      "input": {
+        "currency": "EUR",
+        "locale": "nl_NL",
+        "entries": [
+          {
+            "date": "2025-01-01",
+            "description": "Large amount",
+            "amountInCents": 1234567890123
+          }
+        ]
+      },
+      "expected": [
+        "Datum      | Omschrijving              | Verandering  ",
+        "01-01-2025 | Large amount              | € 12.345.678.901,23 "
+      ]
+    },
+    {
+      "uuid": "42dcf2b4-81e9-4f76-b828-d87f6c1a1907",
+      "description": "the smallest signed amount formats without overflow",
+      "property": "formatEntries",
+      "input": {
+        "currency": "USD",
+        "locale": "en_US",
+        "entries": [
+          {
+            "date": "2025-01-01",
+            "description": "Minimum",
+            "amountInCents": -9223372036854775808
+          }
+        ]
+      },
+      "expected": [
+        "Date       | Description               | Change       ",
+        "01/01/2025 | Minimum                   | ($92,233,720,368,547,758.08)"
+      ]
+    },
+    {
+      "uuid": "38ff09b1-cb93-4102-bd96-edbcec6783e9",
+      "description": "invalid date formats return an error",
+      "property": "formatEntries",
+      "input": {
+        "currency": "USD",
+        "locale": "en_US",
+        "entries": [
+          {
+            "date": "2025/01/01",
+            "description": "Invalid date",
+            "amountInCents": 1
+          }
+        ]
+      },
+      "expected": {
+        "error": "invalid date format"
+      }
+    }
+  ]
+}
