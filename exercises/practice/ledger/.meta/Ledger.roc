@@ -4,13 +4,17 @@
 
 # Refactoring log:
 # - Split sorting, date, description, and amount formatting into focused helpers.
-# - Shared character counting and digit grouping; removed redundant counting.
+# - Shared digit grouping and replaced manual UTF-8 handling with Grapheme.split.
 # - Replaced mutable state and flags with expressions, maps, and folds.
 # - Used clearer names for dates, amounts, and comparison results.
 # - Reduced nesting and duplication in currency and locale formatting.
 # - Matched currencies and locales explicitly instead of relying on fallbacks.
 # - Replaced the empty-string error sentinel with Try and error propagation.
-# - Preserved the public API and output formatting.
+# - Used isodate.Date for date parsing and formatting.
+# - Preserved the public API; keep combining accents and emoji together when truncating.
+
+import isodate.Date
+import unicode.Grapheme
 
 Ledger :: {}.{
 	Currency : [Usd, Eur]
@@ -59,67 +63,46 @@ compare_text = |a, b| {
 }
 
 format_date : Str, Ledger.Locale -> Try(Str, [InvalidDateFormat, ..])
-format_date = |date, locale| match date.split_on("-") {
-	[year, month, day] if year.to_utf8().len() == 4 and month.to_utf8().len() == 2 and day.to_utf8().len() == 2 => {
-		digits = year.concat(month).concat(day).to_utf8()
-		if !digits.all(|byte| byte >= '0' and byte <= '9') {
-			return Err(InvalidDateFormat)
-		}
-		Ok(
-			match locale {
-				EnUs => "${month}/${day}/${year}"
-				NlNl => "${day}-${month}-${year}"
-			},
-		)
+format_date = |date, locale| {
+	parsed = Date.from_iso_str(date)?
+	if parsed.to_iso_str() != date {
+		return Err(InvalidDateFormat)
 	}
-	_ => Err(InvalidDateFormat)
+	pattern = match locale {
+		EnUs => "{MM}/{DD}/{YYYY}"
+		NlNl => "{DD}-{MM}-{YYYY}"
+	}
+	Ok(parsed.format(pattern))
 }
-
-character_count : Str -> U64
-character_count = |text| text.to_utf8().keep_if(|byte| byte < 128 or byte >= 192).len()
 
 format_description : Str -> Str
 format_description = |description| {
-	length = character_count(description)
+	graphemes = Grapheme.split(description)
+	length = graphemes.len()
 	if length <= 25 {
 		description.concat(" ".repeat(25 - length))
 	} else {
-		prefix = description.to_utf8().fold(
-			{ count: 0, bytes: [] },
-			|acc, byte| {
-				count = if byte < 128 or byte >= 192 {
-					acc.count + 1
-				} else {
-					acc.count
-				}
-				{
-					count,
-					bytes: if count <= 22 {
-						acc.bytes.append(byte)
-					} else {
-						acc.bytes
-					},
-				}
-			},
-		)
-		Str.from_utf8_lossy(prefix.bytes).concat("...")
+		prefix = graphemes.take_first(22) |> Str.join_with("")
+		prefix.concat("...")
 	}
 }
 
-group_digits : Str, Str -> Str
-group_digits = |digits, separator| {
-	bytes = digits.to_utf8()
-	bytes.map_with_index(
-		|byte, index| {
-			digit = Str.from_utf8_lossy([byte])
-			if index > 0 and (bytes.len() - index) % 3 == 0 {
-				separator.concat(digit)
-			} else {
-				digit
-			}
-		},
-	)
-		|> Str.join_with("")
+format_number : I128, { group_separator : Str, decimal_separator : Str } -> Str
+format_number = |cents, { group_separator, decimal_separator }| {
+	group_whole = |whole| {
+		if whole < 1000 {
+			whole.to_str()
+		} else {
+			prefix = group_whole(whole // 1000)
+			last_group = (whole % 1000).to_str()
+			padded = "0".repeat(3 - last_group.to_utf8().len()).concat(last_group)
+			"${prefix}${group_separator}${padded}"
+		}
+	}
+	whole = group_whole(cents // 100)
+	fraction = (cents % 100).to_str()
+	padded = "0".repeat(2 - fraction.to_utf8().len()).concat(fraction)
+	"${whole}${decimal_separator}${padded}"
 }
 
 format_amount : I64, Ledger.Currency, Ledger.Locale -> Str
@@ -137,10 +120,7 @@ format_amount = |amount, currency, locale| {
 		EnUs => (",", ".")
 		NlNl => (".", ",")
 	}
-	whole = group_digits((magnitude // 100).to_str(), group_separator)
-	fraction = (magnitude % 100).to_str()
-	cents = "0".repeat(2 - fraction.to_utf8().len()).concat(fraction)
-	number = "${whole}${decimal_separator}${cents}"
+	number = magnitude |> format_number({ group_separator, decimal_separator })
 	formatted = match locale {
 		EnUs => if amount < 0 {
 			"(${symbol}${number})"
@@ -153,5 +133,6 @@ format_amount = |amount, currency, locale| {
 			"${symbol} ${number} "
 		}
 	}
-	" ".repeat((13).minus_saturated(character_count(formatted))).concat(formatted)
+	length = 13.minus_saturated(Grapheme.split(formatted).len())
+	" ".repeat(length).concat(formatted)
 }

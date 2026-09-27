@@ -12,5 +12,7 @@ Looking for a place to start? Here are a few things you might want to tidy up:
 - Implicit enum fallbacks
 - Helpers with unrelated responsibilities
 - Empty strings standing in for errors
+- Hand-written date parsing and formatting (try importing and using `isodate.Date` instead)
+- Manual Unicode handling (try importing and using `unicode.Grapheme` instead)
 
 Pick whatever catches your eye, and keep the tests green!

@@ -1,6 +1,6 @@
 {%- import "generator_macros.j2" as macros with context -%}
 {{ macros.canonical_ref() }}
-{{ macros.header() }}
+{{ macros.header(imports=["isodate", "unicode"]) }}
 
 import Ledger exposing [format_entries]
 
