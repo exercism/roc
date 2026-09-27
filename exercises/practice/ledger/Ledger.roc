@@ -5,6 +5,92 @@ Ledger :: {}.{
 
 	format_entries : { currency : Currency, locale : Locale, entries : List(Entry) } -> Try(Str, [InvalidDateFormat, ..])
 	format_entries = |{ currency, locale, entries }| {
+		format_money = |amount, description| {
+			var $description = description
+			var $n = 0.U64
+			for b in description.to_utf8() {
+				if b < 128 or b >= 192 {
+					$n = $n + 1
+				}
+			}
+			if $n < 25 {
+				$description = $description.concat(" ".repeat(25 - $n))
+			}
+			a = amount.to_i128()
+			var $negative = Bool.False
+			if a < 0 {
+				$negative = Bool.True
+			} else {
+				$negative = Bool.False
+			}
+			p = if $negative {
+				-a
+			} else {
+				a
+			}
+			ds = (p // 100).to_str().to_utf8()
+			var $number = ""
+			for (b, i) in ds.map_with_index(|b, i| (b, i)) {
+				if i > 0 and (ds.len() - i) % 3 == 0 {
+					if locale == EnUs {
+						$number = $number.concat(",")
+					} else {
+						$number = $number.concat(".")
+					}
+				}
+				$number = $number.concat(Str.from_utf8_lossy([b]))
+			}
+			if locale == EnUs {
+				$number = $number.concat(".")
+			} else {
+				$number = $number.concat(",")
+			}
+			if p % 100 < 10 {
+				$number = $number.concat("0")
+			}
+			$number = $number.concat((p % 100).to_str())
+			var $money = ""
+			if locale == EnUs {
+				if currency == Usd {
+					if $negative {
+						$money = "($${$number})"
+					} else {
+						$money = "$${$number} "
+					}
+				} else {
+					if $negative {
+						$money = "(€${$number})"
+					} else {
+						$money = "€${$number} "
+					}
+				}
+			} else {
+				if currency == Usd {
+					if $negative {
+						$money = "$ -${$number} "
+					} else {
+						$money = "$ ${$number} "
+					}
+				} else {
+					if $negative {
+						$money = "€ -${$number} "
+					} else {
+						$money = "€ ${$number} "
+					}
+				}
+			}
+			var $width = 0.U64
+			for b in $money.to_utf8() {
+				if b < 128 or b >= 192 {
+					$width = $width + 1
+				}
+			}
+			while $width < 13 {
+				$money = " ".concat($money)
+				$width = $width + 1
+			}
+			{ description: $description, money: $money }
+		}
 		cmp = |a, b| {
 			cmp_bytes = |a_bytes, b_bytes| match (a_bytes, b_bytes) {
 				([], []) => Same
@@ -42,15 +128,17 @@ Ledger :: {}.{
 			date = match entry.date.split_on("-") {
 				[y, m, d] if y.to_utf8().len() == 4 and m.to_utf8().len() == 2 and d.to_utf8().len() == 2 => {
 					if !y.concat(m).concat(d).to_utf8().all(|b| b >= '0' and b <= '9') {
-						return Err(InvalidDateFormat)
-					}
-					if locale == EnUs {
+						""
+					} else if locale == EnUs {
 						"${m}/${d}/${y}"
 					} else {
 						"${d}-${m}-${y}"
 					}
 				}
-				_ => return Err(InvalidDateFormat)
+				_ => ""
+			}
+			if date == "" {
+				return Err(InvalidDateFormat)
 			}
 			var $n = 0.U64
 			var $bytes = []
@@ -65,77 +153,9 @@ Ledger :: {}.{
 			var $description = entry.description
 			if $n > 25 {
 				$description = Str.from_utf8_lossy($bytes).concat("...")
-			} else {
-				$description = $description.concat(" ".repeat(25 - $n))
 			}
-			a = entry.amount_in_cents.to_i128()
-			p = if a < 0 {
-				-a
-			} else {
-				a
-			}
-			ds = (p // 100).to_str().to_utf8()
-			var $number = ""
-			for (b, i) in ds.map_with_index(|b, i| (b, i)) {
-				if i > 0 and (ds.len() - i) % 3 == 0 {
-					if locale == EnUs {
-						$number = $number.concat(",")
-					} else {
-						$number = $number.concat(".")
-					}
-				}
-				$number = $number.concat(Str.from_utf8_lossy([b]))
-			}
-			if locale == EnUs {
-				$number = $number.concat(".")
-			} else {
-				$number = $number.concat(",")
-			}
-			if p % 100 < 10 {
-				$number = $number.concat("0")
-			}
-			$number = $number.concat((p % 100).to_str())
-			var $money = ""
-			if locale == EnUs {
-				if currency == Usd {
-					if a < 0 {
-						$money = "($${$number})"
-					} else {
-						$money = "$${$number} "
-					}
-				} else {
-					if a < 0 {
-						$money = "(€${$number})"
-					} else {
-						$money = "€${$number} "
-					}
-				}
-			} else {
-				if currency == Usd {
-					if a < 0 {
-						$money = "$ -${$number} "
-					} else {
-						$money = "$ ${$number} "
-					}
-				} else {
-					if a < 0 {
-						$money = "€ -${$number} "
-					} else {
-						$money = "€ ${$number} "
-					}
-				}
-			}
-			var $width = 0.U64
-			for b in $money.to_utf8() {
-				if b < 128 or b >= 192 {
-					$width = $width + 1
-				}
-			}
-			while $width < 13 {
-				$money = " ".concat($money)
-				$width = $width + 1
-			}
-			$text = "${$text}\n${date} | ${$description} | ${$money}"
+			formatted = format_money(entry.amount_in_cents, $description)
+			$text = "${$text}\n${date} | ${formatted.description} | ${formatted.money}"
 		}
 		Ok($text)
 	}

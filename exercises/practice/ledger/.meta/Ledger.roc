@@ -2,6 +2,16 @@
 ## Example solution
 ##
 
+# Refactoring log:
+# - Split sorting, date, description, and amount formatting into focused helpers.
+# - Shared character counting and digit grouping; removed redundant counting.
+# - Replaced mutable state and flags with expressions, maps, and folds.
+# - Used clearer names for dates, amounts, and comparison results.
+# - Reduced nesting and duplication in currency and locale formatting.
+# - Matched currencies and locales explicitly instead of relying on fallbacks.
+# - Replaced the empty-string error sentinel with Try and error propagation.
+# - Preserved the public API and output formatting.
+
 Ledger :: {}.{
 	Currency : [Usd, Eur]
 	Locale : [EnUs, NlNl]
