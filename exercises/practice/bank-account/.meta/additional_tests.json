@@ -1,0 +1,141 @@
+{
+  "cases": [
+    {
+      "uuid": "38b78a9d-f8eb-4359-a426-2005feb48860",
+      "description": "Cannot check balance of unopened account",
+      "property": "bankAccount",
+      "input": {
+        "operations": [
+          {
+            "operation": "balance"
+          }
+        ]
+      },
+      "expected": {
+        "error": "operation must fail"
+      }
+    },
+    {
+      "uuid": "01407b5d-3099-40ba-b5d6-441d8d1e50da",
+      "description": "Cannot withdraw from unopened account",
+      "property": "bankAccount",
+      "input": {
+        "operations": [
+          {
+            "operation": "withdraw",
+            "amount": 1
+          }
+        ]
+      },
+      "expected": {
+        "error": "operation must fail"
+      }
+    },
+    {
+      "uuid": "73cc7a7d-6a76-41bb-9a20-1fa6966b23d1",
+      "description": "Cannot close an account twice",
+      "property": "bankAccount",
+      "input": {
+        "operations": [
+          {
+            "operation": "open"
+          },
+          {
+            "operation": "close"
+          },
+          {
+            "operation": "close"
+          }
+        ]
+      },
+      "expected": {
+        "error": "operation must fail"
+      }
+    },
+    {
+      "uuid": "8ea2154d-b35b-45c1-85af-464bc4ee28cf",
+      "description": "Cannot deposit zero",
+      "property": "bankAccount",
+      "input": {
+        "operations": [
+          {
+            "operation": "open"
+          },
+          {
+            "operation": "deposit",
+            "amount": 0
+          }
+        ]
+      },
+      "expected": {
+        "error": "operation must fail"
+      }
+    },
+    {
+      "uuid": "a72f1fde-adc1-419f-8115-6209b4150b8e",
+      "description": "Cannot withdraw zero",
+      "property": "bankAccount",
+      "input": {
+        "operations": [
+          {
+            "operation": "open"
+          },
+          {
+            "operation": "withdraw",
+            "amount": 0
+          }
+        ]
+      },
+      "expected": {
+        "error": "operation must fail"
+      }
+    },
+    {
+      "uuid": "c4b72914-c3a1-4b9e-b3ea-b4990d73559a",
+      "description": "Can use the maximum balance",
+      "property": "bankAccount",
+      "input": {
+        "operations": [
+          {
+            "operation": "open"
+          },
+          {
+            "operation": "deposit",
+            "amount": 18446744073709551615
+          },
+          {
+            "operation": "withdraw",
+            "amount": 18446744073709551615
+          },
+          {
+            "operation": "balance"
+          }
+        ]
+      },
+      "expected": 0
+    },
+    {
+      "uuid": "3c941a7d-4068-41ea-8abc-03a8ae2eeab4",
+      "description": "Cannot overflow the balance",
+      "property": "bankAccount",
+      "input": {
+        "operations": [
+          {
+            "operation": "open"
+          },
+          {
+            "operation": "deposit",
+            "amount": 18446744073709551615
+          },
+          {
+            "operation": "deposit",
+            "amount": 1
+          }
+        ]
+      },
+      "expected": {
+        "error": "operation must fail"
+      }
+    }
+  ]
+}

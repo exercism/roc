@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "BankAccount.roc"
+    ],
+    "test": [
+      "bank-account-test.roc"
+    ],
+    "example": [
+      ".meta/BankAccount.roc"
+    ]
+  },
+  "blurb": "Simulate a bank account supporting opening/closing, withdraws, and deposits of money. Watch out for concurrent transactions!"
+}
