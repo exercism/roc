@@ -3,8 +3,8 @@
 ##
 
 Bowling :: { frames : List(Frame) }.{
-	new : Bowling
-	new = { frames: [] }
+	create : () -> Bowling
+	create = || { frames: [] }
 
 	roll : Bowling, U64 -> Try(Bowling, [MoreThan10Pins, GameOver])
 	roll = |game, pins| {

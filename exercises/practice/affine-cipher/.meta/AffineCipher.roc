@@ -9,8 +9,8 @@ AffineCipher :: { a : U64, b : U64, encode_map : List(U8), decode_map : List(U8)
 	group_length : U64
 	group_length = 5
 
-	new : { a : U64, b : U64 } -> Try(AffineCipher, [InvalidKey])
-	new = |{ a, b }| {
+	create : { a : U64, b : U64 } -> Try(AffineCipher, [InvalidKey])
+	create = |{ a, b }| {
 		encode_map : List(U8)
 		encode_map =
 			(0..<alphabet_size)

@@ -16,6 +16,7 @@
 set -eo pipefail
 
 readonly TEST_TIMEOUT_SECONDS=30
+readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 die() { echo "$*" >&2; exit 1; }
 
@@ -75,6 +76,7 @@ run_tests() {
     local example_file
     local module_file
     local opts
+    local command=(roc test)
     local roc_pid
     local roc_status
     local test_file
@@ -84,6 +86,10 @@ run_tests() {
     module_file=$(jq -r '.files.solution[]' .meta/config.json) || return 1
     example_file=$(jq -r '.files.example[]' .meta/config.json) || return 1
     test_file=$(jq -r '.files.test[]' .meta/config.json) || return 1
+    if "${SCRIPT_DIR}/is-platform-test" "${test_file}"; then
+        command=(roc)
+        opts="--no-cache --opt=speed"
+    fi
     cp "${example_file}" "${module_file}" || return 1
 
     roc_pid=''
@@ -92,7 +98,7 @@ run_tests() {
     trap 'stop_test "${roc_pid}" "${timeout_pid}"; exit 143' TERM
 
     set -m
-    FORCE_COLOR=1 roc test ${opts} "${test_file}" &
+    FORCE_COLOR=1 "${command[@]}" ${opts} "${test_file}" &
     roc_pid=$!
     set +m
     (
@@ -114,7 +120,7 @@ run_tests() {
 
     kill "${timeout_pid}" 2>/dev/null || true
     if wait "${timeout_pid}" 2>/dev/null; then
-        echo "roc test timed out after ${TEST_TIMEOUT_SECONDS} seconds." >&2
+        echo "Tests timed out after ${TEST_TIMEOUT_SECONDS} seconds." >&2
         return 124
     fi
 

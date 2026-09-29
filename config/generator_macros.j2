@@ -15,17 +15,20 @@
 # File last updated on {{ current_date }}
 {%- endmacro %}
 
-{% macro header(imports=[], ignore=[]) -%}
+{% macro header(imports=[], ignore=[], platform=None) -%}
 
-{%- if imports -%}
-app [] {
+{%- if imports or platform -%}
+app [{% if platform %}main!{% endif %}] {
+{%- if platform == "parallel" %}
+    pf: platform "https://github.com/ageron/roc-parallel/releases/download/0.2.0/3CrJPSgkKDYuP7ojpBa9amXdKWU8hxDjW6HeHCppjWDp.tar.zst",
+{%- endif %}
 {%- for name in imports -%}
     {% if name == "pf" -%}
-    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.22.2/9zUBxb1LtXYVc4eR4hAtd1WQDwBYDhM6HQdZz1UFCm2m.tar.zst",
+    pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.23.0/GNN5tt2gKdX4dhawg4915C4YB193woHFdcCkz31fhGxv.tar.zst",
     {%- elif name == "ascii" -%}
     ascii: "https://github.com/ageron/roc-ascii/releases/download/v0.4.2/3D6JMydSyRWk3oRzG92KaZ6cdqhocn7pvSYehjpuPSvz.tar.zst",
     {%- elif name == "isodate" -%}
-    isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.3/9SypUHT4Tn18tJyHyvtt929ByTx15djH3UaKkagRxGwA.tar.zst",
+    isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.4/8nYCkCKi8sCi2poruWpkdqTp7W4jnEpKHRK84xKUrmJo.tar.zst",
     {%- elif name == "parser" -%}
     parser: "https://github.com/lukewilliamboswell/roc-parser/releases/download/1.2.0/GzeZxk7V7GHFa42qhgzd8gUgX6cEyY3NmrwmDfsuskNd.tar.zst",
     {%- elif name == "random" -%}

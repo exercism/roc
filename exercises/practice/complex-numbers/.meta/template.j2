@@ -38,7 +38,7 @@ expect {
     expected = {{ plugins.to_complex_number(subcase["expected"]) }}
     result |> complex_is_approx_eq(expected)
     {%- else %}
-    result |> is_approx_eq({{ subcase["expected"] | to_roc }})
+    result.is_approx_eq({{ subcase["expected"] | to_roc }}, {abs: 1e-6, rel: 1e-6})
     {%- endif %}
 }
 {%- elif subcase["input"]["z1"] %}
@@ -57,14 +57,8 @@ expect {
 {% endfor %}
 
 complex_is_approx_eq = |z1, z2| {
-	is_approx_eq(z1.real, z2.real) and is_approx_eq(z1.imag, z2.imag)
-}
-
-# The following function should soon be available in Roc's builtins
-is_approx_eq = |x1, x2| {
-	i1 = (x1 * 1000 + 0.5).to_i64_try() ?? { crash "Unreachable" }
-	i2 = (x2 * 1000 + 0.5).to_i64_try() ?? { crash "Unreachable" }
-	i1 == i2
+	z1.real.is_approx_eq(z2.real, {abs: 1e-6, rel: 1e-6})
+    and z1.imag.is_approx_eq(z2.imag, {abs: 1e-6, rel: 1e-6})
 }
 
 {{ macros.footer() }}

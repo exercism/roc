@@ -1,7 +1,7 @@
 Rational :: { num : I64, den : I64 }.{
-	new : { num : I64, den : I64 } -> Rational
-	new = |{ num, den }| {
-		crash "Please implement the 'new' function"
+	create : { num : I64, den : I64 } -> Rational
+	create = |{ num, den }| {
+		crash "Please implement the 'create' function"
 	}
 
 	# # The user can write plus(r1, r2), r1.plus(r2), or simply r1 + r2

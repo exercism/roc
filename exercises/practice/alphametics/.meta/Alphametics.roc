@@ -3,7 +3,7 @@
 ##
 
 Alphametics :: {}.{
-	solve : Str -> Try(List((U8, U8)), [InvalidAssignment, ..])
+	solve : Str -> Try(List((U8, U8)), [InvalidAssignment])
 	solve = |problem| {
 		{ addends, sum } = parse(problem)?
 
@@ -35,7 +35,7 @@ Alphametics :: {}.{
 			)
 		}
 
-		find_match : List((U8, U8)), List(U8), Set(U8) -> Try(List((U8, U8)), [InvalidAssignment, ..])
+		find_match : List((U8, U8)), List(U8), Set(U8) -> Try(List((U8, U8)), [InvalidAssignment])
 		find_match = |assignments, remaining_vars, remaining_digits| {
 			match remaining_vars {
 				[] => {
