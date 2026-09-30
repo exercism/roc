@@ -925,6 +925,14 @@
         "difficulty": 6
       },
       {
+        "slug": "parallel-letter-frequency",
+        "name": "Parallel Letter Frequency",
+        "uuid": "5b399809-4675-4546-b7c6-5c28fabfc285",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "rational-numbers",
         "name": "Rational Numbers",
         "uuid": "6f5c2c74-a087-4f4a-9276-8479c868e784",
