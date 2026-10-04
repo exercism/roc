@@ -67,3 +67,5 @@ The deposits should all succeed and the balance should be `100`.
 Each request reads the account, calls your Roc functions, and saves the result within an SQLite `Immediate` transaction. Failed operations roll back without changing the account. SQLite allows one writer at a time, preventing concurrent requests from overwriting each other's updates (even across different accounts).
 
 Note: The exercise uses `U64`, but the demo stores balances as SQLite integers and rejects updates exceeding the maximum `I64` value (`9223372036854775807`).
+
+For an example of running independent computations in parallel, try the [parallel-letter-frequency exercise](https://exercism.org/tracks/roc/exercises/parallel-letter-frequency).
