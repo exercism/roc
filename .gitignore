@@ -75,3 +75,6 @@ vgcore.*
 *.rm*
 preprocessedhost
 metadata
+
+# databases (e.g., in bank-account)
+*.db
