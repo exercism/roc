@@ -684,6 +684,14 @@
         "difficulty": 4
       },
       {
+        "slug": "linked-list",
+        "name": "Linked List",
+        "uuid": "f3244e0a-939c-4721-ae25-ce20466912ab",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "meetup",
         "name": "Meetup",
         "uuid": "0ef0cb6e-fe81-4988-bc13-26caac30c4d8",
@@ -711,6 +719,14 @@
         "slug": "prime-factors",
         "name": "Prime Factors",
         "uuid": "788260ad-5bc5-442b-8089-72513ac13ff5",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
+        "slug": "prism",
+        "name": "Prism",
+        "uuid": "058b953b-65d6-4d49-8787-dad1132d643f",
         "practices": [],
         "prerequisites": [],
         "difficulty": 4
@@ -788,6 +804,14 @@
         "difficulty": 5
       },
       {
+        "slug": "intergalactic-transmission",
+        "name": "Intergalactic Transmission",
+        "uuid": "ce549a25-50b3-43b6-a6c2-26e32b96ef33",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "killer-sudoku-helper",
         "name": "Killer Sudoku Helper",
         "uuid": "e12846f9-8905-406d-8b3d-b5e0fa4e3c0a",
@@ -815,6 +839,14 @@
         "slug": "robot-name",
         "name": "Robot Name",
         "uuid": "88eac1aa-a4ae-405a-88ab-0dedd5ac7ae2",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
+        "slug": "satellite",
+        "name": "Satellite",
+        "uuid": "32abecd3-962e-4836-aa37-59a8af09ff95",
         "practices": [],
         "prerequisites": [],
         "difficulty": 5
