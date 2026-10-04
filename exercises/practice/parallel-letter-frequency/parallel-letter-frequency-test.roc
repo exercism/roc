@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/parallel-letter-frequency/canonical-data.json
-# File last updated on 2026-09-29
+# File last updated on 2026-10-04
 app [main!] {
 	pf: platform "https://github.com/ageron/roc-parallel/releases/download/0.2.0/3CrJPSgkKDYuP7ojpBa9amXdKWU8hxDjW6HeHCppjWDp.tar.zst",
 	unicode: "https://github.com/roc-lang/unicode/releases/download/4.2.0/4W8SHzvwet9hH9qZewJ1J1CVQoH7YKA6zyijWFTB3y1w.tar.zst",
@@ -9,64 +9,40 @@ app [main!] {
 import pf.Stderr
 import ParallelLetterFrequency exposing [calculate_frequencies!]
 
-main! : List(Str) => Try({}, [Exit(I8)])
-main! = |_args| {
-	results = [
-		test_no_texts!(),
-		test_one_text_with_one_letter!(),
-		test_one_text_with_multiple_letters!(),
-		test_two_texts_with_one_letter!(),
-		test_two_texts_with_multiple_letters!(),
-		test_ignore_letter_casing!(),
-		test_ignore_whitespace!(),
-		test_ignore_punctuation!(),
-		test_ignore_numbers!(),
-		test_unicode_letters!(),
-		test_combination_of_lower_and_uppercase_letters_punctuation_and_white_space!(),
-		test_large_texts!(),
-		test_many_small_texts!(),
-		test_unicode_uppercase_and_lowercase_letters!(),
-		test_ignore_unicode_numbers_punctuation_and_emoji!(),
-	]
-	failures = results.fold(
-		[],
-		|messages, result| match result {
-			Ok({}) => messages
-			Err(message) => messages.append(message)
-		},
-	)
-	for failure in failures {
-		Stderr.line!(failure)
+check! : { description : Str, texts : List(Str), expected : Dict(Str, U64) } => Try({}, Str)
+check! = |{ description, texts, expected }| {
+	for workers in [1, 2, 4, 16] {
+		actual = calculate_frequencies!({ texts, workers }) ? |error| Str.inspect({ test: description, workers, error })
+		if actual != expected {
+			return Err(Str.inspect({ test: description, workers, expected, actual }))
+		}
 	}
-	passed = results.len() - failures.len()
-	Stderr.line!("${passed.to_str()} passed, ${failures.len().to_str()} failed")
-	if failures.is_empty() {
-		Ok({})
-	} else {
-		Err(Exit(1))
-	}
+	Ok({})
 }
 
 ## no texts
 test_no_texts! = || {
+	description = "no texts"
 	texts = []
 	expected = Dict.from_list([])
-	check!("no texts", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## one text with one letter
 test_one_text_with_one_letter! = || {
+	description = "one text with one letter"
 	texts = [
 		"a",
 	]
 	expected = Dict.from_list([
 		("a", 1),
 	])
-	check!("one text with one letter", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## one text with multiple letters
 test_one_text_with_multiple_letters! = || {
+	description = "one text with multiple letters"
 	texts = [
 		"bbcccd",
 	]
@@ -75,11 +51,12 @@ test_one_text_with_multiple_letters! = || {
 		("c", 3),
 		("d", 1),
 	])
-	check!("one text with multiple letters", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## two texts with one letter
 test_two_texts_with_one_letter! = || {
+	description = "two texts with one letter"
 	texts = [
 		"e",
 		"f",
@@ -88,11 +65,12 @@ test_two_texts_with_one_letter! = || {
 		("e", 1),
 		("f", 1),
 	])
-	check!("two texts with one letter", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## two texts with multiple letters
 test_two_texts_with_multiple_letters! = || {
+	description = "two texts with multiple letters"
 	texts = [
 		"ggh",
 		"hhi",
@@ -102,11 +80,12 @@ test_two_texts_with_multiple_letters! = || {
 		("h", 3),
 		("i", 1),
 	])
-	check!("two texts with multiple letters", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## ignore letter casing
 test_ignore_letter_casing! = || {
+	description = "ignore letter casing"
 	texts = [
 		"m",
 		"M",
@@ -114,11 +93,12 @@ test_ignore_letter_casing! = || {
 	expected = Dict.from_list([
 		("m", 2),
 	])
-	check!("ignore letter casing", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## ignore whitespace
 test_ignore_whitespace! = || {
+	description = "ignore whitespace"
 	texts = [
 		"   ",
 		"\t",
@@ -127,11 +107,12 @@ test_ignore_whitespace! = || {
 		,
 	]
 	expected = Dict.from_list([])
-	check!("ignore whitespace", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## ignore punctuation
 test_ignore_punctuation! = || {
+	description = "ignore punctuation"
 	texts = [
 		"!",
 		"?",
@@ -140,11 +121,12 @@ test_ignore_punctuation! = || {
 		".",
 	]
 	expected = Dict.from_list([])
-	check!("ignore punctuation", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## ignore numbers
 test_ignore_numbers! = || {
+	description = "ignore numbers"
 	texts = [
 		"1",
 		"2",
@@ -157,11 +139,12 @@ test_ignore_numbers! = || {
 		"9",
 	]
 	expected = Dict.from_list([])
-	check!("ignore numbers", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## Unicode letters
 test_unicode_letters! = || {
+	description = "Unicode letters"
 	texts = [
 		"本",
 		"φ",
@@ -174,11 +157,12 @@ test_unicode_letters! = || {
 		("ほ", 1),
 		("ø", 1),
 	])
-	check!("Unicode letters", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## combination of lower- and uppercase letters, punctuation and white space
 test_combination_of_lower_and_uppercase_letters_punctuation_and_white_space! = || {
+	description = "combination of lower- and uppercase letters, punctuation and white space"
 	texts = [
 		"There, peeping among the cloud-wrack above a dark tower high up in the mountains, Sam saw a white star twinkle for a while. The beauty of it smote his heart, as he looked up out of the forsaken land, and hope returned to him. For like a shaft, clear and cold, the thought pierced him that in the end, the shadow was only a small and passing thing: there was light and high beauty forever beyond its reach.",
 	]
@@ -206,11 +190,12 @@ test_combination_of_lower_and_uppercase_letters_punctuation_and_white_space! = |
 		("w", 9),
 		("y", 4),
 	])
-	check!("combination of lower- and uppercase letters, punctuation and white space", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## large texts
 test_large_texts! = || {
+	description = "large texts"
 	texts = [
 		\\I am a sick man.... I am a spiteful man. I am an unattractive man.
 		\\I believe my liver is diseased. However, I know nothing at all about my disease, and do not
@@ -379,11 +364,12 @@ test_large_texts! = || {
 		("x", 7),
 		("y", 251),
 	])
-	check!("large texts", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## many small texts
 test_many_small_texts! = || {
+	description = "many small texts"
 	texts = [
 		"abbccc",
 		"abbccc",
@@ -441,11 +427,12 @@ test_many_small_texts! = || {
 		("b", 100),
 		("c", 150),
 	])
-	check!("many small texts", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## Unicode uppercase and lowercase letters
 test_unicode_uppercase_and_lowercase_letters! = || {
+	description = "Unicode uppercase and lowercase letters"
 	texts = [
 		"Éé Øø Φφ Бб",
 	]
@@ -455,11 +442,12 @@ test_unicode_uppercase_and_lowercase_letters! = || {
 		("φ", 2),
 		("б", 2),
 	])
-	check!("Unicode uppercase and lowercase letters", texts, expected)
+	check!({ description, texts, expected })
 }
 
 ## ignore Unicode numbers, punctuation, and emoji
 test_ignore_unicode_numbers_punctuation_and_emoji! = || {
+	description = "ignore Unicode numbers, punctuation, and emoji"
 	texts = [
 		"本１２３—🙂 φ！",
 	]
@@ -467,15 +455,35 @@ test_ignore_unicode_numbers_punctuation_and_emoji! = || {
 		("本", 1),
 		("φ", 1),
 	])
-	check!("ignore Unicode numbers, punctuation, and emoji", texts, expected)
+	check!({ description, texts, expected })
 }
 
-check! = |description, texts, expected| {
-	for workers in [1, 2, 4, 16] {
-		actual = calculate_frequencies!({ texts, workers }) ? |error| Str.inspect({ test: description, workers, error })
-		if actual != expected {
-			return Err(Str.inspect({ test: description, workers, expected, actual }))
-		}
+main! : List(Str) => Try({}, [Exit(I8)])
+main! = |_args| {
+	results = [
+		test_no_texts!(),
+		test_one_text_with_one_letter!(),
+		test_one_text_with_multiple_letters!(),
+		test_two_texts_with_one_letter!(),
+		test_two_texts_with_multiple_letters!(),
+		test_ignore_letter_casing!(),
+		test_ignore_whitespace!(),
+		test_ignore_punctuation!(),
+		test_ignore_numbers!(),
+		test_unicode_letters!(),
+		test_combination_of_lower_and_uppercase_letters_punctuation_and_white_space!(),
+		test_large_texts!(),
+		test_many_small_texts!(),
+		test_unicode_uppercase_and_lowercase_letters!(),
+		test_ignore_unicode_numbers_punctuation_and_emoji!(),
+	]
+	failures = results.keep_errs(|msg| msg)
+	failures.for_each!(Stderr.line!)
+	passed = results.len() - failures.len()
+	Stderr.line!("${passed.to_str()} passed, ${failures.len().to_str()} failed")
+	if failures.is_empty() {
+		Ok({})
+	} else {
+		Err(Exit(1))
 	}
-	Ok({})
 }
