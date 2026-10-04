@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/strain/canonical-data.json
 # File last updated on 2026-08-29
 
-import Strain exposing [keep, discard]
+import Strain exposing [discard, keep]
 
 # keep on empty list returns empty list
 expect {

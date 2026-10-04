@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/matrix/canonical-data.json
 # File last updated on 2026-08-29
 
-import Matrix exposing [row, column]
+import Matrix exposing [column, row]
 
 # extract row from one number matrix
 expect {

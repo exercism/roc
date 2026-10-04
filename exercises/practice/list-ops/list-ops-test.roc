@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/list-ops/canonical-data.json
 # File last updated on 2026-09-29
 
-import ListOps exposing [concat, join, filter, len, map, fold, fold_rev, reverse]
+import ListOps exposing [concat, filter, fold, fold_rev, join, len, map, reverse]
 
 ##
 ## append entries to a list and return the new list
