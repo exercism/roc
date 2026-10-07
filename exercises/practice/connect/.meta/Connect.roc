@@ -3,7 +3,7 @@
 ##
 
 Connect :: {}.{
-	winner : Str -> Try([PlayerO, PlayerX], [NotFinished, InvalidCharacter(U8), InvalidBoardShape, ..])
+	winner : Str -> Try([PlayerO, PlayerX], [NotFinished, InvalidCharacter(U8), InvalidBoardShape])
 	winner = |board_str| {
 		board = parse(board_str)?
 		_ = validate(board)?
@@ -24,7 +24,7 @@ Board : List(List(Cell))
 Position : { x : U64, y : U64 }
 
 # # Parse a string to a Board
-parse : Str -> Try(Board, [InvalidCharacter(U8), ..])
+parse : Str -> Try(Board, [InvalidCharacter(U8)])
 parse = |board_str| {
 	board_str
 		.trim()
@@ -53,7 +53,7 @@ parse = |board_str| {
 }
 
 # # Ensure that the board has a least one cell, and that all rows have the same length
-validate : Board -> Try({}, [InvalidBoardShape, ..])
+validate : Board -> Try({}, [InvalidBoardShape])
 validate = |board| {
 	row_lengths = board.map(List.len) |> Set.from_list
 	if row_lengths.len() != 1 or row_lengths == Set.from_list([0]) {
@@ -98,7 +98,7 @@ first_row = |board| {
 	}
 }
 
-get_cell : Board, Position -> Try(Cell, [OutOfBounds, ..])
+get_cell : Board, Position -> Try(Cell, [OutOfBounds])
 get_cell = |board, { x, y }| {
 	board.get(y)?.get(x)
 }

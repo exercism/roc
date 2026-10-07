@@ -3,7 +3,7 @@
 ##
 
 PalindromeProducts :: {}.{
-	smallest : { min : U64, max : U64 } -> Try({ value : U64, factors : Set((U64, U64)) }, [MinWasLargerThanMax, ..])
+	smallest : { min : U64, max : U64 } -> Try({ value : U64, factors : Set((U64, U64)) }, [MinWasLargerThanMax])
 	smallest = |{ min, max }| {
 		if min > max {
 			Err(MinWasLargerThanMax)
@@ -40,7 +40,7 @@ PalindromeProducts :: {}.{
 		}
 	}
 
-	largest : { min : U64, max : U64 } -> Try({ value : U64, factors : Set((U64, U64)) }, [MinWasLargerThanMax, ..])
+	largest : { min : U64, max : U64 } -> Try({ value : U64, factors : Set((U64, U64)) }, [MinWasLargerThanMax])
 	largest = |{ min, max }| {
 		if min > max {
 			Err(MinWasLargerThanMax)

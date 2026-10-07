@@ -9,29 +9,29 @@ Deque :: {
 	}
 
 	## Add a value at the end of the deque
-    ## This function is often named `push` in other languages
+	## This function is often named `push` in other languages
 	append : Deque, U64 -> Deque
 	append = |deque, value| {
 		crash "Please implement the 'append' function"
 	}
 
 	## Remove the last value and return it with the updated deque, or Err(DequeWasEmpty)
-    ## This function is often named `pop` in other languages
-	pop_last : Deque -> Try({ deque : Deque, value : U64 }, [DequeWasEmpty, ..])
+	## This function is often named `pop` in other languages
+	pop_last : Deque -> Try({ deque : Deque, value : U64 }, [DequeWasEmpty])
 	pop_last = |deque| {
 		crash "Please implement the 'pop_last' function"
 	}
 
 	## Add a value at the start of the deque
-    ## This function is often named `unshift` in other languages
+	## This function is often named `unshift` in other languages
 	prepend : Deque, U64 -> Deque
 	prepend = |deque, value| {
 		crash "Please implement the 'prepend' function"
 	}
 
 	## Remove the first value and return it with the updated deque, or Err(DequeWasEmpty)
-    ## This function is often named `shift` in other languages
-	pop_first : Deque -> Try({ deque : Deque, value : U64 }, [DequeWasEmpty, ..])
+	## This function is often named `shift` in other languages
+	pop_first : Deque -> Try({ deque : Deque, value : U64 }, [DequeWasEmpty])
 	pop_first = |deque| {
 		crash "Please implement the 'pop_first' function"
 	}

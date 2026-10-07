@@ -3,12 +3,12 @@
 ##
 
 RailFenceCipher :: {}.{
-	encode : Str, U64 -> Try(Str, [ZeroRails, BadUtf8(_), ..])
+	encode : Str, U64 -> Try(Str, [ZeroRails, BadUtf8(_)])
 	encode = |message, rails| {
 		reorder_with(message, encoded_indices, rails)
 	}
 
-	decode : Str, U64 -> Try(Str, [ZeroRails, BadUtf8(_), ..])
+	decode : Str, U64 -> Try(Str, [ZeroRails, BadUtf8(_)])
 	decode = |encrypted, rails| {
 		reorder_with(encrypted, decoded_indices, rails)
 	}
@@ -54,7 +54,7 @@ decoded_indices = |len, rails| {
 		.map(|r| r.decoded)
 }
 
-reorder_with : Str, (U64, U64 -> List(U64)), U64 -> Try(Str, [ZeroRails, BadUtf8(_), ..])
+reorder_with : Str, (U64, U64 -> List(U64)), U64 -> Try(Str, [ZeroRails, BadUtf8(_)])
 reorder_with = |message, get_indices, rails| {
 	if rails == 0 {
 		Err(ZeroRails)

@@ -5,9 +5,9 @@ Bowling :: {
 	todo3 : U64,
 	# etc.
 }.{
-	new : Bowling
-	new = {
-		crash "Please implement the 'new' constant"
+	create : () -> Bowling
+	create = || {
+		crash "Please implement the 'create' function"
 	}
 
 	roll : Bowling, U64 -> Try(Bowling, _)
