@@ -3,7 +3,7 @@
 ##
 
 TwelveDays :: {}.{
-	recite : U8, U8 -> Try(Str, [InvalidVerseNumber, ..])
+	recite : U8, U8 -> Try(Str, [InvalidVerseNumber])
 	recite = |first_verse, last_verse| {
 		if first_verse == 0 or last_verse == 0 or first_verse > last_verse {
 			Err(InvalidVerseNumber)
@@ -18,12 +18,12 @@ TwelveDays :: {}.{
 	}
 }
 
-verse : U8 -> Try(Str, [InvalidVerseNumber, ..])
+verse : U8 -> Try(Str, [InvalidVerseNumber])
 verse = |day| {
 	Ok("On the ${to_ordinal(day)?} day of Christmas my true love gave to me: ${presents(day)?}.")
 }
 
-present : U8 -> Try(Str, [InvalidVerseNumber, ..])
+present : U8 -> Try(Str, [InvalidVerseNumber])
 present = |number| {
 	match number {
 		1 => Ok("a Partridge in a Pear Tree")
@@ -42,7 +42,7 @@ present = |number| {
 	}
 }
 
-presents : U8 -> Try(Str, [InvalidVerseNumber, ..])
+presents : U8 -> Try(Str, [InvalidVerseNumber])
 presents = |day| {
 	(1..=day)
 		.iter()
@@ -58,7 +58,7 @@ presents = |day| {
 		|> Ok
 }
 
-to_ordinal : U8 -> Try(Str, [InvalidVerseNumber, ..])
+to_ordinal : U8 -> Try(Str, [InvalidVerseNumber])
 to_ordinal = |day| {
 	match day {
 		1 => Ok("first")

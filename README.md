@@ -12,6 +12,8 @@ This command will iterate over all exercises and check to see if their exemplar/
 
 To test a single exercise, run `./bin/verify-exercises <exercise-slug>`.
 
+The verifier uses `roc test` for ordinary test modules and runs platform-based test apps with `roc --opt=speed`. For example, run `roc --opt=speed parallel-letter-frequency-test.roc` from that exercise directory.
+
 ### Track linting
 
 [`configlet`](https://exercism.org/docs/building/configlet) is an Exercism-wide tool for working with tracks. You can download it by running:

@@ -14,7 +14,7 @@ Deque :: { front : List(U64), back : List(U64) }.{
 	append = |deque, value| { ..deque, back: deque.back.append(value) }
 
 	## Remove the last value and return it with the updated deque, or Err(DequeWasEmpty)
-	pop_last : Deque -> Try({ deque : Deque, value : U64 }, [DequeWasEmpty, ..])
+	pop_last : Deque -> Try({ deque : Deque, value : U64 }, [DequeWasEmpty])
 	pop_last = |deque| {
 		removed = remove_last(deque.back, deque.front)?
 		Ok({ deque: { front: removed.opposite, back: removed.remaining }, value: removed.value })
@@ -25,7 +25,7 @@ Deque :: { front : List(U64), back : List(U64) }.{
 	prepend = |deque, value| { ..deque, front: deque.front.append(value) }
 
 	## Remove the first value and return it with the updated deque, or Err(DequeWasEmpty)
-	pop_first : Deque -> Try({ deque : Deque, value : U64 }, [DequeWasEmpty, ..])
+	pop_first : Deque -> Try({ deque : Deque, value : U64 }, [DequeWasEmpty])
 	pop_first = |deque| {
 		removed = remove_last(deque.front, deque.back)?
 		Ok({ deque: { front: removed.remaining, back: removed.opposite }, value: removed.value })
@@ -48,7 +48,7 @@ Deque :: { front : List(U64), back : List(U64) }.{
 	len = |deque| deque.front.len() + deque.back.len()
 }
 
-remove_last : List(U64), List(U64) -> Try({ remaining : List(U64), opposite : List(U64), value : U64 }, [DequeWasEmpty, ..])
+remove_last : List(U64), List(U64) -> Try({ remaining : List(U64), opposite : List(U64), value : U64 }, [DequeWasEmpty])
 remove_last = |items, opposite| {
 	match items {
 		[.. as remaining, value] => Ok({ remaining, opposite, value })

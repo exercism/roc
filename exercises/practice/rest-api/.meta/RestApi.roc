@@ -131,10 +131,10 @@ pop_amount = |dict, key| {
 	}
 }
 
-parse_json_loan : Str -> Try(RestApi.Loan, [InvalidJson, ..])
+parse_json_loan : Str -> Try(RestApi.Loan, [InvalidJson])
 parse_json_loan = |payload| Json.parse(payload).map_err(|_| InvalidJson)
 
-get_user : RestApi.Database, Str -> Try(RestApi.User, [NotFound, ..])
+get_user : RestApi.Database, Str -> Try(RestApi.User, [NotFound])
 get_user = |database, name| {
 	database.users
 		.find_first(|user| user.name == name).map_err(|_| NotFound)

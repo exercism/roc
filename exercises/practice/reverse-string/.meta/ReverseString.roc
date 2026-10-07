@@ -2,8 +2,6 @@
 ## Example solution
 ##
 
-
-
 import unicode.Grapheme
 
 ReverseString :: {}.{

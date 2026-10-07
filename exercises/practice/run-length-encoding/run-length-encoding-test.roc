@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/run-length-encoding/canonical-data.json
 # File last updated on 2026-08-29
 
-import RunLengthEncoding exposing [encode, decode]
+import RunLengthEncoding exposing [decode, encode]
 
 ##
 ## run-length encode a string
