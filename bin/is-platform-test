@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+# Inspect only the app header, ignoring comments and string contents.
+awk '
+    {
+        line = $0
+        gsub(/"([^"\\]|\\.)*"/, "\"\"", line)
+        sub(/#.*/, "", line)
+        gsub(/[][{}:,]/, " & ", line)
+        n = split(line, tokens, /[[:space:]]+/)
+        for (i = 1; i <= n; i++) {
+            token = tokens[i]
+            if (token == "") continue
+            if (!started) {
+                if (token != "app") exit
+                started = 1
+            }
+            if (token == "{") { depth++; opened = 1 }
+            if (depth == 1 && previous == ":" && token == "platform") found = 1
+            if (token == "}") {
+                depth--
+                if (opened && depth == 0) exit
+            }
+            previous = token
+        }
+    }
+    END { exit !found }
+' "$1"
