@@ -21,7 +21,7 @@ Ledger :: {}.{
 	Locale : [EnUs, NlNl]
 	Entry : { date : Str, description : Str, amount_in_cents : I64 }
 
-	format_entries : { currency : Currency, locale : Locale, entries : List(Entry) } -> Try(Str, [InvalidDateFormat, ..])
+	format_entries : { currency : Currency, locale : Locale, entries : List(Entry) } -> Try(Str, [InvalidDateFormat])
 	format_entries = |{ currency, locale, entries }| {
 		rows = entries.sort_with(compare_entries).map_try(
 			|entry| {
@@ -62,7 +62,7 @@ compare_text = |a, b| {
 	compare_bytes(a.to_utf8(), b.to_utf8())
 }
 
-format_date : Str, Ledger.Locale -> Try(Str, [InvalidDateFormat, ..])
+format_date : Str, Ledger.Locale -> Try(Str, [InvalidDateFormat])
 format_date = |date, locale| {
 	parsed = Date.from_iso_str(date)?
 	if parsed.to_iso_str() != date {
@@ -133,6 +133,6 @@ format_amount = |amount, currency, locale| {
 			"${symbol} ${number} "
 		}
 	}
-	length = 13.minus_saturated(Grapheme.split(formatted).len())
+	length = (13).minus_saturated(Grapheme.split(formatted).len())
 	" ".repeat(length).concat(formatted)
 }

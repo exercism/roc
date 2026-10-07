@@ -34,7 +34,6 @@ expect {
 	result ==
 		\\Date       | Description               | Change       
 		\\01/01/2015 | Buy present               |      ($10.00)
-
 }
 
 ## credit and debit
@@ -59,7 +58,6 @@ expect {
 		\\Date       | Description               | Change       
 		\\01/01/2015 | Buy present               |      ($10.00)
 		\\01/02/2015 | Get present               |       $10.00 
-
 }
 
 ## final order tie breaker is change
@@ -90,7 +88,6 @@ expect {
 		\\01/01/2015 | Something                 |       ($0.01)
 		\\01/01/2015 | Something                 |        $0.00 
 		\\01/01/2015 | Something                 |        $0.01 
-
 }
 
 ## overlong description is truncated
@@ -109,7 +106,6 @@ expect {
 	result ==
 		\\Date       | Description               | Change       
 		\\01/01/2015 | Freude schoner Gotterf... |   ($1,234.56)
-
 }
 
 ## euros
@@ -128,7 +124,6 @@ expect {
 	result ==
 		\\Date       | Description               | Change       
 		\\01/01/2015 | Buy present               |      (€10.00)
-
 }
 
 ## Dutch locale
@@ -147,7 +142,6 @@ expect {
 	result ==
 		\\Datum      | Omschrijving              | Verandering  
 		\\12-03-2015 | Buy present               |   $ 1.234,56 
-
 }
 
 ## Dutch locale and euros
@@ -166,7 +160,6 @@ expect {
 	result ==
 		\\Datum      | Omschrijving              | Verandering  
 		\\12-03-2015 | Buy present               |   € 1.234,56 
-
 }
 
 ## Dutch negative number with 3 digits before decimal point
@@ -185,7 +178,6 @@ expect {
 	result ==
 		\\Datum      | Omschrijving              | Verandering  
 		\\12-03-2015 | Buy present               |    $ -123,45 
-
 }
 
 ## American negative number with 3 digits before decimal point
@@ -204,7 +196,6 @@ expect {
 	result ==
 		\\Date       | Description               | Change       
 		\\03/12/2015 | Buy present               |     ($123.45)
-
 }
 
 ## multiple entries on same date ordered by description
@@ -229,7 +220,6 @@ expect {
 		\\Date       | Description               | Change       
 		\\01/01/2015 | Buy present               |      ($10.00)
 		\\01/01/2015 | Get present               |       $10.00 
-
 }
 
 ## empty Dutch ledger
@@ -264,7 +254,6 @@ expect {
 		\\Date       | Description               | Change       
 		\\12/31/2024 | Year end                  |       ($1.00)
 		\\01/01/2025 | New year                  |        $1.00 
-
 }
 
 ## descriptions of exactly 25 characters are not truncated
@@ -283,7 +272,6 @@ expect {
 	result ==
 		\\Date       | Description               | Change       
 		\\01/01/2025 | 1234567890123456789012345 |        $0.00 
-
 }
 
 ## descriptions of 26 characters are truncated
@@ -302,7 +290,6 @@ expect {
 	result ==
 		\\Date       | Description               | Change       
 		\\01/01/2025 | 1234567890123456789012... |        $0.00 
-
 }
 
 ## Unicode descriptions are padded by character count
@@ -321,7 +308,6 @@ expect {
 	result ==
 		\\Datum      | Omschrijving              | Verandering  
 		\\01-01-2025 | Café                      |      € -1,01 
-
 }
 
 ## truncation preserves complete Unicode characters
@@ -340,7 +326,6 @@ expect {
 	result ==
 		\\Date       | Description               | Change       
 		\\01/01/2025 | éééééééééééééééééééééé... |        €1.01 
-
 }
 
 ## full descriptions determine order before truncation
@@ -365,7 +350,6 @@ expect {
 		\\Date       | Description               | Change       
 		\\01/01/2025 | AAAAAAAAAAAAAAAAAAAAAA... |        $1.00 
 		\\01/01/2025 | AAAAAAAAAAAAAAAAAAAAAA... |       ($1.00)
-
 }
 
 ## large amounts use repeated grouping and expand the column
@@ -384,7 +368,6 @@ expect {
 	result ==
 		\\Datum      | Omschrijving              | Verandering  
 		\\01-01-2025 | Large amount              | € 12.345.678.901,23 
-
 }
 
 ## the smallest signed amount formats without overflow
@@ -403,7 +386,6 @@ expect {
 	result ==
 		\\Date       | Description               | Change       
 		\\01/01/2025 | Minimum                   | ($92,233,720,368,547,758.08)
-
 }
 
 ## invalid date formats return an error

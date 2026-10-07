@@ -3,7 +3,7 @@ Ledger :: {}.{
 	Locale : [EnUs, NlNl]
 	Entry : { date : Str, description : Str, amount_in_cents : I64 }
 
-	format_entries : { currency : Currency, locale : Locale, entries : List(Entry) } -> Try(Str, [InvalidDateFormat, ..])
+	format_entries : { currency : Currency, locale : Locale, entries : List(Entry) } -> Try(Str, [InvalidDateFormat])
 	format_entries = |{ currency, locale, entries }| {
 		format_money = |amount, description| {
 			var $description = description
