@@ -21,7 +21,7 @@ FamilyTree := Dict(Str, List(Str)).{
 			)
 		}
 
-		search : List(Str), Set(Str), U64 -> Try(U64, [NoKnownRelationship, ..])
+		search : List(Str), Set(Str), U64 -> Try(U64, [NoKnownRelationship])
 		search = |frontier, visited, distance| {
 			if frontier.contains(person_b) {
 				Ok(distance)
