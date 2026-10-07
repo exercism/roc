@@ -8,7 +8,7 @@ Meetup :: {}.{
 	Week : [First, Second, Third, Fourth, Last, Teenth]
 	DayOfWeek : [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
 
-	meetup : { year : I64, month : U8, week : Week, day_of_week : DayOfWeek } -> Try(Str, [InvalidMonth, InvalidYear, ..])
+	meetup : { year : I64, month : U8, week : Week, day_of_week : DayOfWeek } -> Try(Str, [InvalidMonth, InvalidYear])
 	meetup = |{ year, month, week, day_of_week }|
 		if month == 0 or month > 12 {
 			Err(InvalidMonth)

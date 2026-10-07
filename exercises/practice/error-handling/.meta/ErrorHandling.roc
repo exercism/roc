@@ -13,7 +13,7 @@ ErrorHandling :: {}.{
 	])
 
 	# # Returns the user with the given user_id, or UserNotFound(user_id)
-	get_user : UserId -> Try(User, [UserNotFound(UserId), ..])
+	get_user : UserId -> Try(User, [UserNotFound(UserId)])
 	get_user = |user_id| {
 		users.get(user_id).map_err(|_| UserNotFound(user_id))
 	}
@@ -21,7 +21,7 @@ ErrorHandling :: {}.{
 	# # Parses a string formatted as "/users/<user_id>" and returns the user_id
 	# # or InvalidUserId(user_id_str) is the <user_id> part of the path cannot
 	# # be parsed to a U64
-	parse_user_id : Str -> Try(UserId, [InvalidUserId(Str), ..])
+	parse_user_id : Str -> Try(UserId, [InvalidUserId(Str)])
 	parse_user_id = |path| {
 		user_id_str = path.drop_prefix("/users/")
 		if user_id_str.contains("e") or user_id_str.contains("E") {
@@ -81,7 +81,7 @@ ErrorHandling :: {}.{
 
 # # Parses a URL formatted as https://example.com/<path> and returns "/<path>"
 # # or the appropriate error if the URL is malformed or http instead of https
-parse_path : Str -> Try(Str, [InvalidDomain(Str), InsecureConnection(Str), ..])
+parse_path : Str -> Try(Str, [InvalidDomain(Str), InsecureConnection(Str)])
 parse_path = |url| {
 	prefix = "https://example.com"
 	if url.starts_with(prefix) {

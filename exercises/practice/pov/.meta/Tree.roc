@@ -12,7 +12,7 @@ Tree := { label : Str, children : Set(Tree) }.{
 
 	## Return the tree from the point of view of the node with the given label.
 	## Return Err(NotFound) if no such node is found.
-	from_pov : Tree, Str -> Try(Tree, [NotFound, ..])
+	from_pov : Tree, Str -> Try(Tree, [NotFound])
 	from_pov = |tree, from| {
 		root_path = tree |> nodes_to_root(from)?
 		match root_path.take_first(2) {
@@ -29,7 +29,7 @@ Tree := { label : Str, children : Set(Tree) }.{
 
 	## Return the labels of the nodes between the two given nodes
 	## If either of these nodes don't exist, return Err(NotFound)
-	path_to : Tree, Str, Str -> Try(List(Str), [NotFound, ..])
+	path_to : Tree, Str, Str -> Try(List(Str), [NotFound])
 	path_to = |tree, from, to| {
 		tree
 			|> from_pov(to)?
@@ -41,9 +41,9 @@ Tree := { label : Str, children : Set(Tree) }.{
 
 ## Return all nodes on the path from the target node up to the root.
 ## If the node is not found, Err(NotFound) is returned.
-nodes_to_root : Tree, Str -> Try(List(Tree), [NotFound, ..])
+nodes_to_root : Tree, Str -> Try(List(Tree), [NotFound])
 nodes_to_root = |tree, label| {
-	help : Tree, List(Tree) -> Try(List(Tree), [NotFound, ..])
+	help : Tree, List(Tree) -> Try(List(Tree), [NotFound])
 	help = |subtree, path| {
 		new_path = path.append(subtree)
 		if subtree.label == label {

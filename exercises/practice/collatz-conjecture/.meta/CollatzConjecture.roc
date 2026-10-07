@@ -3,7 +3,7 @@
 ##
 
 CollatzConjecture :: {}.{
-	steps : U64 -> Try(U64, [NumberArgWasZero, ..])
+	steps : U64 -> Try(U64, [NumberArgWasZero])
 	steps = |number| {
 		if number <= 0 {
 			Err(NumberArgWasZero)

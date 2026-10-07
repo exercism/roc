@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/atbash-cipher/canonical-data.json
 # File last updated on 2026-08-29
 
-import AtbashCipher exposing [encode, decode]
+import AtbashCipher exposing [decode, encode]
 
 ##
 ## encode

@@ -1,8 +1,8 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/gigasecond/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-09-29
 app [] {
-	isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.3/9SypUHT4Tn18tJyHyvtt929ByTx15djH3UaKkagRxGwA.tar.zst",
+	isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.4/8nYCkCKi8sCi2poruWpkdqTp7W4jnEpKHRK84xKUrmJo.tar.zst",
 }
 
 import Gigasecond exposing [add]

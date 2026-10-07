@@ -10,7 +10,7 @@ import RobotName exposing [Factory, Robot]
 
 # A new robot must not have a name
 expect {
-	factory = Factory.new({ seed: 0 })
+	factory = Factory.create({ seed: 0 })
 	robot = factory.build_robot()
 	result = robot.get_name()
 	result == NoName
@@ -18,7 +18,7 @@ expect {
 
 # After the first boot, a robot must have a name
 expect {
-	factory = Factory.new({ seed: 0 })
+	factory = Factory.create({ seed: 0 })
 	robot = factory.build_robot().boot()
 	result = robot.get_name()
 	result != NoName
@@ -26,7 +26,7 @@ expect {
 
 # Rebooting a robot should leave its name unchanged
 expect {
-	factory = Factory.new({ seed: 0 })
+	factory = Factory.create({ seed: 0 })
 	robot = factory.build_robot().boot()
 	name1 = robot.get_name()
 	name2 = robot.boot().get_name()
@@ -35,7 +35,7 @@ expect {
 
 # After it is factory reset and booted, a robot must have a  name
 expect {
-	factory = Factory.new({ seed: 0 })
+	factory = Factory.create({ seed: 0 })
 	robot = factory.build_robot().boot().factory_reset().boot()
 	result = robot.get_name()
 	result != NoName
@@ -46,7 +46,7 @@ expect {
 # again to get a new name. If it's the same again we can be pretty confident
 # that there's a problem.
 expect {
-	factory = Factory.new({ seed: 0 })
+	factory = Factory.create({ seed: 0 })
 	robot = factory.build_robot().boot()
 	name1 = robot.get_name()
 	name2 = robot.factory_reset().boot().get_name()
@@ -56,7 +56,7 @@ expect {
 
 # If you factory reset and boot a new robot it should have a name
 expect {
-	factory = Factory.new({ seed: 0 })
+	factory = Factory.create({ seed: 0 })
 	robot = factory.build_robot().factory_reset().boot()
 	result = robot.get_name()
 	result != NoName
@@ -64,7 +64,7 @@ expect {
 
 # Once created and booted, a robot's name must be 5 characters long
 expect {
-	factory = Factory.new({ seed: 0 })
+	factory = Factory.create({ seed: 0 })
 	robot = factory.build_robot().boot()
 	match robot.get_name() {
 		Name(name) => name.to_utf8().len() == 5
@@ -82,7 +82,7 @@ expect {
 ## or digit is absent from all names is negligible.
 generate_robot_names : { seed : U32, quantity : U64 } -> List(List(U8))
 generate_robot_names = |{ seed, quantity }| {
-	factory = Factory.new({ seed: seed })
+	factory = Factory.create({ seed: seed })
 	(0..<quantity)
 		.iter()
 		.fold(

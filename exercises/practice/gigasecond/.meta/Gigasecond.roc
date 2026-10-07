@@ -14,7 +14,7 @@ Gigasecond :: {}.{
 	}
 }
 
-future_datetime : Str -> Try(Str, [InvalidDateTimeFormat, ..])
+future_datetime : Str -> Try(Str, [InvalidDateTimeFormat])
 future_datetime = |moment| {
 	nanos = DateTime.from_iso_str(moment)?.to_nanos_since_epoch()
 	new_nanos = nanos
