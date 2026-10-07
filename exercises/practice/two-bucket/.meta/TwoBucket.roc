@@ -95,6 +95,7 @@ bfs = |{ start, neighbors, success }| {
 				if visited.contains(node) {
 					help(rest_to_visit, visited, from)
 				} else if success(node) {
+					path_back_to_start : List({ volume_one : U64, volume_two : U64 }), { volume_one : U64, volume_two : U64 } -> List({ volume_one : U64, volume_two : U64 })
 					path_back_to_start = |path, step| {
 						updated_path = path.append(step)
 						match from.get(step) {

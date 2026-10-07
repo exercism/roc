@@ -30,7 +30,7 @@ IntergalacticTransmission :: {}.{
 			})
 	}
 
-	decode_message : List(U8) -> Try(List(U8), [WrongParity, ..])
+	decode_message : List(U8) -> Try(List(U8), [WrongParity])
 	decode_message = |message| {
 		decoded = message.fold(
 			Ok({ result: [], next_byte: 0.U8, num_bits: 0 }),

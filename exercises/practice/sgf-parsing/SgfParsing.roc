@@ -1,3 +1,6 @@
+import parser.Parser
+import parser.Utf8
+
 SgfParsing :: {}.{
 	NodeProperties : Dict(Str, List(Str))
 	GameTree := { properties : NodeProperties, children : List(GameTree) }.{
@@ -10,10 +13,3 @@ SgfParsing :: {}.{
 		crash ("Please implement the 'parse' function")
 	}
 }
-
-# HINT: we have added the `roc-parser` package to the app's header in
-#       sgf-parsing-test.roc. You can use it if you want, particularly the
-#       Core module, and perhaps the String module as well.
-#       However, if you prefer to roll out your own solution, that's fine too!
-# import parser.Core
-# import parser.String

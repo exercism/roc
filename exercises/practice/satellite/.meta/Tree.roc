@@ -9,7 +9,7 @@ Tree := [Empty, Node(Node)].{
 
 	is_eq : _
 
-	from_traversals : { pre_order : List(U8), in_order : List(U8) } -> Try(Tree, [DifferentLengths, DuplicateItems, InconsistentTraversals, ..])
+	from_traversals : { pre_order : List(U8), in_order : List(U8) } -> Try(Tree, [DifferentLengths, DuplicateItems, InconsistentTraversals])
 	from_traversals = |{ pre_order, in_order }| {
 		if pre_order.len() != in_order.len() {
 			return Err(DifferentLengths)

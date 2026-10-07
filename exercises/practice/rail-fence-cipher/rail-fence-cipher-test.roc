@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rail-fence-cipher/canonical-data.json
 # File last updated on 2026-08-29
 
-import RailFenceCipher exposing [encode, decode]
+import RailFenceCipher exposing [decode, encode]
 
 ##
 ## encode

@@ -18,7 +18,7 @@ GoCounting :: {}.{
 		none : Set(Intersection),
 	}
 
-	territory : Str, Intersection -> Try(Territory, [OutOfBounds, BoardWasEmpty, BoardWasNotRectangular, InvalidChar(U8), ..])
+	territory : Str, Intersection -> Try(Territory, [OutOfBounds, BoardWasEmpty, BoardWasNotRectangular, InvalidChar(U8)])
 	territory = |board_str, intersection| {
 		board = parse(board_str)?
 		if intersection.x >= board.width or intersection.y >= board.height {
@@ -28,7 +28,7 @@ GoCounting :: {}.{
 		}
 	}
 
-	territories : Str -> Try(Territories, [BoardWasEmpty, BoardWasNotRectangular, InvalidChar(U8), ..])
+	territories : Str -> Try(Territories, [BoardWasEmpty, BoardWasNotRectangular, InvalidChar(U8)])
 	territories = |board_str| {
 		board = parse(board_str)?
 		empty_intersections = {
@@ -70,7 +70,7 @@ Board : {
 	height : U64,
 }
 
-parse : Str -> Try(Board, [BoardWasEmpty, BoardWasNotRectangular, InvalidChar(U8), ..])
+parse : Str -> Try(Board, [BoardWasEmpty, BoardWasNotRectangular, InvalidChar(U8)])
 parse = |board_str| {
 	if board_str == "" {
 		Err(BoardWasEmpty)
@@ -111,6 +111,7 @@ get_stone = |board, { x, y }| {
 
 search_territory : Board, Intersection -> Territory
 search_territory = |board, intersection| {
+	help : List(Intersection), Set(Intersection), Set(Stone) -> { visited : Set(Intersection), surrounding_stones : Set(Stone) }
 	help = |to_visit, visited, surrounding_stones| {
 		match to_visit {
 			[] => { visited, surrounding_stones }

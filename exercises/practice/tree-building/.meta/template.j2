@@ -1,0 +1,31 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import Tree
+
+{% macro render_cases(cases) %}
+{%- for case in cases %}
+{%- if "cases" in case %}
+{{ render_cases(case["cases"]) }}
+{%- else %}
+# {{ case["description"] }}
+expect {
+    result = Tree.from_records({{ plugins.to_roc_records(case["input"]["records"]) | to_roc }})
+{%- if case["expected"] is mapping and "error" in case["expected"] %}
+    result.is_err()
+{%- else %}
+    {%- if case["expected"] and "node" in case["expected"] %}
+    result == Ok({{ plugins.to_roc_tree(case["expected"]["node"]) | to_roc }})
+{%- else %}
+    result.is_err()
+{%- endif %}
+{%- endif %}
+}
+{%- endif %}
+
+{% endfor %}
+{% endmacro %}
+
+{{ render_cases(cases) }}
+{{ macros.footer() }}
