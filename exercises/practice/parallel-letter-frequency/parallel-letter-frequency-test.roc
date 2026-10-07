@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/parallel-letter-frequency/canonical-data.json
 # File last updated on 2026-10-04
 app [main!] {
-	pf: platform "https://github.com/ageron/roc-parallel/releases/download/0.2.0/3CrJPSgkKDYuP7ojpBa9amXdKWU8hxDjW6HeHCppjWDp.tar.zst",
+	pf: platform "https://github.com/ageron/roc-parallel/releases/download/0.3.0/ArsAKsVYCn93y2GdXRuMDN5DRrVyb8Fa8BJ3QtxqFxfF.tar.zst",
 	unicode: "https://github.com/roc-lang/unicode/releases/download/4.2.0/4W8SHzvwet9hH9qZewJ1J1CVQoH7YKA6zyijWFTB3y1w.tar.zst",
 }
 
