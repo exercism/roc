@@ -12,7 +12,6 @@ expect {
 		\\Ten green bottles hanging on the wall,
 		\\And if one green bottle should accidentally fall,
 		\\There'll be nine green bottles hanging on the wall.
-
 }
 # last generic verse
 expect {
@@ -22,7 +21,6 @@ expect {
 		\\Three green bottles hanging on the wall,
 		\\And if one green bottle should accidentally fall,
 		\\There'll be two green bottles hanging on the wall.
-
 }
 # verse with 2 bottles
 expect {
@@ -32,7 +30,6 @@ expect {
 		\\Two green bottles hanging on the wall,
 		\\And if one green bottle should accidentally fall,
 		\\There'll be one green bottle hanging on the wall.
-
 }
 # verse with 1 bottle
 expect {
@@ -42,7 +39,6 @@ expect {
 		\\One green bottle hanging on the wall,
 		\\And if one green bottle should accidentally fall,
 		\\There'll be no green bottles hanging on the wall.
-
 }
 
 # first two verses
@@ -58,7 +54,6 @@ expect {
 		\\Nine green bottles hanging on the wall,
 		\\And if one green bottle should accidentally fall,
 		\\There'll be eight green bottles hanging on the wall.
-
 }
 # last three verses
 expect {
@@ -78,7 +73,6 @@ expect {
 		\\One green bottle hanging on the wall,
 		\\And if one green bottle should accidentally fall,
 		\\There'll be no green bottles hanging on the wall.
-
 }
 # all verses
 expect {
@@ -133,5 +127,4 @@ expect {
 		\\One green bottle hanging on the wall,
 		\\And if one green bottle should accidentally fall,
 		\\There'll be no green bottles hanging on the wall.
-
 }

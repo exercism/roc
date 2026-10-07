@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/difference-of-squares/canonical-data.json
 # File last updated on 2026-08-29
 
-import DifferenceOfSquares exposing [square_of_sum, sum_of_squares, difference_of_squares]
+import DifferenceOfSquares exposing [difference_of_squares, square_of_sum, sum_of_squares]
 
 ##
 ## Square the sum of the numbers up to the given number

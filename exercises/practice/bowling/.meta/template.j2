@@ -36,7 +36,7 @@ expect {
 
 game_with_previous_rolls : List(U64) -> Try(Bowling, _)
 game_with_previous_rolls = |rolls| {
-    var $game = Bowling.new
+    var $game = Bowling.create()
     for pins in rolls {
         $game = $game.roll(pins)?
     }

@@ -3,7 +3,7 @@
 ##
 
 RunLengthEncoding :: {}.{
-	encode : Str -> Try(Str, [BadUtf8(_), ..])
+	encode : Str -> Try(Str, [BadUtf8(_)])
 	encode = |string| {
 		append_count_and_letter = |state| {
 			match state.count {
@@ -35,7 +35,7 @@ RunLengthEncoding :: {}.{
 			|> Str.from_utf8
 	}
 
-	decode : Str -> Try(Str, [BadUtf8(_), BadNumStr, ..])
+	decode : Str -> Try(Str, [BadUtf8(_), BadNumStr])
 	decode = |string| {
 		state_to_str = |state| state.chars |> Str.from_utf8
 		string
@@ -58,6 +58,5 @@ RunLengthEncoding :: {}.{
 				},
 			)?
 			|> state_to_str
-
 	}
 }

@@ -41,7 +41,7 @@ MatchResult : [Win, Loss, Draw]
 
 TeamTally : { mp : U64, w : U64, d : U64, l : U64, p : U64 }
 
-parse_result : Str -> Try(MatchResult, [InvalidResult(Str), ..])
+parse_result : Str -> Try(MatchResult, [InvalidResult(Str)])
 parse_result = |result_str| {
 	match result_str {
 		"win" => Ok(Win)

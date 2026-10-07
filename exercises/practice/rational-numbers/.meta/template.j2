@@ -42,7 +42,7 @@ expect {
 {%- if case["expected"] is iterable %}
     result == {{ plugins.to_roc_rational(case["expected"]) }}
 {%- else %}
-    result|>is_approx_eq({{ case["expected"] | to_roc }})
+    result.is_approx_eq({{ case["expected"] | to_roc }}, {abs:1e-6, rel:1e-6})
 {%- endif %}
 }
 
@@ -63,9 +63,5 @@ expect {
     {%- endif %}
 {% endfor %}
 {% endfor %}
-
-is_approx_eq = |f1, f2| {
-    (f1 * 1e9 + 0.5).to_u64_wrap() == (f2 * 1e9 + 0.5).to_u64_wrap()
-}
 
 {{ macros.footer() }}

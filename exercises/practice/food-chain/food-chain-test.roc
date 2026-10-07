@@ -10,7 +10,6 @@ expect {
 	result ==
 		\\I know an old lady who swallowed a fly.
 		\\I don't know why she swallowed the fly. Perhaps she'll die.
-
 }
 
 # spider
@@ -21,7 +20,6 @@ expect {
 		\\It wriggled and jiggled and tickled inside her.
 		\\She swallowed the spider to catch the fly.
 		\\I don't know why she swallowed the fly. Perhaps she'll die.
-
 }
 
 # bird
@@ -33,7 +31,6 @@ expect {
 		\\She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.
 		\\She swallowed the spider to catch the fly.
 		\\I don't know why she swallowed the fly. Perhaps she'll die.
-
 }
 
 # cat
@@ -46,7 +43,6 @@ expect {
 		\\She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.
 		\\She swallowed the spider to catch the fly.
 		\\I don't know why she swallowed the fly. Perhaps she'll die.
-
 }
 
 # dog
@@ -60,7 +56,6 @@ expect {
 		\\She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.
 		\\She swallowed the spider to catch the fly.
 		\\I don't know why she swallowed the fly. Perhaps she'll die.
-
 }
 
 # goat
@@ -75,7 +70,6 @@ expect {
 		\\She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.
 		\\She swallowed the spider to catch the fly.
 		\\I don't know why she swallowed the fly. Perhaps she'll die.
-
 }
 
 # cow
@@ -91,7 +85,6 @@ expect {
 		\\She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.
 		\\She swallowed the spider to catch the fly.
 		\\I don't know why she swallowed the fly. Perhaps she'll die.
-
 }
 
 # horse
@@ -100,7 +93,6 @@ expect {
 	result ==
 		\\I know an old lady who swallowed a horse.
 		\\She's dead, of course!
-
 }
 
 # multiple verses
@@ -120,7 +112,6 @@ expect {
 		\\She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.
 		\\She swallowed the spider to catch the fly.
 		\\I don't know why she swallowed the fly. Perhaps she'll die.
-
 }
 
 # full song
@@ -177,5 +168,4 @@ expect {
 		\\
 		\\I know an old lady who swallowed a horse.
 		\\She's dead, of course!
-
 }

@@ -3,7 +3,7 @@
 ##
 
 Matrix :: {}.{
-	column : Str, U64 -> Try(List(I64), [BadNumStr, OutOfBounds, ..])
+	column : Str, U64 -> Try(List(I64), [BadNumStr, OutOfBounds])
 	column = |matrix_str, index| {
 		if index == 0 {
 			Err(OutOfBounds)
@@ -13,7 +13,7 @@ Matrix :: {}.{
 		}
 	}
 
-	row : Str, U64 -> Try(List(I64), [BadNumStr, OutOfBounds, ..])
+	row : Str, U64 -> Try(List(I64), [BadNumStr, OutOfBounds])
 	row = |matrix_str, index| {
 		if index == 0 {
 			Err(OutOfBounds)
@@ -25,7 +25,7 @@ Matrix :: {}.{
 	}
 }
 
-parse_row : Str -> Try(List(I64), [BadNumStr, ..])
+parse_row : Str -> Try(List(I64), [BadNumStr])
 parse_row = |row_str| {
 	row_str
 		.trim()
@@ -35,7 +35,7 @@ parse_row = |row_str| {
 		.map_try(I64.from_str)
 }
 
-parse_matrix : Str -> Try(List(List(I64)), [BadNumStr, ..])
+parse_matrix : Str -> Try(List(List(I64)), [BadNumStr])
 parse_matrix = |matrix_str| {
 	matrix_str
 		.split_on("\n")
