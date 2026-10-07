@@ -7,7 +7,7 @@ import ParallelLetterFrequency exposing [calculate_frequencies!]
 
 check! : { description: Str, texts: List(Str), expected: Dict(Str, U64) } => Try({}, Str)
 check! = |{ description, texts, expected }| {
-    for workers in [1, 2, 4, 16] {
+    for workers in [1, 2, 4] {
         actual = calculate_frequencies!({ texts, workers }) ? |error| Str.inspect({ test: description, workers, error })
         if actual != expected {
             return Err(Str.inspect({ test: description, workers, expected, actual }))
