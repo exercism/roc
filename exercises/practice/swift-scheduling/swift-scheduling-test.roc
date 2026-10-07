@@ -1,8 +1,8 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/swift-scheduling/canonical-data.json
-# File last updated on 2026-09-26
+# File last updated on 2026-10-07
 app [] {
-	isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.3/9SypUHT4Tn18tJyHyvtt929ByTx15djH3UaKkagRxGwA.tar.zst",
+	isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.4/8nYCkCKi8sCi2poruWpkdqTp7W4jnEpKHRK84xKUrmJo.tar.zst",
 }
 
 import SwiftScheduling exposing [delivery_date]
