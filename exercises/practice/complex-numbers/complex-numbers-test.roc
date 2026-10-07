@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/complex-numbers/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-09-29
 
 import Complex
 
@@ -12,21 +12,21 @@ import Complex
 expect {
 	z = Complex.{ real: 1, imag: 0 }
 	result = z.real
-	result |> is_approx_eq(1)
+	result.is_approx_eq(1, { abs: 1e-6, rel: 1e-6 })
 }
 
 # Real part of a purely imaginary number
 expect {
 	z = Complex.{ real: 0, imag: 1 }
 	result = z.real
-	result |> is_approx_eq(0)
+	result.is_approx_eq(0, { abs: 1e-6, rel: 1e-6 })
 }
 
 # Real part of a number with real and imaginary part
 expect {
 	z = Complex.{ real: 1, imag: 2 }
 	result = z.real
-	result |> is_approx_eq(1)
+	result.is_approx_eq(1, { abs: 1e-6, rel: 1e-6 })
 }
 
 ###
@@ -37,21 +37,21 @@ expect {
 expect {
 	z = Complex.{ real: 1, imag: 0 }
 	result = z.imag
-	result |> is_approx_eq(0)
+	result.is_approx_eq(0, { abs: 1e-6, rel: 1e-6 })
 }
 
 # Imaginary part of a purely imaginary number
 expect {
 	z = Complex.{ real: 0, imag: 1 }
 	result = z.imag
-	result |> is_approx_eq(1)
+	result.is_approx_eq(1, { abs: 1e-6, rel: 1e-6 })
 }
 
 # Imaginary part of a number with real and imaginary part
 expect {
 	z = Complex.{ real: 1, imag: 2 }
 	result = z.imag
-	result |> is_approx_eq(2)
+	result.is_approx_eq(2, { abs: 1e-6, rel: 1e-6 })
 }
 
 ###
@@ -186,35 +186,35 @@ expect {
 expect {
 	z = Complex.{ real: 5, imag: 0 }
 	result = z.abs()
-	result |> is_approx_eq(5)
+	result.is_approx_eq(5, { abs: 1e-6, rel: 1e-6 })
 }
 
 # Absolute value of a negative purely real number
 expect {
 	z = Complex.{ real: -5, imag: 0 }
 	result = z.abs()
-	result |> is_approx_eq(5)
+	result.is_approx_eq(5, { abs: 1e-6, rel: 1e-6 })
 }
 
 # Absolute value of a purely imaginary number with positive imaginary part
 expect {
 	z = Complex.{ real: 0, imag: 5 }
 	result = z.abs()
-	result |> is_approx_eq(5)
+	result.is_approx_eq(5, { abs: 1e-6, rel: 1e-6 })
 }
 
 # Absolute value of a purely imaginary number with negative imaginary part
 expect {
 	z = Complex.{ real: 0, imag: -5 }
 	result = z.abs()
-	result |> is_approx_eq(5)
+	result.is_approx_eq(5, { abs: 1e-6, rel: 1e-6 })
 }
 
 # Absolute value of a number with real and imaginary part
 expect {
 	z = Complex.{ real: 3, imag: 4 }
 	result = z.abs()
-	result |> is_approx_eq(5)
+	result.is_approx_eq(5, { abs: 1e-6, rel: 1e-6 })
 }
 
 ###
@@ -366,16 +366,6 @@ expect {
 }
 
 complex_is_approx_eq = |z1, z2| {
-	is_approx_eq(z1.real, z2.real) and is_approx_eq(z1.imag, z2.imag)
-}
-
-# The following function should soon be available in Roc's builtins
-is_approx_eq = |x1, x2| {
-	i1 = (x1 * 1000 + 0.5).to_i64_try() ?? {
-		crash "Unreachable"
-	}
-	i2 = (x2 * 1000 + 0.5).to_i64_try() ?? {
-		crash "Unreachable"
-	}
-	i1 == i2
+	z1.real.is_approx_eq(z2.real, { abs: 1e-6, rel: 1e-6 })
+		and z1.imag.is_approx_eq(z2.imag, { abs: 1e-6, rel: 1e-6 })
 }

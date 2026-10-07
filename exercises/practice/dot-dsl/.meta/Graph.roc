@@ -33,8 +33,8 @@ Graph := {
 
 	## DSL definition starts here
 
-	new : Graph
-	new = Graph.{
+	create : () -> Graph
+	create = || Graph.{
 		nodes: Dict.empty(),
 		edges: Dict.empty(),
 		custom_attributes: Dict.empty(),
@@ -79,6 +79,7 @@ Graph := {
 	edge : Graph, List(Str), List(Attribute) -> Graph
 	edge = |graph, names, attributes| {
 		attrs = build_attributes_record(attributes)
+		insert_edges : Graph, List(Str) -> Graph
 		insert_edges = |updated_graph, remaining_names| {
 			match remaining_names {
 				[] => updated_graph
@@ -109,41 +110,41 @@ Graph := {
 	## empty graph
 	empty_graph : Graph
 	empty_graph = {
-		Graph.new
+		Graph.create()
 	}
 
 	## graph with one node
 	graph_with_one_node : Graph
 	graph_with_one_node = {
-		Graph.new
+		Graph.create()
 			.node("a", [])
 	}
 
 	## graph with one node with attribute
 	graph_with_one_node_with_attribute : Graph
 	graph_with_one_node_with_attribute = {
-		Graph.new
+		Graph.create()
 			.node("a", [Color(Green)])
 	}
 
 	## graph with one edge
 	graph_with_one_edge : Graph
 	graph_with_one_edge = {
-		Graph.new
+		Graph.create()
 			.edge(["a", "b"], [])
 	}
 
 	## graph with one attribute
 	graph_with_one_attribute : Graph
 	graph_with_one_attribute = {
-		Graph.new
+		Graph.create()
 			.int_attr("foo", 1)
 	}
 
 	## graph with nodes, edges, and attributes
 	graph_with_nodes_edges_and_attributes : Graph
 	graph_with_nodes_edges_and_attributes = {
-		Graph.new
+		Graph.create()
 			.int_attr("foo", 1)
 			.title("Testing Attrs")
 			.node("a", [Color(Green)])
@@ -156,14 +157,14 @@ Graph := {
 	## multiple edges on one line
 	multiple_edges_on_one_line : Graph
 	multiple_edges_on_one_line = {
-		Graph.new
+		Graph.create()
 			.edge(["a", "b", "c", "d"], [Style(Dotted)])
 	}
 
 	## only 1 edge between nodes
 	only_1_edge_between_nodes : Graph
 	only_1_edge_between_nodes = {
-		Graph.new
+		Graph.create()
 			.edge(["a", "b"], [])
 			.edge(["a", "b"], [])
 			.edge(["b", "a"], [Color(Blue)])

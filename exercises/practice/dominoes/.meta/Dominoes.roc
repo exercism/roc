@@ -15,7 +15,7 @@ Dominoes :: {}.{
 						if single_left == single_right Ok(used) else Err(NoChainExists)
 					[(first_left, _), .., (_, last_right)] =>
 						if first_left == last_right Ok(used) else Err(NoChainExists)
-					}
+				}
 				[first_available, .. as rest_available] => match used {
 					[] => find_chain_helper([first_available], rest_available)
 					[.., (_, last_used_right)] => {

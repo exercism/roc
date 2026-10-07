@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/go-counting/canonical-data.json
 # File last updated on 2026-08-29
 
-import GoCounting exposing [territory, territories]
+import GoCounting exposing [territories, territory]
 
 # Black corner territory on 5x5 board
 expect {

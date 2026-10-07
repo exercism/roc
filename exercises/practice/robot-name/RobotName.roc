@@ -7,8 +7,8 @@ RobotName :: {}.{
 	Factory :: {
 		# TODO: change this opaque type however you need
 	}.{
-		new : { seed : U32 } -> Factory
-		new = |{ seed }| {
+		create : { seed : U32 } -> Factory
+		create = |{ seed }| {
 			crash "Please implement the 'Factory.create' function"
 		}
 

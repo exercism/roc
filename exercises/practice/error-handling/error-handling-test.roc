@@ -1,6 +1,6 @@
 # File last updated on 2026-08-30
 
-import ErrorHandling exposing [get_user, parse_user_id, get_page, error_message]
+import ErrorHandling exposing [error_message, get_page, get_user, parse_user_id]
 
 ##
 ## get_user should return Ok(<user>) or Err(UserNotFound(<user_id>))
