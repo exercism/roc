@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/palindrome-products/canonical-data.json
 # File last updated on 2026-08-29
 
-import PalindromeProducts exposing [smallest, largest]
+import PalindromeProducts exposing [largest, smallest]
 
 is_eq = |result, expected| {
 	match (result, expected) {

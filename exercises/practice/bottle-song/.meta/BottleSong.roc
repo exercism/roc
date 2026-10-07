@@ -3,7 +3,7 @@
 ##
 
 BottleSong :: {}.{
-	recite : U8, U8 -> Try(Str, [InvalidVerseNumber, ..])
+	recite : U8, U8 -> Try(Str, [InvalidVerseNumber])
 	recite = |starting_number, number_of_verses| {
 		if starting_number == 0 or number_of_verses == 0 or starting_number < number_of_verses {
 			Err(InvalidVerseNumber)
@@ -19,7 +19,7 @@ BottleSong :: {}.{
 	}
 }
 
-verse : U8 -> Try(Str, [InvalidVerseNumber, ..])
+verse : U8 -> Try(Str, [InvalidVerseNumber])
 verse = |number| {
 	\\${describe_bottles(number, Uppercase)?} hanging on the wall,
 	\\${describe_bottles(number, Uppercase)?} hanging on the wall,
@@ -28,7 +28,7 @@ verse = |number| {
 		|> Ok
 }
 
-describe_bottles : U8, [Uppercase, Lowercase] -> Try(Str, [InvalidVerseNumber, ..])
+describe_bottles : U8, [Uppercase, Lowercase] -> Try(Str, [InvalidVerseNumber])
 describe_bottles = |number, case| {
 	if number > 10 {
 		return Err(InvalidVerseNumber)

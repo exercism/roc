@@ -184,10 +184,12 @@ parse_def = |tokens, defs| {
 is_builtin : Str -> Bool
 is_builtin = |token| {
 	builtins = ["dup", "drop", "swap", "over", "+", "-", "*", "/"]
-	builtins.contains(token) or (match I16.from_str(token) {
-		Ok(_) => Bool.True
-		Err(_) => Bool.False
-	})
+	builtins.contains(token) or (
+		match I16.from_str(token) {
+			Ok(_) => Bool.True
+			Err(_) => Bool.False
+		}
+	)
 }
 
 flatten_defs : List(Str), Defs -> List(Str)

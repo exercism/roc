@@ -51,7 +51,7 @@ parse_hand = |hand_str| {
 	}
 }
 
-parse_card : Str -> Try(Card, [CardWasEmpty, InvalidCardValue(List(U8)), InvalidCardSuit(U8), ..])
+parse_card : Str -> Try(Card, [CardWasEmpty, InvalidCardValue(List(U8)), InvalidCardSuit(U8)])
 parse_card = |card_str| {
 	match card_str.to_utf8() {
 		[] => Err(CardWasEmpty)
@@ -63,7 +63,7 @@ parse_card = |card_str| {
 	}
 }
 
-parse_value : List(U8) -> Try(Value, [InvalidCardValue(List(U8)), ..])
+parse_value : List(U8) -> Try(Value, [InvalidCardValue(List(U8))])
 parse_value = |chars| {
 	match chars {
 		[val] if val >= '2' and val <= '9' => Ok((val - '0'))
@@ -76,7 +76,7 @@ parse_value = |chars| {
 	}
 }
 
-parse_suit : U8 -> Try(Suit, [InvalidCardSuit(U8), ..])
+parse_suit : U8 -> Try(Suit, [InvalidCardSuit(U8)])
 parse_suit = |char| {
 	match char {
 		'S' => Ok(Spades)
