@@ -16,7 +16,7 @@ React :: {
 		{ values: Dict.empty(), inputs: Set.empty(), computations: [], callbacks: [] }
 	}
 
-	add_input : React, { cell_id : Str, value : CellValue } -> Try(React, [DuplicateCell, ..])
+	add_input : React, { cell_id : Str, value : CellValue } -> Try(React, [DuplicateCell])
 	add_input = |reactor, input| {
 		if reactor.values.get(input.cell_id).is_ok() {
 			Err(DuplicateCell)
@@ -29,7 +29,7 @@ React :: {
 		}
 	}
 
-	add_compute : React, { cell_id : Str, inputs : List(Str), compute : List(CellValue) -> Try(CellValue, Str) } -> Try(React, [DuplicateCell, UnknownCell, ComputeFailed({ cell_id : Str, message : Str }), ..])
+	add_compute : React, { cell_id : Str, inputs : List(Str), compute : List(CellValue) -> Try(CellValue, Str) } -> Try(React, [DuplicateCell, UnknownCell, ComputeFailed({ cell_id : Str, message : Str })])
 	add_compute = |reactor, cell| {
 		if reactor.values.get(cell.cell_id).is_ok() {
 			Err(DuplicateCell)
@@ -44,12 +44,12 @@ React :: {
 		}
 	}
 
-	value : React, Str -> Try(CellValue, [UnknownCell, ..])
+	value : React, Str -> Try(CellValue, [UnknownCell])
 	value = |reactor, cell_id| {
 		reactor.values.get(cell_id).map_err(|KeyNotFound| UnknownCell)
 	}
 
-	set_value : React, { cell_id : Str, value : CellValue, log : CallbackLog } -> Try({ reactor : React, log : CallbackLog }, [UnknownCell, NotInputCell, ComputeFailed({ cell_id : Str, message : Str }), ..])
+	set_value : React, { cell_id : Str, value : CellValue, log : CallbackLog } -> Try({ reactor : React, log : CallbackLog }, [UnknownCell, NotInputCell, ComputeFailed({ cell_id : Str, message : Str })])
 	set_value = |reactor, update| {
 		previous = reactor.value(update.cell_id)?
 		if !reactor.inputs.contains(update.cell_id) {
@@ -86,7 +86,7 @@ React :: {
 		}
 	}
 
-	add_callback : React, { cell_id : Str, callback_id : Str, callback : CellValue, CallbackLog -> CallbackLog } -> Try(React, [UnknownCell, NotComputeCell, DuplicateCallback, ..])
+	add_callback : React, { cell_id : Str, callback_id : Str, callback : CellValue, CallbackLog -> CallbackLog } -> Try(React, [UnknownCell, NotComputeCell, DuplicateCallback])
 	add_callback = |reactor, registration| {
 		_ = reactor.value(registration.cell_id)?
 		if reactor.inputs.contains(registration.cell_id) {
@@ -98,7 +98,7 @@ React :: {
 		}
 	}
 
-	remove_callback : React, { cell_id : Str, callback_id : Str } -> Try(React, [UnknownCell, NotComputeCell, ..])
+	remove_callback : React, { cell_id : Str, callback_id : Str } -> Try(React, [UnknownCell, NotComputeCell])
 	remove_callback = |reactor, registration| {
 		_ = reactor.value(registration.cell_id)?
 		if reactor.inputs.contains(registration.cell_id) {
