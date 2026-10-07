@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/variable-length-quantity/canonical-data.json
 # File last updated on 2026-08-29
 
-import VariableLengthQuantity exposing [encode, decode]
+import VariableLengthQuantity exposing [decode, encode]
 
 ##
 ## Encode a series of integers, producing a series of bytes.

@@ -3,7 +3,7 @@
 ##
 
 import parser.Parser as P
-import parser.String as S
+import parser.Utf8 as S
 
 SgfParsing :: {}.{
 	NodeProperties : Dict(Str, List(Str))
@@ -12,7 +12,7 @@ SgfParsing :: {}.{
 		is_eq : _
 	}
 
-	parse : Str -> Try(GameTree, [ParsingFailure(Str), ParsingIncomplete(Str)])
+	parse : Str -> Try(GameTree, [ParseError({ message : Str, offset : U64 })])
 	parse = |sgf| {
 		S.parse_str(game_tree, sgf)
 	}
@@ -102,12 +102,12 @@ prop_value =
 
 value_type : P.Parser(List(U8), List(U8))
 value_type =
-	P.build_primitive_parser(
+	P.custom(
 		|input| {
 			help = |result, chars| {
 				match chars {
-					[] => Err(ParsingFailure("No closing bracket"))
-					[']', ..] => Ok({ val: result, input: chars })
+					[] => Err(ParseError({ message: "No closing bracket", offset: input.len() }))
+					[']', ..] => Ok({ value: result, rest: chars })
 					['\\', '\t', .. as rest] => help((result.append(' ')), rest)
 					['\\', '\n', .. as rest] => help(result, rest)
 					['\\', c, .. as rest] => help((result.append(c)), rest)

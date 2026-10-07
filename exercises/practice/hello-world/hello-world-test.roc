@@ -8,5 +8,4 @@ import HelloWorld exposing [hello]
 expect {
 	result = hello
 	result == "Hello, World!"
-
 }

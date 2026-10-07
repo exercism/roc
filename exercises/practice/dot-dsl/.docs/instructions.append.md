@@ -8,7 +8,7 @@ Maybe you would like to create a DSL based on lists of tags and records, like th
 
 ```roc
 my_graph =
-    Graph.new([
+    Graph.create([
         Title("My Graph"),
         Node("a", { color: Green }),
         Node("b", { color: Blue }),
@@ -20,9 +20,9 @@ Or perhaps you would prefer a DSL based on chains of function calls, like this:
 
 ```roc
 my_graph =
-    Graph.new
+    Graph.create()
         .with_title("My Graph")
-        .add_node("a", Attr.new.with_color(Green))
+        .add_node("a", Attr.create().with_color(Green))
         ...
 ```
 

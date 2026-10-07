@@ -1,8 +1,8 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/list-ops/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-09-29
 
-import ListOps exposing [concat, join, filter, len, map, fold, fold_rev, reverse]
+import ListOps exposing [concat, filter, fold, fold_rev, join, len, map, reverse]
 
 ##
 ## append entries to a list and return the new list
@@ -108,19 +108,23 @@ expect {
 
 # empty list
 expect {
-	result = [] |> fold(2, |acc, el| el * acc)
+	result = []
+		|> fold(2, |acc, el| el * acc)
 	result == 2
 }
 
 # direction independent function applied to non-empty list
 expect {
-	result = [1, 2, 3, 4] |> fold(5, |acc, el| el + acc)
+	result = [1, 2, 3, 4]
+		|> fold(5, |acc, el| el + acc)
 	result == 15
 }
 
 # direction dependent function applied to non-empty list
 expect {
-	result = [1, 2, 3, 4] |> fold(24, |acc, el| el / acc) |> round({ step: 0.001 })
+	result = [1, 2, 3, 4]
+		|> fold(24, |acc, el| el / acc)
+		.round_to({ step: 0.001, ties: ToEven })
 	result == 64
 }
 
@@ -130,19 +134,23 @@ expect {
 
 # empty list
 expect {
-	result = [] |> fold_rev(2, |acc, el| el * acc)
+	result = []
+		|> fold_rev(2, |acc, el| el * acc)
 	result == 2
 }
 
 # direction independent function applied to non-empty list
 expect {
-	result = [1, 2, 3, 4] |> fold_rev(5, |acc, el| el + acc)
+	result = [1, 2, 3, 4]
+		|> fold_rev(5, |acc, el| el + acc)
 	result == 15
 }
 
 # direction dependent function applied to non-empty list
 expect {
-	result = [1, 2, 3, 4] |> fold_rev(24, |acc, el| el / acc) |> round({ step: 0.001 })
+	result = [1, 2, 3, 4]
+		|> fold_rev(24, |acc, el| el / acc)
+		.round_to({ step: 0.001, ties: ToEven })
 	result == 9
 }
 
@@ -156,7 +164,7 @@ expect {
 	result == []
 }
 
-# non-empty list
+# non-empty even-length list
 expect {
 	result = [1, 3, 5, 7] |> reverse
 	result == [7, 5, 3, 1]
@@ -166,9 +174,4 @@ expect {
 expect {
 	result = [[1, 2], [3], [], [4, 5, 6]] |> reverse
 	result == [[4, 5, 6], [], [3], [1, 2]]
-}
-
-round : Dec, { step : Dec } -> Dec
-round = |value, { step }| {
-	((value / step).round_to_i128().to_dec_try() ?? crash "Unreachable") * step
 }
