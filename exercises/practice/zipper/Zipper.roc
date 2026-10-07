@@ -6,6 +6,7 @@ Zipper :: {
 	todo3 : U64,
 	# etc.
 }.{
+
 	## A binary tree structure where each node holds an integer
 	Tree := { value : U64, left ?: Tree, right ?: Tree }.{
 		# The following line enables the default `is_eq` implementation

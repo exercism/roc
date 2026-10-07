@@ -3,8 +3,8 @@
 ##
 
 Rational :: { num : I64, den : I64 }.{
-	new : { num : I64, den : I64 } -> Rational
-	new = |{ num, den }| {
+	create : { num : I64, den : I64 } -> Rational
+	create = |{ num, den }| {
 		{ num, den } |> reduce
 	}
 
@@ -79,11 +79,12 @@ Rational :: { num : I64, den : I64 }.{
 	is_eq : _
 }
 
-# The following functions should soon be available in Roc's builtins
+# The following function should soon be available in Roc's builtins
+# See https://github.com/roc-lang/roc/issues/5107
 
 # Calculates the natural logarithm of x, ln(x).
-log : F64 -> F64
-log = |x| {
+ln : F64 -> F64
+ln = |x| {
 	if x <= 0.0 {
 		# Natural log is undefined for zero and negative numbers
 		crash "log is undefined for zero or negative numbers"

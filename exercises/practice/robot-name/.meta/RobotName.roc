@@ -12,8 +12,8 @@ RobotName :: {}.{
 		existing_names : Set(Str),
 		random_state : Random.State,
 	}.{
-		new : { seed : U32 } -> Factory
-		new = |{ seed }| {
+		create : { seed : U32 } -> Factory
+		create = |{ seed }| {
 			{ random_state: Random.seed(seed), existing_names: Set.empty() }
 		}
 
