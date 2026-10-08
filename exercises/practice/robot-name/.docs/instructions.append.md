@@ -8,4 +8,5 @@ A `Robot` must either have no name or have a name composed of two letters follow
 
 ## The `roc-random` package
 
-The [`roc-random` package](https://github.com/kili-ilo/roc-random) is available in the header of `robot-name-test.roc` (with alias `random`). You can use it in your solution if you want, for example by importing `random.Random`.
+The [`roc-random` package](https://github.com/kili-ilo/roc-random) is available in the header of `robot-name-test.roc` (with alias `random`).
+You can use it in your solution if you want, for example by importing `random.Random`.

@@ -26,7 +26,9 @@ my_graph =
         ...
 ```
 
-Or maybe you have very a different plan? Go for it! The tests only require you to create a few specific graphs—the way you build them is totally up to you.
+Or maybe you have very a different plan?
+Go for it!
+The tests only require you to create a few specific graphs—the way you build them is totally up to you.
 
 That said, a DSL is usually better if it is clear, concise, and not too surprising (e.g., the `minus` function is meant for subtracting, not for building an edge between two nodes, as in `node("a") - node("b")`).
 
@@ -34,7 +36,8 @@ To double the fun, you can optionally try to implement a `to_dot` function that 
 
 ## Graph representation
 
-Define your DSL in `Graph.roc`, then use it to construct the graphs requested by the stub. The two node IDs in each `EdgeId` must be ordered alphabetically.
+Define your DSL in `Graph.roc`, then use it to construct the graphs requested by the stub.
+The two node IDs in each `EdgeId` must be ordered alphabetically.
 
 | Definition | Graph to build |
 | --- | --- |

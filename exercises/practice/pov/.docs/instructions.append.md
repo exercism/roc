@@ -6,4 +6,5 @@
 
 `path_to` returns the labels of the nodes between the two given nodes, or `Err(NotFound)` if either node does not exist.
 
-The stub enables default equality with `is_eq` and hashing with `to_hash`. Hashing allows trees to be stored in a `Set`.
+The stub enables default equality with `is_eq` and hashing with `to_hash`.
+Hashing allows trees to be stored in a `Set`.

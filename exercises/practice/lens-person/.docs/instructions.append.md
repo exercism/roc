@@ -2,7 +2,8 @@
 
 ## Lenses in Roc
 
-Lenses are not used much in Roc because the record update syntax covers most use cases nicely. For example, consider this nested record:
+Lenses are not used much in Roc because the record update syntax covers most use cases nicely.
+For example, consider this nested record:
 
 ```roc
 bob = { hair: { color: Brown, length: Long }, mouth: Smiling, height: 6.0 }
@@ -14,7 +15,10 @@ Now let's give Bob a haircut:
 new_bob = { ..bob, hair: { ..bob.hair, length: Short } }
 ```
 
-No lenses needed! That said, even though lenses are rare in Roc, they are common in other languages like Haskell and Scala, so you might be curious to know how one might implement them in Roc. It's also a good way to practice some advanced Roc features such as parameterized types, and records containing functions. Indeed, here is one way to represent a lens in Roc:
+No lenses needed!
+That said, even though lenses are rare in Roc, they are common in other languages like Haskell and Scala, so you might be curious to know how one might implement them in Roc.
+It's also a good way to practice some advanced Roc features such as parameterized types, and records containing functions.
+Indeed, here is one way to represent a lens in Roc:
 
 ```roc
 Lens(whole, part) := {
@@ -23,7 +27,9 @@ Lens(whole, part) := {
 }
 ```
 
-This is a parameterized type: `whole` and `part` could be any types. `whole` is typically a record, while `part` can be any field type. The `get` field contains a function that returns a specific `part` of the given `whole`, while the `set` field contains a function that returns a copy of the given `whole`, except with a specific `part` replaced by the given `part`.
+This is a parameterized type: `whole` and `part` could be any types.
+`whole` is typically a record, while `part` can be any field type.
+The `get` field contains a function that returns a specific `part` of the given `whole`, while the `set` field contains a function that returns a copy of the given `whole`, except with a specific `part` replaced by the given `part`.
 
 For example, here's a lens to get or set a person's hair:
 
@@ -49,7 +55,8 @@ new_bob = bob |> (hair_lens.set)(new_hair)
 
 Note: the parentheses around `hair_lens.set` are required: without them, Roc would look for a function named `set` in `hair_lens`'s type.
 
-Lenses become especially useful when you start composing them, letting you get and set deeply nested parts. This can be done by implementing a function like this:
+Lenses become especially useful when you start composing them, letting you get and set deeply nested parts.
+This can be done by implementing a function like this:
 
 ```roc
 compose : Lens(outer, inner), Lens(inner, part) -> Lens(outer, part)
