@@ -1,0 +1,23 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import BankAccount
+
+{% for case in cases + additional_cases -%}
+{% set is_error = case["expected"] is mapping and "error" in case["expected"] -%}
+## {{ case["description"] }}
+expect {
+    result = BankAccount.create()
+    {%- for operation in case["input"]["operations"] %}
+        .{{ operation["operation"] }}({% if "amount" in operation %}{{ operation["amount"] | to_roc }}{% endif %}){% if not loop.last or not is_error %}?{% endif %}
+    {%- endfor %}
+    {% if is_error -%}
+    result.is_err()
+    {% else -%}
+    result == {{ case["expected"] | to_roc }}
+    {% endif -%}
+}
+
+{% endfor %}
+{{ macros.footer() }}
