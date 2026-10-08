@@ -2,23 +2,15 @@
 ## Example solution
 ##
 
-import unicode.Grapheme
+import unicode.Scalar
 
 MicroBlog :: {}.{
-	GraphemeErrors : [
-		CodepointTooLarge,
-		EncodesSurrogateHalf,
-		ExpectedContinuation,
-		InvalidUtf8,
-		ListWasEmpty,
-		OverlongEncoding,
-	]
-
-	truncate : Str -> Try(Str, GraphemeErrors)
+	truncate : Str -> Try(Str, [InternalEncodingFault])
 	truncate = |input| {
-		input
-			|> Grapheme.split
+		Scalar.iter(input)
 			.take_first(5)
+			|> List.from_iter
+			.map_try(|{ scalar, .. }| scalar.to_str())?
 			|> Str.join_with("")
 			|> Ok
 	}

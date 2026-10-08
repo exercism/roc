@@ -1,4 +1,4 @@
-# Instructions append
+# Instructions Append
 
 ## Implementation
 
@@ -25,7 +25,7 @@ Okay, let's get started! Here's what you need to do:
 
 1. Implement `get_user` to return the requested user from the `users` "database" (it's actually just a `Dict`). Make sure the function returns `Err(UserNotFound(user_id))` in case the user is not found, instead of `Err(KeyNotFound)`.
 2. Implement `parse_user_id` to convert the URL's path (such as `"/users/123"`) to a positive integer user ID (`123`). In case of error, return `Err(InvalidUserId(user_id_str))`.
-3. Implement `getPage`:
+3. Implement `get_page`:
    - If the URL is `"https://example.com/"`, return `Ok("Home page")`
    - If the URL is `"https://example.com/users/"`, return `Ok("Users page")`
    - If the URL is `"https://example.com/users/<user_id>"`, parse the user ID, load the user with that ID, and return `Ok("<user name>'s page")`
@@ -34,7 +34,7 @@ Okay, let's get started! Here's what you need to do:
    - If the path is not `/` or `/users/` or `/users/<user id>`, return `Err(PageNotFound(path))`
    - If the user ID is not a positive integer, return `Err(InvalidUserId(user_id_str))`
    - If the user does not exist, return `Err(UserNotFound(user_id))`
-4. Implement `error_essage` to convert the previous errors to translated error messages. The function should at least handle English, but you are encouraged to try handling another language as well. The English error messages should like this:
+4. Implement `error_message` to convert the previous errors to translated error messages. The function should at least handle English, but you are encouraged to try handling another language as well. The English error messages should like this:
 
 - `"Insecure connection (non HTTPS): http://example.com/users/789"`
 - `"Invalid domain name: https://google.com/wrong"`

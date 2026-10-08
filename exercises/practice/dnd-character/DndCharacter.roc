@@ -1,4 +1,3 @@
-## This exercise uses the https://github.com/kili-ilo/roc-random library
 import random.Random
 
 DndCharacter := {

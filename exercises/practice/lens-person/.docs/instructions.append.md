@@ -1,4 +1,6 @@
-# Instructions append
+# Instructions Append
+
+## Lenses in Roc
 
 Lenses are not used much in Roc because the record update syntax covers most use cases nicely. For example, consider this nested record:
 
