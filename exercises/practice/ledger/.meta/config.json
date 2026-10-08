@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "Ledger.roc"
+    ],
+    "test": [
+      "ledger-test.roc"
+    ],
+    "example": [
+      ".meta/Ledger.roc"
+    ]
+  },
+  "blurb": "Refactor a ledger printer."
+}

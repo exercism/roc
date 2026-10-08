@@ -1,0 +1,28 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header(imports=["isodate", "unicode"]) }}
+
+import Ledger exposing [format_entries]
+
+{% for case in cases + additional_cases -%}
+{% set is_error = case["expected"] is mapping and "error" in case["expected"] -%}
+## {{ case["description"] }}
+expect {
+    result = format_entries({
+        currency: {{ {"USD": "Usd", "EUR": "Eur"}[case["input"]["currency"]] }},
+        locale: {{ {"en_US": "EnUs", "nl_NL": "NlNl"}[case["input"]["locale"]] }},
+        entries: [
+            {%- for entry in case["input"]["entries"] %}
+            {
+                date: {{ entry["date"] | to_roc }},
+                description: {{ entry["description"] | to_roc }},
+                amount_in_cents: {{ entry["amountInCents"] | to_roc }},
+            },
+            {%- endfor %}
+        ],
+    }){% if not is_error %}?{% endif %}
+    {% if is_error %}result.is_err(){% else %}result == {{ case["expected"] | to_roc_multiline_string }}{% endif %}
+}
+
+{% endfor %}
+{{ macros.footer() }}
