@@ -11,7 +11,6 @@ Stopwatch :: {
 		# The following line enables the default `is_eq` implementation
 		is_eq : _
 
-		## This function parses a Str formatted as "HH:MM:SS" to a Time
 		from_quote : Str -> Try(Time, [BadQuotedBytes(Str)])
 		from_quote = |time_str| {
 			crash "Please implement the 'from_quote' function"
