@@ -1,6 +1,12 @@
 # Instructions Append
 
-Looking for a place to start? Here are a few things you might want to tidy up:
+## Hints
+
+<details>
+<summary>Show hints</summary>
+
+Looking for a place to start?
+Here are a few things you might want to tidy up:
 
 - One function does everything
 - Duplicated logic and repeated work
@@ -16,3 +22,5 @@ Looking for a place to start? Here are a few things you might want to tidy up:
 - Manual Unicode handling (try importing and using `unicode.Grapheme` instead)
 
 Pick whatever catches your eye, and keep the tests green!
+
+</details>
