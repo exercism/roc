@@ -2,8 +2,6 @@ import random.Random
 
 RobotName :: {}.{
 
-	## A factory is used to create robots, and holds state such as the existing
-	## robot names and the current random state
 	Factory :: {
 		# TODO: change this opaque type however you need
 	}.{
@@ -18,8 +16,6 @@ RobotName :: {}.{
 		}
 	}
 
-	## A robot must either have no name or a name composed of two letters
-	## followed by three digits
 	Robot :: {
 		# TODO: change this opaque type however you need
 	}.{

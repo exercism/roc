@@ -3,8 +3,6 @@ Tree := { id : U64, children : List(Tree) ?? [] }.{
 
 	Record : { id : U64, parent_id : U64 }
 
-	## This function passes all the tests, but it's slow and ugly.
-	## Try to improve it gradually.
 	from_records : List(Record) -> Try(Tree, [EmptyRecords, InvalidId, InvalidParent])
 	from_records = |records| {
 		if records.len() == 0 {
