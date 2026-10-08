@@ -1,0 +1,94 @@
+{
+  "cases": [
+    {
+      "uuid": "a148ec5e-08f3-4582-bfbf-f8d969e084ea",
+      "description": "multiple paragraphs",
+      "property": "parse",
+      "input": {
+        "markdown": "First\nSecond"
+      },
+      "expected": "<p>First</p><p>Second</p>"
+    },
+    {
+      "uuid": "0acf60cc-f6c1-4283-85cc-42154b34499a",
+      "description": "a heading closes a list",
+      "property": "parse",
+      "input": {
+        "markdown": "* Item\n## Heading"
+      },
+      "expected": "<ul><li>Item</li></ul><h2>Heading</h2>"
+    },
+    {
+      "uuid": "dafbac41-b1b3-428d-bde6-c279a6ef3aa2",
+      "description": "separate lists",
+      "property": "parse",
+      "input": {
+        "markdown": "* First\nMiddle\n* Second"
+      },
+      "expected": "<ul><li>First</li></ul><p>Middle</p><ul><li>Second</li></ul>"
+    },
+    {
+      "uuid": "4747de5e-7a49-45f7-9ce8-b344ced717a6",
+      "description": "repeated inline emphasis",
+      "property": "parse",
+      "input": {
+        "markdown": "_one_ and _two_, __three__ and __four__"
+      },
+      "expected": "<p><em>one</em> and <em>two</em>, <strong>three</strong> and <strong>four</strong></p>"
+    },
+    {
+      "uuid": "5147842b-430b-47ae-8fbd-eef871a33d77",
+      "description": "emphasis in headings",
+      "property": "parse",
+      "input": {
+        "markdown": "## _Small_ and __large__"
+      },
+      "expected": "<h2><em>Small</em> and <strong>large</strong></h2>"
+    },
+    {
+      "uuid": "0c74b1d0-baea-4ba0-b3e3-d968d446b5ea",
+      "description": "Unicode text is preserved",
+      "property": "parse",
+      "input": {
+        "markdown": "* Café __你好__\n_👩🏽‍💻_"
+      },
+      "expected": "<ul><li>Café <strong>你好</strong></li></ul><p><em>👩🏽‍💻</em></p>"
+    },
+    {
+      "uuid": "5a9b7438-fae1-48fd-bfbe-be0cf1d90afc",
+      "description": "unmatched emphasis markers are literal",
+      "property": "parse",
+      "input": {
+        "markdown": "An unfinished __span"
+      },
+      "expected": "<p>An unfinished __span</p>"
+    },
+    {
+      "uuid": "3ff04067-9e7e-4426-b90a-bcb61d11b23a",
+      "description": "heading and list markers need a following space",
+      "property": "parse",
+      "input": {
+        "markdown": "#Heading\n*Item"
+      },
+      "expected": "<p>#Heading</p><p>*Item</p>"
+    },
+    {
+      "uuid": "82c6c569-b76b-4879-a69a-f482b364d3e4",
+      "description": "empty input is an empty paragraph",
+      "property": "parse",
+      "input": {
+        "markdown": ""
+      },
+      "expected": "<p></p>"
+    },
+    {
+      "uuid": "b0f31ee1-d6a9-46e9-ab72-95cfd8778b0c",
+      "description": "blank lines remain empty paragraphs",
+      "property": "parse",
+      "input": {
+        "markdown": "First\n\nLast"
+      },
+      "expected": "<p>First</p><p></p><p>Last</p>"
+    }
+  ]
+}
