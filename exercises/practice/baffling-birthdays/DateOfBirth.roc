@@ -1,11 +1,9 @@
-## This exercise uses the https://github.com/kili-ilo/roc-random library
 import random.Random
 
 DateOfBirth := { year : I64, month : U8, day : U8 }.{
 	# The following line enables the default `is_eq` implementation
 	is_eq : _
 
-	## This function parses a Str formatted as "YYYY-MM-DD" to a DateOfBirth at compile time
 	from_quote : Str -> Try(DateOfBirth, [BadQuotedBytes(Str)])
 	from_quote = |date_str| {
 		crash "Please implement the 'from_quote' function"
