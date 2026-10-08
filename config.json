@@ -844,6 +844,14 @@
         "difficulty": 5
       },
       {
+        "slug": "split-second-stopwatch",
+        "name": "Split-Second Stopwatch",
+        "uuid": "dee2d2a1-bc27-4e58-a82a-b86b609bb135",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
         "slug": "tree-building",
         "name": "Tree Building",
         "uuid": "bded1a57-9d72-41bf-a44c-5483469a54a2",
