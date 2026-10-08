@@ -1,0 +1,21 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import Camicia exposing [simulate_game]
+
+{% for case in cases -%}
+## {{ case["description"] }}
+expect {
+    result = simulate_game({
+        player_a: {{ case["input"]["playerA"] | to_roc }},
+        player_b: {{ case["input"]["playerB"] | to_roc }},
+    })
+    result == {
+      status: {{ case["expected"]["status"] | to_pascal }},
+      cards: {{ case["expected"]["cards"] | to_roc }},
+      tricks: {{ case["expected"]["tricks"] | to_roc }},
+    }
+}
+
+{% endfor %}
