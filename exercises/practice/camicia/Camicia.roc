@@ -7,7 +7,6 @@ Camicia :: {}.{
 		# etc.
 	}.{
 
-		## This function parses a Str to a Card at compile time
 		from_quote : Str -> Try(Card, [BadQuotedBytes(Str)])
 		from_quote = |card_str| {
 			crash "Please implement the 'from_quote' function"
