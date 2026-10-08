@@ -12,11 +12,13 @@ This command will iterate over all exercises and check to see if their exemplar/
 
 To test a single exercise, run `./bin/verify-exercises <exercise-slug>`.
 
-The verifier uses `roc test` for ordinary test modules and runs platform-based test apps with `roc --opt=speed`. For example, run `roc --opt=speed parallel-letter-frequency-test.roc` from that exercise directory.
+The verifier uses `roc test` for ordinary test modules and runs platform-based test apps with `roc --opt=speed`.
+For example, run `roc --opt=speed parallel-letter-frequency-test.roc` from that exercise directory.
 
 ### Track linting
 
-[`configlet`](https://exercism.org/docs/building/configlet) is an Exercism-wide tool for working with tracks. You can download it by running:
+[`configlet`](https://exercism.org/docs/building/configlet) is an Exercism-wide tool for working with tracks.
+You can download it by running:
 
 ```shell
 $ ./bin/fetch-configlet
@@ -45,9 +47,9 @@ Basic linting finished successfully:
 - Required shared exercise docs are present
 ```
 
-Practice exercises in the root `config.json` must be sorted by difficulty, then
-alphabetically by slug. `bin/add-exercise` sorts them automatically. After changing
-an exercise's difficulty, run:
+Practice exercises in the root `config.json` must be sorted by difficulty, then alphabetically by slug.
+`bin/add-exercise` sorts them automatically.
+After changing an exercise's difficulty, run:
 
 ```shell
 bin/sort_exercises.py
