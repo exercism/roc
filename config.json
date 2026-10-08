@@ -924,6 +924,14 @@
         "difficulty": 6
       },
       {
+        "slug": "markdown",
+        "name": "Markdown",
+        "uuid": "0a53fb0a-4652-44af-8308-04bce773daae",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "minesweeper",
         "name": "Minesweeper",
         "uuid": "8d5ea690-9d52-4d0a-a59e-aeec1a03cac7",
