@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "Markdown.roc"
+    ],
+    "test": [
+      "markdown-test.roc"
+    ],
+    "example": [
+      ".meta/Markdown.roc"
+    ]
+  },
+  "blurb": "Refactor a Markdown parser."
+}
