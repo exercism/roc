@@ -1,0 +1,25 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import FamilyTree
+
+{%- for case in cases %}
+## {{ case["description"] }}
+expect {
+    family_tree = FamilyTree.(Dict.from_list([
+    {%- for parent, children in case["input"]["familyTree"].items() %}
+        ({{ parent | to_roc }}, {{ children | to_roc }}),
+    {%- endfor %}
+    ]))
+    result = family_tree.degree_of_separation({{ case["input"]["personA"] | to_roc }}, {{ case["input"]["personB"] | to_roc }})
+{%- if case["expected"] is none %}
+    result.is_err()
+{%- else %}
+    result == Ok({{ case["expected"] | to_roc }})
+{%- endif %}
+}
+
+{% endfor %}
+
+{{ macros.footer() }}
