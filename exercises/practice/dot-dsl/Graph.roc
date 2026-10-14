@@ -25,15 +25,8 @@ Graph := {
 		custom_attributes : Dict(Str, CustomAttributeValue),
 	}
 
-	EdgeId : (Str, Str) # these two node IDs must be ordered alphabetically
+	EdgeId : (Str, Str)
 
-	###
-	#
-	# TODO: Define your DSL here then use it to build the graphs below
-	#
-	###
-
-	## empty graph
 	empty_graph : Graph
 	empty_graph = {
 		crash
@@ -43,7 +36,6 @@ Graph := {
 			\\}
 	}
 
-	## graph with one node
 	graph_with_one_node : Graph
 	graph_with_one_node = {
 		crash
@@ -54,7 +46,6 @@ Graph := {
 			\\}
 	}
 
-	## graph with one node with attribute
 	graph_with_one_node_with_attribute : Graph
 	graph_with_one_node_with_attribute = {
 		crash
@@ -65,7 +56,6 @@ Graph := {
 			\\}
 	}
 
-	## graph with one edge
 	graph_with_one_edge : Graph
 	graph_with_one_edge = {
 		crash
@@ -76,7 +66,6 @@ Graph := {
 			\\}
 	}
 
-	## graph with one attribute
 	graph_with_one_attribute : Graph
 	graph_with_one_attribute = {
 		crash
@@ -87,7 +76,6 @@ Graph := {
 			\\}
 	}
 
-	## graph with nodes, edges, and attributes
 	graph_with_nodes_edges_and_attributes : Graph
 	graph_with_nodes_edges_and_attributes = {
 		crash
@@ -104,7 +92,6 @@ Graph := {
 			\\}
 	}
 
-	## multiple edges on one line
 	multiple_edges_on_one_line : Graph
 	multiple_edges_on_one_line = {
 		crash
@@ -115,7 +102,6 @@ Graph := {
 			\\}
 	}
 
-	## only 1 edge between nodes
 	only_1_edge_between_nodes : Graph
 	only_1_edge_between_nodes = {
 		crash
