@@ -1053,6 +1053,14 @@
         "difficulty": 8
       },
       {
+        "slug": "paasio",
+        "name": "PaaS I/O",
+        "uuid": "859ab1ea-c3ef-47a8-825b-0883a1c21345",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
+      },
+      {
         "slug": "pov",
         "name": "POV",
         "uuid": "6cbdabf6-4a22-43ec-b2e4-6611ea253237",
