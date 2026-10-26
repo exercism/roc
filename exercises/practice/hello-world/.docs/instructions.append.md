@@ -1,6 +1,6 @@
-# Instructions append
+# Instructions Append
 
-## Implementation
+## Implementing Hello World
 
 The file to edit is named `HelloWorld.roc`.
 

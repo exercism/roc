@@ -43,14 +43,3 @@ Ok(card) = Card.from_str("Q")
 
 Note: Placing this definition at the top level makes it run at compile time (since the function is pure and its input is known at compile time).
 Inside a function, you can use `from_str` at runtime.
-
-## Hints
-
-<details>
-<summary>Show hints</summary>
-
-Use `match` with `[]` and `[card, .. as rest]` to distinguish an empty deck from its next card and remaining cards.
-Record updates such as `{ ..state, pile: new_pile }` can keep game transitions explicit without mutable state.
-A `Set` can store tuples or lists as keys when tracking previously seen game states.
-
-</details>
