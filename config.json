@@ -340,6 +340,14 @@
         "difficulty": 3
       },
       {
+        "slug": "bank-account",
+        "name": "Bank Account",
+        "uuid": "2e90db24-053f-40d1-a029-77d2a0553c3e",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "binary-search",
         "name": "Binary Search",
         "uuid": "7493b919-d335-46b0-bfde-b3b22e244c46",
@@ -628,6 +636,14 @@
         "difficulty": 4
       },
       {
+        "slug": "book-store",
+        "name": "Book Store",
+        "uuid": "51e6bbfa-4ca3-493f-b049-ad0f8e227786",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "custom-set",
         "name": "Custom Set",
         "uuid": "cad7b3db-6fdc-4df0-90da-3799d4a0e440",
@@ -671,6 +687,14 @@
         "slug": "house",
         "name": "House",
         "uuid": "3e832749-3036-432b-a4a4-3aab4e599377",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
+        "slug": "ledger",
+        "name": "Ledger",
+        "uuid": "02d590dc-9646-4192-8afa-64d293478606",
         "practices": [],
         "prerequisites": [],
         "difficulty": 4
@@ -724,6 +748,14 @@
         "difficulty": 4
       },
       {
+        "slug": "relative-distance",
+        "name": "Relative Distance",
+        "uuid": "87729f0e-eb90-426f-a1e9-7286aff643b7",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "run-length-encoding",
         "name": "Run-Length Encoding",
         "uuid": "d6b8a979-8ce8-4f46-a6cd-35cd44b19701",
@@ -759,6 +791,14 @@
         "slug": "all-your-base",
         "name": "All Your Base",
         "uuid": "bb51a364-e9de-4e98-bbd9-a8cdd0bc76b3",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
+        "slug": "camicia",
+        "name": "Camicia",
+        "uuid": "22307459-1b91-49f5-a472-6159ccc1fa0d",
         "practices": [],
         "prerequisites": [],
         "difficulty": 5
@@ -924,6 +964,14 @@
         "difficulty": 6
       },
       {
+        "slug": "markdown",
+        "name": "Markdown",
+        "uuid": "0a53fb0a-4652-44af-8308-04bce773daae",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "minesweeper",
         "name": "Minesweeper",
         "uuid": "8d5ea690-9d52-4d0a-a59e-aeec1a03cac7",
@@ -1048,6 +1096,14 @@
         "slug": "grep",
         "name": "Grep",
         "uuid": "eefaa478-9e56-40b5-a378-4af53008c71d",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
+      },
+      {
+        "slug": "paasio",
+        "name": "PaaS I/O",
+        "uuid": "859ab1ea-c3ef-47a8-825b-0883a1c21345",
         "practices": [],
         "prerequisites": [],
         "difficulty": 8

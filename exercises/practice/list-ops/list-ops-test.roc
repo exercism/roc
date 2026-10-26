@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/list-ops/canonical-data.json
-# File last updated on 2026-09-29
+# File last updated on 2026-10-17
 
 import ListOps exposing [concat, filter, fold, fold_rev, join, len, map, reverse]
 
@@ -168,6 +168,12 @@ expect {
 expect {
 	result = [1, 3, 5, 7] |> reverse
 	result == [7, 5, 3, 1]
+}
+
+# non-empty odd-length list
+expect {
+	result = [1, 3, 5, 7, 9, 11, 13] |> reverse
+	result == [13, 11, 9, 7, 5, 3, 1]
 }
 
 # list of lists is not flattened
