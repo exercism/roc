@@ -1,6 +1,6 @@
 # Instructions Append
 
-## Implementation
+## Calculating square roots
 
 This problem can be solved easily using [Roc's built-in `sqrt` function](sqrt).
 

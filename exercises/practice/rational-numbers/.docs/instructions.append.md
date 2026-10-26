@@ -1,6 +1,6 @@
 # Instructions Append
 
-## Operator syntax
+## Rational number operators
 
 The arithmetic functions support regular function calls, static dispatch (i.e., method call syntax), and operators:
 

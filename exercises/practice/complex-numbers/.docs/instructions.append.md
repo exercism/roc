@@ -1,6 +1,6 @@
 # Instructions Append
 
-## Operator syntax
+## Complex number operators
 
 The arithmetic functions support regular function calls, static dispatch (a.k.a., method call syntax), and operators:
 

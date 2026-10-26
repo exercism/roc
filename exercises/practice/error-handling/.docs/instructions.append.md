@@ -1,6 +1,6 @@
 # Instructions Append
 
-## Implementation
+## Web server error handling
 
 You are building a tiny web server that queries an even tinier user database.
 Sounds easy, but in the real world many things can (and often do) go wrong:
