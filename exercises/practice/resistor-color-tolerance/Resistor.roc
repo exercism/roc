@@ -17,9 +17,9 @@ Resistor := {
         Gold,
 	]
 
-    label_decoder : List(Color) -> Try(Resistor, _)
-    label_decoder = |colors| {
-        crash "Please implement the 'label_decoder' function"
+    decode_colors : List(Color) -> Try(Resistor, _)
+    decode_colors = |colors| {
+        crash "Please implement the 'decode_colors' function"
     }
 
 	# The following line enables the default `is_eq` implementation

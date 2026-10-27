@@ -21,8 +21,8 @@ Resistor := {
 		White,
 	]
 
-    label_decoder : List(Color) -> Try(Resistor, _)
-    label_decoder = |colors| {
+    decode_colors : List(Color) -> Try(Resistor, _)
+    decode_colors = |colors| {
         match colors {
             [] => Err(ResistorWithoutColors)
             [Black] => Ok({ resistance: Ohms(0) })

@@ -2,7 +2,7 @@
 {{ macros.canonical_ref() }}
 {{ macros.header() }}
 
-import Resistor exposing [label_decoder]
+import Resistor exposing [decode_colors]
 
 {% macro render_cases(cases) %}
 {%- for case in cases %}
@@ -14,7 +14,7 @@ import Resistor exposing [label_decoder]
 {%- else %}
 ## {{ case["description"] }}
 expect {
-    result = label_decoder([
+    result = decode_colors([
     {%- for color in case["input"]["colors"] -%}
         {{ color | to_roc_tag }}{% if not loop.last %}, {% endif %}
     {%- endfor -%}
