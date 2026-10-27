@@ -1,0 +1,37 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import Resistor exposing [label_decoder]
+
+{% macro render_cases(cases) %}
+{%- for case in cases %}
+{%- if "cases" in case %}
+###
+### {{ case["description"] }}
+###
+{{ render_cases(case["cases"]) }}
+{%- else %}
+## {{ case["description"] }}
+expect {
+    result = label_decoder([
+    {%- for color in case["input"]["colors"] -%}
+        {{ color | to_roc_tag }}{% if not loop.last %}, {% endif %}
+    {%- endfor -%}
+    ])
+{%- if case["expected"] is mapping and "error" in case["expected"] %}
+    result.is_err()
+{%- else %}
+    result == Ok({
+        resistance: {{ case["expected"]["unit"] | to_roc_tag }}({{ case["expected"]["value"] | to_roc }})
+        {%- if "tolerance" in case["expected"] %}, tolerance: {{ case["expected"]["tolerance"][1:-1] }}{% endif %}
+    })
+{%- endif %}
+}
+{%- endif %}
+
+{% endfor %}
+{% endmacro %}
+
+{{ render_cases(cases) }}
+{{ macros.footer() }}
