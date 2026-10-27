@@ -508,6 +508,14 @@
         "difficulty": 3
       },
       {
+        "slug": "resistor-color-tolerance",
+        "name": "Resistor Color Tolerance",
+        "uuid": "5b2a15e4-ff56-4d4e-a34e-f71a1ecf043b",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "reverse-string",
         "name": "Reverse String",
         "uuid": "7bd2e210-08aa-45e9-8a19-f2213a22ac27",
