@@ -1,6 +1,6 @@
 # Instructions Append
 
-## Pros and cons of `from_quote`
+## Birthdate literals with `from_quote`
 
 The `DateOfBirth.from_quote` function parses a string formatted as `"YYYY-MM-DD"` into a `DateOfBirth`.
 This makes it possible to write code such as this:
@@ -43,19 +43,3 @@ Ok(birthdate) = DateOfBirth.from_ymd(2019, 1, 20)
 
 Note: Placing this definition at the top level makes it run at compile time (since the function is pure and the inputs are known at compile time).
 Inside a function, you can use the same constructor at runtime.
-
-## Random library
-
-The [`roc-random` package](https://github.com/kili-ilo/roc-random) is available with the alias `random` in the test app.
-The stub imports `random.Random`.
-
-## Hints
-
-<details>
-<summary>Show hints</summary>
-
-A `Random.Generator(a)` describes how to generate a value of type `a`.
-Use `Random.list` to combine draws and `Random.map` to transform their results.
-`Random.step(state, generator)` returns `{ value, state }`; carry the updated state between simulated groups so you do not repeat the same sample.
-
-</details>
