@@ -1,6 +1,6 @@
 # Instructions Append
 
-## Roc API
+## Reactive cells in Roc
 
 Use an immutable `React` value.
 Each operation returns an updated reactor; keep that value for subsequent operations.
@@ -25,15 +25,3 @@ The tests pass an empty log to each input update to check that callbacks ran exa
 Registering a callback does not call it.
 Removing the same callback more than once is allowed and must not affect other callbacks.
 All callbacks for an update must observe the final, stable cell values.
-
-## Hints
-
-<details>
-<summary>Show hints</summary>
-
-You can store functions in records alongside their cell or callback identifiers.
-To call a function stored in a record field, use parentheses, as in `(cell.compute)(values)` or `(registration.callback)(value, log)`.
-Without those parentheses, Roc treats the call as a method on the record's type.
-`List.map_try` and `List.fold_try` can help sequence computations that may fail.
-
-</details>
