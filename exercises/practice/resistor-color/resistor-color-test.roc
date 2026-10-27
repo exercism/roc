@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/resistor-color/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-10-27
 
 import ResistorColor exposing [color_code, colors]
 
@@ -10,20 +10,20 @@ import ResistorColor exposing [color_code, colors]
 
 # Black
 expect {
-	result = color_code("black")
-	result == Ok(0)
+	result = color_code(Black)
+	result == 0
 }
 
 # White
 expect {
-	result = color_code("white")
-	result == Ok(9)
+	result = color_code(White)
+	result == 9
 }
 
 # Orange
 expect {
-	result = color_code("orange")
-	result == Ok(3)
+	result = color_code(Orange)
+	result == 3
 }
 
 ##
@@ -32,15 +32,15 @@ expect {
 
 expect {
 	colors == [
-		"black",
-		"brown",
-		"red",
-		"orange",
-		"yellow",
-		"green",
-		"blue",
-		"violet",
-		"grey",
-		"white",
+		Black,
+		Brown,
+		Red,
+		Orange,
+		Yellow,
+		Green,
+		Blue,
+		Violet,
+		Grey,
+		White,
 	]
 }

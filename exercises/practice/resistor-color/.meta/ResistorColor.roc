@@ -3,11 +3,35 @@
 ##
 
 ResistorColor :: {}.{
-	colors : List(Str)
-	colors = ["black", "brown", "red", "orange", "yellow", "green", "blue", "violet", "grey", "white"]
+	Color : [
+		Black,
+		Brown,
+		Red,
+		Orange,
+		Yellow,
+		Green,
+		Blue,
+		Violet,
+		Grey,
+		White,
+	]
 
-	color_code : Str -> Try(U64, [NotFound])
+	color_code : Color -> U8
 	color_code = |color| {
-		colors.find_first_index(|elem| elem == color)
+		match color {
+			Black => 0
+			Brown => 1
+			Red => 2
+			Orange => 3
+			Yellow => 4
+			Green => 5
+			Blue => 6
+			Violet => 7
+			Grey => 8
+			White => 9
+		}
 	}
+
+	colors : List(Color)
+	colors = [Black, Brown, Red, Orange, Yellow, Green, Blue, Violet, Grey, White]
 }
