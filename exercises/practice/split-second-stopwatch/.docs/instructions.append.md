@@ -1,6 +1,6 @@
 # Instructions Append
 
-## Pros and cons of `from_quote`
+## Time literals with `from_quote`
 
 The `Time.from_quote` function parses a string formatted as `"HH:MM:SS"` into a `Time`.
 This makes it possible to write code such as this:
@@ -48,15 +48,3 @@ Ok(time) = Time.from_str("00:01:23")
 
 Note: Placing this definition at the top level makes it run at compile time (since the function is pure and its input is known at compile time).
 Inside a function, you can use `from_str` at runtime.
-
-## Hints
-
-<details>
-<summary>Show hints</summary>
-
-Operations return an updated stopwatch rather than modifying their argument.
-Record updates such as `{ ..stopwatch, state: Running }` preserve the other fields.
-`advance_time` receives an elapsed duration from the tests, so you do not need a clock or platform effects.
-Widen `U8` minutes and seconds before arithmetic that might exceed their range.
-
-</details>
