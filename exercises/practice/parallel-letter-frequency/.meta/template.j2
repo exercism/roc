@@ -1,0 +1,51 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header(imports=["unicode"], platform="parallel") }}
+
+import pf.Stderr
+import ParallelLetterFrequency exposing [calculate_frequencies!]
+
+check! : { description: Str, texts: List(Str), expected: Dict(Str, U64) } => Try({}, Str)
+check! = |{ description, texts, expected }| {
+    for workers in [1, 2, 4] {
+        actual = calculate_frequencies!({ texts, workers }) ? |error| Str.inspect({ test: description, workers, error })
+        if actual != expected {
+            return Err(Str.inspect({ test: description, workers, expected, actual }))
+        }
+    }
+    Ok({})
+}
+
+{% for case in cases + additional_cases -%}
+## {{ case["description"] }}
+test_{{ case["description"] | to_snake }}! = || {
+    description = {{ case["description"] | to_roc }}
+    texts = [
+        {%- for text in case["input"]["texts"] %}
+        {{ (text | to_roc_multiline_string).lstrip('\n') | indent(8) }},
+        {%- endfor %}
+    ]
+    expected = Dict.from_list([
+        {%- for letter, count in case["expected"].items() %}
+        ({{ letter | to_roc }}, {{ count }}),
+        {%- endfor %}
+    ])
+    check!({ description, texts, expected })
+}
+
+{% endfor %}
+
+main! : List(Str) => Try({}, [Exit(I8)])
+main! = |_args| {
+    results = [
+        {% for case in cases + additional_cases -%}
+        test_{{ case["description"] | to_snake }}!(),
+        {% endfor -%}
+    ]
+    failures = results.keep_errs(|msg| msg)
+    failures.for_each!(Stderr.line!)
+    passed = results.len() - failures.len()
+    Stderr.line!("${passed.to_str()} passed, ${failures.len().to_str()} failed")
+    if failures.is_empty() { Ok({}) } else { Err(Exit(1)) }
+}
+{{ macros.footer() }}
