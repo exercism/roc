@@ -1,0 +1,38 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import Stopwatch
+
+{% for case in cases -%}
+{% set commands = case["input"]["commands"] -%}
+{% set ends_with_error = commands[-1].get("expected") is mapping and "error" in commands[-1]["expected"] -%}
+## {{ case["description"] }}
+expect {
+    result = Stopwatch.create()
+    {%- for command in commands[1:] %}
+    {%- set name = command["command"] | to_snake %}
+    {%- if name == "advance_time" %}
+        .advance_time({{ command["by"] | to_roc }})
+    {%- elif name in ["state", "current_lap", "previous_laps", "total"] %}
+        |> expect_{{ name }}({% if name == "state" %}{{ command["expected"] | to_pascal }}{% else %}{{ command["expected"] | to_roc }}{% endif %}){% if not loop.last %}?{% endif %}
+    {%- else %}
+        .{{ name }}(){% if not loop.last %}?{% endif %}
+    {%- endif %}
+    {%- endfor %}
+
+    result.{{ "is_err" if ends_with_error else "is_ok" }}()
+}
+
+{% endfor -%}
+{% for name, expected_type in [("state", "[Ready, Running, Stopped]"), ("current_lap", "Stopwatch.Time"), ("previous_laps", "List(Stopwatch.Time)"), ("total", "Stopwatch.Time")] %}
+expect_{{ name }} : Stopwatch, {{ expected_type }} -> Try(Stopwatch, _)
+expect_{{ name }} = |stopwatch, expected| {
+    actual = stopwatch.{{ name }}()
+    if actual == expected {
+        Ok(stopwatch)
+    } else {
+        Err(Unexpected{{ name | to_pascal }}({ expected, actual }))
+    }
+}
+{% endfor %}
