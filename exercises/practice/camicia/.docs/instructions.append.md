@@ -11,8 +11,9 @@ card = "Q"
 ```
 
 This code implicitly calls `Card.from_quote("Q")` at compile time.
-This can potentially speed up the program since it doesn't need to handle parsing at runtime, and it ensures that cards rejected by `from_quote` are caught at compile time, rather than at runtime.
-Moreover, it makes the code nice and readable.
+Running code at compile time using this approach (or other methods described below) can potentially speed up the program since it doesn't need to handle parsing and data validation at runtime.
+Moreover, it ensures that invalid data (such as an incorrect date format) is rejected at compile time rather than at runtime, making your app more robust.
+Lastly, it makes the code nice and readable.
 For example, here's one of the tests in this exercise:
 
 ```roc
