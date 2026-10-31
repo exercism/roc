@@ -1,10 +1,11 @@
 # These tests are maintained by the Roc track; paasio has no canonical test data.
 app [main!] {
-	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.24.0/AEjfyaMFFbh8FJrkkHJy68riVNPr3Qp6c6PawWQjBwMH.tar.zst",
+	pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.26.0/GddgvsGjiNXrHFW6au5i5dUDbTs8FinQdrgE2Gqmw53t.tar.zst",
 }
 
 import pf.Env
 import pf.File
+import pf.IOErr
 import pf.Path
 import pf.Stderr
 import Paasio
@@ -106,7 +107,7 @@ cases = [
 		stats: { read_bytes: 3, read_operations: 2, write_bytes: 0, write_operations: 0 },
 	},
 	{
-		description: "end of file still counts as a read",
+		description: "an empty successful read still counts as a read",
 		reads: [Ok([])],
 		writes: [],
 		requests: [Read(8)],
@@ -242,14 +243,16 @@ test_independent_wrappers! = || {
 # This backend replaces the file on writes and reads it incrementally.
 FileState : { path : Path, offset : U64 }
 
-read_file_chunk! : FileState, U64 => Try(List(U8), Str)
+FileError : [EndOfInput, FileErr(IOErr), PathErr(IOErr, Path)]
+
+read_file_chunk! : FileState, U64 => Try(List(U8), FileError)
 read_file_chunk! = |state, max_bytes| {
-	reader = File.open_reader!(state.path) ? |err| Str.inspect(err)
-	_ = reader.seek!(Start(state.offset)) ? |err| Str.inspect(err)
-	reader.read_up_to!(max_bytes).map_err(|err| Str.inspect(err))
+	reader = File.open_reader!(state.path)?
+	_ = reader.seek!(Start(state.offset))?
+	reader.read_up_to!(max_bytes)
 }
 
-file_backend : Path -> Paasio.Backend(FileState, Str)
+file_backend : Path -> Paasio.Backend(FileState, FileError)
 file_backend = |path| {
 	{
 		state: { path, offset: 0 },
@@ -262,7 +265,7 @@ file_backend = |path| {
 			{ state: { ..state, offset }, result }
 		},
 		write!: |state, bytes| {
-			result = state.path.write_bytes!(bytes).map_ok(|_| bytes.len()).map_err(|err| Str.inspect(err))
+			result = state.path.write_bytes!(bytes).map_ok(|_| bytes.len())
 			{ state: { ..state, offset: 0 }, result }
 		},
 	}
@@ -288,19 +291,23 @@ test_file_roundtrip! = |directory| {
 		{ io, result } = $io.read!(3)
 		$io = io
 		$reads = $reads + 1
-		chunk = result?
+		chunk = match result {
+			Ok(bytes_read) => bytes_read
+			# EOF is an expected read outcome, and still counts as an operation.
+			Err(EndOfInput) => {
+				if $received != bytes {
+					return Err("file read: the round trip changed the contents")
+				}
+				expected = { read_bytes: bytes.len(), read_operations: $reads, write_bytes: bytes.len(), write_operations: 1 }
+				if $io.stats() != expected {
+					return Err("file round trip: statistics mismatch: ${Str.inspect({ expected, actual: $io.stats() })}")
+				}
+				return Ok({})
+			}
+			Err(err) => return Err("file read: ${Str.inspect(err)}")
+		}
 		if chunk.len() > 3 {
 			return Err("file read: returned more bytes than requested")
-		}
-		if chunk.is_empty() {
-			if $received != bytes {
-				return Err("file read: the round trip changed the contents")
-			}
-			expected = { read_bytes: bytes.len(), read_operations: $reads, write_bytes: bytes.len(), write_operations: 1 }
-			if $io.stats() != expected {
-				return Err("file round trip: statistics mismatch: ${Str.inspect({ expected, actual: $io.stats() })}")
-			}
-			return Ok({})
 		}
 		$received = $received.concat(chunk)
 	}
