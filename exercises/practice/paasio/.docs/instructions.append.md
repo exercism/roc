@@ -25,6 +25,10 @@ Keep read and write statistics separate:
 - Count bytes only on success: the returned list's length for reads, and the reported number for writes.
 - A short transfer still counts as one call—don't retry it or a failed operation.
 
+The real-file backend uses basic-cli, which reports EOF as `Err(EndOfInput)`.
+Preserve that result unchanged: it counts as one read operation and zero bytes.
+An `Ok([])` is an empty successful read, such as a zero-byte request; it is not basic-cli's EOF signal.
+
 Count what the backend reports; you don't need to track operating-system calls or buffering.
 You can trust the backend's byte counts and assume the counters fit in `U64`.
 

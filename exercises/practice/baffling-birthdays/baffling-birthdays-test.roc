@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/baffling-birthdays/canonical-data.json
 # File last updated on 2026-09-25
 app [] {
-	random: "https://github.com/kili-ilo/roc-random/releases/download/0.9.2/2ZXLX8WRqrosGu1V3VL5aXqgtfTRvJmjFPx8a26ecVmc.tar.zst",
+	random: "https://github.com/kili-ilo/roc-random/releases/download/0.9.3/HoULZB8QzktiNPYSe9myzy9JQzm1nMbjDPVWoA63QpVf.tar.zst",
 }
 
 import DateOfBirth exposing [estimated_probability_of_shared_birthday, random_birthdates, shared_birthday]

@@ -14,6 +14,15 @@ To test a single exercise, run `./bin/verify-exercises <exercise-slug>`.
 
 The verifier uses `roc test` for ordinary test modules and runs platform-based test apps with `roc --opt=speed`. For example, run `roc --opt=speed parallel-letter-frequency-test.roc` from that exercise directory.
 
+### Updating Roc dependencies
+
+After updating the nightly and dependency versions in your local `roc-test-runner`
+checkout, sync the track's exercise and template dependency URLs from that checkout:
+
+```shell
+bin/sync-roc-dependencies.sh ../exercism-roc-test-runner
+```
+
 ### Track linting
 
 [`configlet`](https://exercism.org/docs/building/configlet) is an Exercism-wide tool for working with tracks. You can download it by running:
