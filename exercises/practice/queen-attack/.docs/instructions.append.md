@@ -1,6 +1,6 @@
-# Instructions append
+# Instructions Append
 
-## Implementation
+## Chessboard squares and queen attacks
 
 In Chess, rows are called "ranks", and columns are called "files".
 Ranks range from 1 to 8, while files range from A to H.
