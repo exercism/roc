@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/dnd-character/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-11-05
 app [] {
 	random: "https://github.com/kili-ilo/roc-random/releases/download/0.9.3/HoULZB8QzktiNPYSe9myzy9JQzm1nMbjDPVWoA63QpVf.tar.zst",
 }
@@ -117,9 +117,9 @@ expect {
 	{ value: character, state: _updated_random_state } = DndCharacter.generate(random_state)
 	character.strength >= 3 and character.strength <= 18
 		and character.dexterity >= 3 and character.dexterity <= 18
-			and character.constitution >= 3 and character.constitution <= 18
-				and character.intelligence >= 3 and character.intelligence <= 18
-					and character.wisdom >= 3 and character.wisdom <= 18
-						and character.charisma >= 3 and character.charisma <= 18
-							and character.hitpoints == (10.I8 + DndCharacter.modifier(character.constitution)).to_u8_try() ?? 1 # minimum HP = 1
+		and character.constitution >= 3 and character.constitution <= 18
+		and character.intelligence >= 3 and character.intelligence <= 18
+		and character.wisdom >= 3 and character.wisdom <= 18
+		and character.charisma >= 3 and character.charisma <= 18
+		and character.hitpoints == (10.I8 + DndCharacter.modifier(character.constitution)).to_u8_try() ?? 1 # minimum HP = 1
 }

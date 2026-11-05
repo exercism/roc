@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/forth/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-11-05
 
 import Forth exposing [evaluate]
 
@@ -237,7 +237,6 @@ expect {
 	result = evaluate(
 		\\: dup-twice dup dup ;
 		\\1 dup-twice
-		,
 	)
 	result == Ok([1, 1, 1])
 }
@@ -247,7 +246,6 @@ expect {
 	result = evaluate(
 		\\: countup 1 2 3 ;
 		\\countup
-		,
 	)
 	result == Ok([1, 2, 3])
 }
@@ -258,7 +256,6 @@ expect {
 		\\: foo dup ;
 		\\: foo dup dup ;
 		\\1 foo
-		,
 	)
 	result == Ok([1, 1, 1])
 }
@@ -268,7 +265,6 @@ expect {
 	result = evaluate(
 		\\: swap dup ;
 		\\1 swap
-		,
 	)
 	result == Ok([1, 1])
 }
@@ -278,7 +274,6 @@ expect {
 	result = evaluate(
 		\\: + * ;
 		\\3 4 +
-		,
 	)
 	result == Ok([12])
 }
@@ -290,7 +285,6 @@ expect {
 		\\: bar foo ;
 		\\: foo 6 ;
 		\\bar foo
-		,
 	)
 	result == Ok([5, 6])
 }
@@ -301,7 +295,6 @@ expect {
 		\\: foo 10 ;
 		\\: foo foo 1 + ;
 		\\foo
-		,
 	)
 	result == Ok([11])
 }
@@ -341,7 +334,6 @@ expect {
 	result = evaluate(
 		\\: foo dup ;
 		\\1 FOO Foo foo
-		,
 	)
 	result == Ok([1, 1, 1, 1])
 }
@@ -351,7 +343,6 @@ expect {
 	result = evaluate(
 		\\: SWAP DUP Dup dup ;
 		\\1 swap
-		,
 	)
 	result == Ok([1, 1, 1, 1])
 }

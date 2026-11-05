@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/dominoes/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-11-05
 
 import Dominoes exposing [Domino, find_chain]
 
@@ -177,7 +177,7 @@ canonicalize : List((U8, U8)) -> List((U8, U8))
 canonicalize = |dominoes| {
 	maybe_flip : (U8, U8) -> (U8, U8)
 	maybe_flip = |domino| {
-		if domino.0 > domino.1 (domino.1, domino.0) else domino
+		if (domino.0 > domino.1) (domino.1, domino.0) else domino
 	}
 	dominoes.map(maybe_flip).sort_with(compare_dominoes)
 }

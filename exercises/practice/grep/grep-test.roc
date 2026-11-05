@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/grep/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-11-05
 
 import Grep exposing [grep]
 
@@ -47,7 +47,6 @@ expect {
 		\\Nor how it may concern my modesty,
 		\\But I beseech your grace that I may know
 		\\The worst that may befall me in this case,
-		,
 	)
 }
 
@@ -58,7 +57,6 @@ expect {
 		\\3:Nor how it may concern my modesty,
 		\\5:But I beseech your grace that I may know
 		\\6:The worst that may befall me in this case,
-		,
 	)
 }
 
@@ -74,7 +72,6 @@ expect {
 	result == Ok(
 		\\Achilles sing, O Goddess! Peleus' son;
 		\\The noble Chief Achilles from the son
-		,
 	)
 }
 
@@ -87,7 +84,6 @@ expect {
 		\\Restore us, and regain the blissful Seat,
 		\\Sing Heav'nly Muse, that on the secret top
 		\\That Shepherd, who first taught the chosen Seed
-		,
 	)
 }
 
@@ -115,7 +111,6 @@ expect {
 		\\When fierce dispute had separated once
 		\\The noble Chief Achilles from the son
 		\\Of Atreus, Agamemnon, King of men.
-		,
 	)
 }
 
@@ -132,7 +127,6 @@ expect {
 		\\midsummer-night.txt:Nor how it may concern my modesty,
 		\\midsummer-night.txt:But I beseech your grace that I may know
 		\\midsummer-night.txt:The worst that may befall me in this case,
-		,
 	)
 }
 
@@ -144,7 +138,6 @@ expect {
 		\\midsummer-night.txt:6:The worst that may befall me in this case,
 		\\paradise-lost.txt:2:Of that Forbidden Tree, whose mortal tast
 		\\paradise-lost.txt:6:Sing Heav'nly Muse, that on the secret top
-		,
 	)
 }
 
@@ -154,7 +147,6 @@ expect {
 	result == Ok(
 		\\iliad.txt
 		\\paradise-lost.txt
-		,
 	)
 }
 
@@ -172,7 +164,6 @@ expect {
 		\\paradise-lost.txt:Brought Death into the World, and all our woe,
 		\\paradise-lost.txt:Restore us, and regain the blissful Seat,
 		\\paradise-lost.txt:Sing Heav'nly Muse, that on the secret top
-		,
 	)
 }
 
@@ -183,7 +174,6 @@ expect {
 		\\iliad.txt:Achilles sing, O Goddess! Peleus' son;
 		\\iliad.txt:The noble Chief Achilles from the son
 		\\midsummer-night.txt:If I refuse to wed Demetrius.
-		,
 	)
 }
 
@@ -211,7 +201,6 @@ expect {
 	result == Ok(
 		\\iliad.txt
 		\\paradise-lost.txt
-		,
 	)
 }
 
@@ -242,6 +231,5 @@ expect {
 		\\paradise-lost.txt:Sing Heav'nly Muse, that on the secret top
 		\\paradise-lost.txt:Of Oreb, or of Sinai, didst inspire
 		\\paradise-lost.txt:That Shepherd, who first taught the chosen Seed
-		,
 	)
 }
