@@ -23,7 +23,7 @@ Meetup :: {}.{
 					Third => first_time + 14
 					Fourth => first_time + 21
 					Last => {
-						if first_time + 28 > Date.days_in_month(year, month)
+						if (first_time + 28 > Date.days_in_month(year, month))
 							first_time + 21
 						else
 							first_time + 28

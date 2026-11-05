@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/rectangles/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-11-05
 
 import Rectangles exposing [rectangles]
 
@@ -28,7 +28,6 @@ expect {
 		\\+-+
 		\\| |
 		\\+-+
-		,
 	)
 	result == 1
 }
@@ -41,7 +40,6 @@ expect {
 		\\+-+-+
 		\\| |  
 		\\+-+  
-		,
 	)
 	result == 2
 }
@@ -54,7 +52,6 @@ expect {
 		\\+-+-+
 		\\| | |
 		\\+-+-+
-		,
 	)
 	result == 5
 }
@@ -64,7 +61,6 @@ expect {
 	result = rectangles(
 		\\+--+
 		\\+--+
-		,
 	)
 	result == 1
 }
@@ -75,7 +71,6 @@ expect {
 		\\++
 		\\||
 		\\++
-		,
 	)
 	result == 1
 }
@@ -85,7 +80,6 @@ expect {
 	result = rectangles(
 		\\++
 		\\++
-		,
 	)
 	result == 1
 }
@@ -98,7 +92,6 @@ expect {
 		\\+-+-+
 		\\| | -
 		\\+-+-+
-		,
 	)
 	result == 1
 }
@@ -111,7 +104,6 @@ expect {
 		\\+---+--+    |
 		\\|   |       |
 		\\+---+-------+
-		,
 	)
 	result == 3
 }
@@ -124,7 +116,6 @@ expect {
 		\\+------+    |
 		\\|   |       |
 		\\+---+-------+
-		,
 	)
 	result == 2
 }
@@ -140,7 +131,6 @@ expect {
 		\\+---+--+--+-+
 		\\+------+  | |
 		\\          +-+
-		,
 	)
 	result == 60
 }
@@ -155,7 +145,6 @@ expect {
 		\\+-+-+-+
 		\\| | | |
 		\\+-+ +-+
-		,
 	)
 	result == 5
 }

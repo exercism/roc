@@ -55,7 +55,7 @@ count_neighbors = |rows, x, y| {
 							crash "Unreachable"
 						}
 					)
-					if is_flower(rows, nx, ny) 1 else 0
+					if (is_flower(rows, nx, ny)) 1 else 0
 				},
 			)
 				.sum()

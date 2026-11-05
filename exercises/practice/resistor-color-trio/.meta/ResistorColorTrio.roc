@@ -20,7 +20,7 @@ ResistorColorTrio :: {}.{
 
 	label : Color, Color, Color -> Label
 	label = |first, second, third| {
-		if (first, second) == (Black, Black) return Ohms(0)
+		if ((first, second) == (Black, Black)) return Ohms(0)
 		value = if second == Black {
 			get_code(first)
 		} else {

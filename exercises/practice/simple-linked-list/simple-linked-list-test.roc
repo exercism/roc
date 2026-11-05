@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/simple-linked-list/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-11-05
 
 import SimpleLinkedList
 
@@ -280,19 +280,19 @@ expect {
 
 expect_value : { updated_list : SimpleLinkedList, value : U64 }, U64 -> Try(SimpleLinkedList, [UnexpectedValue(U64)])
 expect_value = |{ updated_list, value }, expected_value| {
-	if value == expected_value Ok(updated_list) else Err(UnexpectedValue(value))
+	if (value == expected_value) Ok(updated_list) else Err(UnexpectedValue(value))
 }
 
 expect_len : SimpleLinkedList, U64 -> Try(SimpleLinkedList, [UnexpectedLen(U64)])
 expect_len = |list, expected_len| {
 	actual_len = list.len()
-	if actual_len == expected_len Ok(list) else Err(UnexpectedLen(actual_len))
+	if (actual_len == expected_len) Ok(list) else Err(UnexpectedLen(actual_len))
 }
 
 expect_peek : SimpleLinkedList, U64 -> Try(SimpleLinkedList, [UnexpectedPeek(U64), LinkedListWasEmpty])
 expect_peek = |list, expected_peek| {
 	match list.peek() {
-		Ok(actual_peek) => if actual_peek == expected_peek Ok(list) else Err(UnexpectedPeek(actual_peek))
+		Ok(actual_peek) => if (actual_peek == expected_peek) Ok(list) else Err(UnexpectedPeek(actual_peek))
 		Err(LinkedListWasEmpty) => Err(LinkedListWasEmpty)
 	}
 }

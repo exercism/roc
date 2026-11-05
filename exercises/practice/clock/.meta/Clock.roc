@@ -22,7 +22,7 @@ Clock :: { hour : U8, minute : U8 }.{
 
 	to_str : Clock -> Str
 	to_str = |{ hour, minute }| {
-		zero_padded = |num| "${if num < 10 "0" else ""}${num.to_str()}"
+		zero_padded = |num| "${if (num < 10) "0" else ""}${num.to_str()}"
 		"${zero_padded(hour)}:${zero_padded(minute)}"
 	}
 

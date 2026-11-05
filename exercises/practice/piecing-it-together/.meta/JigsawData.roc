@@ -30,11 +30,11 @@ JigsawData := { pieces : U64, border : U64, inside : U64, rows : U64, columns : 
 				} else {
 					Square
 				}
-				if ((data.?pieces ?? pieces) != pieces or
+				if (data.?pieces ?? pieces) != pieces or
 					(data.?border ?? border) != border or
 						(data.?inside ?? inside) != inside or
 							(data.?aspect_ratio ?? aspect_ratio) != aspect_ratio or
-								(data.?format ?? format) != format) {
+								(data.?format ?? format) != format {
 					return Err(InvalidData)
 				}
 				return Ok({ pieces, border, inside, rows, columns, aspect_ratio, format })

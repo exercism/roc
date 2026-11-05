@@ -1,9 +1,9 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/parallel-letter-frequency/canonical-data.json
-# File last updated on 2026-10-04
+# File last updated on 2026-11-05
 app [main!] {
 	pf: platform "https://github.com/ageron/roc-parallel/releases/download/0.3.0/ArsAKsVYCn93y2GdXRuMDN5DRrVyb8Fa8BJ3QtxqFxfF.tar.zst",
-	unicode: "https://github.com/roc-lang/unicode/releases/download/4.2.0/4W8SHzvwet9hH9qZewJ1J1CVQoH7YKA6zyijWFTB3y1w.tar.zst",
+	unicode: "https://github.com/roc-lang/unicode/releases/download/4.3.1/BNmth7q83JT3Pc2neutkWibVwFwNNNBLhhKfZhmDREeL.tar.zst",
 }
 
 import pf.Stderr
@@ -104,7 +104,6 @@ test_ignore_whitespace! = || {
 		"\t",
 		\\\r
 		\\
-		,
 	]
 	expected = Dict.from_list([])
 	check!({ description, texts, expected })
@@ -335,7 +334,6 @@ test_large_texts! = || {
 		\\if only from the one consideration, that, if man is stupid, then who is wise?) But if he is not stupid, he is monstrously ungrateful!
 		\\Phenomenally ungrateful. In fact, I believe that the best definition of man is the ungrateful biped. But that is not all, that is not his worst defect;
 		\\his worst defect is his perpetual moral obliquity, perpetual - from the days of the Flood to the Schleswig-Holstein period.
-		,
 	]
 	expected = Dict.from_list([
 		("a", 845),

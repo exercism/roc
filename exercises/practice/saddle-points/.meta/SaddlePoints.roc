@@ -17,7 +17,7 @@ SaddlePoints :: {}.{
 						max_in_row = row.max() ?? 0.U8
 						row.map_with_index(
 							|height, column_index| {
-								if height == max_in_row
+								if (height == max_in_row)
 									[{ row: row_index + 1, column: column_index + 1 }]
 								else
 									[]

@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/pig-latin/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-11-05
 
 import PigLatin exposing [translate]
 
@@ -162,6 +162,6 @@ expect {
 
 # a whole phrase
 expect {
-	result = translate("quick fast run")
-	result == "ickquay astfay unray"
+	result = translate("why do squids enjoy xrays")
+	result == "ywhay oday idssquay enjoyay xraysay"
 }

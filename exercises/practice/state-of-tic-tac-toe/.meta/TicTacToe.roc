@@ -74,12 +74,12 @@ count_full_cols = |board, cell| {
 
 count_full_diags : TicTacToe.Board, TicTacToe.Cell -> U64
 count_full_diags = |((c11, _, c13), (_, c22, _), (c31, _, c33)), cell| {
-	diag1 = if (c11 == cell and c22 == cell and c33 == cell) {
+	diag1 = if c11 == cell and c22 == cell and c33 == cell {
 		1
 	} else {
 		0
 	}
-	diag2 = if (c13 == cell and c22 == cell and c31 == cell) {
+	diag2 = if c13 == cell and c22 == cell and c31 == cell {
 		1
 	} else {
 		0

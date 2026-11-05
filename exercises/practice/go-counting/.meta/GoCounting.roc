@@ -37,7 +37,7 @@ GoCounting :: {}.{
 					|row, y| {
 						row.map_with_index(
 							|stone, x| {
-								if stone == None [{ x, y }] else []
+								if (stone == None) [{ x, y }] else []
 							},
 						)
 							.join()
