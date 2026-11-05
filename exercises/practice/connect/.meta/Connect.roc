@@ -164,7 +164,7 @@ has_north_south_path = |board, stone| {
 		).map_with_index(
 			|cell, x| {
 				match cell {
-					StoneO | StoneX => if cell == stone Ok({ x, y: 0 }) else Err(NotPlayerStone)
+					StoneO | StoneX => if (cell == stone) Ok({ x, y: 0 }) else Err(NotPlayerStone)
 					Empty => Err(NotPlayerStone)
 				}
 			},

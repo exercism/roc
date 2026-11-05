@@ -12,9 +12,9 @@ Dominoes :: {}.{
 				[] => match used {
 					[] => Ok([])
 					[(single_left, single_right)] =>
-						if single_left == single_right Ok(used) else Err(NoChainExists)
+						if (single_left == single_right) Ok(used) else Err(NoChainExists)
 					[(first_left, _), .., (_, last_right)] =>
-						if first_left == last_right Ok(used) else Err(NoChainExists)
+						if (first_left == last_right) Ok(used) else Err(NoChainExists)
 				}
 				[first_available, .. as rest_available] => match used {
 					[] => find_chain_helper([first_available], rest_available)

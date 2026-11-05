@@ -73,5 +73,5 @@ is_rectangle = |{ grid, x1, y1, x2, y2 }| {
 
 	([(x1, y1), (x2, y1), (x1, y2), (x2, y2)].all(is_corner)
 		and [y1, y2].all(has_horizontal_border)
-			and [x1, x2].all(has_vertical_border))
+		and [x1, x2].all(has_vertical_border))
 }

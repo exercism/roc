@@ -210,10 +210,10 @@ counter_backend = |byte| {
 	{
 		state: 0,
 		read!: |state, max_bytes| {
-			{ state: state + 1, result: Ok(if max_bytes == 0 [] else [byte]) }
+			{ state: state + 1, result: Ok(if (max_bytes == 0) [] else [byte]) }
 		},
 		write!: |state, bytes| {
-			result = if bytes.contains(byte) Ok(bytes.len()) else Err(Offline(state))
+			result = if (bytes.contains(byte)) Ok(bytes.len()) else Err(Offline(state))
 			{ state: state + 10, result }
 		},
 	}
@@ -332,5 +332,5 @@ main! = |_args| {
 	}
 	passed = $results.len() - failures.len()
 	_ = Stderr.line!("${passed.to_str()} passed, ${failures.len().to_str()} failed")
-	if failures.is_empty() Ok({}) else Err(Exit(1))
+	if (failures.is_empty()) Ok({}) else Err(Exit(1))
 }

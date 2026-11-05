@@ -88,7 +88,7 @@ parse_path = |url| {
 		path = url.drop_prefix(prefix)
 		if path == "" {
 			Ok("/")
-		} else if path.starts_with("/") Ok(path) else Err(InvalidDomain(url))
+		} else if (path.starts_with("/")) Ok(path) else Err(InvalidDomain(url))
 	} else if url.starts_with("https://") {
 		Err(InvalidDomain(url))
 	} else {

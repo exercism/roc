@@ -51,7 +51,7 @@ nodes_to_root = |tree, label| {
 		} else {
 			for child in subtree.children {
 				result = help(child, new_path)
-				if result.is_ok() return result
+				if (result.is_ok()) return result
 			}
 			Err(NotFound)
 		}
