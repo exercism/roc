@@ -1,0 +1,113 @@
+{%- import "generator_macros.j2" as macros with context -%}
+{{ macros.canonical_ref() }}
+{{ macros.header() }}
+
+import React
+
+{% for case in cases -%}
+## {{ case["description"] }}
+expect {
+    result = React.create()
+    {%- for cell in case["input"]["cells"] %}
+    {%- if cell["type"] == "input" %}
+        .add_input({ cell_id: {{ cell["name"] | to_roc }}, value: {{ cell["initial_value"] | to_roc }} })?
+    {%- else %}
+        .add_compute({
+            cell_id: {{ cell["name"] | to_roc }},
+            inputs: {{ cell["inputs"] | to_roc }},
+            compute: |values| match values {
+                [{{ "a, b" if cell["inputs"] | length == 2 else "a" }}] => Ok({{ cell["compute_function"] | replace("inputs[0]", "a") | replace("inputs[1]", "b") | replace(" then ", " { ") | replace(" else ", " } else { ") }}{% if cell["compute_function"].startswith("if ") %} }{% endif %})
+                _ => Err("Unexpected number of compute-cell inputs")
+            },
+        })?
+    {%- endif %}
+    {%- endfor %}
+    {%- for op in case["input"]["operations"] %}
+    {%- if op["type"] == "expect_cell_value" %}
+        |> expect_value({ cell_id: {{ op["cell"] | to_roc }}, value: {{ op["value"] | to_roc }} }){% if not loop.last %}?{% endif %}
+    {%- elif op["type"] == "set_value" %}
+        .set_value({ cell_id: {{ op["cell"] | to_roc }}, value: {{ op["value"] | to_roc }}, log: Dict.empty() })?
+        |> expect_callbacks({
+            called: {{ op.get("expect_callbacks", {}) | to_roc_dict }},
+            not_called: {{ op.get("expect_callbacks_not_to_be_called", []) | to_roc }},
+        }){% if not loop.last %}?{% endif %}
+    {%- elif op["type"] == "add_callback" %}
+        .add_callback({ cell_id: {{ op["cell"] | to_roc }}, callback_id: {{ op["name"] | to_roc }}, callback: record_callback({{ op["name"] | to_roc }}) }){% if not loop.last %}?{% endif %}
+    {%- elif op["type"] == "remove_callback" %}
+        .remove_callback({ cell_id: {{ op["cell"] | to_roc }}, callback_id: {{ op["name"] | to_roc }} }){% if not loop.last %}?{% endif %}
+    {%- endif %}
+    {%- endfor %}
+
+    result.is_ok()
+}
+
+{% endfor -%}
+## a failed initial computation returns an error
+expect {
+    result = React.create()
+        .add_input({ cell_id: "numerator", value: 12 })?
+        .add_input({ cell_id: "denominator", value: 0 })?
+        .add_compute({ cell_id: "quotient", inputs: ["numerator", "denominator"], compute: divide })
+
+    result.is_err()
+}
+
+## incorrect compute input counts return an error
+expect {
+    result = React.create()
+        .add_compute({ cell_id: "quotient", inputs: [], compute: divide })
+
+    result.is_err()
+}
+
+## a failed computation leaves the original reactor usable
+expect {
+    reactor = React.create()
+        .add_input({ cell_id: "numerator", value: 12 })?
+        .add_input({ cell_id: "denominator", value: 2 })?
+        .add_compute({ cell_id: "quotient", inputs: ["numerator", "denominator"], compute: divide })?
+        .add_callback({ cell_id: "quotient", callback_id: "division", callback: record_callback("division") })?
+    result = reactor.set_value({ cell_id: "denominator", value: 0, log: Dict.empty() })
+    expect result.is_err()
+    expect reactor.value("denominator") == Ok(2)
+    expect reactor.value("quotient") == Ok(6)
+
+    updated = reactor.set_value({ cell_id: "denominator", value: 3, log: Dict.empty() })?
+    updated.reactor.value("quotient") == Ok(4) and updated.log == Dict.single("division", [4])
+}
+
+divide : List(React.CellValue) -> Try(React.CellValue, Str)
+divide = |values| match values {
+    [_, 0] => Err("Division by zero")
+    [numerator, denominator] => Ok(numerator // denominator)
+    _ => Err("Expected two inputs")
+}
+
+record_callback : Str -> (I64, React.CallbackLog -> React.CallbackLog)
+record_callback = |callback_id| |value, log| {
+    previous = log.get(callback_id) ?? []
+    log.insert(callback_id, previous.append(value))
+}
+
+expect_value : React, { cell_id : Str, value : I64 } -> Try(React, _)
+expect_value = |reactor, { cell_id, value }| {
+    actual = reactor.value(cell_id) ? |_error| MissingCell(cell_id)
+    if actual == value {
+        Ok(reactor)
+    } else {
+        Err(UnexpectedValue({ cell_id, expected: value, actual }))
+    }
+}
+
+expect_callbacks : { reactor : React, log : React.CallbackLog }, { called : Dict(Str, I64), not_called : List(Str) } -> Try(React, _)
+expect_callbacks = |{ reactor, log }, { called, not_called }| {
+    expected = called.to_list().map(|(callback_id, value)| (callback_id, [value])) |> Dict.from_list
+    silent = not_called.all(|callback_id| (log.get(callback_id) ?? []).is_empty())
+    if log == expected and silent {
+        Ok(reactor)
+    } else {
+        Err(UnexpectedCallbacks)
+    }
+}
+
+{{ macros.footer() }}

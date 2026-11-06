@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 
-# Synchronize Roc dependency URLs with exercism/roc-test-runner.
+# Synchronize Roc dependency URLs with a local roc-test-runner checkout.
 #
 # Usage:
-#   bin/sync-roc-dependencies.sh [SOURCE]
+#   bin/sync-roc-dependencies.sh SOURCE
 #
-# SOURCE may be a URL or a local path. In either case it may name the
-# dependencies directory, a Roc dependency file, or the runner project root.
+# SOURCE is a local path to the runner project root, its dependencies
+# directory, or a Roc dependency file. No network access is needed.
 
 set -euo pipefail
 
-readonly DEFAULT_SOURCE="https://github.com/exercism/roc-test-runner"
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 usage() {
-    echo "Usage: $(basename "$0") [SOURCE]" >&2
+    echo "Usage: $(basename "$0") SOURCE" >&2
+    echo "SOURCE: local roc-test-runner checkout, dependencies directory, or Roc dependency file" >&2
     exit 2
 }
 
@@ -24,53 +24,18 @@ die() {
     exit 1
 }
 
-download() {
-    local url="$1"
-
-    if command -v curl >/dev/null 2>&1; then
-        curl --fail --location --silent --show-error "$url"
-    elif command -v wget >/dev/null 2>&1; then
-        wget -qO- "$url"
-    else
-        die "curl or wget is required to download ${url}"
-    fi
-}
-
-read_github_dependencies() {
-    local path="${1#https://github.com/}"
-    local owner repository kind ref file listing urls url
-    IFS=/ read -r owner repository kind ref file <<< "$path"
-    [[ -n "$owner" && -n "$repository" ]] || die "Invalid GitHub URL: $1"
-    if [[ "$kind" == blob ]]; then
-        download "https://raw.githubusercontent.com/$owner/$repository/$ref/$file"
-        return
-    fi
-    [[ -z "$kind" || "$kind" == tree ]] || die "Expected a GitHub project or directory URL"
-    ref="${ref:-HEAD}"
-    file="${file:-dependencies}"
-    listing=$(download "https://api.github.com/repos/$owner/$repository/contents/$file?ref=$ref")
-    urls=$(printf '%s' "$listing" | jq -er '[.[] | select(.type == "file" and (.name | endswith(".roc"))) | .download_url] | if length == 0 then error("no Roc dependency declarations") else .[] end')
-    while IFS= read -r url; do
-        download "$url" || return 1
-        printf '\n'
-    done <<< "$urls"
-}
-
-if (( $# > 1 )); then
+if (( $# != 1 )); then
     usage
 fi
 
-source_input="${1:-${DEFAULT_SOURCE}}"
+source_input="$1"
+[[ -e "$source_input" ]] || die "Local dependency source not found: $source_input"
+echo "Reading dependency declarations from $source_input"
 manifest_file="$(mktemp "${TMPDIR:-/tmp}/roc-download-dependencies.XXXXXX")"
 url_map_file="$(mktemp "${TMPDIR:-/tmp}/roc-dependency-url-map.XXXXXX")"
 trap 'rm -f "${manifest_file}" "${url_map_file}"' EXIT
 
-if [[ "$source_input" == https://github.com/* ]]; then
-    echo "Reading dependency declarations from $source_input"
-    read_github_dependencies "$source_input" > "$manifest_file"
-elif [[ "$source_input" == http://* || "$source_input" == https://* ]]; then
-    download "$source_input" > "$manifest_file"
-elif [[ -d "$source_input" ]]; then
+if [[ -d "$source_input" ]]; then
     source_dir="${source_input%/}"
     [[ ! -d "$source_dir/dependencies" ]] || source_dir="$source_dir/dependencies"
     shopt -s nullglob

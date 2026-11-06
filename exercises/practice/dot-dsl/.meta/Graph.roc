@@ -48,7 +48,7 @@ Graph := {
 
 	bool_attr : Graph, Str, Bool -> Graph
 	bool_attr = |graph, name, value| {
-		custom_attributes = graph.custom_attributes.insert(name, if value True else False)
+		custom_attributes = graph.custom_attributes.insert(name, if (value) True else False)
 		{ ..graph, custom_attributes }
 	}
 

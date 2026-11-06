@@ -1,6 +1,6 @@
 # Instructions Append
 
-## Roc/Host responsibilities
+## Bank accounts in Roc
 
 In Roc code, we typically focus on the business logic while the platform handles concurrency and shared state.
 Therefore, in this exercise you only need to implement the account operations in `BankAccount.roc` without having to worry about concurrency.
@@ -82,14 +82,3 @@ SQLite allows one writer at a time, preventing concurrent requests from overwrit
 Note: The exercise uses `U64`, but the demo stores balances as SQLite integers and rejects updates exceeding the maximum `I64` value (`9223372036854775807`).
 
 For an example of running independent computations in parallel, try the [parallel-letter-frequency exercise](https://exercism.org/tracks/roc/exercises/parallel-letter-frequency).
-
-## Hints
-
-<details>
-<summary>Show hints</summary>
-
-Use `match` to distinguish `Closed` from `Open(balance)`.
-An operation returns an updated account rather than modifying the account passed to it.
-Use `Ok(updated_account)` for a successful update and `Err(...)` for a rejected operation.
-
-</details>

@@ -11,8 +11,9 @@ card = "Q"
 ```
 
 This code implicitly calls `Card.from_quote("Q")` at compile time.
-This can potentially speed up the program since it doesn't need to handle parsing at runtime, and it ensures that cards rejected by `from_quote` are caught at compile time, rather than at runtime.
-Moreover, it makes the code nice and readable.
+Running code at compile time using this approach (or other methods described below) can potentially speed up the program since it doesn't need to handle parsing and data validation at runtime.
+Moreover, it ensures that invalid data (such as an incorrect date format) is rejected at compile time rather than at runtime, making your app more robust.
+Lastly, it makes the code nice and readable.
 For example, here's one of the tests in this exercise:
 
 ```roc
@@ -43,14 +44,3 @@ Ok(card) = Card.from_str("Q")
 
 Note: Placing this definition at the top level makes it run at compile time (since the function is pure and its input is known at compile time).
 Inside a function, you can use `from_str` at runtime.
-
-## Hints
-
-<details>
-<summary>Show hints</summary>
-
-Use `match` with `[]` and `[card, .. as rest]` to distinguish an empty deck from its next card and remaining cards.
-Record updates such as `{ ..state, pile: new_pile }` can keep game transitions explicit without mutable state.
-A `Set` can store tuples or lists as keys when tracking previously seen game states.
-
-</details>

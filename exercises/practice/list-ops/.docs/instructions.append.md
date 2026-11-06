@@ -1,9 +1,9 @@
-# Instructions append
+# Instructions Append
 
 ## Wait, It's Impossible!
 
 Implementing these list operations without using _any_ built-in function is virtually impossible in Roc, because you need a way to append or prepend elements to a list.
-In other languages you might use operators such as `:` in Haskell or `+=` in Python, but in Roc you have to use the [`List` functions](https://www.roc-lang.org/builtins/main/#Builtin.List).
+In other languages you might use operators such as `:` in Haskell or `+=` in Python, but in Roc you have to use the [`List` functions](https://www.roc-lang.org/docs/main/List/).
 
 So for this exercise you're allowed to use `List.append` (but avoid using any other built-in function).
 
@@ -27,23 +27,3 @@ However, the following function names are standard in Roc:
 - `filter`
 - `map`
 - `reverse`
-
-## Hint
-
-Try using:
-
-```roc
-match list {
-    [] => ...
-    [first, .. as rest] => ...
-}
-```
-
-or
-
-```roc
-match list {
-    [] => ...
-    [.. as rest, last] => ...
-}
-```

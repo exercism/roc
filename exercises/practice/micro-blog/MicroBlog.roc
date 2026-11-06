@@ -1,6 +1,6 @@
 
 
-import unicode.Grapheme
+import unicode.Scalar
 
 MicroBlog :: {}.{
 	truncate : Str -> Try(Str, _)

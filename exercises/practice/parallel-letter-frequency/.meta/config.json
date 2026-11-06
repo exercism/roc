@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ageron"
+  ],
+  "files": {
+    "solution": [
+      "ParallelLetterFrequency.roc"
+    ],
+    "test": [
+      "parallel-letter-frequency-test.roc"
+    ],
+    "example": [
+      ".meta/ParallelLetterFrequency.roc"
+    ]
+  },
+  "blurb": "Count the frequency of letters in texts using parallel computation."
+}

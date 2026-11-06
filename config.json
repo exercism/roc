@@ -508,6 +508,14 @@
         "difficulty": 3
       },
       {
+        "slug": "resistor-color-tolerance",
+        "name": "Resistor Color Tolerance",
+        "uuid": "5b2a15e4-ff56-4d4e-a34e-f71a1ecf043b",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 3
+      },
+      {
         "slug": "reverse-string",
         "name": "Reverse String",
         "uuid": "7bd2e210-08aa-45e9-8a19-f2213a22ac27",
@@ -780,6 +788,14 @@
         "difficulty": 4
       },
       {
+        "slug": "swift-scheduling",
+        "name": "Swift Scheduling",
+        "uuid": "efc8eba1-6d6e-4ff3-ba51-b770de428019",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 4
+      },
+      {
         "slug": "variable-length-quantity",
         "name": "Variable Length Quantity",
         "uuid": "3d6cb550-b77f-44f3-a617-1243a4a52dcb",
@@ -879,6 +895,14 @@
         "slug": "satellite",
         "name": "Satellite",
         "uuid": "32abecd3-962e-4836-aa37-59a8af09ff95",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 5
+      },
+      {
+        "slug": "split-second-stopwatch",
+        "name": "Split-Second Stopwatch",
+        "uuid": "dee2d2a1-bc27-4e58-a82a-b86b609bb135",
         "practices": [],
         "prerequisites": [],
         "difficulty": 5
@@ -989,6 +1013,14 @@
         "difficulty": 6
       },
       {
+        "slug": "parallel-letter-frequency",
+        "name": "Parallel Letter Frequency",
+        "uuid": "5b399809-4675-4546-b7c6-5c28fabfc285",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 6
+      },
+      {
         "slug": "rational-numbers",
         "name": "Rational Numbers",
         "uuid": "6f5c2c74-a087-4f4a-9276-8479c868e784",
@@ -1085,6 +1117,14 @@
         "difficulty": 8
       },
       {
+        "slug": "baffling-birthdays",
+        "name": "Baffling Birthdays",
+        "uuid": "ecb4f644-ff49-4be1-a471-184a3b7e6038",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 8
+      },
+      {
         "slug": "dominoes",
         "name": "Dominoes",
         "uuid": "baeabe4e-6d9b-4fa5-b8a7-22b1977d840e",
@@ -1128,6 +1168,14 @@
         "slug": "forth",
         "name": "Forth",
         "uuid": "37d9480f-7283-4123-abaa-3a9146acd2ca",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 9
+      },
+      {
+        "slug": "react",
+        "name": "React",
+        "uuid": "cfce7bb0-5875-4177-a62d-250480cedcdf",
         "practices": [],
         "prerequisites": [],
         "difficulty": 9

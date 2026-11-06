@@ -107,12 +107,12 @@ update_lender = |lender, borrower_name, amount| {
 	(new_owed_by_dict, owed_by_amount) = lender.owed_by |> pop_amount(borrower_name)
 	total_lender_owes_to_borrower = owes_amount - owed_by_amount - amount
 	final_owes_dict =
-		if total_lender_owes_to_borrower > 0.0
+		if (total_lender_owes_to_borrower > 0.0)
 			new_owes_dict.insert(borrower_name, total_lender_owes_to_borrower)
 		else
 			new_owes_dict
 	final_owed_by_dict =
-		if total_lender_owes_to_borrower < 0.0
+		if (total_lender_owes_to_borrower < 0.0)
 			new_owed_by_dict.insert(borrower_name, -total_lender_owes_to_borrower)
 		else
 			new_owed_by_dict

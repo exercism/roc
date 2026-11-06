@@ -95,9 +95,9 @@ Bowling :: { frames : List(Frame) }.{
 			}
 			Ok(points.sum())
 		}
-			else {
-				Err(GameIsNotOver)
-			}
+		else {
+			Err(GameIsNotOver)
+		}
 	}
 
 	is_over : Bowling -> Bool

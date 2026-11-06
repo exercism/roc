@@ -6,8 +6,4 @@ Meetup :: {}.{
 	meetup = |{ year, month, week, day_of_week }| {
 		crash "Please implement the 'meetup' function"
 	}
-
-	# HINT: we have added the `roc-isodate` package to the app's header in
-	#       meetup-test.roc, so you can use it here if you need to.
-	#       For example, you could import isodate.Date, just sayin'.
 }

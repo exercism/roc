@@ -25,6 +25,10 @@ Keep read and write statistics separate:
 - Count bytes only on success: the returned list's length for reads, and the reported number for writes.
 - A short transfer still counts as one call—don't retry it or a failed operation.
 
+The real-file backend uses basic-cli, which reports EOF as `Err(EndOfInput)`.
+Preserve that result unchanged: it counts as one read operation and zero bytes.
+An `Ok([])` is an empty successful read, such as a zero-byte request; it is not basic-cli's EOF signal.
+
 Count what the backend reports; you don't need to track operating-system calls or buffering.
 You can trust the backend's byte counts and assume the counters fit in `U64`.
 
@@ -36,14 +40,3 @@ Unlike most other exercises, this exercise uses effectful functions (in this cas
 If you want to run the tests locally, you must therefore use `roc --opt=speed paasio-test.roc`, rather than `roc test` (since the `expect` statement cannot currently test effectful functions).
 
 Any error returned by the Roc code is reported by the platform, using a different format than usual.
-
-## Hints
-
-<details>
-<summary>Show hints</summary>
-
-Try storing the backend and counters together in the opaque type.
-To call a function stored in a record field, use parentheses: `(backend.read!)(backend.state, max_bytes)`.
-Watch out for `?`: returning early on an error would lose the updated wrapper and its operation count.
-
-</details>
