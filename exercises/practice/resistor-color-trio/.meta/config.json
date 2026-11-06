@@ -4,13 +4,13 @@
   ],
   "files": {
     "solution": [
-      "ResistorColorTrio.roc"
+      "Resistor.roc"
     ],
     "test": [
       "resistor-color-trio-test.roc"
     ],
     "example": [
-      ".meta/ResistorColorTrio.roc"
+      ".meta/Resistor.roc"
     ]
   },
   "blurb": "Convert color codes, as used on resistors, to a human-readable label.",

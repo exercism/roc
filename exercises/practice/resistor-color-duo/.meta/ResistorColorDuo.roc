@@ -3,7 +3,7 @@
 ##
 
 ResistorColorDuo :: {}.{
-	Color := [
+	Color : [
 		Black,
 		Brown,
 		Red,
@@ -16,14 +16,14 @@ ResistorColorDuo :: {}.{
 		White,
 	]
 
-	value : Color, Color -> U8
-	value = |first, second| {
-		10 * get_code(first) + get_code(second)
+	decode_colors : Color, Color -> U8
+	decode_colors = |first, second| {
+		10 * color_code(first) + color_code(second)
 	}
 }
 
-get_code : Color -> U8
-get_code = |color| {
+color_code : Color -> U8
+color_code = |color| {
 	match color {
 		Black => 0
 		Brown => 1

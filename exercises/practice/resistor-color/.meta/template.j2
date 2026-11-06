@@ -12,7 +12,7 @@ import {{ exercise | to_pascal }} exposing [color_code, colors]
 expect {
     {{ case["property"] | to_snake }} == [
 {%- for color in case["expected"] %}
-        {{ color | to_roc }},
+        {{ color | to_roc_tag }},
 {%- endfor %}
     ]
 }
@@ -20,8 +20,8 @@ expect {
 {% for subcase in case["cases"] -%}
 # {{ subcase["description"] }}
 expect {
-    result = {{ subcase["property"] | to_snake }}({{ subcase["input"]["color"] | to_roc }})
-    result == Ok({{ subcase["expected"] }})
+    result = {{ subcase["property"] | to_snake }}({{ subcase["input"]["color"] | to_roc_tag }})
+    result == {{ subcase["expected"] }}
 }
 
 {% endfor %}

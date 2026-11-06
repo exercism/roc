@@ -1,41 +1,41 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/resistor-color-duo/canonical-data.json
-# File last updated on 2026-08-29
+# File last updated on 2026-10-27
 
-import ResistorColorDuo exposing [value]
+import ResistorColorDuo exposing [decode_colors]
 
 # Brown and black
 expect {
-	result = value(Brown, Black)
+	result = decode_colors(Brown, Black)
 	result == 10
 }
 
 # Blue and grey
 expect {
-	result = value(Blue, Grey)
+	result = decode_colors(Blue, Grey)
 	result == 68
 }
 
 # Yellow and violet
 expect {
-	result = value(Yellow, Violet)
+	result = decode_colors(Yellow, Violet)
 	result == 47
 }
 
 # White and red
 expect {
-	result = value(White, Red)
+	result = decode_colors(White, Red)
 	result == 92
 }
 
 # Orange and orange
 expect {
-	result = value(Orange, Orange)
+	result = decode_colors(Orange, Orange)
 	result == 33
 }
 
 # Black and brown, one-digit
 expect {
-	result = value(Black, Brown)
+	result = decode_colors(Black, Brown)
 	result == 1
 }

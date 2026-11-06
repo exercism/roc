@@ -1,5 +1,5 @@
 ResistorColorDuo :: {}.{
-	Color := [
+	Color : [
 		Black,
 		Brown,
 		Red,
@@ -12,8 +12,8 @@ ResistorColorDuo :: {}.{
 		White,
 	]
 
-	value : Color, Color -> U8
-	value = |first, second| {
-		crash "Please implement the 'value' function"
+	decode_colors : Color, Color -> U8
+	decode_colors = |first, second| {
+		crash "Please implement the 'decode_colors' function"
 	}
 }
