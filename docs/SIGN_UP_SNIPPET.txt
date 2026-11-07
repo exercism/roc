@@ -1,0 +1,15 @@
+most_common_word : Str -> Str
+most_common_word = |text| {
+	var $counts = Dict.empty()
+	var $best = ""
+	var $best_count = 0.U64
+	for word in text.split_on(" ") {
+		count = ($counts.get(word) ?? 0) + 1
+		$counts = $counts.insert(word, count)
+		if count > $best_count {
+			$best = word
+			$best_count = count
+		}
+	}
+	"\"${$best}\" appears ${$best_count.to_str()} times"
+}
