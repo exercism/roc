@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/micro-blog/canonical-data.json
 # File last updated on 2026-08-29
 app [] {
-	unicode: "https://github.com/roc-lang/unicode/releases/download/4.3.1/BNmth7q83JT3Pc2neutkWibVwFwNNNBLhhKfZhmDREeL.tar.zst",
+	unicode: "https://github.com/roc-lang/unicode/releases/download/4.3.2/3gvgiWm6BShjHKbNV2zRH6fhC5ZvScZgWF7AnVDWHSdd.tar.zst",
 }
 
 import MicroBlog exposing [truncate]

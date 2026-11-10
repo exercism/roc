@@ -18,7 +18,7 @@ Resistor := [Ohms(Dec), Kiloohms(Dec), Megaohms(Dec), Gigaohms(Dec)].{
 
 	decode_colors : Color, Color, Color -> Resistor
 	decode_colors = |first, second, third| {
-		if (first, second) == (Black, Black) return Ohms(0)
+		if ((first, second) == (Black, Black)) return Ohms(0)
 		value = color_code(first) * 10 + color_code(second)
 		multiplier = Dec.pow(10, color_code(third))
 		resistance = value * multiplier
@@ -28,7 +28,7 @@ Resistor := [Ohms(Dec), Kiloohms(Dec), Megaohms(Dec), Gigaohms(Dec)].{
 			Kiloohms(resistance / 1e3)
 		} else if resistance < 1e9 {
 			Megaohms(resistance / 1e6)
-		} else  {
+		} else {
 			Gigaohms(resistance / 1e9)
 		}
 	}
