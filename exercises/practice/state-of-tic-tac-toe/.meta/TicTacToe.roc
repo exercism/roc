@@ -4,7 +4,7 @@
 
 TicTacToe :: {
 	board : TicTacToe.Board,
-	state : TicTacToe.State,
+	game_state : TicTacToe.State,
 }.{
 	Cell : [O, X, Empty]
 	Row : (Cell, Cell, Cell)
@@ -29,21 +29,21 @@ TicTacToe :: {
 				full_rows = board |> count_full_rows(last_player)
 				full_cols = board |> count_full_cols(last_player)
 				full_diags = board |> count_full_diags(last_player)
-				state = if full_rows + full_cols + full_diags > 0 {
+				game_state = if full_rows + full_cols + full_diags > 0 {
 					Win
 				} else if number_Xs + number_Os == 9 {
 					Draw
 				} else {
 					Ongoing
 				}
-				Ok(TicTacToe.{ board, state })
+				Ok(TicTacToe.{ board, game_state })
 			}
 		}
 	}
 
 	state : TicTacToe -> State
 	state = |tic_tac_toe| {
-		tic_tac_toe.state
+		tic_tac_toe.game_state
 	}
 }
 

@@ -3,7 +3,7 @@
 # File last updated on 2026-09-27
 app [] {
 	isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.4/8nYCkCKi8sCi2poruWpkdqTp7W4jnEpKHRK84xKUrmJo.tar.zst",
-	unicode: "https://github.com/roc-lang/unicode/releases/download/4.3.2/3gvgiWm6BShjHKbNV2zRH6fhC5ZvScZgWF7AnVDWHSdd.tar.zst",
+	unicode: "https://github.com/roc-lang/unicode/releases/download/4.3.3/AJfFMmhvmbgn7THAF1E1sofC3dZaVWPFmVV7GH8Bc7k7.tar.zst",
 }
 
 import Ledger exposing [format_entries]
