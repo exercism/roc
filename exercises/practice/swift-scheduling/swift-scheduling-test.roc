@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/swift-scheduling/canonical-data.json
 # File last updated on 2026-10-07
 app [] {
-	isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.4/8nYCkCKi8sCi2poruWpkdqTp7W4jnEpKHRK84xKUrmJo.tar.zst",
+	isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.9.0/FwUgHLFzeUzCCKjezbh5nGFxMAN7sFZEgiaZ2UBAhrsK.tar.zst",
 }
 
 import SwiftScheduling exposing [delivery_date]

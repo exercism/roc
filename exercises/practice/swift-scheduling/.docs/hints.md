@@ -2,7 +2,7 @@
 
 ## General
 
-- The [`roc-isodate` package](https://github.com/ageron/roc-isodate) is included in the app's header in `swift-scheduling-test.roc`, so you can use it in your code.
+- The [`roc-isodate` package](https://github.com/imclerran/roc-isodate) is included in the app's header in `swift-scheduling-test.roc`, so you can use it in your code.
   Try importing `isodate.Date` and `isodate.DateTime`.
 
 - `DateTime.from_iso_str` parses the input, while `format`, `add_days`, and `add_hours` help construct the output.

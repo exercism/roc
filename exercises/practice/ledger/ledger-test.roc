@@ -2,7 +2,7 @@
 # https://github.com/exercism/problem-specifications/tree/main/exercises/ledger/canonical-data.json
 # File last updated on 2026-09-27
 app [] {
-	isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.4/8nYCkCKi8sCi2poruWpkdqTp7W4jnEpKHRK84xKUrmJo.tar.zst",
+	isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.9.0/FwUgHLFzeUzCCKjezbh5nGFxMAN7sFZEgiaZ2UBAhrsK.tar.zst",
 	unicode: "https://github.com/roc-lang/unicode/releases/download/4.3.3/AJfFMmhvmbgn7THAF1E1sofC3dZaVWPFmVV7GH8Bc7k7.tar.zst",
 }
 

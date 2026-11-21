@@ -20,15 +20,13 @@
 {%- if imports or platform -%}
 app [{% if platform %}main!{% endif %}] {
 {%- if platform == "parallel" %}
-    pf: platform "https://github.com/ageron/roc-parallel/releases/download/0.3.0/ArsAKsVYCn93y2GdXRuMDN5DRrVyb8Fa8BJ3QtxqFxfF.tar.zst",
+    pf: platform "https://github.com/ageron/roc-parallel/releases/download/0.4.0/DqdrrdJ5VUDxWN2tfJmrkC7oLzpzGK9vhPVa1C1yTvGc.tar.zst",
 {%- endif %}
 {%- for name in imports -%}
     {% if name == "pf" -%}
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.28.1/7brgwR8YUqfeGrkdfF1V4GPPN7DnP7ftqub9KcrTEZtr.tar.zst",
-    {%- elif name == "ascii" -%}
-    ascii: "https://github.com/ageron/roc-ascii/releases/download/v0.5.1/3mkSijmaYYGXbT6EvDAXyV4Y9YzYncztbWNDfRSr3z3f.tar.zst",
     {%- elif name == "isodate" -%}
-    isodate: "https://github.com/ageron/roc-isodate/releases/download/v0.8.4/8nYCkCKi8sCi2poruWpkdqTp7W4jnEpKHRK84xKUrmJo.tar.zst",
+    isodate: "https://github.com/imclerran/roc-isodate/releases/download/v0.9.0/FwUgHLFzeUzCCKjezbh5nGFxMAN7sFZEgiaZ2UBAhrsK.tar.zst",
     {%- elif name == "parser" -%}
     parser: "https://github.com/lukewilliamboswell/roc-parser/releases/download/5.0.0/GWrbcSuoXstBeasuzyfMuXe99zFZFLgBhoWavjA7rteZ.tar.zst",
     {%- elif name == "random" -%}

@@ -1,6 +1,6 @@
 # These tests are auto-generated with test data from:
 # https://github.com/exercism/problem-specifications/tree/main/exercises/dot-dsl/canonical-data.json
-# File last updated on 2026-08-30
+# File last updated on 2026-11-21
 
 import Graph
 
@@ -49,8 +49,8 @@ expect {
 	expected : Graph
 	expected = {
 		nodes: Dict.from_list([
-			("a", id({ custom_attributes: Dict.empty() })),
-			("b", id({ custom_attributes: Dict.empty() })),
+			("a", { custom_attributes: Dict.empty() }),
+			("b", { custom_attributes: Dict.empty() }),
 		]),
 		edges: Dict.single(("a", "b"), { custom_attributes: Dict.empty() }),
 		custom_attributes: Dict.empty(),
@@ -86,18 +86,18 @@ expect {
 	expected : Graph
 	expected = {
 		nodes: Dict.from_list([
-			("a", id({ custom_attributes: Dict.empty(), color: Green })),
-			("b", id({ custom_attributes: Dict.empty(), label: "Beta!" })),
-			("c", id({ custom_attributes: Dict.empty() })),
+			("a", { custom_attributes: Dict.empty(), color: Green }),
+			("b", { custom_attributes: Dict.empty(), label: "Beta!" }),
+			("c", { custom_attributes: Dict.empty() }),
 		]),
 		edges: Dict.from_list([
-			(("a", "b"), id({ custom_attributes: Dict.empty(), color: Blue })),
-			(("b", "c"), id({ custom_attributes: Dict.empty() })),
+			(("a", "b"), { custom_attributes: Dict.empty(), color: Blue }),
+			(("b", "c"), { custom_attributes: Dict.empty() }),
 		]),
 		title: "Testing Attrs",
 		custom_attributes: Dict.from_list([
-			("foo", id_val(Int(1))),
-			("bar", id_val(True)),
+			("foo", Int(1)),
+			("bar", True),
 		]),
 	}
 	result == expected
@@ -113,15 +113,15 @@ expect {
 	expected : Graph
 	expected = {
 		nodes: Dict.from_list([
-			("a", id({ custom_attributes: Dict.empty() })),
-			("b", id({ custom_attributes: Dict.empty() })),
-			("c", id({ custom_attributes: Dict.empty() })),
-			("d", id({ custom_attributes: Dict.empty() })),
+			("a", { custom_attributes: Dict.empty() }),
+			("b", { custom_attributes: Dict.empty() }),
+			("c", { custom_attributes: Dict.empty() }),
+			("d", { custom_attributes: Dict.empty() }),
 		]),
 		edges: Dict.from_list([
-			(("a", "b"), id({ custom_attributes: Dict.empty(), style: Dotted })),
-			(("b", "c"), id({ custom_attributes: Dict.empty(), style: Dotted })),
-			(("c", "d"), id({ custom_attributes: Dict.empty(), style: Dotted })),
+			(("a", "b"), { custom_attributes: Dict.empty(), style: Dotted }),
+			(("b", "c"), { custom_attributes: Dict.empty(), style: Dotted }),
+			(("c", "d"), { custom_attributes: Dict.empty(), style: Dotted }),
 		]),
 		custom_attributes: Dict.empty(),
 	}
@@ -140,18 +140,11 @@ expect {
 	expected : Graph
 	expected = {
 		nodes: Dict.from_list([
-			("a", id({ custom_attributes: Dict.empty() })),
-			("b", id({ custom_attributes: Dict.empty() })),
+			("a", { custom_attributes: Dict.empty() }),
+			("b", { custom_attributes: Dict.empty() }),
 		]),
 		edges: Dict.single(("a", "b"), { custom_attributes: Dict.empty(), color: Blue }),
 		custom_attributes: Dict.empty(),
 	}
 	result == expected
 }
-
-# This is a temporary workaround for https://github.com/roc-lang/roc/issues/10886
-id : Graph.Attributes -> Graph.Attributes
-id = |x| x
-
-id_val : Graph.CustomAttributeValue -> Graph.CustomAttributeValue
-id_val = |x| x
