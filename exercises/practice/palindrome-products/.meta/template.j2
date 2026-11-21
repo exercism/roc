@@ -4,15 +4,6 @@
 
 import {{ exercise | to_pascal }} exposing [smallest, largest]
 
-is_eq = |result, expected| {
-    match (result, expected) {
-        (Ok({value, factors}), Ok({value: expected_value, factors: expected_factors})) => {
-            value == expected_value and factors == expected_factors
-        }
-        _ => Bool.False
-    }
-}
-
 {% for case in cases -%}
 # {{ case["description"] }}
 expect {
@@ -27,7 +18,7 @@ expect {
             ({{ pair[0] }}, {{ pair[1] }}),{% endfor %}
         ])
     })
-    result|>is_eq(expected)
+    result == expected
     {%- endif %}
 }
 

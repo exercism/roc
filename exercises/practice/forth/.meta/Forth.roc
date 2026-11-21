@@ -232,7 +232,7 @@ handle_error = |err| {
 		UnableToParseDef(line) => "This is supposed to be a definition, but I'm not sure how to parse it:\n${line}"
 		EvaluationError({ error, stack, op, ops }) => {
 			match error {
-				Arity(1) => "Oops! '${op_to_str(op)}' expected 1 argument, but the stack was empty.\n${show_execution(stack, ops)}"
+				Arity(1.U64) => "Oops! '${op_to_str(op)}' expected 1 argument, but the stack was empty.\n${show_execution(stack, ops)}"
 				Arity(n) => "Oops! '${op_to_str(op)}' expected ${n.to_str()} arguments, but there weren't enough on the stack.\n${show_execution(stack, ops)}"
 				DivByZero => "Sorry, division by zero is not allowed.\n${show_execution(stack, ops)}"
 			}

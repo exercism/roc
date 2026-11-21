@@ -6,8 +6,6 @@ Person := { name : Name, birth : Birth, address : Address }.{
 	Date : { year : I64, month : U8, day : U8 }
 
 	Birth := { born_at : Address, born_on : Date }.{
-		is_eq : _
-
 		street : Birth -> Str
 		street = |birth| {
 			crash "Please implement the 'street' function"

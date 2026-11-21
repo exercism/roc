@@ -23,7 +23,7 @@ Person := { name : Name, birth : Birth, address : Address }.{
 
 	set_current_street : Person, Str -> Person
 	set_current_street = |person, new_street| {
-		person |> (address.compose(street).set)(new_street)
+		person |> (address.compose(street_lens).set)(new_street)
 	}
 
 	set_birth_month : Person, U8 -> Person
@@ -33,8 +33,8 @@ Person := { name : Name, birth : Birth, address : Address }.{
 
 	rename_streets : Person, (Str -> Str) -> Person
 	rename_streets = |person, rename| {
-		updated = birth.compose(born_at).compose(street).over(person, rename)
-		address.compose(street).over(updated, rename)
+		updated = birth.compose(born_at).compose(street_lens).over(person, rename)
+		address.compose(street_lens).over(updated, rename)
 	}
 }
 
@@ -81,8 +81,8 @@ born_on = {
 	set: |birth_info, value| { ..birth_info, born_on: value },
 }
 
-street : Lens(Person.Address, Str)
-street = {
+street_lens : Lens(Person.Address, Str)
+street_lens = {
 	get: |street_address| street_address.street,
 	set: |street_address, value| { ..street_address, street: value },
 }

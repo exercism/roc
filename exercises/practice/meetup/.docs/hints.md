@@ -2,6 +2,5 @@
 
 ## General
 
-- The [`roc-isodate` package](https://github.com/ageron/roc-isodate) is available in the header of `meetup-test.roc` (with alias `isodate`).
-  This package is a (temporary) fork of [the package by @imclerran](https://github.com/imclerran/roc-isodate).
+- The [`roc-isodate` package](https://github.com/imclerran/roc-isodate) is available in the header of `meetup-test.roc` (with alias `isodate`).
   You can use it in your solution if you want, for example by importing `isodate.Date`.

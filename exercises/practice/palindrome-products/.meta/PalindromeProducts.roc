@@ -15,13 +15,13 @@ PalindromeProducts :: {}.{
 					} else {
 						best_value
 					}
-					Ok({ value: final_value, factors: Set.from_list(factors) })
+					{ value: final_value, factors: Set.from_list(factors) }
 				} else if factor2 == max + 1 {
-					help((factor1 + 1), (factor1 + 1), best_value, factors)
+					help(factor1 + 1, factor1 + 1, best_value, factors)
 				} else {
 					value = factor1 * factor2
 					if value > best_value {
-						help((factor1 + 1), (factor1 + 1), best_value, factors)
+						help(factor1 + 1, factor1 + 1, best_value, factors)
 					} else {
 						next_factor2 = factor2 + 1
 						if value == best_value {
@@ -36,7 +36,7 @@ PalindromeProducts :: {}.{
 				}
 			}
 
-			help(min, min, U64.highest, [])
+			Ok(help(min, min, U64.highest, []))
 		}
 	}
 
@@ -52,7 +52,7 @@ PalindromeProducts :: {}.{
 					} else {
 						best_value
 					}
-					Ok({ value: final_value, factors: Set.from_list(factors) })
+					{ value: final_value, factors: Set.from_list(factors) }
 				} else if factor2 < factor1 {
 					help((factor1 - 1), max, best_value, factors)
 				} else {
@@ -73,7 +73,7 @@ PalindromeProducts :: {}.{
 				}
 			}
 
-			help(max, max, 0, [])
+			Ok(help(max, max, 0, []))
 		}
 	}
 }

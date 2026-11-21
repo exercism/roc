@@ -64,8 +64,8 @@ Graph := {
 	}
 
 	color : Graph, Color -> Graph
-	color = |graph, color| {
-		{ ..graph, color }
+	color = |graph, new_color| {
+		{ ..graph, color: new_color }
 	}
 
 	Attribute : [Label(Str), Style(Style), Color(Color), Custom(Str, CustomAttributeValue)]

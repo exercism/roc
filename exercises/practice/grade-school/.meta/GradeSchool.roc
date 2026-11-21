@@ -26,9 +26,9 @@ GradeSchool :: {
 	}
 
 	grade : GradeSchool, U8 -> List(Str)
-	grade = |grade_school, grade| {
+	grade = |grade_school, selected_grade| {
 		grade_school.students
-			.keep_if(|student| student.grade == grade)
+			.keep_if(|student| student.grade == selected_grade)
 			.map(|student| student.name)
 			.sort_with(compare_strings)
 	}

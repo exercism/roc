@@ -39,9 +39,8 @@ SwiftScheduling :: {}.{
 				} else {
 					year + 1
 				}
-				Date.from_ymd(target_year, target, 1)
-					|> first_workday
-					|> Date.format("{YYYY}-{MM}-{DD}T08:00:00")
+				date = Date.from_ymd(target_year, target, 1) ? |_| InvalidMeetingStart
+				first_workday(date).format("{YYYY}-{MM}-{DD}T08:00:00")
 			}
 			Quarter(target) => {
 				if target < 1 or target > 4 {
@@ -53,10 +52,9 @@ SwiftScheduling :: {}.{
 				} else {
 					year + 1
 				}
-				last_day = Date.days_in_month(target_year, last_month)
-				Date.from_ymd(target_year, last_month, last_day)
-					|> last_workday
-					|> Date.format("{YYYY}-{MM}-{DD}T08:00:00")
+				month_start = Date.from_ymd(target_year, last_month, 1) ? |_| InvalidMeetingStart
+				last_day = Date.days_in_month(target_year, month_start.month())
+				last_workday(month_start.add_days(last_day.to_i64() - 1)).format("{YYYY}-{MM}-{DD}T08:00:00")
 			}
 		}
 		Ok(result)
