@@ -23,7 +23,7 @@ GradeSchool :: {
 	}
 
 	grade : GradeSchool, U8 -> List(Str)
-	grade = |grade_school, grade| {
+	grade = |grade_school, selected_grade| {
 		crash "Please implement the 'grade' function"
 	}
 }

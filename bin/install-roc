@@ -3,7 +3,9 @@
 # Synopsis:
 # Install Roc
 
-function download_alpha_release() {
+set -e
+
+function download_release() {
     local install_dir="${1}"
 
     local os platform
@@ -31,22 +33,22 @@ function download_alpha_release() {
     echo "Fetching latest Roc version info from exercism/roc-test-runner..."
     local dockerfile
     if command -v curl >/dev/null 2>&1; then
-        dockerfile=$(curl -sL https://raw.githubusercontent.com/exercism/roc-test-runner/main/Dockerfile)
+        dockerfile=$(curl -fsSL https://raw.githubusercontent.com/exercism/roc-test-runner/main/Dockerfile)
     else
         dockerfile=$(wget -qO- https://raw.githubusercontent.com/exercism/roc-test-runner/main/Dockerfile)
     fi
 
-    local roc_version_date roc_build_id
-    roc_version_date=$(echo "$dockerfile" | grep -o 'ARG ROC_VERSION_DATE="[^"]*"' | cut -d'"' -f2 | head -n1)
-    roc_build_id=$(echo "$dockerfile" | grep -o 'ARG ROC_BUILD_ID="[^"]*"' | cut -d'"' -f2 | head -n1)
+    local roc_version
+    roc_version=$(echo "$dockerfile" | sed -n 's/^ARG ROC_VERSION="\([^"]*\)"$/\1/p' | head -n1)
 
-    if [[ -z "$roc_version_date" || -z "$roc_build_id" ]]; then
-        echo "Failed to parse ROC_VERSION_DATE or ROC_BUILD_ID from roc-test-runner Dockerfile" >&2
+    if [[ ! "$roc_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([_-][A-Za-z0-9][A-Za-z0-9._-]*)?$ ]]; then
+        echo "Failed to parse ROC_VERSION from roc-test-runner Dockerfile" >&2
         exit 1
     fi
 
-    local file_name="roc_nightly-${platform}_${arch_name}-${roc_version_date}-${roc_build_id}.tar.gz"
-    local download_url="https://github.com/roc-lang/nightlies/releases/download/nightly-${roc_version_date}-${roc_build_id}/${file_name}"
+    local release_dir="roc-${platform}_${arch_name}-${roc_version}"
+    local file_name="${release_dir}.tar.gz"
+    local download_url="https://github.com/roc-lang/roc/releases/download/${roc_version}/${file_name}"
 
     rm -rf "${install_dir}"
     mkdir -p "${install_dir}"
@@ -61,7 +63,7 @@ function download_alpha_release() {
     echo "Extracting ${file_name}..."
     tar -xzf "${file_name}"
     rm "${file_name}"
-    ln -s roc_nightly*/roc roc
+    ln -s "${release_dir}/roc" roc
 }
 
 function update_shell {
@@ -76,7 +78,7 @@ function update_shell {
 
 install_dir="${HOME}/.roc/bin"
 
-download_alpha_release "${install_dir}"
+download_release "${install_dir}"
 
 if [[ -z "${GITHUB_ACTIONS}" ]]; then
     update_shell "${install_dir}" ".bashrc" 

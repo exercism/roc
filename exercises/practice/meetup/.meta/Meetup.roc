@@ -13,7 +13,10 @@ Meetup :: {}.{
 		if month == 0 or month > 12 {
 			Err(InvalidMonth)
 		} else {
-			first_day = Date.from_ymd(year, month, 1)
+			first_day = Date.from_ymd(year, month, 1) ? |error| match error {
+				YearOutOfRange => InvalidYear
+				_ => InvalidMonth
+			}
 			first_weekday = first_day.weekday()
 			first_time = (7 + day_of_week_number(day_of_week) - first_weekday) % 7 + 1
 			day_of_month = {
@@ -23,7 +26,7 @@ Meetup :: {}.{
 					Third => first_time + 14
 					Fourth => first_time + 21
 					Last => {
-						if (first_time + 28 > Date.days_in_month(year, month))
+						if (first_time + 28 > Date.days_in_month(year, first_day.month()))
 							first_time + 21
 						else
 							first_time + 28

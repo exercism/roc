@@ -133,6 +133,6 @@ format_amount = |amount, currency, locale| {
 			"${symbol} ${number} "
 		}
 	}
-	length = (13).minus_saturated(Grapheme.split(formatted).len())
+	length = (13.U64).minus_saturated(Grapheme.split(formatted).len())
 	" ".repeat(length).concat(formatted)
 }

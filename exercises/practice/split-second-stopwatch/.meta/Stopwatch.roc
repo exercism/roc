@@ -3,7 +3,7 @@
 ##
 
 Stopwatch :: {
-	previous_laps : List(Stopwatch.Time),
+	prev_laps : List(Stopwatch.Time),
 	current_lap : Stopwatch.Time,
 	state : Stopwatch.State,
 }.{
@@ -58,7 +58,7 @@ Stopwatch :: {
 
 	create : () -> Stopwatch
 	create = || {
-		{ previous_laps: [], current_lap: Time.default(), state: Ready }
+		{ prev_laps: [], current_lap: Time.default(), state: Ready }
 	}
 
 	start : Stopwatch -> Try(Stopwatch, _)
@@ -81,8 +81,8 @@ Stopwatch :: {
 	lap = |Stopwatch.(stopwatch)| {
 		match stopwatch.state {
 			Running => {
-				previous_laps = stopwatch.previous_laps.append(stopwatch.current_lap)
-				Ok({ previous_laps, current_lap: Stopwatch.Time.default(), state: Running })
+				prev_laps = stopwatch.prev_laps.append(stopwatch.current_lap)
+				Ok({ prev_laps, current_lap: Stopwatch.Time.default(), state: Running })
 			}
 			Ready | Stopped => Err(InvalidState)
 		}
@@ -116,12 +116,12 @@ Stopwatch :: {
 
 	previous_laps : Stopwatch -> List(Time)
 	previous_laps = |Stopwatch.(stopwatch)| {
-		stopwatch.previous_laps
+		stopwatch.prev_laps
 	}
 
 	total : Stopwatch -> Time
 	total = |Stopwatch.(stopwatch)| {
-		stopwatch.previous_laps.sum() + stopwatch.current_lap
+		stopwatch.prev_laps.sum() + stopwatch.current_lap
 	}
 }
 
